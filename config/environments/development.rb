@@ -34,4 +34,7 @@ ReduApps::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  # Diretório de instalação do imagemagick (necessário para o Paperclip)
+  Paperclip.options[:command_path] = "/usr/local/bin/"
 end
