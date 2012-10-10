@@ -5,6 +5,10 @@ describe App do
   it { should respond_to(:name) }
   it { should validate_presence_of(:name) }
 
+  # Categorias
+   it {should have_many(:app_category_associations)}
+   it {should have_many(:categories).through(:app_category_associations)}
+
   # Autor
   it { should respond_to(:author) }
   it { should validate_presence_of(:author) }

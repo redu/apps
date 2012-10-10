@@ -3,6 +3,8 @@ class App < ActiveRecord::Base
 
   validates_presence_of :name, :author, :language
 
+  has_many :app_category_associations, :dependent => :destroy
+  has_many :categories, :through => :app_category_associations
   has_many :comments
 
   has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
