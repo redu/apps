@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :login
       t.string :first_name
       t.string :last_name
-      t.integer :role_cd
+      t.integer :role_cd, :default => 1
 
       t.timestamps
     end

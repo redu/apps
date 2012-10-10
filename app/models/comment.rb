@@ -1,6 +1,9 @@
 class Comment < ActiveRecord::Base
   attr_accessible :body, :author, :app
 
+  # Tipo de comentário: comum ou especializado (resenha)
+  as_enum :type, :common => 0, :specialized => 1
+
   belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
   belongs_to :app
 

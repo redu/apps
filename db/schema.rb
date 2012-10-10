@@ -45,8 +45,9 @@ ActiveRecord::Schema.define(:version => 20121009123052) do
     t.integer  "user_id"
     t.integer  "app_id"
     t.text     "body"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "type_cd",    :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "comments", ["user_id", "app_id"], :name => "index_comments_on_user_id_and_app_id"
@@ -57,9 +58,9 @@ ActiveRecord::Schema.define(:version => 20121009123052) do
     t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "role_cd"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "role_cd",    :default => 1
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "users", ["uid"], :name => "index_users_on_uid"

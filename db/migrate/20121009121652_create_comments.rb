@@ -4,6 +4,7 @@ class CreateComments < ActiveRecord::Migration
       t.belongs_to :user
       t.belongs_to :app
       t.text :body
+      t.integer :type_cd, :default => 0
 
       t.timestamps
     end

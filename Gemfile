@@ -13,6 +13,8 @@ gem 'simple_enum'
 
 gem 'factory_girl_rails'
 
+gem 'debugger'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -47,6 +49,3 @@ end
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
