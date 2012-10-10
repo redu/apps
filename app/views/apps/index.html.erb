@@ -1,0 +1,5 @@
+<H1>APPS</H1>
+<% @apps.each do |app| %>
+   <p> <%= app.name =%>  <%= app.categories =%>
+<% end %>
+<%= will_paginate @apps =%>
