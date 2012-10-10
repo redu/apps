@@ -5,6 +5,20 @@ gem 'rails', '3.2.5'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'mysql2'
+
+gem 'paperclip'
+
+gem 'simple_enum'
+
+gem 'factory_girl_rails'
+
+gem 'debugger'
+
+gem 'will_paginate'
+
+gem 'jquery-rails'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,7 +31,15 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+group :development, :test do
+  gem 'rspec-rails'
+  gem 'therubyracer'
+end
+
+group :test do
+  gem 'shoulda-matchers'
+  # gem 'shoulda', :require => false
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -30,10 +52,3 @@ gem 'jquery-rails'
 
 # Deploy with Capistrano
 # gem 'capistrano'
-
-# To use debugger
-gem 'debugger'
-gem 'rspec-rails'
-gem 'mysql2'
-gem 'shoulda', :require => false
-gem 'will_paginate'

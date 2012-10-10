@@ -13,4 +13,9 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignora configuração da RVM
 .rvmrc
+
+# Ignora configuração do BD
+config/database.yml
