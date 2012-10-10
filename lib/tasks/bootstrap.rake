@@ -4,7 +4,7 @@ namespace :bootstrap do
       categories = (0..5).collect {|i| Category.create(:name =>  "Cat #{i}")}
       100.times do |i|
          app = App.create(:name => "App-#{i}")
-         rand(3).times { app.categories << categories.sample }
+         app.categories << categories.sample(rand(4))
       end
    end
 

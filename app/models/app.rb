@@ -7,8 +7,13 @@ class App < ActiveRecord::Base
   has_many :categories, :through => :app_category_associations
   has_many :comments
 
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
+  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
                                              :thumb => "100x100>" }
 
   has_and_belongs_to_many :users
+
+  def App.filter_by_category(categories)
+   #TO-DO, basicamente fazer o mesmo filtro que em favories e apps para evitar
+   #repetição de código
+  end
 end

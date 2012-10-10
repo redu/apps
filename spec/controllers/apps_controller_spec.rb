@@ -7,7 +7,7 @@ describe AppsController do
          @apps = 10.times.collect do |i|
             # app = App.create(:name => "App #{i}")
             app = FactoryGirl.create(:app)
-            rand(3).times {|i| app.categories << @categories.sample}
+            app.categories << @categories.sample(rand(4))
             app
          end
       end

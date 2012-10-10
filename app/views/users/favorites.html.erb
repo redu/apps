@@ -1,0 +1,6 @@
+<h1>FAVORITES</h1>
+
+<% @apps.each do |app| %>
+   <p> <%= app.name =%> </p>
+<% end %>
+<%= will_paginate @apps =%>

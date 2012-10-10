@@ -2,19 +2,12 @@ development:
   adapter: mysql2
   encoding: utf8
   username: root
-  password: 
-  database: reduapps_dev
+  password: coisa
+  database: redu_apps_development
 
 test:
   adapter: mysql2
   encoding: utf8
   username: root
-  password: 
-  database: reduapps_test
-
-production:
-  adapter: mysql2
-  encoding: utf8
-  username: root
-  password: 
-  database: reduapps_prod
+  password: coisa
+  database: redu_apps_test
