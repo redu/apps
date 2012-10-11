@@ -2,7 +2,7 @@
 
 <h1> <%= @app.name %> </h1>
 <ul>
-  <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type", 
+  <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
       "updated_at").each do |att|
         %>
@@ -11,4 +11,9 @@
 </ul>
 
 <%= link_to 'Edit', edit_app_path(@app) %> |
-<%= link_to 'Back', apps_path %>
+<%= link_to 'Back', apps_path %> |
+<%= link_to 'Preview', preview_app_path(@app) %>
+<%= form_tag user_favorites_path(@user.id), :method => "post" do %>
+   <%= hidden_field_tag :app_id , @app.id %>
+   <%= submit_tag("Adcionar a Favoritos") %>
+<% end %>

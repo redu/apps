@@ -1,6 +1,14 @@
 ReduApps::Application.routes.draw do
   root :to => 'apps#index'
   resources :apps do
-    resources :comments
+      member do
+         get 'preview'
+      end
+      resources :comments
   end
+
+  resources :users do
+     resources :favorites
+  end
+
 end
