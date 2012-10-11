@@ -28,7 +28,8 @@ describe User do
   it { FactoryGirl.create(:specialist).role.should == :specialist }
 
   # Aplicativos favoritos do usuário (ou simplesmente aplicativos do usuário)
-  it { should have_and_belong_to_many(:apps) }
+  it { should have_many(:user_app_associations) }
+  it { should have_many(:apps).through(:user_app_associations) }
 
   # Comentários que usuário cria em aplicativos
   it { should have_many(:comments) }

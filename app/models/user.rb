@@ -10,7 +10,8 @@ class User < ActiveRecord::Base
   as_enum :role, :specialist => 0, :member => 1
 
   # Aplicativos do usuário
-  has_and_belongs_to_many :apps
+  has_many :user_app_associations, :dependent => :destroy
+  has_many :apps, :through => :user_app_associations
 
   # Comentários
   has_many :comments

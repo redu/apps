@@ -4,5 +4,6 @@ class CreateAppCategoryAssociations < ActiveRecord::Migration
       t.references :app, :category
       t.timestamps
     end
+    add_index :app_category_associations, [:app_id, :category_id]
   end
 end

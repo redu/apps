@@ -11,10 +11,5 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
     end
     add_index :users, [:uid]
-
-    create_table :apps_users do |t|
-      t.references :user, :app
-    end
-    add_index :apps_users, [:user_id, :app_id]
   end
 end
