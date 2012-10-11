@@ -8,7 +8,7 @@ class App < ActiveRecord::Base
   has_many :categories, :through => :app_category_associations
 
   # Comentários
-  has_many :comments
+  has_many :comments, :dependent => :destroy
 
   # Thumbnail
   has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
