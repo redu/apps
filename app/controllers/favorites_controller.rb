@@ -6,7 +6,7 @@ class FavoritesController < ApplicationController
 
    def create
       user = User.find(params[:user_id])
-      user.apps ||= App.find(params[:app_id])
+      user.apps = user.apps | [App.find(params[:app_id])]
       redirect_to :action => "index"
    end
 end
