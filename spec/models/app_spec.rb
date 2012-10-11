@@ -1,11 +1,13 @@
 # encoding: utf-8
-
 require 'spec_helper'
 
 describe App do
   # Nome
   it { should respond_to(:name) }
   it { should validate_presence_of(:name) }
+
+  # Aulas em que o aplicativo é utilizado
+  it { should have_many(:lectures) }
 
   # Categorias
   it {should have_many(:app_category_associations)}

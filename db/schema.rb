@@ -11,7 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20121019173907) do
+=======
+ActiveRecord::Schema.define(:version => 20121011204321) do
+>>>>>>> Introduz as entidades que representam os componentes da hierarquia do Redu.
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -119,6 +123,64 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
 
   add_index "screen_shots", ["app_id"], :name => "index_screen_shots_on_app_id"
 
+  create_table "courses", :force => true do |t|
+    t.integer  "cid"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "environment_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "courses", ["cid", "name", "user_id"], :name => "index_courses_on_cid_and_name_and_user_id"
+
+  create_table "environments", :force => true do |t|
+    t.integer  "eid"
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "environments", ["eid", "name", "user_id"], :name => "index_environments_on_eid_and_name_and_user_id"
+
+  create_table "lectures", :force => true do |t|
+    t.integer  "lid"
+    t.string   "name"
+    t.integer  "subject_id"
+    t.integer  "app_id"
+    t.string   "lectureable_type"
+    t.integer  "lectureable_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "lectures", ["lid", "name", "subject_id"], :name => "index_lectures_on_lid_and_name_and_subject_id"
+
+  create_table "spaces", :force => true do |t|
+    t.integer  "sid"
+    t.string   "name"
+    t.integer  "course_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "spaces", ["sid", "name", "course_id"], :name => "index_spaces_on_sid_and_name_and_course_id"
+
+  create_table "subjects", :force => true do |t|
+    t.integer  "suid"
+    t.string   "name"
+    t.integer  "space_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "subjects", ["suid", "name", "space_id"], :name => "index_subjects_on_suid_and_name_and_space_id"
+
   create_table "user_app_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "app_id"
@@ -127,6 +189,24 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
   end
 
   add_index "user_app_associations", ["user_id", "app_id"], :name => "index_user_app_associations_on_user_id_and_app_id"
+
+  create_table "user_course_associations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_course_associations", ["user_id", "course_id"], :name => "index_user_course_associations_on_user_id_and_course_id"
+
+  create_table "user_environment_associations", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "environment_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "user_environment_associations", ["user_id", "environment_id"], :name => "index_user_environment_associations_on_user_and_environment_ids"
 
   create_table "users", :force => true do |t|
     t.integer  "uid"
