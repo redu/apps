@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :login
+  attr_accessible :login, :thumbnail
 
   # Atributos de usuário Redu
   validates_presence_of :uid, :login, :first_name, :last_name, :role
@@ -15,4 +15,8 @@ class User < ActiveRecord::Base
 
   # Comentários
   has_many :comments
+
+  # Thumbnail
+  has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
+                                             :thumb => "100x100>" }
 end

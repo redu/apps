@@ -18,7 +18,7 @@ describe Comment do
   # Texto do comentário
   it { should respond_to(:body) }
   it { should validate_presence_of(:body) }
-  it { should ensure_length_of(:body).is_at_least(1)}
+  it { should ensure_length_of(:body).is_at_least(2)}
 
   # Scopes
   context 'when searching for' do

@@ -75,9 +75,13 @@ ActiveRecord::Schema.define(:version => 20121011112556) do
     t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "role_cd",    :default => 1
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "role_cd",                :default => 1
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "users", ["uid"], :name => "index_users_on_uid"

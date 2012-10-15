@@ -9,7 +9,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :author, :app, :body
 
-  validates_length_of :body, :minimum => 1
+  validates_length_of :body, :minimum => 2
 
   # Escopos que retornam comentários de especialistas e comentários de membros
   scope :specialized, where(type_cd: 1)

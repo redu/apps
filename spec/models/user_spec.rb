@@ -33,4 +33,7 @@ describe User do
 
   # Comentários que usuário cria em aplicativos
   it { should have_many(:comments) }
+
+  # Thumbnail do usuário
+  it { should have_attached_file(:thumbnail) }
 end
