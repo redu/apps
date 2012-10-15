@@ -10,11 +10,10 @@ class App < ActiveRecord::Base
   # Comentários
   has_many :comments, :dependent => :destroy
 
-  # Thumbnail
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
-                                             :thumb => "100x100>" }
-
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, :dependent => :destroy
   has_many :users, :through => :user_app_associations
+  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
+                                             :thumb => "100x100>" }
+
 end
