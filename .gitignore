@@ -19,3 +19,6 @@
 
 # Ignora configuração do BD
 config/database.yml
+
+*.swp
+*.swo

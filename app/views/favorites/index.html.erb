@@ -1,0 +1,6 @@
+<h1>FAVORITES</h1>
+
+<% @apps.each do |app| %>
+   <p> <%= app.name =%> <%= link_to 'Abrir', preview_app_path(app) %> </p>
+<% end %>
+<%= will_paginate @apps =%>

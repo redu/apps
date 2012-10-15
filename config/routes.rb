@@ -1,7 +1,14 @@
 ReduApps::Application.routes.draw do
   root :to => 'apps#index'
-  match "/users/:user_id/favorites" => "users#favorites"
+
   resources :apps, :only => [:index, :show] do
+    member do
+      get 'preview'
+    end
     resources :comments
+  end
+
+  resources :users do
+    resources :favorites
   end
 end
