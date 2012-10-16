@@ -13,18 +13,31 @@
 <% @app.comments.specialized.each do |comment| %>
   <p>
     <%= image_tag comment.author.thumbnail.url(:thumb) %>
-    <b>Autor</b>
     <%= "#{comment.author.first_name} #{comment.author.last_name}" %> (especialista)
-    || <b>Data-Hora</b> <%= l comment.created_at %>
+    escreveu uma resenha sobre este aplicativo:<br /><%= l comment.created_at %>
   </p>
-
   <p>
-    <b>Comentário:</b>
     <%= comment.body %>
     <%= link_to 'Apagar Comentário', [comment.app, comment],
                :confirm => 'Tem certeza?',
                :method => :delete %>
   </p>
+<% end %>
+
+<h2>Escrever uma resenha</h2>
+<%= form_for([@app, @app.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :autor %> (login do usuário)<br />
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :corpo %><br />
+    <%= f.text_area :body %>
+  </div>
+    <%= f.hidden_field :type, :value => 'specialized' %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
 <% end %>
 
 <h2>Comentários</h2>
@@ -53,7 +66,7 @@
                :method => :delete %>
   <% end %>
 
-  <h2>Responda este comentário:</h2>
+  <h2>Responder</h2>
   <%= form_for([@app, comment, @app.comments.build]) do |f| %>
     <div class="field">
       <%= f.label :autor %> (login do usuário)<br />
@@ -70,7 +83,7 @@
   <% end %>
 <% end %>
 
-<h2>Faça um novo comentário:</h2>
+<h2>Comentar sobre este aplicativo</h2>
 <%= form_for([@app, @app.comments.build]) do |f| %>
   <div class="field">
     <%= f.label :autor %> (login do usuário)<br />
@@ -80,6 +93,7 @@
     <%= f.label :corpo %><br />
     <%= f.text_area :body %>
   </div>
+    <%= f.hidden_field :type, :value => 'common' %>
   <div class="actions">
     <%= f.submit %>
   </div>
