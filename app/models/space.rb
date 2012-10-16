@@ -3,6 +3,7 @@ class Space < ActiveRecord::Base
 
   # Associações
   belongs_to :course
+  has_many :subjects
 
   # Validadores
   validates_presence_of :sid, :name, :course

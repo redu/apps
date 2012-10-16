@@ -132,5 +132,6 @@
 <%= form_tag user_favorites_path(@user.id), :method => "post" do %>
    <%= hidden_field_tag :app_id , @app.id %>
    <%= submit_tag("Adcionar a Favoritos") %>
+<%= link_to 'Adicionar Aplicativo a uma aula', app_checkout_path(@app) %>
 <% end %>
 <%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>

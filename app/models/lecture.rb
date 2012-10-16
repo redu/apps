@@ -6,6 +6,5 @@ class Lecture < ActiveRecord::Base
   belongs_to :app
 
   # Validadores
-  validates_presence_of :lid, :name, :subject
-  validates_uniqueness_of :lid
+  validates_presence_of :name, :subject
 end

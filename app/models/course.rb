@@ -9,6 +9,7 @@ class Course < ActiveRecord::Base
   has_many :user_course_associations, :dependent => :destroy
   has_many :users, :through => :user_course_associations
 
+  has_many :spaces
   # Validadores
   validates_presence_of :cid, :name, :owner, :environment
   validates_uniqueness_of :cid
