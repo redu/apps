@@ -9,8 +9,26 @@
   <% end %>
 </ul>
 
+<h2>Resenhas</h2>
+<% @app.comments.specialized.each do |comment| %>
+  <p>
+    <%= image_tag comment.author.thumbnail.url(:thumb) %>
+    <b>Autor</b>
+    <%= "#{comment.author.first_name} #{comment.author.last_name}" %> (especialista)
+    || <b>Data-Hora</b> <%= l comment.created_at %>
+  </p>
+
+  <p>
+    <b>Comentário:</b>
+    <%= comment.body %>
+    <%= link_to 'Apagar Comentário', [comment.app, comment],
+               :confirm => 'Tem certeza?',
+               :method => :delete %>
+  </p>
+<% end %>
+
 <h2>Comentários</h2>
-<% @app.comments.each do |comment| %>
+<% @app.comments.common.each do |comment| %>
   <p>
     <%= image_tag comment.author.thumbnail.url(:thumb) %>
     <b>Autor</b>
