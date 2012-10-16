@@ -1,5 +1,5 @@
 class App < ActiveRecord::Base
-  attr_accessible :name, :thumbnail
+  attr_accessible :name, :thumbnail, :views
 
   validates_presence_of :name, :author, :language
 

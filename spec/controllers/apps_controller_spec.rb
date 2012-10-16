@@ -1,26 +1,46 @@
 require 'spec_helper'
 
 describe AppsController do
-   context "When filtering app by category" do
-      before(:each) do
-         @categories = (0..3).collect {|i| Category.create(:name => "Cat #{i}")}
-         @apps = 10.times.collect do |i|
-            # app = App.create(:name => "App #{i}")
-            app = FactoryGirl.create(:app)
-            app.categories << @categories.sample(rand(4))
-            app
+   describe "GET index" do
+      context "When filtering app by category" do
+         before(:each) do
+            @categories = (0..3).collect {|i| Category.create(:name => "Cat #{i}")}
+            @apps = 10.times.collect do |i|
+               # app = App.create(:name => "App #{i}")
+               app = FactoryGirl.create(:app)
+               app.categories << @categories.sample(rand(4))
+               app
+            end
+         end
+
+         it "should return correct number of apps" do
+            get :index , :filter => [@categories.first.name]
+            correct_number = @apps.select {|a| a.categories.include?(@categories.first) }.length
+            assigns(:apps).length.should == correct_number
+         end
+
+         it "should return corret type of apps" do
+            get :index, :filter => [@categories.first.name]
+            assigns(:apps).all? {|a| a.categories.include?(@categories.first)}.should == true
          end
       end
+   end
 
-      it "should return correct number of apps" do
-         get :index , :filter => [@categories.first.name]
-         correct_number = @apps.select {|a| a.categories.include?(@categories.first) }.length
-         assigns(:apps).length.should == correct_number
+   describe "GET show" do
+      before do
+         @app = FactoryGirl.create(:app)
       end
 
-      it "should return corret type of apps" do
-         get :index, :filter => [@categories.first.name]
-         assigns(:apps).all? {|a| a.categories.include?(@categories.first)}.should == true
+      context "with valid params" do
+         before do
+            @params = { :id => @app.id }
+         end
+
+         it "should increment app views counter" do
+            before = @app.views
+            get :show, @params
+            App.find(@app.id).views.should == before + 1
+         end
       end
    end
 end
