@@ -11,7 +11,7 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
-    @user = User.find(1) # Usuario para fins de teste
+    @user = User.find(1) # || FactoryGirl.create(:user) #TODO strip this out
     respond_to do |format|
       format.html  # show.html.erb
       format.json  { render :json => @app }

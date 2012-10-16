@@ -205,7 +205,7 @@ pt-BR:
   time:
     am: ''
     formats:
-      default: ! '%A, %d de %B de %Y, %H:%M h'
+      default: ! '%d %b, %Y, %Hh%M'
       long: ! '%A, %d de %B de %Y, %H:%M h'
       short: ! '%d/%m, %H:%M h'
     pm: ''

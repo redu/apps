@@ -17,5 +17,11 @@ FactoryGirl.define do
       copyright 'UNESCO'
       thumbnail { open('http://www.acslaw.org/files/EducationImage_0.png') }
     end
+
+    factory :complete_app_with_comments do
+      after(:create) do |app|
+        2.times { app.comments << FactoryGirl.create(:comment, :app => app) }
+      end
+    end
   end
 end
