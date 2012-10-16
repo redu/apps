@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
+<h1><%= image_tag @app.thumbnail.url(:thumb) %> <%= @app.name %> </h1>
 <ul>
   <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
@@ -9,9 +9,10 @@
   <% end %>
 </ul>
 
-<h2>Comments</h2>
+<h2>Comentários</h2>
 <% @app.comments.each do |comment| %>
   <p>
+    <%= image_tag comment.author.thumbnail.url(:thumb) %>
     <b>Autor</b>
     <%= "#{comment.author.first_name} #{comment.author.last_name}" %>
     || <b>Data-Hora</b> <%= l comment.created_at %>
@@ -26,17 +27,17 @@
   </p>
 <% end %>
 
-<h2>Add a comment:</h2>
+<h2>Faça um comentário:</h2>
 <%= form_for([@app, @app.comments.build]) do |f| %>
   <div class="field">
     <p>
       Atenção! Preencha com o login do usuário (que deve existir previamente)
     </p>
-    <%= f.label :author %><br />
+    <%= f.label :autor %><br />
     <%= f.text_field :author %>
   </div>
   <div class="field">
-    <%= f.label :body %><br />
+    <%= f.label :corpo %><br />
     <%= f.text_area :body %>
   </div>
   <div class="actions">

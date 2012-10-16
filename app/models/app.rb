@@ -13,7 +13,6 @@ class App < ActiveRecord::Base
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, :dependent => :destroy
   has_many :users, :through => :user_app_associations
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
-                                             :thumb => "100x100>" }
+  has_attached_file :thumbnail, :styles => { :thumb => "160x160>" }
 
 end

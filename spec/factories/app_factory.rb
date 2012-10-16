@@ -15,7 +15,7 @@ FactoryGirl.define do
       submitters 'Ministerio da Educacao (Brasil)'
       url 'objetoseducacionais2.mev.gov.br'
       copyright 'UNESCO'
-      thumbnail { open('http://www.acslaw.org/files/EducationImage_0.png') }
+      thumbnail { open('app/assets/images/app_thumb.png') }
     end
 
     factory :complete_app_with_comments do
