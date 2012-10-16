@@ -3,7 +3,11 @@
 <h1>FAVORITES</h1>
 
 <% @apps.each do |app| %>
-   <p> <%= app.name =%> <%= link_to 'Abrir', preview_app_path(app) %> </p>
+   <p> <%= link_to app.name, app =%> <%= link_to 'Abrir', preview_app_path(app) %>
+    <%= button_to "Delete", { :action => "destroy", :id => app.id, :user_id => @user.id },
+          :confirm => "Are you sure?", :method => :delete %>
+   </p>
 <% end %>
 <%= will_paginate @apps =%>
+
 <%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>

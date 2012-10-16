@@ -22,11 +22,29 @@ describe FavoritesController do
       end
    end
 
-   context "when posting user favorite" do
+   context "when creating user favorite" do
       it "should add app to favorites list" do
          post :create, :app_id => @app1.id, :user_id => @user.id, 
               :locale => 'pt-BR'
          @user.apps.should include @app1
+      end
+
+      it "should not allow duplicate favorites" do
+         post :create, :app_id => @app1.id, :user_id => @user.id
+         lambda {post :create, :app_id => @app1.id,
+            :user_id => @user.id}.should raise_error
+      end
+   end
+
+   context "when destroying user favorite" do
+      before(:each) do
+         @user.apps << [@app1, @app2]
+      end
+
+      it "should remove user favorite" do
+         expect {
+            delete :destroy, :id => @app1.id, :user_id => @user.id
+         }.to change(@user.apps, :count).by(-1)
       end
    end
 end
