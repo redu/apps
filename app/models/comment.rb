@@ -2,14 +2,18 @@ class Comment < ActiveRecord::Base
   attr_accessible :body, :author, :app, :type
 
   # Tipo de comentário: comum ou especializado (resenha)
-  as_enum :type, :common => 0, :specialized => 1
+  as_enum :type, common: 0, specialized: 1, answer: 2
 
-  belongs_to :author, :class_name => 'User', :foreign_key => 'user_id'
+  belongs_to :author, class_name: 'User', foreign_key: 'user_id'
   belongs_to :app
 
-  validates_presence_of :author, :app, :body
+  belongs_to :in_response_to, class_name: 'Comment'
 
-  validates_length_of :body, :minimum => 2
+  has_many :answers, class_name: 'Comment', foreign_key: 'in_response_to_id'
+
+  validates_presence_of :author, :body
+
+  validates_length_of :body, minimum: 2
 
   # Escopos que retornam comentários de especialistas e comentários de membros
   scope :specialized, where(type_cd: 1)

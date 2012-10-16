@@ -16,12 +16,15 @@ FactoryGirl.define do
       url 'objetoseducacionais2.mev.gov.br'
       copyright 'UNESCO'
       thumbnail { open('app/assets/images/app_thumb.png') }
-    end
 
-    factory :complete_app_with_comments do
-      after(:create) do |app|
-        app.comments < FactoryGirl.create(:specialized_comment, :app => app)
-        2.times { app.comments << FactoryGirl.create(:comment, :app => app) }
+      factory :complete_app_with_comments do
+        after(:create) do |app|
+          2.times do 
+            app.comments << FactoryGirl.create(:specialized_comment, :app => app)
+            app.comments << FactoryGirl.create(:comment, :app => app)
+          end
+          app.comments << FactoryGirl.create(:common_comment, :app => app)
+        end
       end
     end
   end

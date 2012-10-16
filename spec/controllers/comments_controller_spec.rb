@@ -102,37 +102,71 @@ describe CommentsController do
             }.to_not change(Comment.common, :count).by(1)
           end
         end # "which is specialized"
+
+        context "which is an answer" do
+          before do
+            @comment = FactoryGirl.create(:common_comment, :app => @app)
+            @params = {:app_id => @app, :comment => {
+                :author => @user.login, :body => "Ola! Parabens pelo REA.",
+                :type => :specialized },
+                :comment_id => @comment
+              }
+          end
+
+          it 'should create a new answer for proper comment' do
+            expect {
+              post :create, @params
+            }.to change(@comment.answers, :count).by(1)
+          end
+        end # context "which is an answer"
       end # context "with valid params"
     end # context "when creating a comment"
   end
 
   describe "DELETE destroy" do
-    context "with valid params" do
-      before do
-        @app = FactoryGirl.create(:app)
-        @user = FactoryGirl.create(:specialist)
-        @comment = FactoryGirl.create(:specialized_comment, :author => @user,
-                                      :app => @app)
-        @params = { :app_id => @app.id, :id => @comment.id}
-      end
+    context "when deleting a comment" do
+      context "with valid params" do
+        before do
+          @app = FactoryGirl.create(:app)
+          @user = FactoryGirl.create(:specialist)
+          @comment = FactoryGirl.create(:specialized_comment, :author => @user,
+                                        :app => @app)
+          @params = { :app_id => @app.id, :id => @comment.id}
+        end
 
-      it 'should destroy one comment' do
-        expect {
-          post :destroy, @params
-        }.to change(Comment, :count).by(-1)
-      end
+        it 'should destroy one comment' do
+          expect {
+            post :destroy, @params
+          }.to change(Comment, :count).by(-1)
+        end
 
-      it 'should destroy one comment from proper app' do
-        expect {
-          post :destroy, @params
-        }.to change(@app.comments, :count).by(-1)
-      end
+        it 'should destroy one comment from proper app' do
+          expect {
+            post :destroy, @params
+          }.to change(@app.comments, :count).by(-1)
+        end
 
-      it 'should destroy one comment from proper user' do
-        expect {
-          post :destroy, @params
-        }.to change(@user.comments, :count).by(-1)
-      end
-    end
+        it 'should destroy one comment from proper user' do
+          expect {
+            post :destroy, @params
+          }.to change(@user.comments, :count).by(-1)
+        end
+
+        context "which is an answer" do
+          before do
+            @answer = FactoryGirl.create(:comment)
+            @comment.answers << @answer
+            @comment.save
+          end
+
+          it 'should destroy answer for proper comment' do
+            expect {
+              post :destroy, @params.merge(:comment_id => @comment.id, 
+                                           :id => @answer.id)
+            }.to change(@comment.answers, :count).by(-1)
+          end
+        end # context "which is an answer"
+      end # context "with valid params"
+    end # context "when deleting a comment"
   end
 end
