@@ -1,3 +1,14 @@
+<p id="notice"><%= notice %></p>
+<ul>
+  <li>
+    <%= link_to 'Portal de Aplicativos (Recursos Educacionais Abertos)',
+                root_path %>
+  </li>
+  <li>
+    <%= link_to 'Aplicativos Favoritos',
+                user_favorites_path(@user) %>
+  </li>
+</ul>
 <h1>FAVORITES</h1>
 
 <% @apps.each do |app| %>

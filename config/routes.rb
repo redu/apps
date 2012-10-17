@@ -8,7 +8,7 @@ ReduApps::Application.routes.draw do
     resources :comments
   end
 
-  resources :users do
-    resources :favorites
+  resources :users, :only => [] do
+    resources :favorites, :only => [:index, :create, :destroy]
   end
 end
