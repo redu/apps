@@ -5,8 +5,16 @@
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
       "updated_at").each do |att|
         %>
-    <li><%= t(att.first) %>: <%= att.second %></li>
+    <% unless att.first == 'views' %>
+      <li><%= t(att.first) %>: <%= att.second %></li>
+    <% end %>
   <% end %>
+  <li><%= t 'views', count: @app.views %></li>
+  <li><%= t 'review', count: @app.comments.specialized.count %></li>
+  <li>
+    <%= t 'comment', 
+          count: (@app.comments.common.count + @app.comments.answer.count) %>
+  </li>
 </ul>
 
 <h2>Resenhas</h2>

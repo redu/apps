@@ -13,7 +13,7 @@ describe Comment do
   # Aplicativo que recebeu o comentário
   it { should respond_to(:app) }
   it { should belong_to(:app) }
-  it { should_not validate_presence_of(:app) }
+  it { should validate_presence_of(:app) }
 
   # Texto do comentário
   it { should respond_to(:body) }

@@ -10,6 +10,18 @@ pt-BR:
   submitters: "Quem submeteu"
   url: "Endereço de origem"
   copyright: "Detentor dos direitos"
+  views: 
+    zero: "Nenhuma visualização"
+    one: "1 visualização"
+    other: "%{count} visualizações"
+  review:
+    zero: "Nenhuma crítica de especialista"
+    one: "1 crítica de especialista"
+    other: "%{count} críticas de especialista"
+  comment:
+    zero: "Nenhum comentário"
+    one: "1 comentário"
+    other: "%{count} comentários"
   date:
     abbr_day_names:
     - Dom

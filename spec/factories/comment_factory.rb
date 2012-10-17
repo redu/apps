@@ -21,7 +21,8 @@ FactoryGirl.define do
 
       after(:create) do |comment|
         comment.answers << FactoryGirl.create(:comment, :body => "Eh mesmo!",
-                                              :type => :answer)
+                                              :type => :answer,
+                                              :app => comment.app)
       end
     end
   end
