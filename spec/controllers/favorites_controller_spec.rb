@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe FavoritesController do
    before(:each) do
       @user = FactoryGirl.create(:user)
@@ -15,14 +17,15 @@ describe FavoritesController do
       end
 
       it "should return user favorites" do
-         get :index, :user_id => @user.id
+         get :index, :user_id => @user.id, :locale => 'pt-BR'
          @user.apps.to_set.should == assigns(:apps).to_set
       end
    end
 
    context "when posting user favorite" do
       it "should add app to favorites list" do
-         post :create, :app_id => @app1.id, :user_id => @user.id
+         post :create, :app_id => @app1.id, :user_id => @user.id, 
+              :locale => 'pt-BR'
          @user.apps.should include @app1
       end
    end
