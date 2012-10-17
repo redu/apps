@@ -1,0 +1,5 @@
+pt-BR:
+  routes:
+    users: usuarios
+    favorites: favoritos
+    comments: comentarios

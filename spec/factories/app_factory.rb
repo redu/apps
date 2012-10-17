@@ -16,6 +16,10 @@ FactoryGirl.define do
       url 'objetoseducacionais2.mev.gov.br'
       copyright 'UNESCO'
       thumbnail { open('http://www.acslaw.org/files/EducationImage_0.png') }
+
+      after(:create) do |app|
+        app.screen_shots << FactoryGirl.create(:screen_shot, :app => app)
+      end
     end
   end
 end

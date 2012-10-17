@@ -1,4 +1,14 @@
 <p id="notice"><%= notice %></p>
+<ul>
+  <li>
+    <%= link_to 'Portal de Aplicativos (Recursos Educacionais Abertos)',
+                root_path %>
+  </li>
+  <li>
+    <%= link_to 'Recurso Educacional Aberto',
+                app_path(@app) %>
+  </li>
+</ul>
 <%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
 <ul>
   <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
@@ -8,6 +18,9 @@
     <li><%= t(att.first) %>: <%= att.second %></li>
   <% end %>
 </ul>
+<% @app.screen_shots.each do |ss| %>
+  <%= image_tag ss.screen.url(:original) %>
+<% end %>
 
 <h2>Comments</h2>
 <% @app.comments.each do |comment| %>

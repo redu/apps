@@ -19,6 +19,8 @@ gem 'will_paginate'
 
 gem 'jquery-rails'
 
+gem 'rails-translate-routes'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
