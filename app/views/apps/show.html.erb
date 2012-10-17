@@ -8,6 +8,9 @@
     <li><%= t(att.first) %>: <%= att.second %></li>
   <% end %>
 </ul>
+<% @app.screen_shots.each do |ss| %>
+  <%= image_tag ss.screen.url(:original) %>
+<% end %>
 
 <h2>Comments</h2>
 <% @app.comments.each do |comment| %>

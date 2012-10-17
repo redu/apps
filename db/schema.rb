@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121011112556) do
+ActiveRecord::Schema.define(:version => 20121017143216) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -59,6 +59,18 @@ ActiveRecord::Schema.define(:version => 20121011112556) do
   end
 
   add_index "comments", ["user_id", "app_id"], :name => "index_comments_on_user_id_and_app_id"
+
+  create_table "screen_shots", :force => true do |t|
+    t.integer  "app_id"
+    t.string   "screen_file_name"
+    t.string   "screen_content_type"
+    t.integer  "screen_file_size"
+    t.datetime "screen_updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "screen_shots", ["app_id"], :name => "index_screen_shots_on_app_id"
 
   create_table "user_app_associations", :force => true do |t|
     t.integer  "user_id"
