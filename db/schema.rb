@@ -39,8 +39,9 @@ ActiveRecord::Schema.define(:version => 20121017143216) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
+    t.integer  "views",                  :default => 0
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   create_table "categories", :force => true do |t|
@@ -52,13 +53,14 @@ ActiveRecord::Schema.define(:version => 20121017143216) do
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "app_id"
+    t.integer  "in_response_to_id"
     t.text     "body"
-    t.integer  "type_cd",    :default => 0
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "type_cd",           :default => 0
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
-  add_index "comments", ["user_id", "app_id"], :name => "index_comments_on_user_id_and_app_id"
+  add_index "comments", ["user_id", "app_id", "in_response_to_id"], :name => "index_comments_on_user_id_and_app_id_and_in_response_to_id"
 
   create_table "screen_shots", :force => true do |t|
     t.integer  "app_id"

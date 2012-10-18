@@ -5,7 +5,10 @@ ReduApps::Application.routes.draw do
     member do
       get 'preview'
     end
-    resources :comments, :only => [:create, :destroy]
+    
+    resources :comments, :except => :edit do
+      resources :comments, :except => :edit
+    end
   end
 
   resources :users, :only => [] do

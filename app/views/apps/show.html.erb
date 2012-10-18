@@ -6,22 +6,29 @@
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
       "updated_at").each do |att|
         %>
-    <li><%= t(att.first) %>: <%= att.second %></li>
+    <% unless att.first == 'views' %>
+      <li><%= t(att.first) %>: <%= att.second %></li>
+    <% end %>
   <% end %>
+  <li><%= t 'views', count: @app.views %></li>
+  <li><%= t 'review', count: @app.comments.specialized.count %></li>
+  <li>
+    <%= t 'comment', 
+          count: (@app.comments.common.count + @app.comments.answer.count) %>
+  </li>
 </ul>
 <% @app.screen_shots.each do |ss| %>
   <%= image_tag ss.screen.url(:original) %>
 <% end %>
 
-<h2>Comments</h2>
-<% @app.comments.each do |comment| %>
+<h2>Resenhas</h2>
+<% @app.comments.specialized.each do |comment| %>
   <p>
-    <b>Autor</b>
-    <%= "#{comment.author.first_name} #{comment.author.last_name}" %>
+    <%= image_tag comment.author.thumbnail.url(:thumb) %>
+    <%= "#{comment.author.first_name} #{comment.author.last_name}" %> (especialista)
+    escreveu uma resenha sobre este aplicativo:<br /><%= l comment.created_at %>
   </p>
-
   <p>
-    <b>Comentário:</b>
     <%= comment.body %>
     <%= link_to 'Apagar Comentário', [comment.app, comment],
                :confirm => 'Tem certeza?',
@@ -29,26 +36,82 @@
   </p>
 <% end %>
 
-<h2>Add a comment:</h2>
+<h2>Escrever uma resenha</h2>
 <%= form_for([@app, @app.comments.build]) do |f| %>
   <div class="field">
-    <p>
-      Atenção! Preencha com o login do usuário (que deve existir previamente)
-    </p>
-    <%= f.label :author %><br />
+    <%= f.label :autor %> (login do usuário)<br />
     <%= f.text_field :author %>
   </div>
   <div class="field">
-    <%= f.label :body %><br />
+    <%= f.label :corpo %><br />
     <%= f.text_area :body %>
   </div>
+    <%= f.hidden_field :type, :value => 'specialized' %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<h2>Comentários</h2>
+<% @app.comments.common.each do |comment| %>
+  <p>
+    <%= image_tag comment.author.thumbnail.url(:thumb) %>
+    <%= "#{comment.author.first_name} #{comment.author.last_name}" %>
+    comentou sobre este aplicativo:
+    <br /><%= l comment.created_at %>
+  </p>
+  <p>
+    <%= comment.body %>
+    <%= link_to 'Apagar Comentário', [comment.app, comment],
+               :confirm => 'Tem certeza?',
+               :method => :delete %>
+  </p>
+  <% comment.answers.each do |answer| %>
+    <p>
+      <%= image_tag answer.author.thumbnail.url(:thumb) %>
+      <b><%= "#{answer.author.first_name} #{answer.author.last_name}" %></b>
+      respondeu:<br /><%= l answer.created_at %>
+    </p>
+    <%= answer.body %>
+    <%= link_to 'Apagar Resposta', [comment.app, comment, answer],
+               :confirm => 'Tem certeza?',
+               :method => :delete %>
+  <% end %>
+
+  <h2>Responder</h2>
+  <%= form_for([@app, comment, @app.comments.build]) do |f| %>
+    <div class="field">
+      <%= f.label :autor %> (login do usuário)<br />
+      <%= f.text_field :author %>
+    </div>
+    <div class="field">
+      <%= f.label :corpo %><br />
+      <%= f.text_area :body %>
+    </div>
+      <%= f.hidden_field :type, :value => 'answer' %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+<% end %>
+
+<h2>Comentar sobre este aplicativo</h2>
+<%= form_for([@app, @app.comments.build]) do |f| %>
+  <div class="field">
+    <%= f.label :autor %> (login do usuário)<br />
+    <%= f.text_field :author %>
+  </div>
+  <div class="field">
+    <%= f.label :corpo %><br />
+    <%= f.text_area :body %>
+  </div>
+    <%= f.hidden_field :type, :value => 'common' %>
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
 
 <%= link_to 'Back', apps_path %>
-<%= link_to 'Back', apps_path %> |
 <%= link_to 'Preview', preview_app_path(@app) %>
 <%= form_tag user_favorites_path(@user.id), :method => "post" do %>
    <%= hidden_field_tag :app_id , @app.id %>

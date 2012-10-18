@@ -1,5 +1,5 @@
 class App < ActiveRecord::Base
-  attr_accessible :name, :thumbnail
+  attr_accessible :name, :thumbnail, :views
 
   validates_presence_of :name, :author, :language
 
@@ -18,6 +18,5 @@ class App < ActiveRecord::Base
   has_many :screen_shots
 
   # Thumbnail
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
-                                             :thumb => "100x100>" }
+  has_attached_file :thumbnail, :styles => { :thumb => "160x160>" }
 end
