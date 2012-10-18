@@ -16,4 +16,11 @@ class App < ActiveRecord::Base
   has_attached_file :thumbnail, :styles => { :medium => "300x300>",
                                              :thumb => "100x100>" }
 
+  def App.filter_by_categories(filter)
+    if filter
+      App.joins(:categories).where(:categories => {:id => filter})
+    else
+      App
+    end
+  end
 end

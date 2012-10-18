@@ -1,5 +1,15 @@
-<H1>APPS</H1>
-<% @apps.each do |app| %>
-   <p> <%= app.name =%>  <%= app.categories =%>
-<% end %>
-<%= will_paginate @apps =%>
+<H1>Home</H1>
+<%= link_to "Meus Favoritos", user_favorites_path(1) %>
+<h3>Filtros:</h3>
+<% @categories.each do |cat| %>
+  <%= link_to cat.name, apps_path(:filter => @filter | [cat.id] ) %>
+<%end %>
+<%= link_to "Limpa Filtros", apps_path %>
+<h3>Apps</h3>
+<ul id='apps'>
+  <%= render @apps %>
+</ul>
+<div id="paginator">
+  <%= link_to_next_page @apps, 'Mostrar Mais', :remote => true %>
+</div>
+

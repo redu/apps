@@ -13,7 +13,7 @@ describe AppsController do
       end
 
       it "should return correct number of apps" do
-         get :index , :filter => [@categories.first.name]
+         get :index , :filter => [@categories.first.id]
          correct_number = @apps.select {|a| a.categories.include?(@categories.first) }.length
          assigns(:apps).length.should == correct_number
       end
