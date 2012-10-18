@@ -25,6 +25,15 @@ class App < ActiveRecord::Base
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
 
+  searchable do
+    text :name, :boost => 5.0
+    text :author, :language, :objective, :synopsis, :description,
+      :publishers, :submitters, :copyright
+    text :categories do
+      categories.map { |category| category.name }
+    end
+  end
+
   def App.filter_by_categories(filter)
     if filter
       App.joins(:categories).where(categories: {id: filter})

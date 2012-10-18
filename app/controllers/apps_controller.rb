@@ -35,5 +35,18 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     @app.add_or_update_evaluation(:rating, rating, current_user)
     redirect_to :back, notice: "Você classificou o recurso com #{rating}."
+
+  def search
+    @search = App.search do
+      fulltext params[:search] do
+        boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
+        query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca
+        phrase_fields :description => 2.0 # Prioriza se aparecer a frase na desc
+        phrase_fields :synopsis => 2.0 # Prioriza se aparecer a frase na sinopse
+      end
+    end
+    @apps = @search.results
+
+    render :index
   end
 end
