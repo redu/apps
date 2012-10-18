@@ -17,6 +17,10 @@ FactoryGirl.define do
       copyright 'UNESCO'
       thumbnail { open('app/assets/images/app_thumb.png') }
 
+      after(:create) do |app|
+        app.screen_shots << FactoryGirl.create(:screen_shot, :app => app)
+      end
+
       factory :complete_app_with_comments do
         after(:create) do |app|
           2.times do 

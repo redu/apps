@@ -10,8 +10,9 @@ describe CommentsController do
       before do
         @user = FactoryGirl.create(:member)
         @params = { :app_id => @app, :comment => {
-            :author => @user.login, :body => "Ola! Parabens pelo REA."
-          }}
+            :author => @user.login, :body => "Ola! Parabens pelo REA." },
+            :locale => 'pt-BR'
+          }
       end
 
       context "with valid params" do
@@ -64,8 +65,9 @@ describe CommentsController do
             @user = FactoryGirl.create(:member)
             @params = {:app_id => @app, :comment => {
                 :author => @user.login, :body => "Ola! Parabens pelo REA.",
-                :type => :common
-              }}
+                :type => :common },
+                :locale => 'pt-BR'
+              }
           end
 
           it 'should create a new common comment' do
@@ -86,8 +88,9 @@ describe CommentsController do
             @user = FactoryGirl.create(:specialist)
             @params = {:app_id => @app, :comment => {
                 :author => @user.login, :body => "Ola! Parabens pelo REA.",
-                :type => :specialized
-              }}
+                :type => :specialized },
+                :locale => 'pt-BR'
+              }
           end
 
           it 'should create a new specialized comment' do
@@ -109,7 +112,7 @@ describe CommentsController do
             @params = {:app_id => @app, :comment => {
                 :author => @user.login, :body => "Ola! Parabens pelo REA.",
                 :type => :specialized },
-                :comment_id => @comment
+                :comment_id => @comment, :locale => 'pt-BR'
               }
           end
 
@@ -124,14 +127,16 @@ describe CommentsController do
   end
 
   describe "DELETE destroy" do
+
     context "when deleting a comment" do
+
       context "with valid params" do
         before do
           @app = FactoryGirl.create(:app)
           @user = FactoryGirl.create(:specialist)
           @comment = FactoryGirl.create(:specialized_comment, :author => @user,
                                         :app => @app)
-          @params = { :app_id => @app.id, :id => @comment.id}
+          @params = { :app_id => @app.id, :id => @comment.id, :locale => 'pt-BR'}
         end
 
         it 'should destroy one comment' do

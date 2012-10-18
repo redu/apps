@@ -1,4 +1,11 @@
-<H1>APPS</H1>
+<ul>
+  <li>
+    <%= link_to 'Portal de Aplicativos (Recursos Educacionais Abertos)',
+                root_path %>
+  </li>
+</ul>
+<p id="notice"><%= notice %></p>
+<h1>APPS</h1>
 <% @apps.each do |app| %>
    <p> <%= app.name =%>  <%= app.categories =%>
 <% end %>

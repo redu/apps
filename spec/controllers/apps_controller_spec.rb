@@ -14,13 +14,13 @@ describe AppsController do
          end
 
          it "should return correct number of apps" do
-            get :index , :filter => [@categories.first.name]
+            get :index , :filter => [@categories.first.name], :locale => 'pt-BR'
             correct_number = @apps.select {|a| a.categories.include?(@categories.first) }.length
             assigns(:apps).length.should == correct_number
          end
 
          it "should return corret type of apps" do
-            get :index, :filter => [@categories.first.name]
+            get :index, :filter => [@categories.first.name], :locale => 'pt-BR'
             assigns(:apps).all? {|a| a.categories.include?(@categories.first)}.should == true
          end
       end
@@ -33,7 +33,7 @@ describe AppsController do
 
       context "with valid params" do
          before do
-            @params = { :id => @app.id }
+            @params = { :id => @app.id, :locale => 'pt-BR' }
          end
 
          it "should increment app views counter" do

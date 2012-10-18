@@ -5,12 +5,15 @@ ReduApps::Application.routes.draw do
     member do
       get 'preview'
     end
+    
     resources :comments, :except => :edit do
       resources :comments, :except => :edit
     end
   end
 
-  resources :users do
-    resources :favorites
+  resources :users, :only => [] do
+    resources :favorites, :only => [:index, :create]
   end
+
+  ActionDispatch::Routing::Translator.translate_from_file('config/locales/routes.yml')
 end

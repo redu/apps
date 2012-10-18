@@ -1,5 +1,15 @@
 <p id="notice"><%= notice %></p>
-<h1><%= image_tag @app.thumbnail.url(:thumb) %> <%= @app.name %> </h1>
+<ul>
+  <li>
+    <%= link_to 'Portal de Aplicativos (Recursos Educacionais Abertos)',
+                root_path %>
+  </li>
+  <li>
+    <%= link_to 'Recurso Educacional Aberto',
+                app_path(@app) %>
+  </li>
+</ul>
+<%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
 <ul>
   <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
@@ -16,6 +26,9 @@
           count: (@app.comments.common.count + @app.comments.answer.count) %>
   </li>
 </ul>
+<% @app.screen_shots.each do |ss| %>
+  <%= image_tag ss.screen.url(:original) %>
+<% end %>
 
 <h2>Resenhas</h2>
 <% @app.comments.specialized.each do |comment| %>
