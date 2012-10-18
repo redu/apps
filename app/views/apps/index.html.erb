@@ -1,12 +1,8 @@
-<ul>
-  <li>
-    <%= link_to 'Portal de Aplicativos (Recursos Educacionais Abertos)',
-                root_path %>
-  </li>
-</ul>
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
 <p id="notice"><%= notice %></p>
 <h1>APPS</h1>
 <% @apps.each do |app| %>
    <p> <%= app.name =%>  <%= app.categories =%>
 <% end %>
 <%= will_paginate @apps =%>
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
