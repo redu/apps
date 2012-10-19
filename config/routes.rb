@@ -2,7 +2,8 @@ ReduApps::Application.routes.draw do
   root :to => 'apps#index'
 
   resources :apps, :only => [:index, :show] do
-    match '/checkout'  => 'checkout#index'
+    match '/checkout'  => 'checkout#update', :via => :post
+    match '/checkout' => 'checkout#new', :via => :get
 
     member do
       get 'preview'

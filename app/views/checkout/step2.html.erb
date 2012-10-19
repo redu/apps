@@ -1,12 +1,12 @@
 <h1>STEP 2</h1>
-<%= form_tag  app_checkout_path (@app_id), :step => @next_step do %>
+<%= form_tag(app_checkout_path(@app_id), :step => @next_step) do %>
   <%= hidden_field_tag 'space' , @space %>
   <%= hidden_field_tag 'create_module', false %>
   <%= submit_tag("Usar Módulo existente") %>
 <% end %>
 
 <%= form_tag  app_checkout_path (@app_id), :step => @next_step do %>
-  <%= hidden_field_tag 'space' , @space %>
+  <%= hidden_field_tag 'space_id' , @space %>
   <%= hidden_field_tag 'create_module', true %>
   <%= submit_tag("Criar novo Módulo") %>
 <% end %>

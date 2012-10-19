@@ -1,10 +1,10 @@
-<% @environments.each do |env| %>
-  <h4>Ambiente: <%= env.name %></h4>
-  <% env.courses.each do |course| %>
+<% @user.environments(:include => { :courses => :spaces }).each do |e| %>
+  <h4>Ambiente: <%= e.name %></h4>
+  <% e.courses.each do |course| %>
     <h5>Curso: <%= course.name %> </h5>
     <% course.spaces.each do |space| %>
-      <%= form_tag app_checkout_path(@app_id, :step => @next_step) do %>
-        <%= hidden_field_tag "space", space.id %>
+      <%= form_tag(app_checkout_path(@app_id, :step => @next_step)) do %>
+        <%= hidden_field_tag "space_id", space.id %>
         <%= submit_tag(space.name) %>
       <% end %>
     <% end %>

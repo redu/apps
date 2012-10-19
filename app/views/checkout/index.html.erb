@@ -1,7 +1,0 @@
-<h1>ALGUM PASSO</h1>
-
-<%= form_tag  app_checkout_path (@app_id), :step => @next_step do %>
-  <%= select_tag "space", "<option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
-  <%= select_tag "environment", "<option>1</option><option>2</option><option>3</option><option>4</option>".html_safe %>
-  <%= submit_tag("Next") %>
-<% end %>

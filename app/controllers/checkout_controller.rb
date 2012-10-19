@@ -1,7 +1,7 @@
 
 class CheckoutController < ApplicationController
 
-  def index
+  def update
     @app_id = params[:app_id]
     case params[:step]
     when '1'
@@ -18,36 +18,41 @@ class CheckoutController < ApplicationController
 
   end
 
+  def new
+    @app_id = params[:app_id]
+    step_1
+  end
+
   protected
 
   def step_1
-    @environments = User.find(1).environments
+    @user = current_user
     @next_step = 2
     render :step1
   end
 
   def step_2
-    @space = params.fetch(:space) {raise "Invalid State"}
+    @space = params.fetch(:space_id) { raise "Invalid State" }
     @next_step = 3
     render :step2
   end
 
   def step_3
-    space_id = params.fetch(:space) {raise "Invalid State"}
+    space_id = params.fetch(:space_id) { raise "Invalid State" }
     @space = Space.find(space_id)
-    @create_module = params.fetch(:create_module) {raise "Invalid State"}
+    @create_module = params.fetch(:create_module) { raise "Invalid State" }
     @next_step = 4
     render :step3
   end
 
   def step_4
-    @space = params.fetch(:space) {raise "Invalid State"}
-    create_module = params.fetch(:create_module) {raise "Invalid State"}
-    @aula = params.fetch(:aula) {raise "Invalid State"}
-    @modulo = params.fetch(:subject) {raise "Invalid State"}
+    @space = params.fetch(:space_id) { raise "Invalid State" }
+    create_module = params.fetch(:create_module) { raise "Invalid State" }
+    @aula = params.fetch(:aula) { raise "Invalid State" }
+    @modulo = params.fetch(:subject) { raise "Invalid State" }
 
     @modulo = if create_module == 'true'
-      Subject.create(:name => @modulo) {|s| s.space = Space.find(@space)}
+      Subject.create(:name => @modulo) { |s| s.space = Space.find(@space) }
     else
       Subject.find(@modulo)
     end
