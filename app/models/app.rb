@@ -22,6 +22,9 @@ class App < ActiveRecord::Base
                                           medium: "x90",
                                           small: "x32" }
 
+  # Rating
+  has_reputation :rating, source: :user, aggregated_by: :average
+
   def App.filter_by_categories(filter)
     if filter
       App.joins(:categories).where(categories: {id: filter})

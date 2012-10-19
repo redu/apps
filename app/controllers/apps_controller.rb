@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class AppsController < ApplicationController
    def index
       @categories = Category.all
@@ -13,7 +15,11 @@ class AppsController < ApplicationController
   def show
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
-    @user = User.last || FactoryGirl.create(:user) # TODO strip this out
+    @user = current_user
+    if @user
+      @evaluated = @app.evaluators_for(:rating).include?(@user)
+      @user_rating = @app.reputation_for(:rating, nil, @user) if @evaluated
+    end
     respond_to do |format|
       format.html  # show.html.erb
       format.json  { render :json => @app }
@@ -22,5 +28,12 @@ class AppsController < ApplicationController
 
   def preview
     @app = App.find(params[:id])
+  end
+
+  def rate
+    rating = Integer(params[:rating])
+    @app = App.find(params[:id])
+    @app.add_or_update_evaluation(:rating, rating, current_user)
+    redirect_to :back, notice: "Você classificou o recurso com #{rating}."
   end
 end
