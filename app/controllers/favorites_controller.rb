@@ -1,7 +1,7 @@
 class FavoritesController < ApplicationController
   def index
     @user = User.find(params[:user_id])
-    @user_apps_association = @user.user_app_associations.paginate(:page => params[:page])
+    @user_apps_associations = @user.user_app_associations.paginate(:page => params[:page])
   end
 
   def create
