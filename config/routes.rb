@@ -12,7 +12,7 @@ ReduApps::Application.routes.draw do
   end
 
   resources :users, :only => [] do
-    resources :favorites, :only => [:index, :create]
+    resources :favorites, :only => [:index, :create, :destroy]
   end
 
   ActionDispatch::Routing::Translator.translate_from_file('config/locales/routes.yml')
