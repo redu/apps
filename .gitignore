@@ -13,6 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /log/*.lck
+/log/*.log.*
 /tmp
 
 # Ignora configuração da RVM
@@ -21,5 +22,10 @@
 # Ignora configuração do BD
 config/database.yml
 
+# Ignora arquivos de swap
 *.swp
 *.swo
+
+# Ignora arquivos de dados do solr (indexes e mais)
+solr/data/*
+solr/pids/*

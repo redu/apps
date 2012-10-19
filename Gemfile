@@ -40,6 +40,8 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'therubyracer'
+  gem 'faker'
+  gem 'random_data'
 end
 
 group :test do
