@@ -4,7 +4,7 @@ class AppsController < ApplicationController
       @apps = App.filter_by_categories(params[:filter])
       @apps = @apps.page(params[:page])
       @filter = params.fetch(:filter, [])
-
+      debugger
       respond_to do |format|
         format.js {}
         format.html
@@ -13,7 +13,8 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
-    @user = User.find(1) # Usuario para fins de teste
+    @app.update_attribute(:views, @app.views + 1)
+    @user = User.last || FactoryGirl.create(:user) # TODO strip this out
     respond_to do |format|
       format.html  # show.html.erb
       format.json  { render :json => @app }

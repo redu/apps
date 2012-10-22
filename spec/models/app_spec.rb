@@ -53,4 +53,10 @@ describe App do
   # Aplicativos favoritos de usuários (ou simplesmente aplicativos de usuários)
   it { should have_many(:user_app_associations) }
   it { should have_many(:users).through(:user_app_associations) }
+
+  # Total de visualizações do aplicativo
+  it { should respond_to(:views) }
+
+  # Screenshots do aplicativo
+  it { should have_many(:screen_shots) }
 end

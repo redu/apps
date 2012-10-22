@@ -1,5 +1,5 @@
 class App < ActiveRecord::Base
-  attr_accessible :name, :thumbnail
+  attr_accessible :name, :thumbnail, :views
 
   validates_presence_of :name, :author, :language
 
@@ -13,8 +13,11 @@ class App < ActiveRecord::Base
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, :dependent => :destroy
   has_many :users, :through => :user_app_associations
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
-                                             :thumb => "100x100>" }
+  # Screen shots
+  has_many :screen_shots
+
+  # Thumbnail
+  has_attached_file :thumbnail, :styles => { :thumb => "160x160>" }
 
   def App.filter_by_categories(filter)
     if filter

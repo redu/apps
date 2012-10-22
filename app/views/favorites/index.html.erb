@@ -1,6 +1,14 @@
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
+<p id="notice"><%= notice %></p>
 <h1>FAVORITES</h1>
 
-<% @apps.each do |app| %>
-   <p> <%= app.name =%> <%= link_to 'Abrir', preview_app_path(app) %> </p>
+<% @user_apps_associations.each do |association| %>
+   <p> <%= link_to association.app.name, association.app =%> <%= link_to 'Abrir', preview_app_path(association.app) %>
+    <%= button_to "Delete", { :action => "destroy",:user_id => association.user.id,
+      :id => association.app.id, :association_id => association.id},
+      :confirm => "Are you sure?", :method => :delete %>
+   </p>
 <% end %>
 <%= paginate @apps =%>
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
+

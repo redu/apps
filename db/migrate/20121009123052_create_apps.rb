@@ -14,6 +14,7 @@ class CreateApps < ActiveRecord::Migration
       t.string :url
       t.string :copyright
       t.attachment :thumbnail
+      t.integer :views, :default => 0
 
       t.timestamps
     end

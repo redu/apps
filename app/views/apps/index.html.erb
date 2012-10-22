@@ -1,4 +1,6 @@
 <H1>Home</H1>
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
+<p id="notice"><%= notice %></p>
 <%= link_to "Meus Favoritos", user_favorites_path(1) %>
 <h3>Filtros:</h3>
 <% @categories.each do |cat| %>
@@ -10,6 +12,7 @@
   <%= render @apps %>
 </ul>
 <div id="paginator">
-  <%= link_to_next_page @apps, 'Mostrar Mais', :remote => true %>
+  <%= link_to_next_page(@apps, 'Mostrar Mais', {remote: true, params: {filter: @filter}}) %>
 </div>
+<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
 

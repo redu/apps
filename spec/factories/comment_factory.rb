@@ -18,6 +18,12 @@ FactoryGirl.define do
     factory :common_comment do
       type :common #default
       body "Ae, mano! Muito massa esse app, vei."
+
+      after(:create) do |comment|
+        comment.answers << FactoryGirl.create(:comment, :body => "Eh mesmo!",
+                                              :type => :answer,
+                                              :app => comment.app)
+      end
     end
   end
 end

@@ -20,6 +20,12 @@ describe Comment do
   it { should validate_presence_of(:body) }
   it { should ensure_length_of(:body).is_at_least(2)}
 
+  # Respostas
+  it { should have_many(:answers) }
+
+  # No caso de respostas, comentário respondido
+  it { should respond_to(:in_response_to) }
+
   # Scopes
   context 'when searching for' do
     before do
@@ -52,7 +58,7 @@ describe Comment do
           @comments.should_not include comment
         end
       end
-    end
+    end # context 'specialized ones'
 
     # Recupera comentários do tipo common
     context 'common ones' do
@@ -72,6 +78,6 @@ describe Comment do
           @comments.should include comment if comment.type == :common
         end
       end
-    end
-  end
+    end # context 'common ones'
+  end # context 'when searching for'
 end
