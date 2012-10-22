@@ -4,12 +4,10 @@ ReduApps::Application.routes.draw do
   resources :apps, :only => [:index, :show] do
     match '/checkout'  => 'checkout#update', :via => :post
     match '/checkout' => 'checkout#new', :via => :get
-
     member do
       get 'preview'
       post 'rate'
     end
-
     resources :comments, :except => :edit do
       resources :comments, :except => :edit
     end

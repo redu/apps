@@ -56,10 +56,11 @@ class CheckoutController < ApplicationController
     else
       Subject.find(@modulo)
     end
-    Lecture.create(:name => @aula) do |l|
+    lecutre = Lecture.new(:name => @aula) do |l|
       l.subject = Subject.find(@modulo)
       l.app = App.find(@app_id)
     end
+    raise "Invalid data" unless lecutre.save
     redirect_to app_path(@app_id)
   end
 end
