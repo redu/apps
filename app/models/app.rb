@@ -30,7 +30,7 @@ class App < ActiveRecord::Base
     text :author, :language, :objective, :synopsis, :description,
       :publishers, :submitters, :copyright
     text :categories do
-      categories.map { |category| category.name }
+      categories.map(&:name)
     end
   end
 
