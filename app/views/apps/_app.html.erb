@@ -1,0 +1,6 @@
+<%= link_to app.name, app_path(app) =%>
+<li>Autor: <%= app.author %></li>
+<li>Lingua: <%= app.language %></li>
+<% app.categories.each do |cat| %>
+  <li> <%= cat.name %></li>
+<% end %>

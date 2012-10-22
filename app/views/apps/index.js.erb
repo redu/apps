@@ -1,0 +1,2 @@
+$('#apps').append('<%= escape_javascript render(@apps) %>');
+$('#paginator').html("<%= escape_javascript(link_to_next_page(@apps, 'Mostrar Mais', :remote => true)) %>")

@@ -12,7 +12,7 @@ gem 'factory_girl_rails'
 
 gem 'debugger'
 
-gem 'will_paginate'
+gem 'kaminari'
 
 gem 'jquery-rails'
 

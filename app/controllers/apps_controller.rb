@@ -1,12 +1,14 @@
 class AppsController < ApplicationController
    def index
-      filter = params[:filter]
-      if filter
-         @apps = App.joins(:categories).where(:categories => {:name => filter})
-      else
-         @apps = App
+      @categories = Category.all
+      @apps = App.filter_by_categories(params[:filter])
+      @apps = @apps.page(params[:page])
+      @filter = params.fetch(:filter, [])
+      debugger
+      respond_to do |format|
+        format.js {}
+        format.html
       end
-      @apps = @apps.paginate(:page => params[:page])
    end
 
   def show

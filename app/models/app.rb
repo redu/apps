@@ -13,10 +13,17 @@ class App < ActiveRecord::Base
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, :dependent => :destroy
   has_many :users, :through => :user_app_associations
-
   # Screen shots
   has_many :screen_shots
 
   # Thumbnail
   has_attached_file :thumbnail, :styles => { :thumb => "160x160>" }
+
+  def App.filter_by_categories(filter)
+    if filter
+      App.joins(:categories).where(:categories => {:id => filter})
+    else
+      App
+    end
+  end
 end
