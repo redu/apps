@@ -30,6 +30,11 @@ describe AppsController do
       { get: "/apps/1/preview", locale: 'pt-BR' }.should 
         route_to("apps#preview", id: '1', locale: 'pt-BR')
     end
+
+    it "routes to #rate" do
+      { post: "/apps/1/rate", rating: 5, locale: 'pt-BR' }.should 
+        route_to("apps#rate", id: '1', locale: 'pt-BR')
+    end
   end
 end
 

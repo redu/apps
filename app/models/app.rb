@@ -13,7 +13,7 @@ class App < ActiveRecord::Base
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, dependent: :destroy
   has_many :users, through: :user_app_associations
-  
+
   # Screen shots
   has_many :screen_shots
 

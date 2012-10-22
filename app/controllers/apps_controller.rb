@@ -1,23 +1,23 @@
 # encoding: utf-8
 
 class AppsController < ApplicationController
-   def index
-      @categories = Category.all
-      @apps = App.filter_by_categories(params[:filter])
-      @apps = @apps.page(params[:page])
-      @filter = params.fetch(:filter, [])
-      respond_to do |format|
-        format.js {}
-        format.html
-      end
-   end
+  def index
+    @categories = Category.all
+    @apps = App.filter_by_categories(params[:filter])
+    @apps = @apps.page(params[:page])
+    @filter = params.fetch(:filter, [])
+    respond_to do |format|
+      format.js {}
+      format.html
+    end
+  end
 
   def show
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
     @user = current_user
     if @user
-      @evaluated = @app.evaluators_for(:rating).include?(@user)
+      @evaluated = @app.has_evaluation?(:rating, @user)
       @user_rating = @app.reputation_for(:rating, nil, @user) if @evaluated
     end
     respond_to do |format|
