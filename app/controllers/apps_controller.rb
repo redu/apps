@@ -4,7 +4,6 @@ class AppsController < ApplicationController
       @apps = App.filter_by_categories(params[:filter])
       @apps = @apps.page(params[:page])
       @filter = params.fetch(:filter, [])
-      debugger
       respond_to do |format|
         format.js {}
         format.html

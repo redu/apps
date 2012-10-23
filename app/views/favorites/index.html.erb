@@ -9,6 +9,6 @@
       :confirm => "Are you sure?", :method => :delete %>
    </p>
 <% end %>
-<%= paginate @apps =%>
+<%= link_to_next_page(@user_apps_associations, 'Mostrar Mais') %>
 <%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
 
