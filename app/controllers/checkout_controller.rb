@@ -15,7 +15,6 @@ class CheckoutController < ApplicationController
     else
       step_1
     end
-
   end
 
   def new
@@ -26,41 +25,43 @@ class CheckoutController < ApplicationController
   protected
 
   def step_1
-    @user = current_user
+    @environments = current_user.environments(include: {courses: :spaces})
     @next_step = 2
     render :step1
   end
 
   def step_2
-    @space = params.fetch(:space_id) { raise "Invalid State" }
+    get_params([:space_id], params)
     @next_step = 3
     render :step2
   end
 
   def step_3
-    space_id = params.fetch(:space_id) { raise "Invalid State" }
-    @space = Space.find(space_id)
-    @create_module = params.fetch(:create_module) { raise "Invalid State" }
+    get_params([:space_id, :create_module], params)
+    @space = Space.find(@space_id)
     @next_step = 4
     render :step3
   end
 
   def step_4
-    @space = params.fetch(:space_id) { raise "Invalid State" }
-    create_module = params.fetch(:create_module) { raise "Invalid State" }
-    @aula = params.fetch(:aula) { raise "Invalid State" }
-    @modulo = params.fetch(:subject) { raise "Invalid State" }
-
-    @modulo = if create_module == 'true'
-      Subject.create(:name => @modulo) { |s| s.space = Space.find(@space) }
+    get_params([:space_id, :create_module, :lesson, :subject], params)
+    @subject = if @create_module == 'true'
+      Subject.create(:name => @subject) { |s| s.space = Space.find(@space_id) }
     else
-      Subject.find(@modulo)
+      Subject.find(@subject)
     end
-    lecutre = Lecture.new(:name => @aula) do |l|
-      l.subject = Subject.find(@modulo)
+    lecutre = Lecture.new(:name => @lesson) do |l|
+      l.subject = Subject.find(@subject)
       l.app = App.find(@app_id)
     end
     raise "Invalid data" unless lecutre.save
     redirect_to app_path(@app_id)
+  end
+
+  def get_params(expected_params, params)
+    expected_params.each do |p|
+      self.instance_variable_set("@#{p}",
+        params.fetch(p) { raise "Invalid State" })
+    end
   end
 end

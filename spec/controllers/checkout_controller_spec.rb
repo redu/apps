@@ -10,7 +10,7 @@ describe CheckoutController do
   context 'when geting new' do
     it "should render step1" do
       get :new, @params
-      assigns(:next_step).should == 2
+      should render_template(:step1)
     end
   end
 
@@ -34,37 +34,40 @@ describe CheckoutController do
     context 'after step 1' do
       it 'should render step 2' do
         post :update, @params.merge(space_id: @space.id, step: 2)
-        assigns(:next_step).should == 3
+        should render_template(:step2)
       end
 
       it 'should not render step 2 if space_id missing' do
-        lambda { post :update, @params.merge(step: 2) }.should raise_error
+        lambda { post :update,
+          @params.merge(step: 2) }.should raise_error("Invalid State")
       end
     end
     context 'after step 2' do
       it 'should render step 3' do
         post :update, @params.merge(space_id: @space.id, create_module: false,
           next_step: 4, step: 3)
-        assigns(:next_step).should == 4
+        should render_template(:step3)
       end
       it 'should not render step 3 if missing params' do
-        lambda { post :update, @params.merge(step: 3) }.should raise_error
+        lambda { post :update,
+          @params.merge(step: 3) }.should raise_error("Invalid State")
       end
     end
     context 'after step 3' do
       it 'should create lecture on existing module' do
         post :update, @params.merge(step: 4, space_id: @space.id,
-          create_module: false, aula: "Nova Aula!", subject: @subject.id)
+          create_module: false, lesson: "Nova Aula!", subject: @subject.id)
         Lecture.last.subject.should == @subject
       end
       it 'should create lecture on new module' do
         post :update, @params.merge(step: 4, space_id: @space.id,
-          create_module: 'true', aula: "Nova Aula!", subject: "Novo modulo")
+          create_module: 'true', lesson: "Nova Aula!", subject: "Novo modulo")
         Lecture.last.subject.name.should == "Novo modulo"
       end
 
       it 'should raise error if missing params' do
-        lambda { post :update, @params.merge(step: 4) }.should raise_error
+        lambda { post :update,
+          @params.merge(step: 4) }.should raise_error("Invalid State")
       end
     end
   end

@@ -1,5 +1,5 @@
 <h1>CHECKOUT</h1>
-<% @user.environments(:include => { :courses => :spaces }).each do |e| %>
+<% @environments.each do |e| %>
   <h4>Ambiente: <%= e.name %></h4>
   <% e.courses.each do |course| %>
     <h5>Curso: <%= course.name %> </h5>
