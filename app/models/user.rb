@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
                                           medium: "x64",
                                           large: "x90",
                                           larger: "x140" }
+
+  def to_param
+    login
+  end
 end
