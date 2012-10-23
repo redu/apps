@@ -59,4 +59,17 @@ describe App do
 
   # Screenshots do aplicativo
   it { should have_many(:screen_shots) }
+
+  describe "has many categories" do
+    before do
+      @app = FactoryGirl.create(:app)
+      @category = Category.create(name: "Rock School")
+    end
+
+    it "should not destroy app when associated categories are destroyed" do
+      expect {
+        @category.destroy
+      }.to_not change(App, :count)
+    end
+  end
 end
