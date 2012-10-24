@@ -5,5 +5,6 @@ class ScreenShot < ActiveRecord::Base
   belongs_to :app
 
   # Imagem do screenshot
-  has_attached_file :screen
+  has_attached_file :screen, styles: { unique: "700x200",
+                                       double: "340x200" }
 end
