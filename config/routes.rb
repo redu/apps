@@ -4,6 +4,7 @@ ReduApps::Application.routes.draw do
   resources :apps, :only => [:index, :show] do
     member do
       get 'preview'
+      post 'rate'
     end
     
     resources :comments, :except => :edit do

@@ -1,6 +1,22 @@
 <%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
 <p id="notice"><%= notice %></p>
-<%= image_tag @app.thumbnail.url(:large) %><h1> <%= @app.name %> </h1>
+<%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
+<% if @user %>
+  <%= link_to "1", rate_app_path(@app, rating: 1), method: "post" %>
+  <%= link_to "2", rate_app_path(@app, rating: 2), method: "post" %>
+  <%= link_to "3", rate_app_path(@app, rating: 3), method: "post" %>
+  <%= link_to "4", rate_app_path(@app, rating: 4), method: "post" %>
+  <%= link_to "5", rate_app_path(@app, rating: 5), method: "post" %>
+  <%= @app.reputation_for(:rating) %>/5
+  <br />
+  <% if @evaluated %>
+    Você deu <%= @user_rating %> a este aplicativo
+  <% else %>
+    Classifique este recurso
+  <% end %>
+<% else %>
+  <%# TODO exibir rating do app sem opção de o usuário dar rate %>
+<% end %>
 <ul>
   <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
       "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",

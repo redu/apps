@@ -72,4 +72,15 @@ describe App do
       }.to_not change(App, :count)
     end
   end
+
+  # Rating
+  describe "AR Reputation System" do
+    it { should respond_to(:has_evaluation?) }
+    it { should respond_to(:add_evaluation) }
+    it { should respond_to(:update_evaluation) }
+    it { should respond_to(:add_or_update_evaluation) }
+    it { should respond_to(:delete_evaluation) }
+    it { should respond_to(:reputation_for) }
+    it { should respond_to(:evaluators_for) }
+  end
 end
