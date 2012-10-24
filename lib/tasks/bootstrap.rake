@@ -1,7 +1,10 @@
 namespace :bootstrap do
    desc "Create apps with random categories"
    task :create_apps => :environment do
-     categories = (0..5).collect {|i| Category.create(:name =>  "Cat #{i}")}
+     categories = (0..3).collect {|i| Category.create(name: "Cat #{i}",
+      kind: "Area")}
+     categories << (0..2).collect { |i| Category.create(name: "Cat #{i}",
+      kind: "Nivel")}
      100.times do
        app = FactoryGirl.create(:app)
        app.categories << categories.sample(rand(4))
