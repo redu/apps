@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20121017143216) do
     t.datetime "updated_at",                       :null => false
   end
 
-  add_index "comments", ["user_id", "app_id", "in_response_to_id"], :name => "index_comments_on_user_id_and_app_id_and_in_response_to_id"
+  add_index "comments", ["user_id", "app_id", "in_response_to_id", "type_cd"], :name => "index_comments_on_user_and_app_and_type_columns"
 
   create_table "screen_shots", :force => true do |t|
     t.integer  "app_id"
