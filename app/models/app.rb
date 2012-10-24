@@ -32,6 +32,9 @@ class App < ActiveRecord::Base
     text :categories do
       categories.map(&:name)
     end
+    integer :category_ids, multiple: true do
+      categories.map(&:id)
+    end
   end
 
   def App.filter_by_categories(filter)

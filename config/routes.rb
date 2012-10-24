@@ -6,10 +6,6 @@ ReduApps::Application.routes.draw do
       get 'preview'
       post 'rate'
     end
-    
-    collection do
-      get 'search'
-    end
 
     resources :comments, :except => :edit do
       resources :comments, :except => :edit
