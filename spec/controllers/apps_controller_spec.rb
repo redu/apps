@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe AppsController do
+
   describe "GET index" do
+
     context "When filtering app by category" do
       before(:each) do
         @categories = (0..3).collect {|i| Category.create(:name => "Cat #{i}")}
@@ -33,7 +35,7 @@ describe AppsController do
 
     context "with valid params" do
       before do
-        @params = { :id => @app.id, :locale => 'pt-BR' }
+        @params = { id: @app.id, locale: 'pt-BR' }
       end
 
       it "increments app views counter" do

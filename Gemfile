@@ -22,6 +22,10 @@ gem 'simple-navigation'
 
 gem 'activerecord-reputation-system'
 
+gem 'sunspot_rails'
+
+# Gems used only for assets and not required
+# in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -29,9 +33,15 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development do
+  gem 'sunspot_solr'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'therubyracer'
+  gem 'faker'
+  gem 'random_data'
 end
 
 group :test do

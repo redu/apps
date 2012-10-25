@@ -3,8 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
-#require 'shoulda'
 require 'paperclip/matchers'
+require 'sunspot/rails/spec_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -43,4 +43,13 @@ RSpec.configure do |config|
 
   # Configuração do FactoryGirl para o Rspec
   config.include FactoryGirl::Syntax::Methods
+
+  # Configuração do Sunspot para o Rspec
+  config.before(:each) do
+    ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
+  end
+
+  config.after(:each) do
+    ::Sunspot.session = ::Sunspot.session.original_session
+  end
 end

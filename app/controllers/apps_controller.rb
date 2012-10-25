@@ -3,9 +3,15 @@
 class AppsController < ApplicationController
   def index
     @categories = Category.all
-    @apps = App.filter_by_categories(params[:filter])
-    @apps = @apps.page(params[:page])
+    if params[:filter] || params[:search]
+      @apps = search(params[:filter])
+    else
+      @apps = App.all
+    end
+    @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
+    @search = params[:search]
+
     respond_to do |format|
       format.js {}
       format.html
@@ -35,5 +41,20 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     @app.add_or_update_evaluation(:rating, rating, current_user)
     redirect_to :back, notice: "Você classificou o recurso com #{rating}."
+  end
+
+  private
+
+  def search(filters = nil)
+    @search = App.search do
+      fulltext params[:search] do
+        boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
+        query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca
+        phrase_fields :description => 2.0 # Prioriza se aparecer a frase na desc
+        phrase_fields :synopsis => 2.0 # Prioriza se aparecer a frase na sinopse
+      end
+      with(:category_ids, filters) if filters
+    end
+    @apps = @search.results
   end
 end
