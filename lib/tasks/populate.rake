@@ -3,13 +3,13 @@
 desc "Populate DB with random_data and Faker stuff"
 task :random_population, :n do |t, args|
   cats = Array.new
-  cats << Category.create(name: "Ensino Básico")
-  cats << Category.create(name: "Ensino Médio")
-  cats << Category.create(name: "Ensino Superior")
-  cats << Category.create(name: "Ensino Técnico")
-  cats << Category.create(name: "Matemática")
-  cats << Category.create(name: "Português")
-  cats << Category.create(name: "Ciências Exatas e da Natureza")
+  cats << Category.create(name: "Ensino Básico", kind: "Nível")
+  cats << Category.create(name: "Ensino Médio", kind: "Nível")
+  cats << Category.create(name: "Ensino Superior", kind: "Nível")
+  cats << Category.create(name: "Ensino Técnico", kind: "Nível")
+  cats << Category.create(name: "Matemática", kind: "Área")
+  cats << Category.create(name: "Português", kind: "Área")
+  cats << Category.create(name: "Ciências Exatas e da Natureza", kind: "Área")
   languages = ['Português', 'Inglês', 'Espanhol', 'Italiano', 'Japonês',
                'Francês', 'Russo', 'Alemão', 'Aramaico']
 
