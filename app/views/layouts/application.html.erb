@@ -13,7 +13,27 @@
   <body>
     <%= render :partial => "shared/nav_global" %>
     <div class="main-wrapper">
-      <%= yield %>
+      <div class="container">
+        <div class="row">
+          <div class="span16">
+            <div class="apps-portal-header">
+              <h2 class="portal-title icon-apps-portal-gray_48_50-before link-container pull-left">
+                <%= link_to "Portal de Aplicativos", root_path, :class => "portal-title-link link-target", :title => "Portal de Aplicativos" %>
+              </h2>
+              <div class="breadcrumb-mini-wrapper">
+                <%= render_navigation renderer: :breadcrumbs, join_with: " &gt; " %>
+              </div>
+              <%= render partial: 'search' %>
+            </div>
+            <div class="apps-portal-content content-body">
+              <%= yield %>
+            </div>
+            <div class="breadcrumb-mini-wrapper">
+              <%= render_navigation renderer: :breadcrumbs, join_with: " &gt; " %>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="footer-pusher"></div>
     </div>
     <%= render :partial => "shared/footer" %>
