@@ -1,0 +1,133 @@
+// ==========================================================================
+// Corpo
+// ==========================================================================
+
+
+// Variáveis
+// ==========================================================================
+
+// Cor de fundo.
+$oer-explaination-background-color: rgb(28, 117, 187);
+
+
+// Explicação sobre REA
+// ==========================================================================
+
+// Link.
+.apps-portal-oer-link {
+  position: absolute;
+  top: 30px;
+  left: 626px;
+}
+
+// Wrapper.
+.apps-portal-oer {
+  overflow: hidden;
+  position: relative;
+  padding: 10px 20px 15px 0;
+  margin-top: 6px;
+  border-left: 1px solid $white;
+  border-right: 1px solid $white;
+  background-color: $oer-explaination-background-color;
+
+  .cssgradients & { @include background-image(linear-gradient(rgba(0, 0, 0, 0.4), $oer-explaination-background-color 5%, $oer-explaination-background-color 95%, rgba(0, 0, 0, 0.4) 100%)); }
+
+  .no-cssgradients.gt-ie8 & {
+    // http://www.colorzilla.com/gradient-editor/#000000+0,1c75bb+5,1c75bb+95,000000+100;Custom
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iOTUlIiBzdG9wLWNvbG9yPSIjMWM3NWJiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAwMDAwMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+  }
+}
+
+// Ícone de fechar.
+.apps-portal-oer-close {
+  float: right;
+  cursor: pointer;
+}
+
+// Explicação.
+.apps-portal-oer-explaination {
+  @include text-shadow(0 1px 0 $black);
+  padding-top: 10px;
+  color: $white;
+  // Imagem do logo do REA.
+  background: url("../images/landing/sprite/logo-oer.png") no-repeat;
+  // Largura da imagem + espaçamento entre imagem e texto.
+  padding-left: 279px + 20px;
+
+  .apps-portal-oer-explaination-title +
+  p { margin-top: 5px; }
+
+  p { max-width: 580px; }
+
+  a,
+  a:hover {
+    color: $white;
+    text-decoration: underline;
+  }
+}
+
+.apps-portal-oer-explaination-title { @include heading(2); }
+
+
+// Abas
+// ==========================================================================
+
+.tabs {
+  padding-left: 20px;
+  margin-top: 14px;
+}
+
+
+// Filtros
+// ==========================================================================
+
+.tabs +
+.apps-portal-filters { padding-top: 10px; }
+
+.apps-portal-filters {
+  text-align: center;
+
+  .filters { display: inline-block; }
+}
+
+
+// Aplicativos
+// ==========================================================================
+
+.apps-portal-filters +
+.oer-apps-wrapper { margin-top: 5px; }
+
+.oer-apps-wrapper { padding: 25px; }
+
+.apps-portal-content {
+  // Bordas + paddings do .content-body.
+  $content-body-border-n-padding: 2px + 10px;
+  // A altura mínima total deve ser 500, mas é preciso subtrair a borda e padding já existentes em .content-body.
+  min-height: 500px - $content-body-border-n-padding;
+
+  .pagination { padding: 10px 0; }
+}
+
+.oer-apps-none {
+  padding: 80px 0 136px;
+  text-align: center;
+
+  p {
+    color: $gray5;
+    width: 718px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  img +
+  p { margin-top: 20px; }
+}
+
+.apps-portal-search-messages { text-align: center; }
+
+.apps-portal-search-message { display: block; }
+
+.tabs +
+.apps-portal-search-messages,
+.apps-portal-search-messages +
+.apps-portal-filters { margin-top: 10px; }

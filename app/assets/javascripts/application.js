@@ -11,5 +11,73 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require jquery.cookie
+//= require modernizr
+//= require jquery.autosize.min
+//= require placeholder-polyfill.min
+//= require bootstrap-redu
 //= require jquery_ujs
 //= require_tree .
+
+$(function() {
+
+  // Sequência de passos da modal de adicionar REA à disciplina.
+  // TODO: É só para testes. Em produção será feito de outra maneira.
+  $('body')
+    .on('click', '[href="#modal-add-oer-step-1"]', function(e) {
+      e.preventDefault();
+      $('#modal-add-oer-step-2').modal('hide');
+      $($(this).attr('href')).modal('show');
+    })
+    .on('click', '[href="#modal-add-oer-step-2"]', function(e) {
+      e.preventDefault();
+      $('#modal-add-oer-step-1').modal('hide');
+      $('#modal-add-oer-step-3').modal('hide');
+      $($(this).attr('href')).modal('show');
+    })
+    .on('click', '[href="#modal-add-oer-step-3"]', function(e) {
+      e.preventDefault();
+      $('#modal-add-oer-step-2').modal('hide');
+      $($(this).attr('href')).modal('show');
+    })
+    .on('click', '[href="#system-message-oer-successfully-added"]', function(e) {
+      e.preventDefault();
+      $('#modal-add-oer-step-3').modal('hide');
+      $($(this).attr('href')).show();
+    });
+
+
+  // Expande/colapsa a explicação dos REA.
+
+  var oerLinkClass = '.apps-portal-oer-link';
+  var oerCloseClass = '.apps-portal-oer-close';
+  var $oerLink = $(oerLinkClass);
+  var $oerArea = $(oerCloseClass).parents('.apps-portal-oer');
+  var warned = $.cookie("oer_explaination");
+
+  if (warned) {
+    // O usuário já fechou a explicação uma vez, então a mantém escondida.
+    $oerArea.hide();
+  } else {
+    // Se o usuário ainda não fechou a explicação pelo menos uma vez.
+    $oerLink.hide();
+  }
+
+  $('body').on('click', oerCloseClass, function(e) {
+    // Colapsa a explicação.
+    e.preventDefault();
+    $oerArea.slideToggle('fast', function() {
+      $oerLink.show('fast');
+      // Cria um cookie pra salvar que o usuário fechou a explicação.
+      $.cookie("oer_explaination", true, { path: "/" });
+    });
+  }).on('click', oerLinkClass, function(e) {
+    // Expande a explicação.
+    e.preventDefault();
+    $oerLink.hide('fast', function() {
+      $oerArea.slideToggle('fast');
+    });
+  });
+
+});
+
