@@ -1,24 +1,41 @@
-<div class="container">
-  <div class="row">
-    <div class="span16">
-      <H1>Home</H1>
-      <p id="notice"><%= notice %></p>
-      <%= link_to "Meus Favoritos", user_favorites_path(1) %>
-      <h3>Filtros:</h3>
-      <% @categories.each do |cat| %>
-        <%= link_to cat.name, 
-                    apps_path(filter: filters_url(@filter, cat),
-                              search: @search ) %>
-      <%end %>
-      <%= link_to "Limpa Filtros", apps_path(search: @search) %>
-      <h3>Apps</h3>
-      <ul id='apps'>
-        <%= render @apps %>
-      </ul>
-      <div id="paginator">
-        <%= link_to_next_page(@apps, 'Mostrar Mais', {remote: true, params: {filter: @filter}}) %>
-      </div>
-      <%= render_navigation renderer: :breadcrumbs, join_with: " &gt; " %>
-    </div>
+<div class="apps-portal-oer">
+  <div class="apps-portal-oer-explaination">
+    <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
+    <h3 class="apps-portal-oer-explaination-title">O que são R.E.A.s?</h3>
+    <p>São <em>aplicativos</em> de ensino e aprendizagem que estão licenciados de maneira aberta, permitindo que sejam utilizados ou adaptados por qualquer pessoa gratuitamente (<em>em seus Ambientes de Aprendizagem ou em seu Perfil</em>). Podem incluir, também, cursos completos, partes de cursos, módulos, livros didáticos, artigos de pesquisa, vídeos, testes, software e qualquer material ou técnica que possa apoiar o acesso ao conhecimento. (<a href="http://rea.net.br/site/o-que-e-rea/" title="UNESCO/Comunidade REA Brasil">UNESCO/Comunidade REA Brasil</a>)</p>
   </div>
+</div>
+
+<a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
+
+<ul class="tabs tabs-big">
+  <li class="tab tab-active">
+    <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
+  </li>
+  <!-- TODO: O li seguinte só deve aparecer se o usuário estiver logado. -->
+  <li class="tab">
+    <!-- TODO: É preciso dar um count nos aplicativos favoritos do usuário para colocar esta informação entre os parênteses. -->
+    <%= link_to "Aplicativos Favoritos ()", user_favorites_path(1), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos ()" %>
+  </li>
+</ul>
+
+<div class="apps-portal-filters">
+  <div class="filters">
+    <% @categories.each do |cat| %>
+      <% next unless cat.kind.eql? "Nível" %>
+      <%= link_to cat.name, apps_path(filter: @filter | [cat.id], search: @search), :class => "filter" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="oer-apps-wrapper">
+  <ul id="apps" class="list-2-columns list-columns-separator">
+    <%= render @apps %>
+  </ul>
+</div>
+
+<hr class="list-separator">
+
+<div id="paginator" class="pagination">
+  <%= link_to_next_page(@apps, "Mostrar mais...", {remote: true, params: {filter: @filter}, class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
 </div>
