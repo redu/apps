@@ -10,7 +10,7 @@
 <%= link_to "Limpa Filtros", apps_path(search: @search) %>
 <h3>Apps</h3>
 <ul id='apps'>
-  <%= render @apps.includes(:comments) %>
+  <%= render @apps %>
 </ul>
 <div id="paginator">
   <%= link_to_next_page(@apps, 'Mostrar Mais', {remote: true, params: {filter: @filter}}) %>

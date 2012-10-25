@@ -2,12 +2,12 @@
 
 class AppsController < ApplicationController
   def index
-    @categories = Category.all
     if params[:filter] || params[:search]
       @apps = search(params[:filter])
     else
       @apps = App.all
     end
+    @categories = Category.all
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]
