@@ -11,11 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(:version => 20121019173907) do
-=======
-ActiveRecord::Schema.define(:version => 20121011204321) do
->>>>>>> Introduz as entidades que representam os componentes da hierarquia do Redu.
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -66,6 +62,44 @@ ActiveRecord::Schema.define(:version => 20121011204321) do
   end
 
   add_index "comments", ["user_id", "app_id", "in_response_to_id", "type_cd"], :name => "index_comments_on_user_and_app_and_type_columns"
+
+  create_table "courses", :force => true do |t|
+    t.integer  "cid"
+    t.string   "name"
+    t.integer  "user_id"
+    t.integer  "environment_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "courses", ["cid", "name", "user_id"], :name => "index_courses_on_cid_and_name_and_user_id"
+
+  create_table "environments", :force => true do |t|
+    t.integer  "eid"
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
+  end
+
+  add_index "environments", ["eid", "name", "user_id"], :name => "index_environments_on_eid_and_name_and_user_id"
+
+  create_table "lectures", :force => true do |t|
+    t.integer  "lid"
+    t.string   "name"
+    t.integer  "subject_id"
+    t.integer  "app_id"
+    t.string   "lectureable_type"
+    t.integer  "lectureable_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "lectures", ["lid", "name", "subject_id"], :name => "index_lectures_on_lid_and_name_and_subject_id"
 
   create_table "rs_evaluations", :force => true do |t|
     t.string   "reputation_name"
@@ -123,44 +157,6 @@ ActiveRecord::Schema.define(:version => 20121011204321) do
 
   add_index "screen_shots", ["app_id"], :name => "index_screen_shots_on_app_id"
 
-  create_table "courses", :force => true do |t|
-    t.integer  "cid"
-    t.string   "name"
-    t.integer  "user_id"
-    t.integer  "environment_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "courses", ["cid", "name", "user_id"], :name => "index_courses_on_cid_and_name_and_user_id"
-
-  create_table "environments", :force => true do |t|
-    t.integer  "eid"
-    t.string   "name"
-    t.integer  "user_id"
-    t.string   "thumbnail_file_name"
-    t.string   "thumbnail_content_type"
-    t.integer  "thumbnail_file_size"
-    t.datetime "thumbnail_updated_at"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-  end
-
-  add_index "environments", ["eid", "name", "user_id"], :name => "index_environments_on_eid_and_name_and_user_id"
-
-  create_table "lectures", :force => true do |t|
-    t.integer  "lid"
-    t.string   "name"
-    t.integer  "subject_id"
-    t.integer  "app_id"
-    t.string   "lectureable_type"
-    t.integer  "lectureable_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-  end
-
-  add_index "lectures", ["lid", "name", "subject_id"], :name => "index_lectures_on_lid_and_name_and_subject_id"
-
   create_table "spaces", :force => true do |t|
     t.integer  "sid"
     t.string   "name"
@@ -214,9 +210,13 @@ ActiveRecord::Schema.define(:version => 20121011204321) do
     t.string   "login"
     t.string   "first_name"
     t.string   "last_name"
-    t.integer  "role_cd",    :default => 1
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "role_cd",                :default => 1
+    t.string   "thumbnail_file_name"
+    t.string   "thumbnail_content_type"
+    t.integer  "thumbnail_file_size"
+    t.datetime "thumbnail_updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "users", ["uid"], :name => "index_users_on_uid"
