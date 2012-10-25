@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe FavoritesController do
@@ -17,24 +18,36 @@ describe FavoritesController do
       end
 
       it "should return user favorites" do
-         get :index, :user_id => @user.id, :locale => 'pt-BR'
+         get :index, user_id: @user, locale: 'pt-BR'
          @user.user_app_associations.to_set.should == 
             assigns(:user_apps_associations).to_set
+      end
+
+      it "should raise ActiveRecord::RecordNotFound when login doesn't exist" do
+         expect {
+            get :index, user_id: 123, locale: 'pt-BR'
+         }.to raise_exception(ActiveRecord::RecordNotFound)
       end
    end
 
    context "when creating user favorite" do
       it "should add app to favorites list" do
-         post :create, :app_id => @app1.id, :user_id => @user.id, 
-              :locale => 'pt-BR'
+         post :create, app_id: @app1, user_id: @user, locale: 'pt-BR'
          @user.apps.should include @app1
       end
 
       it "should not allow duplicate favorites" do
-         post :create, :app_id => @app1.id, :user_id => @user.id, 
-              :locale => 'pt-BR'
-         lambda { post :create, :app_id => @app1.id,
-            :user_id => @user.id }.should raise_error
+         @user.apps << @app1
+         expect {
+            post :create, app_id: @app1, user_id: @user, locale: 'pt-BR'
+         }.to raise_exception(ActiveRecord::RecordInvalid,
+                              'A validação falhou: User já está em uso')
+      end
+
+      it "should raise ActiveRecord::RecordNotFound when login doesn't exist" do
+         expect {
+            post :create, app_id: @app1, user_id: 123, locale: 'pt-BR'
+         }.to raise_exception(ActiveRecord::RecordNotFound)
       end
    end
 
@@ -44,10 +57,10 @@ describe FavoritesController do
       end
 
       it "should remove user favorite" do
-         assoc_id = @user.user_app_associations.where(:app_id => @app1.id).first.id
+         assoc_id = @user.user_app_associations.where(app_id: @app1.id).first.id
          expect {
-            delete :destroy, :id => @app1.id, :user_id => @user.id,
-                   :association_id => assoc_id, :locale => 'pt-BR'
+            delete :destroy, id: @app1, user_id: @user.id,
+                   association_id: assoc_id, locale: 'pt-BR'
          }.to change(@user.apps, :count).by(-1)
       end
    end
