@@ -1,0 +1,13 @@
+<h1>CHECKOUT</h1>
+<% @environments.each do |e| %>
+  <h4>Ambiente: <%= e.name %></h4>
+  <% e.courses.each do |course| %>
+    <h5>Curso: <%= course.name %> </h5>
+    <% course.spaces.each do |space| %>
+      <%= form_tag(app_checkout_path(@app_id, :step => @next_step)) do %>
+        <%= hidden_field_tag "space_id", space.id %>
+        <%= submit_tag(space.name) %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

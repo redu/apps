@@ -36,4 +36,12 @@ describe User do
 
   # Thumbnail do usuário
   it { should have_attached_file(:thumbnail) }
+
+  # Ambientes de que o usuário participa
+  it { should have_many(:user_environment_associations) }
+  it { should have_many(:environments).through(:user_environment_associations) }
+
+  # Disciplinas de que o usuário participa
+  it { should have_many(:user_course_associations) }
+  it { should have_many(:courses).through(:user_course_associations) }
 end

@@ -14,6 +14,9 @@ class App < ActiveRecord::Base
   has_many :user_app_associations, dependent: :destroy
   has_many :users, through: :user_app_associations
 
+  # Aulas em que o aplicativo é usado
+  has_many :lectures
+
   # Screen shots
   has_many :screen_shots
 

@@ -13,6 +13,14 @@ class User < ActiveRecord::Base
   has_many :user_app_associations, dependent: :destroy
   has_many :apps, through: :user_app_associations
 
+  # Ambientes em que o usuário pode adicionar aplicativos
+  has_many :user_environment_associations
+  has_many :environments, through: :user_environment_associations
+
+  # Cursos em que o usuário pode adicionar aplicativos
+  has_many :user_course_associations, dependent: :destroy
+  has_many :courses, through: :user_course_associations
+
   # Comentários
   has_many :comments
 
