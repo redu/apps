@@ -20,7 +20,7 @@
               <h2 class="portal-title icon-apps-portal-gray_48_50-before link-container pull-left">
                 <%= link_to "Portal de Aplicativos", root_path, :class => "portal-title-link link-target", :title => "Portal de Aplicativos" %>
               </h2>
-              <div class="breadcrumb-mini-wrapper">
+              <div id="apps-portal-breadcrumb" class="breadcrumb-mini-wrapper">
                 <%= render_navigation renderer: :breadcrumbs, join_with: " &gt; " %>
               </div>
               <%= render partial: 'search' %>
