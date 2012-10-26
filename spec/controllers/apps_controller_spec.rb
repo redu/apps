@@ -4,7 +4,25 @@ describe AppsController do
 
   describe "GET index" do
 
-    context "When filtering app by category" do
+    context "when assigning variables" do
+      before do
+        get :index , :locale => 'pt-BR'
+      end
+
+      it "assigns @apps variable" do
+        assigns(:apps).should == App.all
+      end
+
+      it "assigns @categories variable" do
+        assigns(:categories).should == Category.all
+      end
+
+      it "assigns @kinds variable" do
+        assigns(:kinds).should == Category.select(:kind).uniq
+      end
+    end
+
+    context "when filtering app by category" do
       before(:each) do
         @categories = (0..3).collect {|i| Category.create(:name => "Cat #{i}")}
         @apps = 10.times.collect do |i|

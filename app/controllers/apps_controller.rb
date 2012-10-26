@@ -8,6 +8,7 @@ class AppsController < ApplicationController
       @apps = App.all
     end
     @categories = Category.all
+    @kinds = Category.select(:kind).uniq
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]

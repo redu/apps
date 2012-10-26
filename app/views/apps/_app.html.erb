@@ -8,7 +8,7 @@
 <li>
   Comentario Especialistas: <%= app.comments.select { |c| c.type ==  :specialized }.count %>
 </li>
-<% @categories.each do |cat| %>
+<% @kinds.each do |cat| %>
   <% if app.categories.any? {|c| c.kind == cat.kind } %>
     <li>
        <%= cat.kind %>: <%= app.categories.select { |a| a.kind == cat.kind }.collect &:name %>
