@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.boolean  "zombie"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end

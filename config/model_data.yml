@@ -1,0 +1,19 @@
+user:
+  attributes: # Which vars are used from the hash
+    - login
+    - first_name
+    - last_name
+    - id
+  id: uid #How to translate the id
+  include_data: #Necessary default data to include onto our new model
+    - role: member
+  model_name: User
+environment:
+  attributes:
+    - name
+    - id
+    - owner
+  id: eid
+  check_for: #Checks for dependent models,
+    user: owner #Model user by the id of owner
+  model_name: Environment

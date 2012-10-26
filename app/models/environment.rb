@@ -1,5 +1,5 @@
 class Environment < ActiveRecord::Base
-  attr_accessible :eid, :name
+  attr_accessible :eid, :name, :zombie, :owner
 
   # Associações
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
@@ -14,6 +14,6 @@ class Environment < ActiveRecord::Base
   validates_presence_of :eid, :name, :owner
 
   # Thumbnail
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>", 
+  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
                                              :thumb => "100x100>" }
 end
