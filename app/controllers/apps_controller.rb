@@ -20,6 +20,7 @@ class AppsController < ApplicationController
   end
 
   def show
+    @kinds = Category.select(:kind).uniq
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
     @user = current_user
