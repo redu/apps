@@ -24,6 +24,9 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
     @user = current_user
+    @favorite = UserAppAssociation.find_by_user_id_and_app_id(@user, 
+                                                              @app)
+    @evaluations = @app.evaluators_for(:rating).count
     if @user
       @evaluated = @app.has_evaluation?(:rating, @user)
       @user_rating = @app.reputation_for(:rating, nil, @user) if @evaluated

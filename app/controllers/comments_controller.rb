@@ -1,8 +1,7 @@
 class CommentsController < ApplicationController
   def create
     @app = App.find(params[:app_id])
-    #TODO autor do comentário deve ser o usuário da sessão (buscando por login)
-    params[:comment][:author] = User.find_by_login(params[:comment][:author])
+    params[:comment][:author] = current_user
     @comment = if params[:comment_id]
       create_answer
     else

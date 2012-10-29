@@ -10,7 +10,15 @@ pt-BR:
   submitters: "Quem submeteu"
   url: "Endereço de origem"
   copyright: "Detentor dos direitos"
-  views: 
+  evaluation:
+    zero: "Nenhuma classificação"
+    one: "1 classificação"
+    other: "%{count} classificações"
+  favorite:
+    zero: "Nenhum favorito"
+    one: "1 favorito"
+    other: "%{count} favoritos"
+  view: 
     zero: "Nenhuma visualização"
     one: "1 visualização"
     other: "%{count} visualizações"
@@ -22,6 +30,9 @@ pt-BR:
     zero: "Nenhum comentário"
     one: "1 comentário"
     other: "%{count} comentários"
+    answer:
+      one: "Visualizando a única resposta"
+      other: "Visualizando todas as %{count} respostas"
   date:
     abbr_day_names:
     - Dom

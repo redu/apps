@@ -3,6 +3,12 @@
 
   <h2> <%= @app.name %> </h2>
 
+  <% if @favorite %>
+    <div class="oer-add-favorite" rel="tooltip" title="Este é um Aplicativo Favorito." data-placement="left">
+      <span class="icon-favorite-blue_32_34 show text-replacement">Favorito</span>
+    </div>
+  <% end %>
+
   <div class="oer-data">
     <p id="notice"><%# notice %></p>
     <%= image_tag @app.thumbnail.url(:large) %>
@@ -26,10 +32,18 @@
     <% else %>
       <%# TODO exibir rating do app sem opção de o usuário dar rate %>
     <% end %>
-      <li class="icon-star-empty-gray_16_18-before">xxx classificações.</li>
-      <li class="icon-favorite-gray_16_18-before">xxx favoritos.</li>
-      <li class="icon-seen-gray_16_18-before"><%= t 'views', count: @app.views %></li>
-      <li class="icon-specialist-gray_16_18-before"><%= t 'review', count: @app.comments.specialized.count %></li>
+      <li class="icon-star-empty-gray_16_18-before">
+        <%= t 'evaluation', count: @evaluations %>
+      </li>
+      <li class="icon-favorite-gray_16_18-before">
+        <%= t 'favorite', count: @app.users.count %>
+      </li>
+      <li class="icon-seen-gray_16_18-before">
+        <%= t 'view', count: @app.views %>
+      </li>
+      <li class="icon-specialist-gray_16_18-before">
+        <%= t 'review', count: @app.comments.specialized.count %>
+      </li>
       <li class="icon-comment-gray_16_18-before">
         <%= t 'comment', 
               count: (@app.comments.common.count + @app.comments.answer.count) %>
@@ -67,16 +81,21 @@
         Abrir este Recurso
       <% end %>
     <% end %>
-    <%= form_tag user_favorites_path(@user.id), method: "post" do %>
-      <%= hidden_field_tag :app_id , @app.id %>
-      <%= content_tag :button, :type => :submit, class: "button-primary" do %>
-        Adicionar a Favoritos
+    <% unless @favorite %>
+      <%= form_tag user_favorites_path(@user.id), method: "post" do %>
+        <%= hidden_field_tag :app_id , @app.id %>
+        <%= content_tag :button, :type => :submit, class: "button-primary" do %>
+          Adicionar a Favoritos
+        <% end %>
       <% end %>
     <% end %>
     <%= form_tag app_checkout_path(@app), method: "post" do %>
       <%= content_tag :button, :type => :submit, :class => "button-primary", :'data-target' => "#modal-add-oer-step-1", :'data-toggle' => "modal", class: "button-success"  do %>
         Adicionar a Disciplina
       <% end %>
+    <% end %>
+    <% if @favorite %>
+      <%= link_to "Remover dos Favoritos", user_favorite_path(current_user, @favorite), :method => "delete", :class => "icon-favorite-delete-lightblue_16_18-before", :title => "Remover dos Favoritos" %>
     <% end %>
   </div>
 
@@ -105,14 +124,16 @@
   </div>
 </div>
 
+<!-- Comentários de especialista -->
 <div class="statuses oer-comments">
   <ol>
-    <li class="status">
-      <div class="status-wrapper">
-        <div class="status-text">
-
-          <% @app.comments.specialized.each do |comment| %>
-            <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
+    <% @app.comments.specialized.each do |comment| %>
+      <li class="status">
+        <div class="status-wrapper">
+          <div class="status-text">
+            <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">
+              Especialista
+            </span>
             <%= image_tag comment.author.thumbnail.url(:medium), :class => "icon-link" %>
             <a href="#" class="link-name"><%= "#{comment.author.first_name} #{comment.author.last_name}" %></a> (especialista)
             escreveu uma resenha sobre este aplicativo:
@@ -121,143 +142,168 @@
                        :method => :delete,
                        :class => "close icon-close-gray_16_18 replacement" %>
             <span class="date"><%= l comment.created_at %></span>
-        </div>
-        <div class="status-container specialist">
-          <div class="status-content">
-            <div class="post-text">
-              <p class="input-user">
-                <%= comment.body %>
-              </p>
+          </div>
+          <div class="status-container specialist">
+            <div class="status-content">
+              <div class="post-text">
+                <p class="input-user">
+                  <%= comment.body %>
+                </p>
+              </div>
+              <hr class="link-separator">
             </div>
-            <hr class="link-separator">
           </div>
         </div>
-          <% end %>
+      </li>
+    <% end %>
 
-      </div>
-    </li>
-
+<!-- Botões de comentários -->
     <hr class="list-separator">
-
     <div class="status status-buttons">
       <div>
         <ul class="status-text button-comment">
-          <li><a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">Comentar sobre este aplicativo</a></li>
+          <li>
+              <a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">
+                Comentar sobre este aplicativo
+              </a>
+          </li>
         </ul>
         <div class="create-response">
-          <form accept-charset="UTF-8" data-remote="true" method="post">
-            <fieldset>
-            <textarea id="status_text" cols="40" rows="6" style="height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; "></textarea>
-              <div class="status-buttons">
-                <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
-                <button id="status_submit" class="button-primary" type="submit" name="commit">Enviar</button>
-              </div>
-            </fieldset>
-          </form>
-        </div>
-      </div>
-      <div>
-        <ul class="status-text button-review">
-          <li><a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">Escrever uma resenha</a></li>
-        </ul>
-        <div class="create-response">
-
           <%= form_for([@app, @app.comments.build]) do |f| %>
             <fieldset>
               <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
-              <%= f.hidden_field :type, :value => 'specialized' %>
+              <%= f.hidden_field :type, :value => 'common' %>
               <div class="status-buttons">
-                <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
-                <!-- <button id="status_submit" class="button-primary" type="submit" name="commit">Enviar</button> -->
+                <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">
+                  Cancelar
+                </a>
                 <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
                   Enviar
                 <% end %>
               </div>
             </fieldset>
           <% end %>
-
-          <form accept-charset="UTF-8" data-remote="true" method="post">
-          </form>
+        </div>
+      </div>
+      <div>
+        <ul class="status-text button-review">
+          <li>
+            <a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">
+              Escrever uma resenha
+            </a>
+          </li>
+        </ul>
+        <div class="create-response">
+          <%= form_for([@app, @app.comments.build]) do |f| %>
+            <fieldset>
+              <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
+              <%= f.hidden_field :type, :value => 'specialized' %>
+              <div class="status-buttons">
+                <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">
+                  Cancelar
+                </a>
+                <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
+                  Enviar
+                <% end %>
+              </div>
+            </fieldset>
+          <% end %>
         </div>
       </div>
     </div>
+    <hr class="list-separator">
 
-  </ol>
-</div>
-
-    <%= form_for([@app, @app.comments.build]) do |f| %>
-      <div class="field">
-        <%= f.label :autor %> (login do usuário)<br />
-        <%= f.text_field :author %>
-      </div>
-      <div class="field">
-        <%= f.label :corpo %><br />
-        <%= f.text_area :body %>
-      </div>
-        <%= f.hidden_field :type, :value => 'specialized' %>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-
-    <% @app.comments.common.each do |comment| %>
-      <p>
-        <%= image_tag comment.author.thumbnail.url(:medium) %>
-        <%= "#{comment.author.first_name} #{comment.author.last_name}" %>
+<!-- Comentários comuns -->
+  <% @app.comments.common.each do |comment| %>
+    <li class="status">
+      <div class="status-text">
+        <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">
+          Especialista
+        </span>
+        <%= image_tag comment.author.thumbnail.url(:medium), :class => "icon-link" %>
+        <a href="#" class="link-name"><%= "#{comment.author.first_name} #{comment.author.last_name}" %></a>
         comentou sobre este aplicativo:
-        <br /><%= l comment.created_at %>
-      </p>
-      <p>
-        <%= comment.body %>
         <%= link_to 'Apagar Comentário', [comment.app, comment],
                    :confirm => 'Tem certeza?',
-                   :method => :delete %>
-      </p>
-      <% comment.answers.each do |answer| %>
-        <p>
-          <%= image_tag answer.author.thumbnail.url(:medium) %>
-          <b><%= "#{answer.author.first_name} #{answer.author.last_name}" %></b>
-          respondeu:<br /><%= l answer.created_at %>
-        </p>
-        <%= answer.body %>
-        <%= link_to 'Apagar Resposta', [comment.app, comment, answer],
-                   :confirm => 'Tem certeza?',
-                   :method => :delete %>
-      <% end %>
+                   :method => :delete,
+                   :class => "close icon-close-gray_16_18 replacement" %>
+        <span class="date"><%= l comment.created_at %></span>
+      </div>
+      <div class="status-container">
+        <div class="status-content">
+          <div class="post-text">
+            <p class="input-user">
+              <%= comment.body %>
+            </p>
+          </div>
+        </div>
 
-      <h2>Responder</h2>
-      <%= form_for([@app, comment, @app.comments.build]) do |f| %>
-        <div class="field">
-          <%= f.label :autor %> (login do usuário)<br />
-          <%= f.text_field :author %>
-        </div>
-        <div class="field">
-          <%= f.label :corpo %><br />
-          <%= f.text_area :body %>
-        </div>
+        <!-- Respostas ao comentário -->
+      <% if comment.answers.count != 0 %>
+        <ol class="responses status-content">
+          <li class="last-responses">
+            <p class="legend">Visualizando as últimas respostas...</p><hr>
+          </li>
+        <% comment.answers.each do |answer| %>
+          <li class="status-content response">
+            <%= link_to 'Apagar Comentário', [comment.app, answer],
+                       :confirm => 'Tem certeza?',
+                       :method => :delete,
+                       :class => "close icon-close-gray_16_18 replacement" %>
+            <div class="status-text-response status-text">
+              <a href="#" class="icon-link">
+                <%= image_tag answer.author.thumbnail.url(:medium) %>
+              </a>
+              <a href="#" class="link-name">
+                <%= "#{answer.author.first_name} #{answer.author.last_name}" %>
+              </a>
+              <span class="status-info">
+                respondeu:
+              </span>
+              <span class="date">
+                <%= l answer.created_at %>
+              </span>
+              <div class="post-text">
+                <p class="input-user"><%= answer.body %></p>
+              </div>
+            </div>
+            <hr>
+          </li>
+        <% end %>
+          <li class="all-responses">
+            <a href="#" class="link-secondary">
+              <%= t 'comment.answer', count: comment.answers.count %>
+            </a>
+          </li>
+        </ol>
+      <% end %>
+      </div>
+      <ul class="actions clearfix">
+        <li>
+          <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
+        </li>
+      </ul>
+      <div class="create-response">
+        <%= form_for([@app, comment, @app.comments.build]) do |f| %>
+          <fieldset>
+          <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
           <%= f.hidden_field :type, :value => 'answer' %>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
-      <% end %>
-    <% end %>
+            <div class="status-buttons">
+              <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
+              <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
+                Enviar
+              <% end %>
+            </div>
+          </fieldset>
+        <% end %>
+      </div>
+    </li>
+    <hr class="list-separator">
+  <% end %>
 
-    <h2>Comentar sobre este aplicativo</h2>
-    <%= form_for([@app, @app.comments.build]) do |f| %>
-      <div class="field">
-        <%= f.label :autor %> (login do usuário)<br />
-        <%= f.text_field :author %>
-      </div>
-      <div class="field">
-        <%= f.label :corpo %><br />
-        <%= f.text_area :body %>
-      </div>
-        <%= f.hidden_field :type, :value => 'common' %>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-    <% end %>
-
+<!-- Paginação -->
+  </ol>
+</div>
 
 <script type="text/javascript">
 
