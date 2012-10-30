@@ -65,5 +65,8 @@ module ReduApps
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.autoload_paths += %W(#{config.root}/lib)
+
+    # Carrega renderers do simple_navigation
+    config.autoload_paths << "#{config.root}/app/navigation_renderers"
   end
 end
