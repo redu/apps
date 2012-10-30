@@ -29,7 +29,11 @@
   <div class="filters">
     <% @categories.each do |cat| %>
       <% next unless cat.kind.eql? "Nível" %>
-      <%= link_to cat.name, apps_path(filter: @filter | [cat.id], search: @search), :class => "filter" %>
+      <% filter_active = "" %>
+      <% if @filter.include?(cat.id.to_s) %>
+        <% filter_active = " filter-active" %>
+      <% end %>
+      <%= link_to cat.name, apps_path(filter: @filter | [cat.id], search: @search), :class => "filter#{filter_active}" %>
     <% end %>
   </div>
 </div>
