@@ -9,8 +9,7 @@ class AppsController < ApplicationController
     else
       @apps = App.all
     end
-    @categories = Category.select
-    @kinds = Category.select(:kind).uniq
+    @categories = Category.select { |c| c.kind.eql? "Nível" }
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]

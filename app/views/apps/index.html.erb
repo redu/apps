@@ -23,7 +23,6 @@
 <div class="apps-portal-filters">
   <div class="filters">
     <% @categories.each do |cat| %>
-      <% next unless cat.kind.eql? "Nível" %>
       <% filter_active = "" %>
       <% if @filter.include?(cat.id.to_s) %>
         <% filter_active = " filter-active" %>
