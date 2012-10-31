@@ -31,12 +31,4 @@ class FavoritesController < ApplicationController
 
     Kaminari.paginate_array(@apps).page(params[:page])
   end
-
-  def assign_user_app_associations
-    if params[:filter]
-      current_user.user_app_associations.filter(params[:filter])
-    else
-      current_user.user_app_associations.includes(app: [:categories, :comments])
-    end
-  end
 end
