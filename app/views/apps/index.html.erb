@@ -14,13 +14,8 @@
   </li>
   <% if current_user %>
   <li class="tab">
-    <% favorite_apps_counter = current_user.apps.count %>
-    <% if favorite_apps_counter != 0 %>
-      <% favorite_apps_counter = " (" + favorite_apps_counter.to_s + ")" %>
-    <% else %>
-      <% favorite_apps_counter = "" %>
-    <% end %>
-    <%= link_to "Aplicativos Favoritos#{favorite_apps_counter}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos#{favorite_apps_counter}" %>
+    <% favorite_apps_count = parentize(@favorite_apps_count) %>
+    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
   </li>
   <% end %>
 </ul>
