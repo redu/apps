@@ -6,16 +6,21 @@ class AppsController < ApplicationController
   def index
     if params[:filter] || params[:search]
       @apps = search(params[:filter])
+      @categories = Category.filter
+      unless !params[:search]
+        @categories = @apps.collect { |a| a.categories.filter }.flatten
+        @filters_counter = Hash.new(0)
+        @categories.collect(&:name).each { |v| @filters_counter.store(v, @filters_counter[v]+1) }
+        @categories = @categories.uniq
+      end
     else
       @apps = App.includes(:comments, :categories)
+      @categories = Category.filter
     end
-    @categories = Category.select { |c| c.kind.eql? "Nível" }
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]
-    if current_user
-      @favorite_apps_count = current_user.apps.count
-    end
+    @favorite_apps_count = current_user.apps.count if current_user
 
     respond_to do |format|
       format.js {}
