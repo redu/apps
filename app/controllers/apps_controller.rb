@@ -1,17 +1,22 @@
 # encoding: utf-8
 
 class AppsController < ApplicationController
+  helper :formatting
+
   def index
     if params[:filter] || params[:search]
       @apps = search(params[:filter])
     else
       @apps = App.all
     end
-    @categories = Category.all
+    @categories = Category.select
     @kinds = Category.select(:kind).uniq
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]
+    if current_user
+      @favorite_apps_count = current_user.apps.count
+    end
 
     respond_to do |format|
       format.js {}
