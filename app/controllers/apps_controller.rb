@@ -7,7 +7,7 @@ class AppsController < ApplicationController
     if params[:filter] || params[:search]
       @apps = search(params[:filter])
     else
-      @apps = App.all
+      @apps = App.includes(:comments, :categories)
     end
     @categories = Category.select { |c| c.kind.eql? "Nível" }
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
