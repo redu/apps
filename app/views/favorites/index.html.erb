@@ -14,11 +14,55 @@
     <p>Você ainda não possui Aplicativos Favoritos. Para adicioná-los, pesquise por um aplicativo na aba “Recursos Educacionais Abertos”, abra a página do mesmo clicando no título e clique no botão “Adicionar a Favoritos”.</p>
   </div>
 <% else %>
-  <% @user_apps_associations.each do |association| %>
-     <p> <%= link_to association.app.name, association.app =%> <%= link_to 'Abrir', preview_app_path(association.app) %>
-      <%= button_to "Delete", { :action => "destroy",:user_id => association.user.id,
-        :id => association.app.id, :association_id => association.id},
-        :confirm => "Are you sure?", :method => :delete %>
-     </p>
-  <% end %>
+  <div class="oer-apps-wrapper">
+    <ul id="apps" class="list-2-columns list-columns-separator">
+      <% @user_apps_associations.each do |association| %>
+        <% rating = association.app.reputation_for(:rating).to_i %>
+        <% specialized_comments = association.app.comments.select { |c| c.type ==  :specialized }.count %>
+        <% belongs_to_area = association.app.categories.any? { |c| c.kind.eql? "Área" } %>
+        <li class="general-list-item">
+          <%= link_to "Fechar", { :action => "destroy", :user_id => association.user.id,
+                :id => association.app.id, :association_id => association.id },
+                :confirm => "Are you sure?", :method => :delete, :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
+          <div class="general-list-item-body">
+            <div class="general-list-item-column">
+              <%= link_to app_path(association.app), title: association.app.name do %>
+                <%= image_tag association.app.thumbnail(:medium), title: association.app.name, alt: association.app.name %>
+              <% end %>
+            </div>
+            <div class="general-list-item-column">
+              <h4 class="general-list-item-title">
+                <%= link_to truncate(association.app.name, :length => 40), app_path(association.app), title: association.app.name, class: "general-list-item-title-link" %>
+              </h4>
+              <span class="legend">Autor: <%= association.app.author %></span>
+              <span class="legend"><%= association.app.categories.select { |c| c.kind.eql? "Nível" }.collect(&:name).join(", ") %></span>
+              <span class="legend">Língua: <%= association.app.language %></span>
+              <% if belongs_to_area %>
+                <span class="legend">Área: <%= association.app.categories.select { |c| c.kind.eql? "Área" }.collect(&:name).join(", ") %></span>
+              <% end %>
+            </div>
+          </div>
+          <div class="general-list-item-footer">
+            <% if rating != 0 %>
+            <ol class="general-list-item-stars">
+              <% rating.times do %>
+                <li class="general-list-item-star">
+                  <span class="icon-star-full-gray_16_18 show text-replacement">Estrela</span>
+                </li>
+              <% end %>
+            </ol>
+            <% end %>
+            <ul class="general-list-item-counters">
+              <li class="general-list-item-counter icon-seen-gray_16_18-before"><%= association.app.views %></li>
+              <li class="general-list-item-counter icon-comment-gray_16_18-before"><%= association.app.comments.select { |c| c.type == :common }.count %></li>
+              <% if specialized_comments != 0 %>
+                <li class="general-list-item-counter icon-specialist-gray_16_18-before"><%= specialized_comments %></li>
+              <% end %>
+            </ul>
+          </div>
+          <%= link_to "Abrir", preview_app_path(association.app), :class => "button-default", "data-toggle" => "modal" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
