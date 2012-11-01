@@ -1,2 +1,2 @@
 $('#apps').append('<%= escape_javascript render(@apps) %>');
-$('#paginator').html("<%= escape_javascript(link_to_next_page(@apps, 'Mostrar Mais', :remote => true)) %>")
+$('#paginator').html("<%= escape_javascript(link_to_next_page(@apps, 'Mostrar mais...', {remote: true, params: {filter: @filter}, class: 'button-default icon-arrow-down-pagination-gray_16_18-before'})) %>")

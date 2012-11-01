@@ -3,10 +3,7 @@
 // ==========================================================================
 
 
-body {
-  background-color: $gray1;
-  padding-top: 59px;
-}
+body { background-color: $gray1; }
 
 .breadcrumb-mini-wrapper {
   height: 18px;
@@ -19,3 +16,8 @@ body {
 .content-body,
 .content-body +
 .breadcrumb-mini-wrapper { margin-top: 10px; }
+
+.header-not-logged-in +
+.container { margin-top: 17px; }
+
+.main-wrapper > .container { padding: 17px 0 20px; }
