@@ -60,7 +60,7 @@
               <% end %>
             </ul>
           </div>
-          <%= link_to "Abrir", preview_app_path(association.app), :class => "button-default", "data-toggle" => "modal" %>
+          <%= link_to "Abrir", preview_app_path(association.app), :class => "button-default", "data-toggle" => "modal-app", "data-modal-title" => association.app.name, "data-modal-subtitle" => association.app.author, "data-modal-url" => association.app.url %>
         </li>
       <% end %>
     </ul>
