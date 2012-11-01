@@ -1,0 +1,111 @@
+<form class="form-horizontal">
+  <div class="modal-header modal-header-gray">
+    <h3 class="modal-sign-up-title icon-add-friend-green_32_34-before">Cadastre-se no Redu.<br>É gratuito, rápido e fácil.</h3>
+  </div>
+  <div class="modal-body">
+    <div class="modal-sign-up-section">
+      <p>Caso tenha uma conta no Facebook, você pode evitar o trabalho de preencher formulários ao associar sua conta ao Redu. Desta forma, o cadastro é feito de forma automática.</p>
+      <div class="facebook-sign-up">
+        <a href="/auth/facebook" class="facebook-sign-up-button" value="login-facebook">Cadastre-se no Redu usando sua conta do Facebook</a>
+        <span class="legend"><em>Opcional</em></span>
+      </div>
+    </div>
+    <hr class="list-separator">
+    <div class="modal-sign-up-section">
+      <p>Ou preencha os formulários abaixo e crie seu perfil no Redu.</p>
+    </div>
+    <div class="row">
+      <div class="span6">
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_first_name">Nome</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_first_name" name="user[first_name]" placeholder="Seu primeiro nome" size="30" type="text">
+          </div>
+        </div>
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_last_name">Sobrenome</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_last_name" name="user[last_name]" placeholder="Seu último nome" size="30" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="span6">
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_email">E-mail</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_email" name="user[email]" placeholder="Seu e-mail de contato" size="30" type="text">
+          </div>
+        </div>
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_email_confirmation">Confirmação</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_email_confirmation" name="user[email_confirmation]" placeholder="Digite novamente o e-mail" size="30" type="text">
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="header-separator">
+    <div class="row">
+      <div class="span6">
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_login">Login</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_login" name="user[login]" placeholder="Como será o seu apelido?" size="30" type="text">
+          </div>
+        </div>
+        <div class="row">
+          <div class="span4 offset2">
+            <div class="modal-sign-up-login-explaination">
+              <p class="legend">O Login define como será o endereço de sua página no Redu.</p>
+              <p class="legend">Ex.: redu.com.br/pessoas/<strong>seulogin</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span6">
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_password">Senha</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_password" name="user[password]" placeholder="Digite sua senha" size="30" type="password">
+          </div>
+        </div>
+        <div class="control-group control-big">
+          <div class="control-label span2">
+            <label for="user_password_confirmation">Confirmação</label>
+          </div>
+          <div class="controls span4">
+            <input id="user_password_confirmation" name="user[password_confirmation]" placeholder="Confirme sua senha" size="30" type="password">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer clearfix">
+    <div class="modal-sign-up-tos">
+      <div class="control-group">
+        <div class="controls">
+          <div class="control-checkbox tos">
+            <input id="user_tos" name="user[tos]" type="checkbox" value="1">
+            <label for="user_tos">Aceito os <a href="#modal-tos" data-toggle="modal">Termos de Uso</a> da plataforma Redu.</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-sign-up-buttons">
+      <a href="/" class="button-big button-default" data-dismiss="modal" rel="nofollow">Cancelar</a>
+      <input class="button-big button-success" name="commit" type="submit" value="Cadastrar sua conta">
+    </div>
+  </div>
+</form>
