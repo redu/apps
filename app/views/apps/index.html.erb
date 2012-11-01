@@ -26,7 +26,7 @@
   <% end %>
 </ul>
 
-<% if @apps.count == 0 %>
+<% if @apps.size == 0 %>
 
 <div class="oer-apps-none">
   <%= image_tag "icon-api-gray_128_130.png" %>
@@ -39,7 +39,7 @@
 <div class="apps-portal-search-messages">
   <span class="apps-portal-search-message">
     Você buscou por <strong>“<%= params[:search] %>”</strong>. 
-    Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @apps.count %>.
+    Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @results_counter %>.
   </span>
   <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
 </div>

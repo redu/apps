@@ -66,10 +66,8 @@ class AppsController < ApplicationController
     @results_counter = @apps.total_entries  # Total de hits
 
     # Conta quantidade de aplicativos por filtro
-    @categories = @apps.collect { |a| a.categories }.flatten.
-      select { |c| c.kind == "Nível" }
-    @filters_counter = hash = Hash.new(0)
-    @categories.collect(&:name).each { |v| hash.store(v, hash[v]+1) }
+    @categories = Category.filters_on @apps
+    @filters_counter = Category.count_filters_on @categories
     @categories = @categories.uniq # Remove categorias duplicadas
   end
 end
