@@ -20,24 +20,24 @@
           <div class="dropdown-menu nav-global-profile-dropdown">
             <div class="arrow"></div>
             <div class="nav-global-profile-header">
-              Nome Sobrenome
+              <%= "#{current_user.first_name} #{current_user.last_name}" %>
             </div>
             <ul class="nav-global-profile-items">
               <li class="nav-global-profile-item link-container">
-                <a href="#" title="Meu Perfil" class="link-target icon-profile-lightblue_16_18-before">Meu Perfil</a>
-                <a href="#" title="Editar" class="nav-global-profile-edit link-secondary">editar</a>
+                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}" %>" title="Meu Perfil" class="link-target icon-profile-lightblue_16_18-before">Meu Perfil</a>
+                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/editar" %>" title="Editar" class="nav-global-profile-edit link-secondary">editar</a>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="#" title="Mensagens" class="link-target icon-message-lightblue_16_18-before">Mensagens</a>
+                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/messages" %>" title="Mensagens" class="link-target icon-message-lightblue_16_18-before">Mensagens</a>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="#" title="Configurações" class="link-target icon-manage-lightblue_16_18-before">Configurações</a>
+                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/editar" %>" title="Configurações" class="link-target icon-manage-lightblue_16_18-before">Configurações</a>
               </li>
               <li class="nav-global-profile-item link-container">
                 <a href="#" title="Parceiro" class="link-target icon-partner-lightblue_16_18-before">Parceiro</a>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="#" title="Sair" class="link-target">Sair</a>
+                <a href="<%= "http://www.redu.com.br/logout" %>" title="Sair" class="link-target">Sair</a>
               </li>
             </ul>
           </div>
