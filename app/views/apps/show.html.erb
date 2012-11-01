@@ -45,7 +45,7 @@
         <%= t 'review', count: @app.comments.specialized.count %>
       </li>
       <li class="icon-comment-gray_16_18-before">
-        <%= t 'comment', 
+        <%= t 'comment',
               count: (@app.comments.common.count + @app.comments.answer.count) %>
       </li>
     </ul>
@@ -63,7 +63,7 @@
 
     <% @kinds.each do |cat| %>
       <% if @app.categories.any? {|c| c.kind == cat.kind } %>
-        <p class="info"><%= cat.kind %>:</p> 
+        <p class="info"><%= cat.kind %>:</p>
         <p class="description"><%= (@app.categories.select { |a| a.kind == cat.kind }.collect &:name).first %></p>
       <% end %>
     <% end %>
@@ -76,11 +76,7 @@
   </div>
 
   <div class="oer-buttons">
-    <%= form_tag preview_app_path(@app), method: "get" do %>
-      <%= content_tag :button, :type => :submit, :class => "button-default" do %>
-        Abrir este Recurso
-      <% end %>
-    <% end %>
+    <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
     <% unless @favorite %>
       <%= form_tag user_favorites_path(@user.id), method: "post" do %>
         <%= hidden_field_tag :app_id , @app.id %>
