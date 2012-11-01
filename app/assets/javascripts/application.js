@@ -79,5 +79,47 @@ $(function() {
     });
   });
 
+  // Cria uma janela modal específica para abrir um aplicativo.
+  $('body').on('click', '[data-toggle="modal-app"]', function(e) {
+    e.preventDefault();
+    var $this = $(this);
+
+    // Cria a modal.
+    var $modal = $(document.createElement('div'))
+      .attr({
+        'id': $this.attr('href')
+      , 'class': 'modal hide modal-fill-horizontal'
+      });
+    var $header = $(document.createElement('div'))
+      .attr('class', 'modal-header')
+      .append($(document.createElement('h3')).attr('class', 'modal-title').html($this.data('modal-title')))
+      .append($(document.createElement('span')).attr('class', 'modal-subtitle').html($this.data('modal-subtitle')));
+    var $body = $(document.createElement('div'))
+      .attr('class', 'modal-body')
+      .append($(document.createElement('iframe')).attr({
+        'frameborder': '0'
+      , 'scrolling': 'no'
+      , 'src': $this.data('modal-url')
+      }))
+    var $footer = $(document.createElement('div'))
+      .attr('class', 'modal-footer')
+      .append($(document.createElement('button')).attr({
+        'class': 'button-default'
+      , 'data-dismiss': 'modal'
+      }).html('Fechar'));
+    $('body').append($modal.append($header).append($body).append($footer));
+
+    // Evita que ela seja fechada com Esc ou clicando fora.
+    $modal.data('backdrop', 'static');
+    $modal.data('keyboard', 'false');
+
+    // Abre a modal.
+    $modal.modal('show').reduModal('fillHorizontal');
+
+    // Remove a modal quando for fechada.
+    $modal.on('hidden', function(e) {
+      $modal.remove();
+    })
+  });
 });
 
