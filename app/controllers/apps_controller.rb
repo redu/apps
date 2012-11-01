@@ -5,14 +5,9 @@ class AppsController < ApplicationController
 
   def index
     if params[:filter] || params[:search]
-      @apps = search(params[:filter])
-      @categories = Category.filter
-      unless !params[:search]
-        @categories = @apps.collect { |a| a.categories.filter }.flatten
-        @filters_counter = Hash.new(0)
-        @categories.collect(&:name).each { |v| @filters_counter.store(v, @filters_counter[v]+1) }
-        @categories = @categories.uniq
-      end
+      @apps = search(params[:filter]).results
+      @categories = Category.filter if params[:filter] && !params[:search]
+      assign_searching_variables unless !params[:search]
     else
       @apps = App.includes(:comments, :categories)
       @categories = Category.filter
@@ -56,7 +51,7 @@ class AppsController < ApplicationController
   private
 
   def search(filters = nil)
-    @search = App.search do
+    App.search(include: [:comments, :categories]) do
       fulltext params[:search] do
         boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
         query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca
@@ -65,6 +60,16 @@ class AppsController < ApplicationController
       end
       with(:category_ids, filters) if filters
     end
-    @apps = @search.results
+  end
+
+  def assign_searching_variables
+    @results_counter = @apps.total_entries  # Total de hits
+
+    # Conta quantidade de aplicativos por filtro
+    @categories = @apps.collect { |a| a.categories }.flatten.
+      select { |c| c.kind == "Nível" }
+    @filters_counter = hash = Hash.new(0)
+    @categories.collect(&:name).each { |v| hash.store(v, hash[v]+1) }
+    @categories = @categories.uniq # Remove categorias duplicadas
   end
 end

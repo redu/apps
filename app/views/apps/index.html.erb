@@ -37,7 +37,10 @@
 
 <% unless !params.include? :search %>
 <div class="apps-portal-search-messages">
-  <span class="apps-portal-search-message">Você buscou por <strong>“<%= params[:search] %>”</strong>. Achamos <strong><%= @apps.count %></strong> <%= t 'result', count: @apps.count %>.</span>
+  <span class="apps-portal-search-message">
+    Você buscou por <strong>“<%= params[:search] %>”</strong>. 
+    Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @apps.count %>.
+  </span>
   <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
 </div>
 <% end %>
@@ -70,7 +73,9 @@
 <hr class="list-separator">
 
 <div id="paginator" class="pagination">
-  <%= link_to_next_page(@apps, "Mostrar mais...", {remote: true, params: {filter: @filter}, class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
+  <%= link_to_next_page(@apps, "Mostrar mais...", 
+                        {remote: true, params: {filter: @filter, search: @search}, 
+                        class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
 </div>
 
 <% end %>
