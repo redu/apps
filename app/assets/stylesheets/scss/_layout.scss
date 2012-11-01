@@ -19,3 +19,5 @@ body { background-color: $gray1; }
 
 .header-not-logged-in +
 .container { margin-top: 17px; }
+
+.main-wrapper > .container { padding: 17px 0 20px; }
