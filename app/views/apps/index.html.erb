@@ -38,7 +38,7 @@
 <% unless !params.include? :search %>
 <div class="apps-portal-search-messages">
   <span class="apps-portal-search-message">
-    Você buscou por <strong>“<%= params[:search] %>”</strong>. 
+    Você buscou por <strong>“<%= params[:search] %>”</strong>.
     Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @results_counter %>.
   </span>
   <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
@@ -52,13 +52,8 @@
       <% if @filter.include?(cat.id.to_s) %>
         <% filter_active = " filter-active" %>
       <% end %>
-      <% counter = if params.include? :search %>
-        <% @filters_counter[cat.name].to_i %>
-      <% else %>
-        <% 0 %>
-      <% end %>
-      <%= link_to "#{cat.name} #{parentize(counter)}", 
-                  apps_path(filter: filters_url(@filter, cat), search: @search), 
+      <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
+                  apps_path(filter: filters_url(@filter, cat), search: @search),
                   :class => "filter#{filter_active}" %>
     <% end %>
   </div>
@@ -73,8 +68,8 @@
 <hr class="list-separator">
 
 <div id="paginator" class="pagination">
-  <%= link_to_next_page(@apps, "Mostrar mais...", 
-                        {remote: true, params: {filter: @filter, search: @search}, 
+  <%= link_to_next_page(@apps, "Mostrar mais...",
+                        {remote: true, params: {filter: @filter, search: @search},
                         class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
 </div>
 
