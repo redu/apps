@@ -121,5 +121,32 @@ $(function() {
       $modal.remove();
     })
   });
+
+
+  // Comportamento de hover in/out das estrelas.
+  var unratedStar = "icon-star-full-lightgray_16_18"
+    , ratedStar = "icon-star-full-gray_16_18"
+    , userRatedStar = "icon-star-full-blue_16_18"
+    , starsWrapper = "oer-stars"
+  $("." + starsWrapper + " a").hover(function() {
+    var index = $(this).html()
+      , $stars = $(this).parents("." + starsWrapper).find("a")
+
+    $stars.each(function(i) {
+      if (i < index) {
+        $(this).removeClass(unratedStar + " " + ratedStar).addClass(userRatedStar)
+      }
+    })
+  }, function() {
+    var index = $(this).html()
+      , $stars = $(this).parents("." + starsWrapper).find("a")
+
+    // Retorna as classes originais das estrelas.
+    $stars.each(function(i) {
+      if (i < index) {
+        $(this).removeClass(userRatedStar).addClass("icon-star-full-" + $(this).data("star-color") + "_16_18")
+      }
+    })
+  });
 });
 

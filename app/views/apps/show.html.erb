@@ -15,12 +15,25 @@
     <% if @user %>
 
       <ul class="oer-stars">
-        <% 5.times do |n| %>
-          <li><%= link_to "#{n+1}", rate_app_path(@app, rating: n+1), method: "post", class: "icon-star-full-gray_16_18 show text-replacement" %></li>
+        <% app_reputation = @app.reputation_for(:rating) %>
+        <% user_rating = @user_rating.to_i %>
+        <% index = user_rating || 0 %>
+        <% user_rating.times do |n| %>
+          <li><%= link_to "#{n+1}", rate_app_path(@app, rating: n+1), method: "post", class: "icon-star-full-blue_16_18 show text-replacement", "data-star-color" => "blue" %></li>
+        <% end %>
+        <% if app_reputation > user_rating %>
+          <% (app_reputation - user_rating).times do |n| %>
+            <li><%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-gray_16_18 show text-replacement", "data-star-color" => "gray" %></li>
+            <% index += 1 %>
+          <% end %>
+        <% end %>
+        <% (5 - index).times do |n| %>
+          <li><%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-lightgray_16_18 show text-replacement", "data-star-color" => "lightgray" %></li>
+          <% index += 1 %>
         <% end %>
       </ul>
 
-      <h6><%= @app.reputation_for(:rating) %><span>/5</span></h6>
+      <h6><%= app_reputation %><span>/5</span></h6>
       <ul class="data-app">
         <li class="app-rating">
           <% if @evaluated %>
