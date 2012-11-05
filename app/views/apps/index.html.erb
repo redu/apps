@@ -1,3 +1,4 @@
+<% unless params.include? :search %>
 <div class="apps-portal-oer">
   <div class="apps-portal-oer-explaination">
     <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
@@ -7,9 +8,14 @@
 </div>
 
 <a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
+<% end %>
 
 <ul class="tabs tabs-big">
+  <% if params.include? :search %>
+  <li class="tab">
+  <% else %>
   <li class="tab tab-active">
+  <% end %>
     <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
   </li>
   <% if current_user %>
@@ -20,6 +26,25 @@
   <% end %>
 </ul>
 
+<% if @apps.size == 0 %>
+
+<div class="oer-apps-none">
+  <%= image_tag "icon-api-gray_128_130.png" %>
+  <p>Sentimos muito, mas não achamos resultado para “<%= params[:search] %>”. Tente outro termo.</p>
+</div>
+
+<% else %>
+
+<% unless !params.include? :search %>
+<div class="apps-portal-search-messages">
+  <span class="apps-portal-search-message">
+    Você buscou por <strong>“<%= params[:search] %>”</strong>.
+    Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @results_counter %>.
+  </span>
+  <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
+</div>
+<% end %>
+
 <div class="apps-portal-filters">
   <div class="filters">
     <% @categories.each do |cat| %>
@@ -27,7 +52,9 @@
       <% if @filter.include?(cat.id.to_s) %>
         <% filter_active = " filter-active" %>
       <% end %>
-      <%= link_to cat.name, apps_path(filter: filters_url(@filter, cat), search: @search), :class => "filter#{filter_active}" %>
+      <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
+                  apps_path(filter: filters_url(@filter, cat), search: @search),
+                  :class => "filter#{filter_active}" %>
     <% end %>
   </div>
 </div>
@@ -41,5 +68,9 @@
 <hr class="list-separator">
 
 <div id="paginator" class="pagination">
-  <%= link_to_next_page(@apps, "Mostrar mais...", {remote: true, params: {filter: @filter}, class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
+  <%= link_to_next_page(@apps, "Mostrar mais...",
+                        {remote: true, params: {filter: @filter, search: @search},
+                        class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
 </div>
+
+<% end %>

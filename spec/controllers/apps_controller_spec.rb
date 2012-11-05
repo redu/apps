@@ -16,10 +16,6 @@ describe AppsController do
       it "assigns @categories variable" do
         assigns(:categories).should == Category.all
       end
-
-      it "assigns @kinds variable" do
-        assigns(:kinds).should == Category.select(:kind).uniq
-      end
     end
 
     context "when filtering app by category" do

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class App < ActiveRecord::Base
   attr_accessible :name, :thumbnail, :views
 
@@ -37,14 +39,6 @@ class App < ActiveRecord::Base
     end
     integer :category_ids, multiple: true do
       categories.map(&:id)
-    end
-  end
-
-  def App.filter_by_categories(filter)
-    if filter
-      App.joins(:categories).where(categories: {id: filter})
-    else
-      App
     end
   end
 end

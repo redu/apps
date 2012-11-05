@@ -8,4 +8,13 @@ module AppsHelper
       ret
     end
   end
+
+  # Retorna a quantidade de aplicativos encontrados de uma dada categoria.
+  def count_filtered(filters_counter, cat)
+    if params.include? :search
+      filters_counter[cat.name].to_i
+    else
+      0
+    end
+  end
 end
