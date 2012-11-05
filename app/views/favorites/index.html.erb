@@ -14,6 +14,20 @@
     <p>Você ainda não possui Aplicativos Favoritos. Para adicioná-los, pesquise por um aplicativo na aba “Recursos Educacionais Abertos”, abra a página do mesmo clicando no título e clique no botão “Adicionar a Favoritos”.</p>
   </div>
 <% else %>
+  <% unless @favorite_apps_filters_counter.keys.length < 2 %>
+    <div class="apps-portal-filters">
+      <div class="filters">
+        <% @favorite_apps_filters.uniq.each do |cat| %>
+          <% if @filter.include?(cat.id.to_s) %>
+            <% filter_active = " filter-active" %>
+          <% end %>
+          <%= link_to "#{cat.name} #{parentize(@favorite_apps_filters_counter[cat.name])}",
+                      user_favorites_path(current_user, filter: filters_url(@filter, cat)),
+                      class: "filter#{filter_active}" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
   <div class="oer-apps-wrapper">
     <ul id="apps" class="list-2-columns list-columns-separator">
       <% @user_apps_associations.each do |association| %>
@@ -21,8 +35,8 @@
         <% specialized_comments = association.app.comments.select { |c| c.type ==  :specialized }.count %>
         <% belongs_to_area = association.app.categories.any? { |c| c.kind.eql? "Área" } %>
         <li class="general-list-item">
-          <%= link_to "Fechar", { :action => "destroy", :user_id => association.user.id,
-                :id => association.app.id, :association_id => association.id },
+          <%= link_to "Fechar", { :action => "destroy", :user_id => @user,
+                :id => association },
                 :confirm => "Are you sure?", :method => :delete, :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
           <div class="general-list-item-body">
             <div class="general-list-item-column">
