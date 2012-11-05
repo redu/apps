@@ -20,8 +20,11 @@ pt-BR:
     other: "%{count} críticas de especialista"
   comment:
     zero: "Nenhum comentário"
-    one: "1 comentário"
-    other: "%{count} comentários"
+    one: "comentário"
+    other: "comentários"
+  result:
+    one: "resultado"
+    other: "resultados"
   date:
     abbr_day_names:
     - Dom
