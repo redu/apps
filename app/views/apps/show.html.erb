@@ -14,7 +14,7 @@
     <%= image_tag @app.thumbnail.url(:large) %>
     <% if @user %>
 
-      <ul class="oer-stars">
+      <ol class="oer-stars">
         <% app_reputation = @app.reputation_for(:rating) %>
         <% user_rating = @user_rating.to_i %>
         <% index = user_rating || 0 %>
@@ -31,7 +31,7 @@
           <li><%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-lightgray_16_18 show text-replacement", "data-star-color" => "lightgray" %></li>
           <% index += 1 %>
         <% end %>
-      </ul>
+      </ol>
 
       <h6><%= app_reputation %><span>/5</span></h6>
       <ul class="data-app">
