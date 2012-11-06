@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "environment_id"
+    t.boolean  "zombie"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
   end
@@ -162,6 +163,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.integer  "sid"
     t.string   "name"
     t.integer  "course_id"
+    t.boolean  "zombie"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -172,6 +174,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.integer  "suid"
     t.string   "name"
     t.integer  "space_id"
+    t.boolean  "zombie"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -190,6 +193,9 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
   create_table "user_course_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_id"
+    t.integer  "ucaid"
+    t.integer  "role_cd"
+    t.boolean  "zombie"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -216,6 +222,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
+    t.boolean  "zombie"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
   end

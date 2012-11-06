@@ -1,4 +1,6 @@
 class Environment < ActiveRecord::Base
+  zombify
+
   attr_accessible :eid, :name, :zombie, :owner
 
   # Associações
