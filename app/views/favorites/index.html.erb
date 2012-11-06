@@ -8,7 +8,7 @@
   </li>
 </ul>
 
-<% if @user_apps_associations.count <= 0 %>
+<% if @favorite_apps_count <= 0 %>
   <div class="oer-apps-none">
     <%= image_tag "icon-api-gray_128_130.png" %>
     <p>Você ainda não possui Aplicativos Favoritos. Para adicioná-los, pesquise por um aplicativo na aba “Recursos Educacionais Abertos”, abra a página do mesmo clicando no título e clique no botão “Adicionar a Favoritos”.</p>
@@ -18,19 +18,17 @@
     <div class="apps-portal-filters">
       <div class="filters">
         <% @favorite_apps_filters.uniq.each do |cat| %>
-          <% if @filter.include?(cat.id.to_s) %>
-            <% filter_active = " filter-active" %>
-          <% end %>
           <%= link_to "#{cat.name} #{parentize(@favorite_apps_filters_counter[cat.name])}",
                       user_favorites_path(current_user, filter: filters_url(@filter, cat)),
-                      class: "filter#{filter_active}" %>
+                      class: filter_class(@filter, cat) %>
         <% end %>
       </div>
     </div>
   <% end %>
   <div class="oer-apps-wrapper">
     <ul id="apps" class="list-2-columns list-columns-separator">
-      <%= render partial: "app", collection: @user_apps_associations %>
+      <%= render partial: 'shared/app', collection: @apps, 
+                 locals: { favflag: true } %>
     </ul>
   </div>
 <% end %>

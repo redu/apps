@@ -5,9 +5,10 @@ class FavoritesController < ApplicationController
 
   def index
     @user = current_user
-    @user_apps_associations = assign_user_app_associations.page(params[:page])
+    @user_app_associations = assign_user_app_associations.page(params[:page])
     @favorite_apps_count = @user.apps.count
-    @favorite_apps_filters = Category.filters_on @user.apps.includes(:categories)
+    @apps = @user_app_associations.collect(&:app)
+    @favorite_apps_filters = Category.filters_on @apps
     @favorite_apps_filters_counter = Category.count_filters_on @favorite_apps_filters
     @filter = params.fetch(:filter, [])
   end

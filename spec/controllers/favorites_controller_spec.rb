@@ -20,7 +20,7 @@ describe FavoritesController do
     it "should return user favorites" do
        get :index, user_id: @user, locale: 'pt-BR'
        @user.user_app_associations.to_set.should == 
-          assigns(:user_apps_associations).to_set
+          assigns(:user_app_associations).to_set
     end
   end
 

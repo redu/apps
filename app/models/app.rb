@@ -41,4 +41,9 @@ class App < ActiveRecord::Base
       categories.map(&:id)
     end
   end
+
+  def self.favorited_by(apps, user)
+    apps.collect(&:user_app_associations).flatten.
+      select { |a| a.user_id == user.id }
+  end
 end

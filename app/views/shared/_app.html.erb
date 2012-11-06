@@ -2,6 +2,11 @@
 <% specialized_comments = app.comments.select { |c| c.type ==  :specialized }.count %>
 <% belongs_to_area = app.categories.any? { |c| c.kind.eql? "Área" } %>
 <li class="general-list-item">
+  <% unless !favflag %>
+  <%= link_to "Fechar", { :action => "destroy", :user_id => @user,
+        :id => app },
+        :confirm => "Are you sure?", :method => :delete, :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
+  <% end %>
   <div class="general-list-item-body">
     <div class="general-list-item-column">
       <%= link_to app_path(app), title: app.name do %>
@@ -30,4 +35,9 @@
       <% end %>
     </ul>
   </div>
+  <% if favflag || @user_app_associations.collect(&:id).include?(app.id) %>
+  <%= link_to "Abrir", preview_app_path(app), :class => "button-default", 
+              :"data-toggle" => "modal-app", :"data-modal-title" => app.name, 
+              :"data-modal-subtitle" => app.author, :"data-modal-url" => app.url %>
+  <% end %>
 </li>

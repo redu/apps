@@ -17,4 +17,12 @@ module AppsHelper
       0
     end
   end
+
+  def filter_class(filters, category)
+    if filters.include? category.id.to_s
+      "filter filter-active"
+    else
+      "filter"
+    end
+  end
 end

@@ -9,13 +9,13 @@ class AppsController < ApplicationController
       @categories = Category.filter if params[:filter] && !params[:search]
       assign_searching_variables unless !params[:search]
     else
-      @apps = App.includes(:comments, :categories)
+      @apps = App.includes(:comments, :categories, :user_app_associations)
       @categories = Category.filter
     end
+    @user_app_associations = App.favorited_by(@apps, current_user) if current_user
     @apps = Kaminari.paginate_array(@apps).page(params[:page])
     @filter = params.fetch(:filter, [])
     @search = params[:search]
-    @favorite_apps_count = current_user.apps.count if current_user
 
     respond_to do |format|
       format.js {}
