@@ -30,45 +30,7 @@
   <% end %>
   <div class="oer-apps-wrapper">
     <ul id="apps" class="list-2-columns list-columns-separator">
-      <% @user_apps_associations.each do |association| %>
-        <% rating = association.app.reputation_for(:rating).to_i %>
-        <% specialized_comments = association.app.comments.select { |c| c.type ==  :specialized }.count %>
-        <% belongs_to_area = association.app.categories.any? { |c| c.kind.eql? "Área" } %>
-        <li class="general-list-item">
-          <%= link_to "Fechar", { :action => "destroy", :user_id => @user,
-                :id => association },
-                :confirm => "Are you sure?", :method => :delete, :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
-          <div class="general-list-item-body">
-            <div class="general-list-item-column">
-              <%= link_to app_path(association.app), title: association.app.name do %>
-                <%= image_tag association.app.thumbnail(:medium), title: association.app.name, alt: association.app.name %>
-              <% end %>
-            </div>
-            <div class="general-list-item-column">
-              <h4 class="general-list-item-title">
-                <%= link_to truncate(association.app.name, :length => 40), app_path(association.app), title: association.app.name, class: "general-list-item-title-link" %>
-              </h4>
-              <span class="legend">Autor: <%= association.app.author %></span>
-              <span class="legend"><%= association.app.categories.select { |c| c.kind.eql? "Nível" }.collect(&:name).join(", ") %></span>
-              <span class="legend">Língua: <%= association.app.language %></span>
-              <% if belongs_to_area %>
-                <span class="legend">Área: <%= association.app.categories.select { |c| c.kind.eql? "Área" }.collect(&:name).join(", ") %></span>
-              <% end %>
-            </div>
-          </div>
-          <div class="general-list-item-footer">
-            <%= render "shared/app_rating_stars", rating: rating %>
-            <ul class="general-list-item-counters">
-              <li class="general-list-item-counter icon-seen-gray_16_18-before"><%= association.app.views %></li>
-              <li class="general-list-item-counter icon-comment-gray_16_18-before"><%= association.app.comments.select { |c| c.type == :common }.count %></li>
-              <% if specialized_comments != 0 %>
-                <li class="general-list-item-counter icon-specialist-gray_16_18-before"><%= specialized_comments %></li>
-              <% end %>
-            </ul>
-          </div>
-          <%= link_to "Abrir", preview_app_path(association.app), :class => "button-default", "data-toggle" => "modal-app", "data-modal-title" => association.app.name, "data-modal-subtitle" => association.app.author, "data-modal-url" => association.app.url %>
-        </li>
-      <% end %>
+      <%= render partial: "app", collection: @user_apps_associations %>
     </ul>
   </div>
 <% end %>
