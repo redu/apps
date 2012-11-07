@@ -10,6 +10,9 @@ pt-BR:
   submitters: "Quem submeteu"
   url: "Endereço de origem"
   copyright: "Detentor dos direitos"
+  star:
+    one: "1 estrela"
+    other: "%{count} estrelas"
   evaluation:
     zero: "Nenhuma classificação"
     one: "1 classificação"
@@ -18,7 +21,7 @@ pt-BR:
     zero: "Nenhum favorito"
     one: "1 favorito"
     other: "%{count} favoritos"
-  view: 
+  view:
     zero: "Nenhuma visualização"
     one: "1 visualização"
     other: "%{count} visualizações"
@@ -43,7 +46,7 @@ pt-BR:
     - Sex
     - Sáb
     abbr_month_names:
-    - 
+    -
     - Jan
     - Fev
     - Mar
@@ -69,7 +72,7 @@ pt-BR:
       long: ! '%d de %B de %Y'
       short: ! '%d de %B'
     month_names:
-    - 
+    -
     - Janeiro
     - Fevereiro
     - Março

@@ -53,27 +53,27 @@
       <% if @user %>
         <li class="app-rating">
           <% if @evaluated %>
-            Você classificou em <%= user_rating %> estrelas.
+            Você classificou em <%= t "star", count: user_rating %>.
           <% else %>
             Classifique este Recurso.
           <% end %>
         </li>
       <% end %>
       <li class="icon-star-empty-gray_16_18-before">
-        <%= t 'evaluation', count: @evaluations %>
+        <%= t 'evaluation', count: @evaluations %>.
       </li>
       <li class="icon-favorite-gray_16_18-before">
-        <%= t 'favorite', count: @app.users.count %>
+        <%= t 'favorite', count: @app.users.count %>.
       </li>
       <li class="icon-seen-gray_16_18-before">
-        <%= t 'view', count: @app.views %>
+        <%= t 'view', count: @app.views %>.
       </li>
       <li class="icon-specialist-gray_16_18-before">
-        <%= t 'review', count: @app.comments.specialized.count %>
+        <%= t 'review', count: @app.comments.specialized.count %>.
       </li>
       <li class="icon-comment-gray_16_18-before">
         <%= t 'comment',
-              count: (@app.comments.common.count + @app.comments.answer.count) %>
+              count: (@app.comments.common.count + @app.comments.answer.count) %>.
       </li>
     </ul>
 
