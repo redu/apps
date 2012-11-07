@@ -9,5 +9,3 @@ module BaseModel
     end
   end
 end
-
-ActiveRecord::Base.send :include, BaseModel

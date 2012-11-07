@@ -14,4 +14,8 @@ class UntiedGeneralObserver < Untied::Consumer::Observer
     self.send("update_#{kind}", payload)
   end
 
+  def after_destroy(payload)
+    kind = payload.keys[0]
+    self.send("destroy_#{kind}", payload)
+  end
 end

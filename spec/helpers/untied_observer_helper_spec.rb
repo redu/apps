@@ -29,6 +29,15 @@ describe UntiedObserverHelper do
       end
     end
 
+    describe "destroy_user" do
+      it "should erase user from database" do
+        User.create(login: "darth", first_name: "anny", last_name: "skywalker",
+          uid: 1)
+        destroy_user(user)
+        User.find_by_uid(user["user"][:id]).should be_nil
+      end
+    end
+
   end
 
   context "When working with environment" do
@@ -55,7 +64,7 @@ describe UntiedObserverHelper do
       end
 
       it 'should complete zombie environment' do
-        Environment.new(eid: environment[:id]).save(validate: false) #Beware! it's a zombie
+        Environment.new(eid: environment["environment"][:id]).save(validate: false) #Beware! it's a zombie
         create_environment(environment)
         Environment.find_by_eid(environment["environment"][:id]).should be_valid
       end
@@ -68,7 +77,14 @@ describe UntiedObserverHelper do
         update_environment(environment).should == true
       end
     end
-
+    describe 'destroy_environment' do
+      it 'should erase environment from database' do
+        Environment.create(name: "Ambiente mais lindo do mundo", eid: 3,
+          owner: @user)
+        destroy_environment(environment)
+        Environment.find_by_eid(environment["environment"][:id]).should be_nil
+      end
+    end
   end
 
   context "When working with course" do
@@ -121,6 +137,13 @@ describe UntiedObserverHelper do
         update_course(course.merge(id: 2)).should == true
       end
     end
+    describe 'destroy_course' do
+      it 'Should erase course from database' do
+        Course.new(cid: course["course"][:id]).save(validate: false) # o curso não precisa ser valido
+        destroy_course(course)
+        Course.find_by_cid(course["course"][:id]).should be_nil
+      end
+    end
   end
 
   context "When working with space" do
@@ -164,6 +187,14 @@ describe UntiedObserverHelper do
     describe 'update_space' do
       it 'should udpate space in database' do
         update_space(space.merge(id: 1)).should == true
+      end
+    end
+
+    describe 'destroy_space' do
+      it 'should erase space from database' do
+        Space.new(sid: space["space"][:id])
+        destroy_space(space)
+        Space.find_by_sid(space["space"][:id]).should be_nil
       end
     end
   end
@@ -210,6 +241,13 @@ describe UntiedObserverHelper do
     describe 'update_subject' do
       it 'should update subject in database' do
         update_subject(subject.merge(id:1)).should == true
+      end
+    end
+    describe 'destroy_subject' do
+      it 'should erase subject from database' do
+        Subject.new(suid: subject["subject"][:id]).save(validate: false)
+        destroy_subject(subject)
+        Subject.find_by_suid(subject["subject"][:id]).should be_nil
       end
     end
   end
@@ -260,6 +298,13 @@ describe UntiedObserverHelper do
         UserCourseAssociation.create()
         update_user_course_association(association)
         UserCourseAssociation.find_by_ucaid(1).role.should == :member
+      end
+    end
+    describe 'destroy_user_course_association' do
+      it 'should erase use_course_associaiton from database' do
+        UserCourseAssociation.new(ucaid: 1).save(validate: false)
+        destroy_user_course_association(association)
+        UserCourseAssociation.find_by_ucaid(1).should be_nil
       end
     end
   end

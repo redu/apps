@@ -1,4 +1,6 @@
+require 'base_model'
 class Subject < ActiveRecord::Base
+  include BaseModel
   zombify
 
   attr_accessible :name, :suid, :space

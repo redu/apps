@@ -1,4 +1,7 @@
+require 'base_model'
 class Environment < ActiveRecord::Base
+  include BaseModel
+
   zombify
 
   attr_accessible :eid, :name, :zombie, :owner

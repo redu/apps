@@ -1,6 +1,8 @@
 require 'base_model'
 
 class User < ActiveRecord::Base
+  include BaseModel
+
   zombify
 
   attr_accessible :uid, :login, :first_name, :last_name,:role, :thumbnail

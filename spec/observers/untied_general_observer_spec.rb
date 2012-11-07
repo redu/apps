@@ -15,6 +15,12 @@ describe UntiedGeneralObserver do
           subject.notify(:after_update, "#{name}".to_sym, :core,
             {"#{name}" => {}})
         end
+
+        it "should call destroy_#{name} with payload" do
+          subject.should_receive("destroy_#{name}").with(an_instance_of(Hash))
+          subject.notify(:after_destroy, "#{name}".to_sym, :core,
+            {"#{name}" => {}})
+        end
       end
     end
 end

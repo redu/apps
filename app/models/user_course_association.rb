@@ -1,4 +1,6 @@
+require 'base_model'
 class UserCourseAssociation < ActiveRecord::Base
+  include BaseModel
   zombify
   attr_accessible :ucaid, :user
   belongs_to :user

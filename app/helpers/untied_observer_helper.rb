@@ -23,6 +23,11 @@ module UntiedObserverHelper
     model.save
   end
 
+  def destroy(data, model_info)
+    model = find_model(model_info['name'], data[:id])
+    model.destroy if model
+  end
+
   def method_missing(name, *args, &block)
     #checa por "metodo"_"modelo", ex: create_user, update_environment, etc.
     match = /(?<method>[a-z]+?)_(?<model>[a-z_]+)/.match(name)
@@ -42,7 +47,7 @@ module UntiedObserverHelper
   end
 
   def check_match(match)
-    match  and ['create', 'update'].include?(match[:method]) and
+    match  and ['create', 'update', 'destroy'].include?(match[:method]) and
     @@model_data.keys.include?(match[:model].classify)
   end
 

@@ -1,4 +1,7 @@
+require 'base_model'
+
 class Course < ActiveRecord::Base
+  include BaseModel
   zombify
 
   attr_accessible :cid, :name, :owner, :environment
