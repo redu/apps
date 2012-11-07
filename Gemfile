@@ -11,6 +11,8 @@ gem 'rails-translate-routes'
 gem 'simple-navigation'
 gem 'activerecord-reputation-system'
 gem 'sunspot_rails'
+gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
+gem 'daemons'
 
 # Gems used only for assets and not required
 # in production environments by default.
