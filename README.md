@@ -23,6 +23,22 @@ What about if you already have data in your database? Run reindex!
 rake sunspot:reindex
 ```
 
+## Untied consumer
+
+As you probably know, this application relies on entities created by another service (aka core) propagated via message bus. In development mode you can start the consumer with the following rake task:
+
+```sh
+$ bundle exec rake untied:consumer:work
+```
+
+In order to run the message bus consumer as a daemon you should use the following script:
+
+```sh
+$ script/untiedconsumerd start
+```
+
+For more information: ``script/untiedconsumerd -h``.
+
 ## Technologies and Versions
 * Ruby 1.9.3
 * Rails 3.2.5
