@@ -5,7 +5,6 @@ class FavoritesController < ApplicationController
 
   def index
     @apps = current_user.apps.includes(:categories, :comments)
-    @apps.page(params[:page])
     @favorite_apps_count = @apps.length
     @favorite_apps_filters = Category.filters_on @apps
     @favorite_apps_filters_counter = Category.count_filters_on @favorite_apps_filters

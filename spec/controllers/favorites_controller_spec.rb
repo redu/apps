@@ -17,10 +17,9 @@ describe FavoritesController do
        @user.apps << [@app1, @app2]
     end
 
-    it "should return user favorites" do
-       get :index, user_id: @user, locale: 'pt-BR'
-       @user.user_app_associations.to_set.should == 
-          assigns(:user_app_associations).to_set
+    it "should assign user favorites" do
+      get :index, user_id: @user, locale: 'pt-BR'
+      assigns(:apps).should_not be_nil
     end
   end
 
