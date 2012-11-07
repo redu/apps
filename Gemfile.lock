@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/redu/untied-consumer.git
+  revision: be74c7991e500f0e5985267b5dc1bcd4fe9958d2
+  specs:
+    untied-consumer (0.0.4)
+      activemodel
+      amqp
+      configurable
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -30,7 +40,7 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     arel (3.0.2)
-    builder (3.0.3)
+    builder (3.0.4)
     cocaine (0.4.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)

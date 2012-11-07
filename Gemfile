@@ -1,27 +1,15 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.5'
-
 gem 'mysql2'
-
 gem 'paperclip'
-
 gem 'simple_enum'
-
 gem 'factory_girl_rails'
-
-gem 'debugger'
-
 gem 'kaminari'
-
 gem 'jquery-rails'
-
 gem 'rails-translate-routes'
-
 gem 'simple-navigation'
-
 gem 'activerecord-reputation-system'
-
 gem 'sunspot_rails'
 
 # Gems used only for assets and not required
@@ -42,6 +30,7 @@ group :development, :test do
   gem 'therubyracer'
   gem 'faker'
   gem 'random_data'
+  gem 'debugger'
 end
 
 group :test do
