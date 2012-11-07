@@ -127,7 +127,7 @@ $(function() {
   var unratedStar = "icon-star-full-lightgray_16_18"
     , ratedStar = "icon-star-full-gray_16_18"
     , userRatedStar = "icon-star-full-blue_16_18"
-    , starsWrapper = "oer-stars"
+    , starsWrapper = "oer-stars-user-rated"
   $("." + starsWrapper + " a").hover(function() {
     var index = $(this).html()
       , $stars = $(this).parents("." + starsWrapper).find("a")

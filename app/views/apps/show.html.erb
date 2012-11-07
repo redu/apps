@@ -1,4 +1,3 @@
-
 <div class="oer-main">
 
   <h2> <%= @app.name %> </h2>
@@ -11,29 +10,47 @@
 
   <div class="oer-data">
     <%= image_tag @app.thumbnail.url(:large) %>
-    <% if @user %>
 
-      <ol class="oer-stars">
-        <% app_reputation = @app.reputation_for(:rating) %>
+    <ol class="oer-stars <%= "oer-stars-user-rated" if @user %>">
+      <% app_reputation = @app.reputation_for(:rating) %>
+      <% user_rating = 0 %>
+      <% index = 0 %>
+      <% if @user %>
         <% user_rating = @user_rating.to_i %>
-        <% index = user_rating || 0 %>
+        <% index = user_rating %>
         <% user_rating.times do |n| %>
-          <li><%= link_to "#{n+1}", rate_app_path(@app, rating: n+1), method: "post", class: "icon-star-full-blue_16_18 show text-replacement", "data-star-color" => "blue" %></li>
+          <li>
+            <%= link_to "#{n+1}", rate_app_path(@app, rating: n+1), method: "post", class: "icon-star-full-blue_16_18 show text-replacement", "data-star-color" => "blue" %>
+          </li>
         <% end %>
-        <% if app_reputation > user_rating %>
-          <% (app_reputation - user_rating).times do |n| %>
-            <li><%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-gray_16_18 show text-replacement", "data-star-color" => "gray" %></li>
-            <% index += 1 %>
-          <% end %>
-        <% end %>
-        <% (5 - index).times do |n| %>
-          <li><%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-lightgray_16_18 show text-replacement", "data-star-color" => "lightgray" %></li>
+      <% end %>
+      <% if app_reputation > user_rating %>
+        <% (app_reputation - user_rating).to_i.times do |n| %>
+          <li>
+            <% if @user %>
+              <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-gray_16_18 show text-replacement", "data-star-color" => "gray" %>
+            <% else %>
+              <span class="icon-star-full-gray_16_18 show text-replacement"><%= index + 1 %></span>
+            <% end %>
+          </li>
           <% index += 1 %>
         <% end %>
-      </ol>
+      <% end %>
+      <% (5 - index).times do |n| %>
+        <li>
+          <% if @user %>
+            <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-lightgray_16_18 show text-replacement", "data-star-color" => "lightgray" %>
+          <% else %>
+            <span class="icon-star-full-lightgray_16_18 show text-replacement"><%= index + 1 %></span>
+          <% end %>
+        </li>
+        <% index += 1 %>
+      <% end %>
+    </ol>
 
-      <h6><%= app_reputation %><span>/5</span></h6>
-      <ul class="data-app">
+    <h6><%= app_reputation %><span>/5</span></h6>
+    <ul class="data-app">
+      <% if @user %>
         <li class="app-rating">
           <% if @evaluated %>
             Você classificou em <%= user_rating %> estrelas.
@@ -41,9 +58,7 @@
             Classifique este Recurso.
           <% end %>
         </li>
-    <% else %>
-      <%# TODO exibir rating do app sem opção de o usuário dar rate %>
-    <% end %>
+      <% end %>
       <li class="icon-star-empty-gray_16_18-before">
         <%= t 'evaluation', count: @evaluations %>
       </li>
@@ -89,7 +104,7 @@
 
   <div class="oer-buttons">
     <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
-    <% unless @favorite %>
+    <% unless @favorite || !@user %>
       <%= form_tag user_favorites_path(@user.id), method: "post" do %>
         <%= hidden_field_tag :app_id , @app.id %>
         <%= content_tag :button, :type => :submit, class: "button-primary" do %>

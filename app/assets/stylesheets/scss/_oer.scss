@@ -1,7 +1,7 @@
 .oer-main {
   margin: 10px 20px 20px 20px;
   overflow: auto;
-    
+
   h2 {
     margin-bottom: 20px;
     float: left;
@@ -19,7 +19,7 @@
   float: left;
   clear: left;
   margin-right: 18px;
-    
+
   li {
     padding: 0 5px 3px 0;
     list-style: none;
@@ -30,14 +30,13 @@
   h6 {
     color: $gray5;
     float: right;
-        
+
     span { color: $gray3; }
   }
 }
 
 .oer-stars li {
   float: left;
-  cursor: pointer;
 }
 
 .data-app {
@@ -49,7 +48,7 @@
 
 .oer-cc {
   text-align: center;
-    
+
   img {
     padding-bottom: 4px;
     cursor: pointer;
@@ -59,7 +58,7 @@
 .oer-info-app {
   color: $gray6;
   float: left;
-    
+
   p { margin: 0; }
 }
 
@@ -79,27 +78,27 @@
 
 .oer-buttons {
   float: right;
-    
+
   button {
     display: block;
     clear: both;
     width: 158px;
     margin-bottom: 12px;
   }
-    
+
   a { margin-top: 8px; }
 }
 
 .oer-meta-data {
   font-size: 11px;
   color: $gray5;
-    
+
   p {
-    margin: 0; 
+    margin: 0;
     span { font-style: italic; }
   }
 }
-    
+
 .meta-data-column-1 {
   margin-left: 70px;
   float: left;
@@ -112,14 +111,14 @@
 
 .oer-images {
   float: right;
-    
+
   img {
     float: right;
     margin: 15px 3px 10px 15px;
     border: 1px solid white;
     @include box-shadow($shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.5));
   }
-  
+
   .small-image {
       background-color: gray;
       width: 339px;
