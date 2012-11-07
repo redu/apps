@@ -1,0 +1,3 @@
+environments:
+  walledgarden:
+    precompile_assets: false
