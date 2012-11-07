@@ -25,4 +25,9 @@ module AppsHelper
       "filter"
     end
   end
+
+  # Chama join para um array de entidades que possuem name
+  def names_for(entities)
+    entities.collect(&:name).join(", ")
+  end
 end

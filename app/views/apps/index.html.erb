@@ -20,7 +20,7 @@
   </li>
   <% if current_user %>
   <li class="tab">
-    <% favorite_apps_count = parentize(@user_app_associations.length) %>
+    <% favorite_apps_count = parentize(@favorite_apps_count) %>
     <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
   </li>
   <% end %>
@@ -58,7 +58,7 @@
 <div class="oer-apps-wrapper">
   <ul id="apps" class="list-2-columns list-columns-separator">
     <%= render partial: 'shared/app', collection: @apps, 
-               locals: { favflag: false } %>
+               locals: { favorite_flag: false } %>
   </ul>
 </div>
 

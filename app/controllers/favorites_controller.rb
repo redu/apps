@@ -4,13 +4,13 @@ class FavoritesController < ApplicationController
   helper :formatting
 
   def index
-    @user = current_user
-    @user_app_associations = assign_user_app_associations.page(params[:page])
-    @favorite_apps_count = @user.apps.count
-    @apps = @user_app_associations.collect(&:app)
+    @apps = current_user.apps.includes(:categories, :comments)
+    @apps.page(params[:page])
+    @favorite_apps_count = @apps.length
     @favorite_apps_filters = Category.filters_on @apps
     @favorite_apps_filters_counter = Category.count_filters_on @favorite_apps_filters
     @filter = params.fetch(:filter, [])
+    @apps = filter_and_paginate_apps
   end
 
   def create
@@ -25,11 +25,19 @@ class FavoritesController < ApplicationController
 
   private
 
+  def filter_and_paginate_apps
+    if params[:filter]
+      @apps = @apps.filter(params[:filter])
+    end
+
+    Kaminari.paginate_array(@apps).page(params[:page])
+  end
+
   def assign_user_app_associations
     if params[:filter]
-      @user.user_app_associations.filter(params[:filter])
+      current_user.user_app_associations.filter(params[:filter])
     else
-      @user.user_app_associations.includes(app: [:categories, :comments])
+      current_user.user_app_associations.includes(app: [:categories, :comments])
     end
   end
 end

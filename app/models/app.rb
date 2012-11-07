@@ -30,6 +30,10 @@ class App < ActiveRecord::Base
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
 
+  scope :filter, lambda { |filters|
+    includes(:categories).where(categories: { id: filters })
+  }
+
   searchable do
     text :name, :boost => 5.0
     text :author, :language, :objective, :synopsis, :description,

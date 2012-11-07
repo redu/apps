@@ -6,9 +6,7 @@ class Category < ActiveRecord::Base
   has_many :apps, through: :app_category_associations, dependent: :destroy
   validates_presence_of :name, :kind
 
-  scope :filter, lambda {
-    where(kind: "Nível")
-  }
+  scope :filter, where(kind: "Nível")
 
   # Recebe array de Apps e retorna categorias (filtros) associadas às Apps
   def self.filters_on(apps)
@@ -22,5 +20,9 @@ class Category < ActiveRecord::Base
     categories.collect(&:name).each { |v| hash.store(v, hash[v]+1) }
 
     hash
+  end
+
+  def self.get_by_kind(app, kind)
+    app.categories.select { |c| c.kind.eql? kind }
   end
 end
