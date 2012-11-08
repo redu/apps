@@ -315,23 +315,3 @@
     <hr class="list-separator">
   <% end %>
 </ol>
-
-<script type="text/javascript">
-
-  $(".oer-stars li").hover(function() {
-    var star = $(this).attr('id');
-    for (i = 1; i <= star; i++) {
-      $(".oer-stars li#" + i + " span").removeClass("icon-star-full-lightgray_16_18").addClass("icon-star-full-lightblue_16_18");
-    }
-  }, function() {
-    var star = $(this).attr('id');
-    for (i = 1; i <= star; i++) {
-      $(".oer-stars li#" + i + " span").removeClass("icon-star-full-lightblue_16_18");
-
-      if (!$(".oer-stars li#" + i + " span").hasClass("icon-star-full-gray_16_18")) {
-        $(".oer-stars li#" + i + " span").addClass("icon-star-full-lightgray_16_18");
-      }
-    }
-  });
-
-</script>
