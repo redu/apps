@@ -148,5 +148,41 @@ $(function() {
       }
     })
   });
+
+
+  // Responder status
+  $(".reply-status").live("click", function(e){
+    e.preventDefault()
+    var $this = $(this);
+    var $responseArea = $this.parents().find(".status-buttons .create-response");
+
+    if ($this.hasClass("button-comment")) {
+      $this.parents(".specialist-buttons").find(".button-review").parent().removeClass("open");
+      $responseArea.removeClass("flap-to-review")
+      $responseArea.addClass("flap-to-comment")
+      $this.parent().addClass("open");
+    }
+
+    else if ($this.hasClass("button-review")) {
+      $this.parents(".specialist-buttons").find(".button-comment").parent().removeClass("open");
+      $responseArea.removeClass("flap-to-comment")
+      $responseArea.addClass("flap-to-review");
+      $this.parent().addClass("open");
+    }
+
+    var $createResponse = $(this).parents("ul:first").next(".create-response");
+
+    $createResponse.slideDown(150, "swing");
+    $createResponse.find("textarea").focus();
+  });
+
+  // Cancelar Publicação
+  $(".cancel").live("click", function(e){
+    e.preventDefault();
+
+    var $createResponse = $(this).parents(".create-response");
+    $(".reply-status.button-review, .reply-status.button-comment").parent().removeClass("open");
+    $createResponse.slideUp(150, "swing");
+  });
 });
 

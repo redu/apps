@@ -147,48 +147,46 @@
   </div>
 </div>
 
-<!-- Comentários de especialista -->
-<div class="statuses oer-comments">
-  <ol>
-    <% @app.comments.specialized.each do |comment| %>
-      <li class="status">
-        <div class="status-wrapper">
-          <div class="status-text">
-            <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">
-              Especialista
-            </span>
-            <%= image_tag comment.author.thumbnail.url(:medium), :class => "icon-link" %>
-            <a href="#" class="link-name"><%= "#{comment.author.first_name} #{comment.author.last_name}" %></a> (especialista)
-            escreveu uma resenha sobre este aplicativo:
-            <%= link_to 'Apagar Comentário', [comment.app, comment],
-                       :confirm => 'Tem certeza?',
-                       :method => :delete,
-                       :class => "close icon-close-gray_16_18 replacement" %>
-            <span class="date"><%= l comment.created_at %></span>
+<ol class="statuses oer-comments">
+  <% @app.comments.specialized.each do |comment| %>
+    <li>
+      <div class="status status-text">
+        <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
+        <%= link_to "http://www.redu.com.br/pessoas/#{comment.author.login}", class: "icon-link" do %>
+          <%= image_tag comment.author.thumbnail.url(:medium) %>
+        <% end %>
+        <% link_to "http://www.redu.com.br/pessoas/#{comment.author.login}", "#{comment.author.first_name} #{comment.author.last_name}", class: "link-name" %>
+        <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
+        <%= link_to 'Apagar Comentário', [comment.app, comment],
+                    :confirm => 'Tem certeza?',
+                    :method => :delete,
+                    :class => "close icon-close-gray_16_18 replacement" %>
+        <span class="date"><%= l comment.created_at %></span>
+      </div>
+      <div class="status-container specialist">
+        <div class="status-content">
+          <div class="post-text">
+            <p class="input-user">
+              <%= comment.body %>
+            </p>
           </div>
-          <div class="status-container specialist">
-            <div class="status-content">
-              <div class="post-text">
-                <p class="input-user">
-                  <%= comment.body %>
-                </p>
-              </div>
-              <hr class="link-separator">
-            </div>
-          </div>
+          <hr class="link-separator">
         </div>
-      </li>
-    <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
 
 <!-- Botões de comentários -->
-    <hr class="list-separator">
-    <div class="status status-buttons">
-      <div>
-        <ul class="status-text button-comment">
+    <li>
+      <hr class="list-separator">
+      <div class="status status-buttons especialist-buttons">
+        <ul class="status-text">
           <li>
-              <a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">
-                Comentar sobre este aplicativo
-              </a>
+            <%= link_to "Comentar sobre este aplicativo", nil, class: "reply-status button-big button-comment button-primary icon-comment-white_blue_32_34-before" %>
+          </li>
+          <li>
+            <%= link_to "Escrever uma resenha", nil, class: "reply-status button-big button-primary button-review icon-specialist-white_blue_32_34-before" %>
           </li>
         </ul>
         <div class="create-response">
@@ -207,34 +205,27 @@
             </fieldset>
           <% end %>
         </div>
-      </div>
-      <div>
-        <ul class="status-text button-review">
-          <li>
-            <a class="reply-status button-big button-primary icon-specialist-gray_32_34-before">
-              Escrever uma resenha
-            </a>
-          </li>
-        </ul>
-        <div class="create-response">
-          <%= form_for([@app, @app.comments.build]) do |f| %>
-            <fieldset>
-              <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
-              <%= f.hidden_field :type, :value => 'specialized' %>
-              <div class="status-buttons">
-                <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">
-                  Cancelar
-                </a>
-                <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
-                  Enviar
-                <% end %>
-              </div>
-            </fieldset>
-          <% end %>
+        <div>
+          <div class="create-response">
+            <%= form_for([@app, @app.comments.build]) do |f| %>
+              <fieldset>
+                <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
+                <%= f.hidden_field :type, :value => 'specialized' %>
+                <div class="status-buttons">
+                  <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">
+                    Cancelar
+                  </a>
+                  <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
+                    Enviar
+                  <% end %>
+                </div>
+              </fieldset>
+            <% end %>
+          </div>
         </div>
       </div>
-    </div>
-    <hr class="list-separator">
+      <hr class="list-separator">
+    </li>
 
 <!-- Comentários comuns -->
   <% @app.comments.common.each do |comment| %>
@@ -323,10 +314,7 @@
     </li>
     <hr class="list-separator">
   <% end %>
-
-<!-- Paginação -->
-  </ol>
-</div>
+</ol>
 
 <script type="text/javascript">
 
