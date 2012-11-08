@@ -1,4 +1,4 @@
-if defined? AssetSync
+if defined?(AssetSync) && Rails.env.production?
   AssetSync.configure do |config|
     s3 = ReduApps::Application.config.s3.fetch(Rails.env)
     config.fog_provider = 'AWS'
