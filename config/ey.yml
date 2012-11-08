@@ -1,3 +1,4 @@
 environments:
-  walledgarden:
-    precompile_assets: false
+  production:
+    branch: master
+    migrate: false
