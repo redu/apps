@@ -69,11 +69,11 @@
         <%= t 'view', count: @app.views %>.
       </li>
       <li class="icon-specialist-gray_16_18-before">
-        <%= t 'review', count: @app.comments.specialized.count %>.
+        <%= t 'review', count: @app.comments.specialized.length %>.
       </li>
       <li class="icon-comment-gray_16_18-before">
         <%= t 'comment',
-              count: (@app.comments.common.count + @app.comments.answer.count) %>.
+              count: (@app.comments.common.length + @app.comments.answer.length) %>.
       </li>
     </ul>
 
@@ -259,7 +259,7 @@
         </div>
 
         <!-- Respostas ao comentário -->
-      <% if comment.answers.count != 0 %>
+      <% if comment.answers.length != 0 %>
         <ol class="responses status-content">
           <li class="last-responses">
             <p class="legend">Visualizando as últimas respostas...</p><hr>
@@ -292,7 +292,7 @@
         <% end %>
           <li class="all-responses">
             <a href="#" class="link-secondary">
-              <%= t 'comment.answer', count: comment.answers.count %>
+              <%= t 'comment.answer', count: comment.answers.length %>
             </a>
           </li>
         </ol>
