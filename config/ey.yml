@@ -1,4 +1,4 @@
 environments:
-  production:
+  walledgarden:
     branch: master
     migrate: false
