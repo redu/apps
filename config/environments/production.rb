@@ -1,7 +1,7 @@
 ReduApps::Application.configure do
   File.open("#{Rails.root}/config/s3.yml") do |file|
     s3 = Psych.load(file)
-    s3 = s3.fetch(:production, {})
+    s3 = s3.fetch("production", {})
     config.s3 =  HashWithIndifferentAccess.new_from_hash_copying_default(s3)
   end
 
