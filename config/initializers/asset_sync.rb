@@ -5,6 +5,7 @@ if defined?(AssetSync) && Rails.env.production?
     config.aws_access_key_id = s3[:access_key_id]
     config.aws_secret_access_key = s3[:secret_access_key]
     config.fog_directory = s3[:bucket]
+    config.gzip_compression = true
 
     # Increase upload performance by configuring your region
     # config.fog_region = 'eu-west-1'
