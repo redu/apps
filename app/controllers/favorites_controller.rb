@@ -1,20 +1,34 @@
+# encoding: utf-8
+
 class FavoritesController < ApplicationController
+  helper :formatting
+
   def index
-    @user = User.find_by_login(params[:user_id])
-    raise ActiveRecord::RecordNotFound unless @user
-    @user_apps_associations = @user.user_app_associations.page(params[:page])
+    @apps = current_user.apps.includes(:categories, :comments)
+    @favorite_apps_count = @apps.length
+    @favorite_apps_filters = Category.filters_on @apps
+    @favorite_apps_filters_counter = Category.count_filters_on @favorite_apps_filters
+    @filter = params.fetch(:filter, [])
+    @apps = filter_and_paginate_apps
   end
 
   def create
-    user = User.find_by_login(params[:user_id])
-    raise ActiveRecord::RecordNotFound unless user
-    user.apps << App.find(params[:app_id])
+    current_user.apps << App.find(params[:app_id])
     redirect_to action: "index"
   end
 
   def destroy
-    association = UserAppAssociation.find(params[:association_id])
-    association.destroy
+    UserAppAssociation.find(params[:id]).destroy
     redirect_to action: "index"
+  end
+
+  private
+
+  def filter_and_paginate_apps
+    if params[:filter]
+      @apps = @apps.filter(params[:filter])
+    end
+
+    Kaminari.paginate_array(@apps).page(params[:page])
   end
 end

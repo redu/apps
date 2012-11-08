@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class App < ActiveRecord::Base
   attr_accessible :name, :thumbnail, :views
 
@@ -28,6 +30,10 @@ class App < ActiveRecord::Base
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
 
+  scope :filter, lambda { |filters|
+    includes(:categories).where(categories: { id: filters })
+  }
+
   searchable do
     text :name, :boost => 5.0
     text :author, :language, :objective, :synopsis, :description,
@@ -40,11 +46,8 @@ class App < ActiveRecord::Base
     end
   end
 
-  def App.filter_by_categories(filter)
-    if filter
-      App.joins(:categories).where(categories: {id: filter})
-    else
-      App
-    end
+  def self.favorited_by(apps, user)
+    apps.collect(&:user_app_associations).flatten.
+      select { |a| a.user_id == user.id }
   end
 end
