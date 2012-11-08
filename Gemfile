@@ -14,6 +14,7 @@ gem 'sunspot_rails'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
 gem 'daemons'
 gem 'aws-sdk'
+gem 'faker'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,7 +33,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'faker'
   gem 'random_data'
   gem 'debugger'
 end
