@@ -1,6 +1,6 @@
 if defined?(AssetSync) && Rails.env.production?
   AssetSync.configure do |config|
-    s3 = ReduApps::Application.config.s3.fetch(Rails.env)
+    s3 = ReduApps::Application.config.s3
     config.fog_provider = 'AWS'
     config.aws_access_key_id = s3[:access_key_id]
     config.aws_secret_access_key = s3[:secret_access_key]
