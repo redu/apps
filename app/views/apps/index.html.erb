@@ -65,9 +65,7 @@
 <hr class="list-separator">
 
 <div id="paginator" class="pagination">
-  <%= link_to_next_page(@apps, "Mostrar mais...",
-                        {remote: true, params: {filter: @filter, search: @search},
-                        class: "button-default icon-arrow-down-pagination-gray_16_18-before"})  %>
+  <%= render 'shared/apps_pagination' %>
 </div>
 
 <% end %>

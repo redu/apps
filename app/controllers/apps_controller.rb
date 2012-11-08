@@ -54,7 +54,7 @@ class AppsController < ApplicationController
   private
 
   def search(filters = nil)
-    App.search(include: [:comments, :categories]) do
+    App.search(include: [:comments, :categories, :user_app_associations]) do
       fulltext params[:search] do
         boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
         query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca

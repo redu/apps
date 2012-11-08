@@ -14,6 +14,12 @@ pt-BR:
     zero: "Nenhuma visualização"
     one: "1 visualização"
     other: "%{count} visualizações"
+    pagination:
+      first: ""
+      previous: ""
+      next: ""
+      last: ""
+      truncate: "..."
   review:
     zero: "Nenhuma crítica de especialista"
     one: "1 crítica de especialista"
