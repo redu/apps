@@ -27,6 +27,12 @@ ReduApps::Application.configure do
     "http://#{config.s3[:bucket]}.s3.amazonaws.com"
   config.assets.initialize_on_precompile = true
 
+  config.paperclip = {
+    storage: :s3,
+    s3_credentials: config.s3.slice(:access_key_id, :secret_access_key),
+    bucket: config.s3[:bucket],
+  }
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

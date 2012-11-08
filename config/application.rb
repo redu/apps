@@ -68,5 +68,7 @@ module ReduApps
 
     # Carrega renderers do simple_navigation
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
+
+    config.paperclip = {}
   end
 end

@@ -23,9 +23,10 @@ class App < ActiveRecord::Base
   has_many :screen_shots
 
   # Thumbnail
-  has_attached_file :thumbnail, styles: { large: "x160>",
-                                          medium: "x90",
-                                          small: "x32" }
+  has_attached_file :thumbnail,
+    styles: ReduApps::Application.config.paperclip.merge({ large: "x160>",
+                                                           medium: "x90",
+                                                           small: "x32" })
 
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
