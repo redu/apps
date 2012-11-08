@@ -1,9 +1,10 @@
 if defined? AssetSync
   AssetSync.configure do |config|
+    s3 = ReduApps::Application.config.s3.fetch(Rails.env)
     config.fog_provider = 'AWS'
-    config.aws_access_key_id = 'AKIAIRKVQDTWT2NN4J4Q'
-    config.aws_secret_access_key = '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'
-    config.fog_directory = 'redu.apps.production'
+    config.aws_access_key_id = s3[:access_key_id]
+    config.aws_secret_access_key = s3[:secret_access_key]
+    config.fog_directory = s3[:bucket]
 
     # Increase upload performance by configuring your region
     # config.fog_region = 'eu-west-1'
