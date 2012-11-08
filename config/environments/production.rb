@@ -19,6 +19,8 @@ ReduApps::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.assets.initialize_on_precompile = true
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH

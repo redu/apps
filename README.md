@@ -39,6 +39,18 @@ $ script/untiedconsumerd start
 
 For more information: ``script/untiedconsumerd -h``.
 
+## Static assets and AWS
+
+In production mode it's necessary to setup the following environment variables in order to sync compiled static assets to S3 buckets:
+
+```sh
+export AWS_ACCESS_KEY_ID=xxxx
+export AWS_SECRET_ACCESS_KEY=xxxx
+export FOG_DIRECTORY=xxxx
+```
+
+More information is avalible [here](https://github.com/rumblelabs/asset_sync).
+
 ## Technologies and Versions
 * Ruby 1.9.3
 * Rails 3.2.5
