@@ -17,4 +17,17 @@ module AppsHelper
       0
     end
   end
+
+  def filter_class(filters, category)
+    if filters.include? category.id.to_s
+      "filter filter-active"
+    else
+      "filter"
+    end
+  end
+
+  # Chama join para um array de entidades que possuem name
+  def names_for(entities)
+    entities.collect(&:name).join(", ")
+  end
 end

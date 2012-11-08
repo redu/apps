@@ -48,20 +48,17 @@
 <div class="apps-portal-filters">
   <div class="filters">
     <% @categories.each do |cat| %>
-      <% filter_active = "" %>
-      <% if @filter.include?(cat.id.to_s) %>
-        <% filter_active = " filter-active" %>
-      <% end %>
       <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
                   apps_path(filter: filters_url(@filter, cat), search: @search),
-                  :class => "filter#{filter_active}" %>
+                  :class => filter_class(@filter, cat) %>
     <% end %>
   </div>
 </div>
 
 <div class="oer-apps-wrapper">
   <ul id="apps" class="list-2-columns list-columns-separator">
-    <%= render @apps %>
+    <%= render partial: 'shared/app', collection: @apps, 
+               locals: { favorite_flag: false } %>
   </ul>
 </div>
 

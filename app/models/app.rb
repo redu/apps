@@ -30,6 +30,10 @@ class App < ActiveRecord::Base
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
 
+  scope :filter, lambda { |filters|
+    includes(:categories).where(categories: { id: filters })
+  }
+
   searchable do
     text :name, :boost => 5.0
     text :author, :language, :objective, :synopsis, :description,
@@ -40,5 +44,10 @@ class App < ActiveRecord::Base
     integer :category_ids, multiple: true do
       categories.map(&:id)
     end
+  end
+
+  def self.favorited_by(apps, user)
+    apps.collect(&:user_app_associations).flatten.
+      select { |a| a.user_id == user.id }
   end
 end
