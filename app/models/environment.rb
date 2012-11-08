@@ -15,6 +15,6 @@ class Environment < ActiveRecord::Base
 
   # Thumbnail
   has_attached_file :thumbnail,
-    styles: ReduApps::Application.config.paperclip.merge({ medium: "300x300>",
-                                                           thumb: "100x100>" })
+    ReduApps::Application.config.paperclip.merge({styles: { medium: "300x300>",
+                                                            thumb: "100x100>" }})
 end
