@@ -1,0 +1,127 @@
+// ==========================================================================
+// Janelas modais de adicionar REA à disciplina
+// ==========================================================================
+
+
+// Comum aos modais.
+// ==========================================================================
+
+.modal-add-oer {
+  .modal-title { color: $green4; }
+
+  .modal-body { padding: 0; }
+
+  // Modifica o espaçamento padrão de 10px para 40px.
+  @include list-column-separator-gutter(40px, 1, ".list-environment-course-space-item");
+
+  // Modificações específicas da lista de ambientes, cursos e disciplinas.
+
+  .list-environment-course-space { padding: 1px 0 1px 2px; }
+
+  .list-environment-course-space-item +
+  .list-environment-course-space-item { margin-top: 0; }
+
+  .list-mix-title,
+  .list-mix-title:hover,
+  & .list-mix-item:hover .list-mix-title,
+  .list-environment-course-space-title { color: $gray5; }
+
+  .list-environment-course-space-link { color: $gray3; }
+
+  .list-mix-inner { padding: 10px 20px; }
+
+  .list-mix-header +
+  .list-mix-body { margin-top: 10px; }
+
+  .list-environment-course-space-header +
+  .apps-portal-add-oer-step-2-buttons,
+  .list-environment-course-space-header +
+  .apps-portal-add-oer-step-3-form { margin-top: 20px; }
+
+  .button-default +
+  .button-success { margin-left: 5px; }
+}
+
+.apps-portal-content {
+  // Mensagem de REA adicionado à disciplina com sucesso.
+  .system-message {
+    width: 520px;
+
+    p { width: 476px; }
+
+    p +
+    .button-success { margin-top: 10px; }
+  }
+}
+
+.apps-portal-add-oer-section { padding: 10px 20px; }
+
+
+// Área das passos.
+// ==========================================================================
+
+.progress-bar-total +
+.apps-portal-add-oer-steps-explaination { margin-top: 10px; }
+
+// Lista de passos.
+.apps-portal-add-oer-steps-explaination {
+  list-style: none;
+  overflow: hidden;
+  margin: 0;
+}
+
+// Explicação da passo.
+.apps-portal-add-oer-step-explaination {
+  float: left;
+  width: 246px;
+
+  &,
+  .apps-portal-add-oer-step-title { color: $gray5; }
+
+  .apps-portal-add-oer-step-title +
+  p { margin-top: 5px; }
+
+  & + & { margin-left: 20px; }
+}
+
+// Passo anterior.
+.apps-portal-add-oer-step-past {
+  &,
+  .apps-portal-add-oer-step-title { color: $gray6; }
+}
+
+// Passo atual.
+.apps-portal-add-oer-step-current {
+  color: $black;
+
+  .apps-portal-add-oer-step-title { color: $green4; }
+}
+
+
+// Passo 2.
+// ==========================================================================
+
+// Área com os botões.
+.apps-portal-add-oer-step-2-buttons {
+  text-align: center;
+  vertical-align: middle;
+  margin-bottom: 80px;
+}
+
+// Legenda com "ou".
+.apps-portal-add-oer-step-2-legend {
+  color: $gray6;
+  width: 40px;
+  display: inline-block;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+// Passo 3.
+// ==========================================================================
+
+.apps-portal-add-oer-step-3-form {
+  width: 640px;
+  margin: 0 auto 30px;
+}

@@ -13,6 +13,9 @@ gem 'activerecord-reputation-system'
 gem 'sunspot_rails'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
 gem 'daemons'
+gem 'aws-sdk'
+gem 'faker'
+gem 'random_data'
 gem 'omniauth-redu', :git => 'git://github.com/redu/omniauth-redu.git'
 gem 'faraday'
 
@@ -20,6 +23,7 @@ gem 'faraday'
 # in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
+  gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
@@ -32,9 +36,6 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
-  gem 'therubyracer'
-  gem 'faker'
-  gem 'random_data'
   gem 'debugger'
 end
 

@@ -71,3 +71,15 @@ More information is avalible [here](https://github.com/rumblelabs/asset_sync).
 * [Kaminari](https://github.com/amatsuda/kaminari)
 * [Simple Navigation](https://github.com/andi/simple-navigation)
 * [Sunspot](https://github.com/outoftime/sunspot)
+
+## Contributing
+
+### Run specs
+That's not that hard:
+```shell
+rspec
+```
+We do not like a million migrations among our project files. That's why you perhaps may find some issues while trying to run the specs. If that's the case, run our task rake for cleaning and putting your DB just as if it wanted to work:
+```shell
+rake db:prepare
+```

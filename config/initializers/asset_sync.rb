@@ -1,9 +1,11 @@
-if defined? AssetSync
+if defined?(AssetSync) && Rails.env.production?
   AssetSync.configure do |config|
+    s3 = ReduApps::Application.config.s3
     config.fog_provider = 'AWS'
-    config.aws_access_key_id = ENV['AWS_ACCESS_KEY_ID']
-    config.aws_secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
-    config.fog_directory = ENV['FOG_DIRECTORY']
+    config.aws_access_key_id = s3[:access_key_id]
+    config.aws_secret_access_key = s3[:secret_access_key]
+    config.fog_directory = s3[:bucket]
+    config.gzip_compression = true
 
     # Increase upload performance by configuring your region
     # config.fog_region = 'eu-west-1'

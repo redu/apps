@@ -25,10 +25,11 @@ class User < ActiveRecord::Base
   has_many :comments
 
   # Thumbnail
-  has_attached_file :thumbnail, styles: { small: "x32",
-                                          medium: "x64",
-                                          large: "x90",
-                                          larger: "x140" }
+  has_attached_file :thumbnail,
+    ReduApps::Application.config.paperclip.merge({styles: { small: "x32",
+                                                            medium: "x64",
+                                                            large: "x90",
+                                                            larger: "x140" }})
 
   def to_param
     login
