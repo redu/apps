@@ -28,10 +28,10 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
     load_comment_answers if params[:'show-answers-for']
-    @comments = Kaminari::paginate_array(@app.comments.common).
+    @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(10)
     @user = current_user
-    @favorite = UserAppAssociation.find_by_user_id_and_app_id(@user, 
+    @favorite = UserAppAssociation.find_by_user_id_and_app_id(@user,
                                                               @app)
     @evaluations = @app.evaluators_for(:rating).count
     if @user
