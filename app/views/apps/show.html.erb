@@ -158,12 +158,16 @@
           <li>
             <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
           </li>
-          <li>
-            <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
-          </li>
+          <% if @user.specialist? %>
+            <li>
+              <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
+            </li>
+          <% end %>
         </ul>
         <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_type: "common" %>
-        <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialist" %>
+        <% if @user.specialist? %>
+          <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialized" %>
+        <% end %>
       </div>
     </li>
 
