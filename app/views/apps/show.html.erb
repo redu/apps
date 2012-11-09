@@ -177,8 +177,12 @@
   </div>
 </ol>
 
-<hr class="list-separator">
-<div id="paginator" class="pagination">
-  <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
-                        class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
-</div>
+<% unless @comments.last_page? %>
+  <div id="pagination-wrapper">
+    <hr class="list-separator">
+    <div id="paginator" class="pagination">
+      <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
+                            class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+    </div>
+  </div>
+<% end %>
