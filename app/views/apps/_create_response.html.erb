@@ -1,0 +1,12 @@
+<div class="create-response <%= klass %>">
+  <%= form_for(model_object) do |f| %>
+    <fieldset>
+      <%= f.text_area :body, :rows => "6" %>
+      <%= f.hidden_field :type, :value => comment_type %>
+      <div class="status-buttons">
+        <%= link_to "Cancelar", nil, class: "button-default cancel" %>
+        <%= submit_tag "Enviar", class: "button-primary" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

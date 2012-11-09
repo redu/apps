@@ -46,18 +46,5 @@
       <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
     </li>
   </ul>
-  <div class="create-response">
-    <%= form_for([@app, common_comment, @app.comments.build]) do |f| %>
-      <fieldset>
-      <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
-      <%= f.hidden_field :type, :value => 'answer' %>
-        <div class="status-buttons">
-          <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
-          <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
-            Enviar
-          <% end %>
-        </div>
-      </fieldset>
-    <% end %>
-  </div>
+  <%= render "create_response", klass: nil, model_object: [@app, common_comment, @app.comments.build], comment_type: "answer" %>
 </li>

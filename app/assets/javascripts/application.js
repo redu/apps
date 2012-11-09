@@ -149,40 +149,60 @@ $(function() {
     })
   });
 
+  // Realiza o comportamento dos botões de comentar (comum e especialista).
+  $.fn.replyBehavior = function(options) {
+    var settings = $.extend({
+      openClass: "open"
+    , containerClass: "reply-buttons"
+    }, options);
 
-  // Responder status
-  $(".reply-status").live("click", function(e){
-    e.preventDefault()
-    var $this = $(this);
-    var $responseArea = $this.parents().find(".status-buttons .create-response");
+    return this.each(function() {
+      $(document).on("click", "." + settings.buttonClass, function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $container = $this.parents("." + settings.containerClass);
+        var $createResponse = $container.find("." + settings.createResponseClass);
+        var $listItem = $container.find("." + settings.buttonClass).parent();
 
-    if ($this.hasClass("button-comment")) {
-      $this.parents(".specialist-buttons").find(".button-review").parent().removeClass("open");
-      $responseArea.removeClass("flap-to-review")
-      $responseArea.addClass("flap-to-comment")
-      $this.parent().addClass("open");
-    }
+        // Se o botão está ativo e for clicado, esconde a área de texto.
+        if ($listItem.hasClass(settings.openClass)) {
+          $createResponse.slideUp(150, "swing");
 
-    else if ($this.hasClass("button-review")) {
-      $this.parents(".specialist-buttons").find(".button-comment").parent().removeClass("open");
-      $responseArea.removeClass("flap-to-comment")
-      $responseArea.addClass("flap-to-review");
-      $this.parent().addClass("open");
-    }
+        } else {
+          // Esconde a área de texto do outro botão.
+          $container.find("." + settings.otherButtonClass).parent().removeClass(settings.openClass);
+          $container.find("." + settings.otherResponseClass).slideUp(150, "swing");
+          // Mostra a área de texto do botão clicado.
+          $createResponse.slideDown(150, "swing");
+          $createResponse.find("textarea").focus();
+        }
 
-    var $createResponse = $(this).parents("ul:first").next(".create-response");
+        $listItem.toggleClass(settings.openClass);
+      });
+    });
+  }
 
-    $createResponse.slideDown(150, "swing");
-    $createResponse.find("textarea").focus();
+  var buttonCommentClass = "button-comment";
+  var buttonReviewClass = "button-review";
+  var createResponseCommentClass = "flap-to-comment";
+  var createResponseReviewClass = "flap-to-review";
+
+  $("." + buttonCommentClass).replyBehavior({
+    buttonClass: buttonCommentClass
+  , createResponseClass: createResponseCommentClass
+  , otherButtonClass: buttonReviewClass
+  , otherResponseClass: createResponseReviewClass
   });
 
-  // Cancelar Publicação
-  $(".cancel").live("click", function(e){
-    e.preventDefault();
-
-    var $createResponse = $(this).parents(".create-response");
-    $(".reply-status.button-review, .reply-status.button-comment").parent().removeClass("open");
-    $createResponse.slideUp(150, "swing");
+  $("." + buttonReviewClass).replyBehavior({
+    buttonClass: buttonReviewClass
+  , createResponseClass: createResponseReviewClass
+  , otherButtonClass: buttonCommentClass
+  , otherResponseClass: createResponseCommentClass
   });
+
+  $(document).on("click", ".reply-buttons .cancel", function(e) {
+    $(".button-review, .button-comment").parent().removeClass("open");
+  })
 });
 

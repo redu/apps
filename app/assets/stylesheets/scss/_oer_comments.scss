@@ -12,7 +12,13 @@
 	.status {
 
 		.button-comment,
-		.button-review { display: inline-block; }
+		.button-review {
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 34px;
+
+			&[class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+		}
 
 		&.status-buttons {
 			text-align: center;
