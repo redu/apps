@@ -2,6 +2,6 @@
   $('#comments').append('<%= escape_javascript render partial: "common_comment", collection: @comments %>');
   $('#paginator').html("<%= escape_javascript(link_to_next_page(@comments, 'Mostrar mais...', remote: true, class: 'button-default icon-arrow-down-pagination-gray_16_18-before')) %>")
 <% elsif params[:'show-answers-for'] %>
-  $('#comments-for-<%= params[:"show-answers-for"] %>').append('<%= escape_javascript render partial: "comment_answer", collection: @answers, locals: { comment: @comment } %>');
+  $('#comments-for-<%= params[:"show-answers-for"] %>').html('<%= escape_javascript render partial: "comment_answer", collection: @answers, locals: { comment: @comment } %>');
   $('#show-more').hide();
 <% end %>

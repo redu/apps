@@ -74,6 +74,6 @@ class AppsController < ApplicationController
 
   def load_comment_answers
     @comment = @app.comments.find(params[:'show-answers-for'].to_i)
-    @answers = @comment.answers.order('created_at DESC').drop(2)
+    @answers = @comment.answers
   end
 end

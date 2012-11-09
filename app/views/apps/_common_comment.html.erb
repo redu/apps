@@ -28,7 +28,7 @@
         <p class="legend">Visualizando as últimas respostas...</p><hr>
       </li>
       <div id="comments-for-<%= common_comment.id %>">
-        <%= render partial: 'comment_answer', collection: common_comment.answers.order('created_at DESC').first(2),
+        <%= render partial: 'comment_answer', collection: common_comment.answers.last(2),
                    locals: { comment: common_comment } %>
       </div>
       <% if common_comment.answers.length > 2 %>
