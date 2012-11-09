@@ -4,6 +4,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    User.find_by_uid(session[:user_uid]) || User.last || FactoryGirl.create(:user)
+    User.find_by_uid(session[:user_uid]) || User.first || FactoryGirl.create(:user)
   end
 end

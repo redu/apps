@@ -1,5 +1,5 @@
 class Space < ActiveRecord::Base
-  attr_accessible :name, :sid
+  attr_accessible :name, :sid, :course
 
   # Associações
   belongs_to :course

@@ -13,6 +13,8 @@ gem 'activerecord-reputation-system'
 gem 'sunspot_rails'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
 gem 'daemons'
+gem 'omniauth-redu', :git => 'git://github.com/redu/omniauth-redu.git'
+gem 'faraday'
 
 # Gems used only for assets and not required
 # in production environments by default.

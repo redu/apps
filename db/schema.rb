@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
   add_index "app_category_associations", ["app_id", "category_id"], :name => "index_app_category_associations_on_app_id_and_category_id"
 
   create_table "apps", :force => true do |t|
+    t.integer  "aid"
     t.string   "name"
     t.string   "author"
     t.string   "language"

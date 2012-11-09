@@ -25,7 +25,7 @@ class CheckoutController < ApplicationController
   protected
 
   def step_1
-    @environments = current_user.environments(include: {courses: :spaces})
+    @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
     render :step1
   end
@@ -37,24 +37,24 @@ class CheckoutController < ApplicationController
   end
 
   def step_3
-    get_params([:space_id, :create_module], params)
+    get_params([:space_id, :create_subject], params)
     @space = Space.find(@space_id)
     @next_step = 4
     render :step3
   end
 
   def step_4
-    get_params([:space_id, :create_module, :lesson, :subject], params)
-    @subject = if @create_module == 'true'
-      Subject.create(:name => @subject) { |s| s.space = Space.find(@space_id) }
+    get_params([:space_id, :create_subject, :lesson, :subject], params)
+    @subject = if @create_subject == 'true'
+      Subject.create(name: @subject, space: Space.find(@space_id))
     else
       Subject.find(@subject)
     end
-    lecutre = Lecture.new(:name => @lesson) do |l|
+    lecture = Lecture.new(name: @lesson) do |l|
       l.subject = Subject.find(@subject)
       l.app = App.find(@app_id)
     end
-    raise "Invalid data" unless lecutre.save
+    raise "Invalid data" unless lecture.save
     redirect_to app_path(@app_id)
   end
 
