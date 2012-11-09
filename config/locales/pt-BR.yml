@@ -33,9 +33,6 @@ pt-BR:
     zero: "Nenhum comentário"
     one: "1 comentário"
     other: "%{count} comentários"
-    answer:
-      one: "Visualizando a única resposta"
-      other: "Visualizando todas as %{count} respostas"
   date:
     abbr_day_names:
     - Dom

@@ -1,0 +1,24 @@
+<li class="status-content response">
+  <%= link_to 'Apagar Comentário', [comment.app, comment_answer],
+             :confirm => 'Tem certeza?',
+             :method => :delete,
+             :class => "close icon-close-gray_16_18 replacement" %>
+  <div class="status-text-response status-text">
+    <a href="#" class="icon-link">
+      <%= image_tag comment_answer.author.thumbnail.url(:medium) %>
+    </a>
+    <a href="#" class="link-name">
+      <%= "#{comment_answer.author.first_name} #{comment_answer.author.last_name}" %>
+    </a>
+    <span class="status-info">
+      respondeu:
+    </span>
+    <span class="date">
+      <%= l comment_answer.created_at %>
+    </span>
+    <div class="post-text">
+      <p class="input-user"><%= comment_answer.body %></p>
+    </div>
+  </div>
+  <hr>
+</li>

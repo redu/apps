@@ -27,6 +27,9 @@ class AppsController < ApplicationController
     @kinds = Category.select(:kind).uniq
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
+    load_comment_answers if params[:'show-answers-for']
+    @comments = Kaminari::paginate_array(@app.comments.common).
+      page(params[:page]).per(10)
     @user = current_user
     @favorite = UserAppAssociation.find_by_user_id_and_app_id(@user, 
                                                               @app)
@@ -35,7 +38,9 @@ class AppsController < ApplicationController
       @evaluated = @app.has_evaluation?(:rating, @user)
       @user_rating = @app.reputation_for(:rating, nil, @user) if @evaluated
     end
+
     respond_to do |format|
+      format.js {}
       format.html  # show.html.erb
       format.json  { render :json => @app }
     end
@@ -65,5 +70,10 @@ class AppsController < ApplicationController
       with(:category_ids, filters) if filters
     end
     @apps = @search.results
+  end
+
+  def load_comment_answers
+    @comment = @app.comments.find(params[:'show-answers-for'].to_i)
+    @answers = @comment.answers.order('created_at DESC').drop(2)
   end
 end

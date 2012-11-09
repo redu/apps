@@ -1,0 +1,63 @@
+<hr class="list-separator">
+<li class="status">
+  <div class="status-text">
+    <%= link_to "http://www.redu.com.br/pessoas/#{common_comment.author.login}", class: "icon-link" do %>
+      <%= image_tag common_comment.author.thumbnail.url(:medium) %>
+    <% end %>
+    <a href="#" class="link-name"><%= "#{common_comment.author.first_name} #{common_comment.author.last_name}" %></a>
+    comentou sobre este aplicativo:
+    <%= link_to 'Apagar Comentário', [common_comment.app, common_comment],
+               :confirm => 'Tem certeza?',
+               :method => :delete,
+               :class => "close icon-close-gray_16_18 replacement" %>
+    <span class="date"><%= l common_comment.created_at %></span>
+  </div>
+  <div class="status-container">
+    <div class="status-content">
+      <div class="post-text">
+        <p class="input-user">
+          <%= common_comment.body %>
+        </p>
+      </div>
+    </div>
+
+    <!-- Respostas ao comentário -->
+  <% if common_comment.answers.length != 0 %>
+    <ol class="responses status-content">
+      <li class="last-responses">
+        <p class="legend">Visualizando as últimas respostas...</p><hr>
+      </li>
+      <div id="comments-for-<%= common_comment.id %>">
+        <%= render partial: 'comment_answer', collection: common_comment.answers.order('created_at DESC').first(2),
+                   locals: { comment: common_comment } %>
+      </div>
+      <% if common_comment.answers.length > 2 %>
+        <li id="show-more" class="all-responses">
+          <%= link_to "Mostrar todas as #{common_comment.answers.length} respostas",
+                      app_path(@app, :'show-answers-for' => common_comment.id),
+                      remote: true, class: "link-secondary" %>
+        </li>
+      <% end %>
+    </ol>
+  <% end %>
+  </div>
+  <ul class="actions clearfix">
+    <li>
+      <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
+    </li>
+  </ul>
+  <div class="create-response">
+    <%= form_for([@app, common_comment, @app.comments.build]) do |f| %>
+      <fieldset>
+      <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
+      <%= f.hidden_field :type, :value => 'answer' %>
+        <div class="status-buttons">
+          <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
+          <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
+            Enviar
+          <% end %>
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+</li>

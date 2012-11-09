@@ -148,42 +148,9 @@
 </div>
 
 <ol class="statuses oer-comments">
-  <% @app.comments.specialized.each do |comment| %>
-    <li>
-      <hr class="list-separator">
-      <div class="status status-text">
-        <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
-        <%= link_to "http://www.redu.com.br/pessoas/#{comment.author.login}", class: "icon-link" do %>
-          <%= image_tag comment.author.thumbnail.url(:medium) %>
-        <% end %>
-        <%= link_to "#{comment.author.first_name} #{comment.author.last_name}", "http://www.redu.com.br/pessoas/#{comment.author.login}", class: "link-name" %>
-        <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
-        <%= link_to 'Apagar Comentário', [comment.app, comment],
-                    :confirm => 'Tem certeza?',
-                    :method => :delete,
-                    :class => "close icon-close-gray_16_18 replacement" %>
-        <span class="date"><%= l comment.created_at %></span>
-      </div>
-      <div class="status-container specialist">
-        <div class="status-content">
-          <div class="post-text">
-            <p class="input-user">
-              <%= comment.body %>
-            </p>
-          </div>
-          <!-- TODO: Adicionar quando implementar opção de expandir crítica do especialista.
-          <hr class="link-separator">
-          <ul>
-            <li class="last-responses">
-              <a href="#" class="link-secondary">Mostrar toda a crítica do especialista</a>
-            </li>
-          </ul> -->
-        </div>
-      </div>
-    </li>
-  <% end %>
+  <%= render partial: 'specialized_comment', collection: @app.comments.specialized %>
 
-<!-- Botões de comentários -->
+    <!-- Botões de comentários -->
     <li>
       <hr class="list-separator">
       <div class="status status-buttons especialist-buttons">
@@ -232,98 +199,14 @@
       </div>
     </li>
 
-<!-- Comentários comuns -->
-  <% @app.comments.common.each do |comment| %>
-    <hr class="list-separator">
-    <li class="status">
-      <div class="status-text">
-        <%= link_to "http://www.redu.com.br/pessoas/#{comment.author.login}", class: "icon-link" do %>
-          <%= image_tag comment.author.thumbnail.url(:medium) %>
-        <% end %>
-        <a href="#" class="link-name"><%= "#{comment.author.first_name} #{comment.author.last_name}" %></a>
-        comentou sobre este aplicativo:
-        <%= link_to 'Apagar Comentário', [comment.app, comment],
-                   :confirm => 'Tem certeza?',
-                   :method => :delete,
-                   :class => "close icon-close-gray_16_18 replacement" %>
-        <span class="date"><%= l comment.created_at %></span>
-      </div>
-      <div class="status-container">
-        <div class="status-content">
-          <div class="post-text">
-            <p class="input-user">
-              <%= comment.body %>
-            </p>
-          </div>
-        </div>
-
-        <!-- Respostas ao comentário -->
-      <% if comment.answers.length != 0 %>
-        <ol class="responses status-content">
-          <li class="last-responses">
-            <p class="legend">Visualizando as últimas respostas...</p><hr>
-          </li>
-        <% comment.answers.each do |answer| %>
-          <li class="status-content response">
-            <%= link_to 'Apagar Comentário', [comment.app, answer],
-                       :confirm => 'Tem certeza?',
-                       :method => :delete,
-                       :class => "close icon-close-gray_16_18 replacement" %>
-            <div class="status-text-response status-text">
-              <a href="#" class="icon-link">
-                <%= image_tag answer.author.thumbnail.url(:medium) %>
-              </a>
-              <a href="#" class="link-name">
-                <%= "#{answer.author.first_name} #{answer.author.last_name}" %>
-              </a>
-              <span class="status-info">
-                respondeu:
-              </span>
-              <span class="date">
-                <%= l answer.created_at %>
-              </span>
-              <div class="post-text">
-                <p class="input-user"><%= answer.body %></p>
-              </div>
-            </div>
-            <hr>
-          </li>
-        <% end %>
-          <li class="all-responses">
-            <a href="#" class="link-secondary">
-              <%= t 'comment.answer', count: comment.answers.length %>
-            </a>
-          </li>
-        </ol>
-      <% end %>
-      </div>
-      <ul class="actions clearfix">
-        <li>
-          <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
-        </li>
-      </ul>
-      <div class="create-response">
-        <%= form_for([@app, comment, @app.comments.build]) do |f| %>
-          <fieldset>
-          <%= f.text_area :body, :id => "status_text", :cols => "40", :rows => "6", :style => "height: 136px; overflow: hidden; word-wrap: break-word; resize: horizontal; " %>
-          <%= f.hidden_field :type, :value => 'answer' %>
-            <div class="status-buttons">
-              <a class="cancel button-default" rel="nofollow" href="/pessoas/thaisbione/home">Cancelar</a>
-              <%= content_tag :button, :type => :submit, :class => "button-primary", :id => "status_submit", :name => "commit"  do %>
-                Enviar
-              <% end %>
-            </div>
-          </fieldset>
-        <% end %>
-      </div>
-    </li>
-  <% end %>
+  <!-- Comentários comuns -->
+  <div id="comments" >
+    <%= render partial: 'common_comment', collection: @comments %>
+  </div>
 </ol>
 
-<!-- Se precisar de paginação (mais de 2 comentários). -->
-  <hr class="list-separator">
-  <div id="paginator" class="pagination">
-    <!-- Integrar com o kaminari. -->
-    <a href="#" class="button-default icon-arrow-down-pagination-gray_16_18-before">Mostrar mais...</a>
-  </div>
-<!-- End. -->
+<hr class="list-separator">
+<div id="paginator" class="pagination">
+  <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
+                        class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+</div>
