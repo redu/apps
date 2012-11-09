@@ -149,12 +149,17 @@ $(function() {
     })
   });
 
+
+  var openClass = "open";
+  var buttonCommentClass = "button-comment";
+  var buttonReviewClass = "button-review";
+  var createResponseCommentClass = "flap-to-comment";
+  var createResponseReviewClass = "flap-to-review";
+  var containerClass = "reply-buttons";
+
   // Realiza o comportamento dos botões de comentar (comum e especialista).
   $.fn.replyBehavior = function(options) {
-    var settings = $.extend({
-      openClass: "open"
-    , containerClass: "reply-buttons"
-    }, options);
+    var settings = $.extend({}, options);
 
     return this.each(function() {
       $(document).on("click", "." + settings.buttonClass, function(e) {
@@ -182,27 +187,30 @@ $(function() {
     });
   }
 
-  var buttonCommentClass = "button-comment";
-  var buttonReviewClass = "button-review";
-  var createResponseCommentClass = "flap-to-comment";
-  var createResponseReviewClass = "flap-to-review";
 
+  // Adiciona o comportamento para o botão de comentário comum.
   $("." + buttonCommentClass).replyBehavior({
     buttonClass: buttonCommentClass
   , createResponseClass: createResponseCommentClass
   , otherButtonClass: buttonReviewClass
   , otherResponseClass: createResponseReviewClass
+  , openClass: openClass
+  , containerClass: containerClass
   });
 
+  // Adiciona o comportamento para o botão de comentário especialista.
   $("." + buttonReviewClass).replyBehavior({
     buttonClass: buttonReviewClass
   , createResponseClass: createResponseReviewClass
   , otherButtonClass: buttonCommentClass
   , otherResponseClass: createResponseCommentClass
+  , openClass: openClass
+  , containerClass: containerClass
   });
 
-  $(document).on("click", ".reply-buttons .cancel", function(e) {
-    $(".button-review, .button-comment").parent().removeClass("open");
-  })
+  // No cancelar, remove também a classe de aberto.
+  $(document).on("click", "." + containerClass + " .cancel", function(e) {
+    $("." + buttonReviewClass + ", ." + buttonCommentClass).parent().removeClass(openClass);
+  });
 });
 
