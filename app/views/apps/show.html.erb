@@ -37,7 +37,7 @@
 
     <h6><%= app_reputation %><span>/5</span></h6>
     <ul class="data-app">
-      <% if @user %>
+      <% if current_user %>
         <li class="app-rating">
           <% if @evaluated %>
             Você classificou em <%= t "star", count: user_rating %>.
@@ -93,8 +93,8 @@
 
   <div class="oer-buttons">
     <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
-    <% unless @favorite || !@user %>
-      <%= form_tag user_favorites_path(@user.id), method: "post" do %>
+    <% unless @favorite || !current_user %>
+      <%= form_tag user_favorites_path(current_user.id), method: "post" do %>
         <%= hidden_field_tag :app_id , @app.id %>
         <%= content_tag :button, :type => :submit, class: "button-primary" do %>
           Adicionar a Favoritos
@@ -148,14 +148,14 @@
           <li>
             <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
           </li>
-          <% if @user.specialist? %>
+          <% if current_user.specialist? %>
             <li>
               <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
             </li>
           <% end %>
         </ul>
         <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_type: "common" %>
-        <% if @user.specialist? %>
+        <% if current_user.specialist? %>
           <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialized" %>
         <% end %>
       </div>
