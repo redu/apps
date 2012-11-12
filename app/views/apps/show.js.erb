@@ -5,6 +5,7 @@
     $("#pagination-wrapper").remove();
   <% end %>
 <% elsif params[:'show-answers-for'] %>
-  $('#comments-for-<%= params[:"show-answers-for"] %>').html('<%= escape_javascript render partial: "comment_answer", collection: @answers, locals: { comment: @comment } %>');
-  $('#show-more').hide();
+  var $container = $('#comments-for-<%= params[:"show-answers-for"] %>');
+  $container.find('.comments').html('<%= escape_javascript render partial: "comment_answer", collection: @answers, locals: { comment: @comment, total: @answers.length } %>');
+  $container.find('.show-more, .last-responses').remove();
 <% end %>

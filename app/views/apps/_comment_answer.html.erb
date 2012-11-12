@@ -20,5 +20,7 @@
       <p class="input-user"><%= comment_answer.body %></p>
     </div>
   </div>
-  <hr>
+  <% unless last_answer?(comment_answer_counter, total) %>
+    <hr>
+  <% end %>
 </li>
