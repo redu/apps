@@ -34,4 +34,6 @@ class User < ActiveRecord::Base
   def to_param
     login
   end
+
+  acts_as_authentic
 end

@@ -44,4 +44,10 @@ describe User do
   # Disciplinas de que o usuário participa
   it { should have_many(:user_course_associations) }
   it { should have_many(:courses).through(:user_course_associations) }
+
+  # Campos necessários à autenticação
+  it { should respond_to(:email) }
+  it { should respond_to(:crypted_password) }
+  it { should respond_to(:password_salt) }
+  it { should respond_to(:persistence_token) }
 end

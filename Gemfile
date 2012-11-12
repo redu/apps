@@ -16,6 +16,7 @@ gem 'daemons'
 gem 'aws-sdk'
 gem 'faker'
 gem 'random_data'
+gem 'authlogic'
 
 # Gems used only for assets and not required
 # in production environments by default.
