@@ -1,5 +1,9 @@
 ReduApps::Application.configure do
-  # Settings specified here will take precedence over those in config/application.rb
+  File.open("#{Rails.root}/config/s3.yml") do |file|
+    s3 = Psych.load(file)
+    s3 = s3.fetch("production", {})
+    config.s3 =  HashWithIndifferentAccess.new_from_hash_copying_default(s3)
+  end
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -19,6 +23,15 @@ ReduApps::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+  config.action_controller.asset_host = \
+    "http://#{config.s3[:bucket]}.s3.amazonaws.com"
+  config.assets.initialize_on_precompile = true
+
+  config.paperclip = {
+    storage: :s3,
+    s3_credentials: config.s3.slice(:access_key_id, :secret_access_key),
+    bucket: config.s3[:bucket],
+  }
 
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH

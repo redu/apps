@@ -1,0 +1,17 @@
+// ==========================================================================
+// Sprites do Creative Commons
+// ==========================================================================
+
+@import "compass/utilities/sprites/base";
+
+$cc-layout: smart;
+$cc-sprite-dimensions: true;
+$cc-sprite-base-class: ".sprite-cc" !default;
+
+@import "sprites/cc/*.png";
+@include all-cc-sprites;
+
+.sprite-cc {
+  display: inline-block;
+  vertical-align: middle;
+}

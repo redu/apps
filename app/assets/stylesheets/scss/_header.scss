@@ -1,0 +1,20 @@
+// ==========================================================================
+// Cabeçalho
+// ==========================================================================
+
+
+.apps-portal-header {
+  @include clear-fix;
+  position: relative;
+
+  .breadcrumb-mini-wrapper {
+    position: absolute;
+    bottom: -11px;
+    width: 100%;
+  }
+
+  .form-search { margin-top: 10px; }
+}
+
+.apps-portal-header +
+.apps-portal-content { margin-top: 21px; }

@@ -1,14 +1,22 @@
 # encoding: utf-8
 
 class AppsController < ApplicationController
+  helper :formatting
+
   def index
-    @categories = Category.all
     if params[:filter] || params[:search]
-      @apps = search(params[:filter])
+      @apps = search(params[:filter]).results
+      @categories = Category.filter if params[:filter] && !params[:search]
+      assign_searching_variables unless !params[:search]
+      @user_app_associations = App.favorited_by(@apps, current_user) if current_user
+      @apps = Kaminari.paginate_array(@apps).page(params[:page])
     else
-      @apps = App.all
+      @apps = App.includes(:comments, :categories, :user_app_associations).
+        page(params[:page])
+      @user_app_associations = App.favorited_by(@apps, current_user) if current_user
+      @categories = Category.filter
     end
-    @apps = Kaminari.paginate_array(@apps).page(params[:page])
+    @favorite_apps_count = current_user.apps.count if current_user
     @filter = params.fetch(:filter, [])
     @search = params[:search]
 
@@ -46,7 +54,7 @@ class AppsController < ApplicationController
   private
 
   def search(filters = nil)
-    @search = App.search do
+    App.search(include: [:comments, :categories, :user_app_associations]) do
       fulltext params[:search] do
         boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
         query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca
@@ -55,6 +63,14 @@ class AppsController < ApplicationController
       end
       with(:category_ids, filters) if filters
     end
-    @apps = @search.results
+  end
+
+  def assign_searching_variables
+    @results_counter = @apps.total_entries  # Total de hits
+
+    # Conta quantidade de aplicativos por filtro
+    @categories = Category.filters_on @apps
+    @filters_counter = Category.count_filters_on @categories
+    @categories = @categories.uniq # Remove categorias duplicadas
   end
 end

@@ -1,0 +1,25 @@
+// ==========================================================================
+// Estilos para o portal de aplicativos
+// ==========================================================================
+
+// Mixins de imagens do Compass.
+@import "compass/css3/images";
+// Mixins do UI-components.
+@import "ui-components/mixins";
+// Variáveis do UI-components.
+@import "ui-components/variables";
+
+// Estilos do layout.
+@import "scss/layout";
+// Estilos do cabeçalho.
+@import "scss/header";
+// Estilos do corpo.
+@import "scss/body";
+// Estilo das modais.
+@import "scss/modals";
+// Estilos do aplicativo.
+@import "scss/oer";
+// Estilos dos comentários
+@import "scss/oer_comments";
+// Sprites do Creative Commons.
+// @import "scss/sprites_cc";

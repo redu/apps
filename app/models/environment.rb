@@ -20,6 +20,7 @@ class Environment < ActiveRecord::Base
   validates_presence_of :eid, :name, :owner
 
   # Thumbnail
-  has_attached_file :thumbnail, :styles => { :medium => "300x300>",
-                                             :thumb => "100x100>" }
+  has_attached_file :thumbnail,
+    ReduApps::Application.config.paperclip.merge({styles: { medium: "300x300>",
+                                                            thumb: "100x100>" }})
 end

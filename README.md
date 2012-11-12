@@ -23,6 +23,34 @@ What about if you already have data in your database? Run reindex!
 rake sunspot:reindex
 ```
 
+## Untied consumer
+
+As you probably know, this application relies on entities created by another service (aka core) propagated via message bus. In development mode you can start the consumer with the following rake task:
+
+```sh
+$ bundle exec rake untied:consumer:work
+```
+
+In order to run the message bus consumer as a daemon you should use the following script:
+
+```sh
+$ script/untiedconsumerd start
+```
+
+For more information: ``script/untiedconsumerd -h``.
+
+## Static assets and AWS
+
+In production mode it's necessary to setup the following environment variables in order to sync compiled static assets to S3 buckets:
+
+```sh
+export AWS_ACCESS_KEY_ID=xxxx
+export AWS_SECRET_ACCESS_KEY=xxxx
+export FOG_DIRECTORY=xxxx
+```
+
+More information is avalible [here](https://github.com/rumblelabs/asset_sync).
+
 ## Technologies and Versions
 * Ruby 1.9.3
 * Rails 3.2.5

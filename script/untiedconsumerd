@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+# -*- encoding : utf-8 -*-
+
+require 'bundler/setup'
+require 'untied-consumer'
+require 'untied-consumer/worker'
+
+log_dir = File.expand_path('../../log',  __FILE__)
+pids_dir = File.expand_path('../../tmp/pids', __FILE__)
+
+puts log_dir, pids_dir
+
+worker = Untied::Consumer::Worker.new
+worker.daemonize(pids_dir: pids_dir, log_dir: log_dir, pname: 'untied_apps')

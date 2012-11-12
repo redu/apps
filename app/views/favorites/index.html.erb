@@ -1,14 +1,40 @@
-<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
-<p id="notice"><%= notice %></p>
-<h1>FAVORITES</h1>
+<ul class="tabs tabs-big">
+  <li class="tab">
+    <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
+  </li>
+  <li class="tab tab-active">
+    <% favorite_apps_count = parentize(@favorite_apps_count) %>
+    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
+  </li>
+</ul>
 
-<% @user_apps_associations.each do |association| %>
-   <p> <%= link_to association.app.name, association.app =%> <%= link_to 'Abrir', preview_app_path(association.app) %>
-    <%= button_to "Delete", { :action => "destroy",:user_id => association.user.id,
-      :id => association.app.id, :association_id => association.id},
-      :confirm => "Are you sure?", :method => :delete %>
-   </p>
+<% if @favorite_apps_count <= 0 %>
+  <div class="oer-apps-none">
+    <%= image_tag "icon-api-gray_128_130.png" %>
+    <p>Você ainda não possui Aplicativos Favoritos. Para adicioná-los, pesquise por um aplicativo na aba “Recursos Educacionais Abertos”, abra a página do mesmo clicando no título e clique no botão “Adicionar a Favoritos”.</p>
+  </div>
+<% else %>
+  <% unless @favorite_apps_filters_counter.keys.length < 2 %>
+    <div class="apps-portal-filters">
+      <div class="filters">
+        <% @favorite_apps_filters.uniq.each do |cat| %>
+          <%= link_to "#{cat.name} #{parentize(@favorite_apps_filters_counter[cat.name])}",
+                      user_favorites_path(current_user, filter: filters_url(@filter, cat)),
+                      class: filter_class(@filter, cat) %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+  <div class="oer-apps-wrapper">
+    <ul id="apps" class="list-2-columns list-columns-separator">
+      <%= render partial: 'shared/app', collection: @apps, 
+                 locals: { favorite_flag: true } %>
+    </ul>
+  </div>
+
+  <hr class="list-separator">
+
+  <div id="paginator" class="pagination">
+    <%= render 'shared/apps_pagination' %>
+  </div>
 <% end %>
-<%= link_to_next_page(@user_apps_associations, 'Mostrar Mais') %>
-<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
-
