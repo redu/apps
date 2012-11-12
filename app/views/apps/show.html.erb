@@ -77,11 +77,9 @@
     <p class="info">Autor:<p>
     <p class="description"><%= @app.author %></p>
 
-    <% @kinds.each do |cat| %>
-      <% if @app.categories.any? {|c| c.kind == cat.kind } %>
-        <p class="info"><%= cat.kind %>:</p>
-        <p class="description"><%= (@app.categories.select { |a| a.kind == cat.kind }.collect &:name).first %></p>
-      <% end %>
+    <% @app_categories.each do |category| %>
+      <p class="info"><%= category.first %>:</p>
+      <p class="description"><%= category.second.join(", ") %></p>
     <% end %>
 
     <p class="info">Objetivo:</p>

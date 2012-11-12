@@ -27,9 +27,9 @@ class AppsController < ApplicationController
   end
 
   def show
-    @kinds = Category.select(:kind).uniq
     @app = App.find(params[:id])
     @app.update_attribute(:views, @app.views + 1)
+    @app_categories = Category.get_names_by_kind @app
     load_comment_answers if params[:'show-answers-for']
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(10)
