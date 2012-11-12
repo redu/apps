@@ -3,17 +3,24 @@
 desc "Populate DB with random_data and Faker stuff"
 task :random_population, :n do |t, args|
   cats = Array.new
-  cats << Category.create(name: "Ensino Básico", kind: "Nível")
-  cats << Category.create(name: "Ensino Médio", kind: "Nível")
-  cats << Category.create(name: "Ensino Superior", kind: "Nível")
-  cats << Category.create(name: "Ensino Técnico", kind: "Nível")
-  cats << Category.create(name: "Matemática", kind: "Área")
-  cats << Category.create(name: "Português", kind: "Área")
+  lvls = Array.new
+  lvls << Category.create(name: "Ensino Infantil", kind: "Nível")
+  lvls << Category.create(name: "Ensino Fundamental", kind: "Nível")
+  lvls << Category.create(name: "Ensino Médio", kind: "Nível")
+  lvls << Category.create(name: "Ensino Superior", kind: "Nível")
+  lvls << Category.create(name: "Educação Profissional", kind: "Nível")
+  cats << Category.create(name: "Matemática", kind: "Subárea")
+  cats << Category.create(name: "Português", kind: "Subárea")
+  cats << Category.create(name: "Biologia", kind: "Subárea")
+  cats << Category.create(name: "Geografia", kind: "Subárea")
+  cats << Category.create(name: "História", kind: "Subárea")
   cats << Category.create(name: "Ciências Exatas e da Natureza", kind: "Área")
+  cats << Category.create(name: "Ciências Humanas", kind: "Área")
+  cats << Category.create(name: "Saúde", kind: "Área")
   languages = ['Português', 'Inglês', 'Espanhol', 'Italiano', 'Japonês',
-               'Francês', 'Russo', 'Alemão', 'Aramaico']
+               'Francês', 'Russo', 'Alemão', 'Aramaico', 'Esperanto', 'Dothraki']
 
-  args[:n].times do
+  args[:n].to_i.times do
     app = FactoryGirl.create(:complete_app, name: Faker::Company.catch_phrase,
                              author: Faker::Company.name,
                              language: languages[rand(languages.length)],
@@ -24,23 +31,34 @@ task :random_population, :n do |t, args|
                              submitters: Faker::Company.name,
                              url: Faker::Internet.domain_name,
                              copyright: Faker::Company.name)
-    cats[rand(cats.length)].apps << app
+    lvls[rand(lvls.length)].apps << app # Associa o App a um Nível de Ensino
+    cats[rand(cats.length)].apps << app # Associa o App a uma Área de Ensino
   end
 end
 
 namespace :populate do
+  # Chamada: 'rake populate:arbitrary[n]', com n um número inteiro não negativo
+  desc "Populate DB with an arbitrary quantity of entities"
+  task :arbitrary, [:n] => [:environment] do |t, args|
+    task(:random_population).invoke(args[:n])
+  end
+
+  desc "Populate DB with one only entity"
   task one: :environment do
     task(:random_population).invoke(1)
   end
 
+  desc "Populate DB with one hundred entities"
   task a_few: :environment do
     task(:random_population).invoke(100)
   end
 
+  desc "Populate DB with one thousand entities"
   task some: :environment do
     task(:random_population).invoke(1000)
   end
 
+  desc "Populate DB with ten thousand entities"
   task a_lot: :environment do
     task(:random_population).invoke(10000)
   end

@@ -19,4 +19,8 @@ class Comment < ActiveRecord::Base
   scope :specialized, where(type_cd: 1)
   scope :common, where(type_cd: 0)
   scope :answer, where(type_cd: 2)
+
+  def self.get_by_type(app, type)
+    app.comments.select { |c| c.type == type }
+  end
 end

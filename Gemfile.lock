@@ -1,3 +1,13 @@
+GIT
+  remote: git://github.com/redu/untied-consumer.git
+  revision: be74c7991e500f0e5985267b5dc1bcd4fe9958d2
+  specs:
+    untied-consumer (0.0.4)
+      activemodel
+      amqp
+      configurable
+      json
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -29,8 +39,24 @@ GEM
     activesupport (3.2.5)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    amq-client (0.9.5)
+      amq-protocol (>= 0.9.4)
+      eventmachine
+    amq-protocol (0.9.5)
+    amqp (0.9.8)
+      amq-client (~> 0.9.5)
+      amq-protocol (>= 0.9.4)
+      eventmachine
     arel (3.0.2)
-    builder (3.0.3)
+    asset_sync (0.5.0)
+      activemodel
+      fog
+    aws-sdk (1.7.1)
+      httparty (~> 0.7)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4)
+      uuidtools (~> 2.1)
+    builder (3.0.4)
     chunky_png (1.2.6)
     cocaine (0.4.0)
     coffee-rails (3.2.2)
@@ -47,6 +73,11 @@ GEM
       sass (~> 3.1)
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
+    config_parser (0.5.5)
+    configurable (1.0.0)
+      config_parser (~> 0.5.4)
+      lazydoc (~> 1.0)
+    daemons (1.1.9)
     debugger (1.2.0)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.1.1)
@@ -56,6 +87,8 @@ GEM
     debugger-ruby_core_source (1.1.3)
     diff-lcs (1.1.3)
     erubis (2.7.0)
+    eventmachine (1.0.0)
+    excon (0.16.7)
     execjs (1.4.0)
       multi_json (~> 1.0)
     factory_girl (4.1.0)
@@ -65,8 +98,22 @@ GEM
       railties (>= 3.0.0)
     faker (1.1.2)
       i18n (~> 0.5)
+    fog (1.7.0)
+      builder
+      excon (~> 0.14)
+      formatador (~> 0.2.0)
+      mime-types
+      multi_json (~> 1.0)
+      net-scp (~> 1.0.4)
+      net-ssh (>= 2.1.3)
+      nokogiri (~> 1.5.0)
+      ruby-hmac
+    formatador (0.2.4)
     fssm (0.2.9)
     hike (1.2.1)
+    httparty (0.9.0)
+      multi_json (~> 1.0)
+      multi_xml
     i18n (0.6.1)
     journey (1.0.4)
     jquery-rails (2.1.3)
@@ -77,14 +124,19 @@ GEM
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
       railties (>= 3.0.0)
+    lazydoc (1.0)
     libv8 (3.3.10.4)
     mail (2.4.4)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.19)
-    multi_json (1.3.6)
+    multi_json (1.3.7)
+    multi_xml (0.5.1)
     mysql2 (0.3.11)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-ssh (2.6.1)
     nokogiri (1.5.5)
     paperclip (3.3.0)
       activemodel (>= 3.0.0)
@@ -137,6 +189,7 @@ GEM
       activesupport (>= 3.0)
       railties (>= 3.0)
       rspec (~> 2.11.0)
+    ruby-hmac (0.4.0)
     sass (3.2.1)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -170,14 +223,18 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    uuidtools (2.1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activerecord-reputation-system
+  asset_sync
+  aws-sdk
   coffee-rails (~> 3.2.1)
   compass-rails
+  daemons
   debugger
   factory_girl_rails
   faker
@@ -197,3 +254,4 @@ DEPENDENCIES
   sunspot_solr
   therubyracer
   uglifier (>= 1.0.3)
+  untied-consumer!

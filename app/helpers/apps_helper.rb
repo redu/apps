@@ -9,6 +9,28 @@ module AppsHelper
     end
   end
 
+  # Retorna a quantidade de aplicativos encontrados de uma dada categoria.
+  def count_filtered(filters_counter, cat)
+    if params.include? :search
+      filters_counter[cat.name].to_i
+    else
+      0
+    end
+  end
+
+  def filter_class(filters, category)
+    if filters.include? category.id.to_s
+      "filter filter-active"
+    else
+      "filter"
+    end
+  end
+
+  # Chama join para um array de entidades que possuem name
+  def names_for(entities)
+    entities.collect(&:name).join(", ")
+  end
+
   # Retorna 2 se length for maior que 2 ou length se menor.
   def max_2_answers(length)
     if length > 2
