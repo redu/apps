@@ -37,8 +37,8 @@ pt-BR:
     other: "%{count} críticas de especialista"
   comment:
     zero: "Nenhum comentário"
-    one: "comentário"
-    other: "comentários"
+    one: "1 comentário"
+    other: "%{count} comentários"
   result:
     one: "resultado"
     other: "resultados"
