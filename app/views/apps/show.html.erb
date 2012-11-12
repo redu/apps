@@ -9,39 +9,28 @@
   <div class="oer-data">
     <%= image_tag @app.thumbnail.url(:large) %>
 
-    <ol class="oer-stars <%= "oer-stars-user-rated" if @user %>">
+    <ol class="oer-stars<%= " oer-stars-user-rated" if current_user %>">
       <% app_reputation = @app.reputation_for(:rating) %>
       <% user_rating = 0 %>
       <% index = 0 %>
-      <% if @user %>
+      <%# Renderiza as estrelas azuis da nota do usuário. %>
+      <% if current_user %>
         <% user_rating = @user_rating.to_i %>
         <% index = user_rating %>
         <% user_rating.times do |n| %>
-          <li>
-            <%= link_to "#{n+1}", rate_app_path(@app, rating: n+1), method: "post", class: "icon-star-full-blue_16_18 show text-replacement", "data-star-color" => "blue" %>
-          </li>
+          <%= render "star", index: n, type: "blue" %>
         <% end %>
       <% end %>
+      <%# Renderiza as estrelas cinza escuro da média de classificação. %>
       <% if app_reputation > user_rating %>
         <% (app_reputation - user_rating).to_i.times do |n| %>
-          <li>
-            <% if @user %>
-              <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-gray_16_18 show text-replacement", "data-star-color" => "gray" %>
-            <% else %>
-              <span class="icon-star-full-gray_16_18 show text-replacement"><%= index + 1 %></span>
-            <% end %>
-          </li>
+          <%= render "star", index: index, type: "gray" %>
           <% index += 1 %>
         <% end %>
       <% end %>
+      <%# Renderiza as estrelas cinza claro restantes. %>
       <% (5 - index).times do |n| %>
-        <li>
-          <% if @user %>
-            <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-lightgray_16_18 show text-replacement", "data-star-color" => "lightgray" %>
-          <% else %>
-            <span class="icon-star-full-lightgray_16_18 show text-replacement"><%= index + 1 %></span>
-          <% end %>
-        </li>
+        <%= render "star", index: index, type: "lightgray" %>
         <% index += 1 %>
       <% end %>
     </ol>
