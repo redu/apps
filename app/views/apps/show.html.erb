@@ -152,6 +152,7 @@
 <ol class="statuses oer-comments">
   <%= render partial: 'specialized_comment', collection: @app.comments.specialized %>
 
+  <% if current_user %>
     <!-- Botões de comentários -->
     <li>
       <hr class="list-separator">
@@ -172,6 +173,7 @@
         <% end %>
       </div>
     </li>
+  <% end %>
 
   <!-- Comentários comuns -->
   <div id="comments" >
