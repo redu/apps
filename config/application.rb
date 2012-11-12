@@ -69,5 +69,10 @@ module ReduApps
 
     #OBSERVERS TEM DIREITO A UM LAR SIM!
     config.autoload_paths << "#{config.root}/app/observers"
+
+    #configs para auxiliar a integração com o untied
+    config.untied = {}
+    config.untied['model_data'] = HashWithIndifferentAccess.new_from_hash_copying_default(
+      Psych.load(File.open("#{Rails.root}/config/model_data.yml")))
   end
 end

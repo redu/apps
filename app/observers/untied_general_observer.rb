@@ -1,21 +1,21 @@
-class UntiedGeneralObserver < Untied::Consumer::Observer
-  include UntiedObserverHelper
+class UntiedGeneralObserver < UntiedObserverHelper
+  #Observa todos os objetos relevantes do redu, faz uso do helper para criação
+  #dos modelos
+
   observe(:user, :environment, :course, :space, :subject,
     :user_course_association, :from => :core)
-  #observa tudo
-
   def after_create(payload)
     kind = payload.keys[0]
-    self.send("create_#{kind}", payload)
+    self.create_proxy(kind, payload.values[0])
   end
 
   def after_update(payload)
     kind = payload.keys[0]
-    self.send("update_#{kind}", payload)
+    self.update_proxy(kind, payload.values[0])
   end
 
   def after_destroy(payload)
     kind = payload.keys[0]
-    self.send("destroy_#{kind}", payload)
+    self.destroy_proxy(kind, payload.values[0])
   end
 end
