@@ -1,5 +1,5 @@
 <li class="status-content response">
-  <%= link_to 'Apagar Comentário', [comment.app, comment_answer],
+  <%= link_to_if (comment_answer.author == current_user), 'Apagar Comentário', [comment.app, comment_answer],
              :confirm => 'Tem certeza?',
              :method => :delete,
              :class => "close icon-close-gray_16_18 replacement" %>
