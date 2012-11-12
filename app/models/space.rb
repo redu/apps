@@ -1,4 +1,5 @@
 require 'base_model'
+
 class Space < ActiveRecord::Base
   include BaseModel
   zombify

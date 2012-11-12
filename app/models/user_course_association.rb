@@ -1,4 +1,5 @@
 require 'base_model'
+
 class UserCourseAssociation < ActiveRecord::Base
   include BaseModel
   zombify

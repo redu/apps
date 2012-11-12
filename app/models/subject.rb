@@ -1,4 +1,5 @@
 require 'base_model'
+
 class Subject < ActiveRecord::Base
   include BaseModel
   zombify
