@@ -7,7 +7,7 @@
     <a href="#" class="link-name"><%= "#{common_comment.author.first_name} #{common_comment.author.last_name}" %></a>
     comentou sobre este aplicativo:
     <%= link_to_if (common_comment.author == current_user), 'Apagar Comentário', [common_comment.app, common_comment],
-               :confirm => 'Tem certeza?',
+               :confirm => 'Ao apagar este comentário, você também removerá todas as respostas. Deseja continuar?',
                :method => :delete,
                :class => "close icon-close-gray_16_18 replacement" %>
     <span class="date"><%= l common_comment.created_at %></span>
