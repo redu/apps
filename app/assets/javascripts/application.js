@@ -124,32 +124,34 @@ $(function() {
 
 
   // Comportamento de hover in/out das estrelas.
-  var unratedStar = "icon-star-full-lightgray_16_18"
-    , ratedStar = "icon-star-full-gray_16_18"
-    , userRatedStar = "icon-star-full-blue_16_18"
-    , starsWrapper = "oer-stars-user-rated"
+  var unratedStar = "icon-star-full-lightgray_16_18";
+  var ratedStar = "icon-star-full-gray_16_18";
+  var userRatedStar = "icon-star-full-blue_16_18";
+  var starsWrapper = "oer-stars-user-rated";
+
   $("." + starsWrapper + " a").hover(function() {
-    var index = $(this).html()
-      , $stars = $(this).parents("." + starsWrapper).find("a")
+    var index = $(this).html();
+    var $stars = $(this).parents("." + starsWrapper).find("a");
 
     $stars.each(function(i) {
       if (i < index) {
-        $(this).removeClass(unratedStar + " " + ratedStar).addClass(userRatedStar)
+        $(this).removeClass(unratedStar + " " + ratedStar).addClass(userRatedStar);
       }
     })
   }, function() {
-    var index = $(this).html()
-      , $stars = $(this).parents("." + starsWrapper).find("a")
+    var index = $(this).html();
+    var $stars = $(this).parents("." + starsWrapper).find("a");
 
     // Retorna as classes originais das estrelas.
     $stars.each(function(i) {
       if (i < index) {
-        $(this).removeClass(userRatedStar).addClass("icon-star-full-" + $(this).data("star-color") + "_16_18")
+        $(this).removeClass(userRatedStar).addClass("icon-star-full-" + $(this).data("star-color") + "_16_18");
       }
     })
   });
 
 
+  // Realiza o comportamento dos botões de comentar (comum e especialista).
   var openClass = "open";
   var buttonCommentClass = "button-comment";
   var buttonReviewClass = "button-review";
@@ -157,7 +159,6 @@ $(function() {
   var createResponseReviewClass = "flap-to-review";
   var containerClass = "reply-buttons";
 
-  // Realiza o comportamento dos botões de comentar (comum e especialista).
   $.fn.replyBehavior = function(options) {
     var settings = $.extend({}, options);
 
@@ -187,25 +188,24 @@ $(function() {
     });
   }
 
-
   // Adiciona o comportamento para o botão de comentário comum.
   $("." + buttonCommentClass).replyBehavior({
-    buttonClass: buttonCommentClass
-  , createResponseClass: createResponseCommentClass
-  , otherButtonClass: buttonReviewClass
-  , otherResponseClass: createResponseReviewClass
-  , openClass: openClass
-  , containerClass: containerClass
+    buttonClass: buttonCommentClass,
+    createResponseClass: createResponseCommentClass,
+    otherButtonClass: buttonReviewClass,
+    otherResponseClass: createResponseReviewClass,
+    openClass: openClass,
+    containerClass: containerClass
   });
 
   // Adiciona o comportamento para o botão de comentário especialista.
   $("." + buttonReviewClass).replyBehavior({
-    buttonClass: buttonReviewClass
-  , createResponseClass: createResponseReviewClass
-  , otherButtonClass: buttonCommentClass
-  , otherResponseClass: createResponseCommentClass
-  , openClass: openClass
-  , containerClass: containerClass
+    buttonClass: buttonReviewClass,
+    createResponseClass: createResponseReviewClass,
+    otherButtonClass: buttonCommentClass,
+    otherResponseClass: createResponseCommentClass,
+    openClass: openClass,
+    containerClass: containerClass
   });
 
   // No cancelar, remove também a classe de aberto.
