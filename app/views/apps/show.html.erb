@@ -68,9 +68,11 @@
       <li class="icon-seen-gray_16_18-before">
         <%= t 'view', count: @app.views %>.
       </li>
-      <li class="icon-specialist-gray_16_18-before">
-        <%= t 'review', count: @app.comments.specialized.length %>.
-      </li>
+      <% if @app.comments.specialized.length > 0 %>
+        <li class="icon-specialist-gray_16_18-before">
+          <%= t 'review', count: @app.comments.specialized.length %>.
+        </li>
+      <% end %>
       <li class="icon-comment-gray_16_18-before">
         <%= t 'comment',
               count: (@app.comments.common.length + @app.comments.answer.length) %>.
