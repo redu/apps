@@ -52,4 +52,19 @@ module AppsHelper
   def last_answer?(index, total)
     index + 1 == total
   end
+
+  # Retorna a URL base do Redu.
+  def redu_domain
+    ReduApps::Application.config.redu_domain
+  end
+
+  # Retorna links simples para o Redu.
+  def redu_static(area)
+    redu_domain + area
+  end
+
+  # Retorna links relacionados a usuários para o Redu.
+  def redu_user_static(area = "", user = current_user)
+    redu_domain + "pessoas/" + user.login + "/" + area
+  end
 end
