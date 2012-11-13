@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
 
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
+    # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
+    c.primary_key = :uid
   end
 
   def self.find_by_login_or_email(key)
