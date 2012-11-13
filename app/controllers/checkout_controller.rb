@@ -1,3 +1,4 @@
+# encoding: utf-8
 
 class CheckoutController < ApplicationController
 
@@ -47,17 +48,8 @@ class CheckoutController < ApplicationController
   def step_4
     get_params([:space_id, :create_subject, :lecture, :subject], params)
     @app = App.find(@app_id)
-    @subject = if @create_subject == 'true'
-      create_subject_via_api
-    else
-      Subject.find(@subject)
-    end
+    @subject = @create_subject == 'true' ? create_subject_via_api : Subject.find(@subject)
     create_lecture_via_api
-    # lecture = Lecture.new(name: @lecture) do |l|
-    #   l.subject = Subject.find(@subject)
-    #   l.app = App.find(@app_id)
-    # end
-    # raise "Invalid data" unless lecture.save
 
     redirect_to app_path(@app)
   end
@@ -70,28 +62,30 @@ class CheckoutController < ApplicationController
   end
 
   def create_subject_via_api
-    response = Subject.create_via_api(space_id: @space_id, subject: @subject,
-                                      token: current_user.token)
+    response = Subject.create_via_api(space_sid: Space.find(@space_id).sid,
+                                      subject: @subject, token: current_user.token)
     case response.status #TODO
     when 201
       subject = JSON.parse response.body
 
       Subject.new(name: subject['name'], suid: subject['id'])
-    when 401
+    when 401 # Autenticação falhou
+    when 422 # Criação falhou devido a erro na requisição
     else
-      raise "Unknown status code #{ response.status }"
+      raise "Unknown status code #{response.status}"
     end
   end
 
   def create_lecture_via_api
     response = Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
-                                      subject_id: @subject.suid,
+                                      subject_suid: @subject.suid,
                                       token: current_user.token)
     case response.status #TODO
     when 201
-    when 401
+    when 401 # Autenticação falhou
+    when 422 # Criação falhou devido a erro na requisição
     else
-      raise "Unknown status code #{ response.status }"
+      raise "Unknown status code #{response.status}"
     end
   end
 end

@@ -104,7 +104,7 @@ describe CheckoutController do
         before do
           lecture_name = "Nova Aula"
           stub_request(:post,
-                       "http://www.redu.com.br/spaces/#{ @space.id }/subjects").
+                       "http://www.redu.com.br/api/subjects/#{@subject.suid}/lectures").
             to_return(:status => 201, body: { name: lecture_name,
                                               id: 713 }.to_json)
           post :update,
@@ -121,15 +121,14 @@ describe CheckoutController do
         before do
           subject_name = "Novo módulo"
           lecture_name = "Nova Aula"
+          new_redu_subject_id = 713
           stub_request(:post,
-                       "http://www.redu.com.br/spaces/#{ @space.id }/subjects").
+                       "http://www.redu.com.br/api/spaces/#{@space.sid}/subjects").
             to_return(:status => 201,
-                      body: { name: subject_name, id: 317 }.to_json )
-          stub_request(:post, "http://www.redu.com.br/spaces/317/subjects").
+                      body: { name: subject_name, id: new_redu_subject_id }.to_json )
+          stub_request(:post, "http://www.redu.com.br/api/subjects/#{new_redu_subject_id}/lectures").
             to_return(:status => 201, body: { name: lecture_name,
                                               id: 713 }.to_json)
-
-
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
                              lecture: lecture_name, subject: subject_name)
