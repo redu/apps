@@ -26,6 +26,14 @@ module AppsHelper
     end
   end
 
+  def screen_shot_class(length)
+    if length == 2
+      "oer-image-preview oer-image-preview-small"
+    else
+      "oer-image-preview oer-image-preview-long"
+    end
+  end
+
   # Chama join para um array de entidades que possuem name
   def names_for(entities)
     entities.collect(&:name).join(", ")
