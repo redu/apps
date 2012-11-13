@@ -31,9 +31,13 @@ class User < ActiveRecord::Base
                                                             large: "x90",
                                                             larger: "x140" }})
 
+  acts_as_authentic
+
+  def self.find_by_login_or_email(key)
+    User.find_by_login(key) || User.find_by_email(key)
+  end
+
   def to_param
     login
   end
-
-  acts_as_authentic
 end

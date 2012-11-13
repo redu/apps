@@ -1,29 +1,31 @@
-<form class="header-sign-in-form">
+<%= form_for @user_session || UserSession.new, remote: true, html: { :class => "header-sign-in-form", :id => "sign-in-form" } do |f| %>
   <div class="control-group">
     <div class="control-label">
-      <label for="login">Login</label>
+      <%= f.label :login, "Login" %>
     </div>
     <div class="controls">
-      <input type="text" placeholder="Seu login ou e-mail cadastrado" id="login">
+      <%= f.text_field :login, :placeholder => "Seu login ou e-mail cadastrado" %>
+      <%= concave_errors_for f.object, :login %>
     </div>
   </div>
   <div class="control-group">
     <div class="control-label">
-      <label for="password">Senha</label>
+      <%= f.label :password, "Senha" %>
     </div>
     <div class="controls">
-      <input type="password" placeholder="Sua senha" id="password">
+      <%= f.password_field :password, :placeholder =>"Sua senha" %>
+      <%= concave_errors_for f.object, :password %>
     </div>
   </div>
   <div class="header-sign-in-form-submit">
     <div class="control-group pull-left">
       <div class="controls">
         <div class="control-checkbox">
-          <input type="checkbox" id="remember-me">
-          <label for="remember-me" class="legend">Mantenha-me conectado</label>
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me, "Matenha-me conectado", :class => "legend" %>
         </div>
       </div>
     </div>
-    <input type="submit" value="Enviar" class="button-primary pull-right">
+    <%= f.submit "Enviar", :class => "button-primary pull-right" %>
   </div>
-</form>
+<% end %>

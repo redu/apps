@@ -17,5 +17,8 @@ ReduApps::Application.routes.draw do
     resources :favorites, :only => [:index, :create, :destroy]
   end
 
+  resources :user_sessions, :only => [:create]
+  delete 'logout' => "user_sessions#destroy", :as => :logout
+
   ActionDispatch::Routing::Translator.translate_from_file('config/locales/routes.yml')
 end

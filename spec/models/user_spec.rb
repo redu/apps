@@ -50,4 +50,14 @@ describe User do
   it { should respond_to(:crypted_password) }
   it { should respond_to(:password_salt) }
   it { should respond_to(:persistence_token) }
+
+  context 'Retrievers' do
+    it 'find user by login or email' do
+      @user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user)
+
+      User.find_by_login_or_email(@user.login).should == @user
+      User.find_by_login_or_email(@user.email).should == @user
+    end
+  end
 end
