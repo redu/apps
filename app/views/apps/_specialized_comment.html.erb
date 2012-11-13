@@ -7,7 +7,7 @@
     <% end %>
     <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
     <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
-    <%= link_to_if (specialized_comment.author == current_user), 'Apagar Comentário', [specialized_comment.app, specialized_comment],
+    <%= link_to_if (specialized_comment.author == current_user), 'Apagar Crítica', [specialized_comment.app, specialized_comment],
                 :confirm => 'Esta ação irá apagar sua crítica. Deseja continuar?',
                 :method => :delete,
                 :class => "close icon-close-gray_16_18 replacement" %>
