@@ -4,6 +4,10 @@ User: #Kind that comes in the payload
     - first_name
     - last_name
     - id
+    - crypted_password
+    - password_salt
+    - email
+    - persistence_token
   id: uid #How to translate the id
   include_data: #Necessary default data to include onto our new model
     - role: member
