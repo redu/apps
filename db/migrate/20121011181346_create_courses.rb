@@ -5,6 +5,7 @@ class CreateCourses < ActiveRecord::Migration
       t.string :name
       t.belongs_to :user
       t.belongs_to :environment
+      t.boolean :zombie
 
       t.timestamps
     end

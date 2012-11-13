@@ -1,5 +1,10 @@
+require 'base_model'
+
 class Subject < ActiveRecord::Base
-  attr_accessible :name, :suid
+  include BaseModel
+  zombify
+
+  attr_accessible :name, :suid, :space
 
   belongs_to :space
   has_many :lectures

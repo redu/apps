@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :last_name
       t.integer :role_cd, :default => 1
       t.attachment :thumbnail
+      t.boolean :zombie
 
       t.timestamps
     end

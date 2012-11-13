@@ -1,0 +1,63 @@
+User: #Kind that comes in the payload
+  attributes: # Which vars are used from the hash
+    - login
+    - first_name
+    - last_name
+    - id
+  id: uid #How to translate the id
+  include_data: #Necessary default data to include onto our new model
+    - role: member
+  name: User # Name of your local model
+Environment:
+  attributes:
+    - name
+    - id
+    - user_id
+  id: eid
+  check_for: #Checks for dependent models,
+    User: user_id #The key is the model and the value is how we search for it
+  name: Environment
+
+Course:
+  attributes:
+    - name
+    - id
+    - user_id
+    - environment_id
+  id: cid
+  check_for:
+    Environment: environment_id
+    User: user_id
+  name: Course
+
+Space:
+  attributes:
+    - name
+    - id
+    - course_id
+  id: sid
+  check_for:
+    Course: course_id
+  name: Space
+
+Subject:
+  attributes:
+    - name
+    - id
+    - space_id
+  id: suid
+  check_for:
+    Space: space_id
+  name: Subject
+
+UserCourseAssociation:
+  attributes:
+    - id
+    - user_id
+    - course_id
+    - role
+  id: ucaid
+  check_for:
+    User: user_id
+    Course: course_id
+  name: UserCourseAssociation
