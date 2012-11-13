@@ -15,49 +15,7 @@
       <%= image_tag @app.thumbnail.url(:large), alt: @app.name, title: @app.name, class: "oer-thumbnail" %>
 
       <%# Área de classificação. %>
-      <div class="oer-rating">
-        <div class="oer-stars-n-value">
-          <ol class="oer-stars<%= " oer-stars-user-rated" if current_user %>">
-            <% app_reputation = @app.reputation_for(:rating) %>
-            <% user_rating = 0 %>
-            <% index = 0 %>
-            <%# Renderiza as estrelas azuis da nota do usuário. %>
-            <% if current_user %>
-              <% user_rating = @user_rating.to_i %>
-              <% index = user_rating %>
-              <% user_rating.times do |n| %>
-                <%= render "star", index: n, type: "blue" %>
-              <% end %>
-            <% end %>
-            <%# Renderiza as estrelas cinza escuro da média de classificação. %>
-            <% if app_reputation > user_rating %>
-              <% (app_reputation - user_rating).to_i.times do |n| %>
-                <%= render "star", index: index, type: "gray" %>
-                <% index += 1 %>
-              <% end %>
-            <% end %>
-            <%# Renderiza as estrelas cinza claro restantes. %>
-            <% (5 - index).times do |n| %>
-              <%= render "star", index: index, type: "lightgray" %>
-              <% index += 1 %>
-            <% end %>
-          </ol>
-
-          <%# Nota média. %>
-          <span class="oer-rating-value"><%= app_reputation %><span class="oer-rating-value-max">/5</span></span>
-        </div>
-
-        <%# Nota do usuário. %>
-        <% if current_user %>
-          <span class="legend show">
-            <% if @evaluated %>
-              Você classificou em <%= t "star", count: user_rating %>.
-            <% else %>
-              Classifique este Recurso.
-            <% end %>
-          </span>
-        <% end %>
-      </div>
+      <%= render "stars" %>
 
       <%# Contadores. %>
       <ul class="oer-counters">
