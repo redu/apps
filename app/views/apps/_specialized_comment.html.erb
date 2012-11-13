@@ -2,10 +2,10 @@
   <hr class="list-separator">
   <div class="status status-text">
     <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
-    <%= link_to "http://www.redu.com.br/pessoas/#{specialized_comment.author.login}", class: "icon-link" do %>
-      <%= image_tag specialized_comment.author.thumbnail.url(:medium) %>
+    <%= link_to redu_user_static("", specialized_comment.author), class: "icon-link" do %>
+      <%= image_tag specialized_comment.author.thumbnail.url(:medium), alt: specialized_comment.author.display_name, title: specialized_comment.author.display_name %>
     <% end %>
-    <%= link_to "#{specialized_comment.author.first_name} #{specialized_comment.author.last_name}", "http://www.redu.com.br/pessoas/#{specialized_comment.author.login}", class: "link-name" %>
+    <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
     <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
     <%= link_to_if (specialized_comment.author == current_user), 'Apagar Comentário', [specialized_comment.app, specialized_comment],
                 :confirm => 'Esta ação irá apagar sua crítica. Deseja continuar?',
