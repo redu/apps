@@ -4,4 +4,5 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-ReduApps::Application.config.secret_token = 'd7b29dddf42c261461a9231d2b0d2338e96096ea097172770594682b6491dcbc384fe1ed0f2a47537a3fc223cd8e5a8ab56a18e315b19f990973ca0c2f65b3be'
+ReduApps::Application.config.secret_token = 'e61b5fca2025b8bc89b31f7066bdef1e7c92f79ef2ae4282c889954563d36cfa74d777186bb4d017e75f44a974b0cde94c97d567324ea2a1091e3965d0d5df83'
+

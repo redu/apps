@@ -31,7 +31,9 @@ class User < ActiveRecord::Base
                                                             large: "x90",
                                                             larger: "x140" }})
 
-  acts_as_authentic
+  acts_as_authentic do |c|
+    c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
+  end
 
   def self.find_by_login_or_email(key)
     User.find_by_login(key) || User.find_by_email(key)
