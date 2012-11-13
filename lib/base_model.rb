@@ -1,4 +1,8 @@
 module BaseModel
+  #Modulo que adiciona suporte a modelos zombies. Se um modelo for criado sem validação
+  #ele automaticamente é marcado como zombie, caso a validação seja feita,
+  #o modelo perde essa tag se não ocorrer nenhum erro.
+
   extend ActiveSupport::Concern
 
   module ClassMethods
