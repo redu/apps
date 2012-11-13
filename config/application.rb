@@ -70,5 +70,7 @@ module ReduApps
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
 
     config.paperclip = {}
+
+    config.redu_domain = "http://www.redu.com.br/"
   end
 end

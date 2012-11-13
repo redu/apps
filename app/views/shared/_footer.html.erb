@@ -14,34 +14,34 @@
         <ul class="footer-navigation">
           <li>
             <%= link_to "Sobre o Redu",
-                "http://www.redu.com.br/",
+                redu_domain,
                 :title => "Sobre o Redu"
             %>
           </li>
           <li>
             <%= link_to "Segmentos",
-                "http://www.redu.com.br/#segmentos",
+                redu_static("#segmentos"),
                 :title => "Segmentos",
                 :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Vantagens",
-                "http://www.redu.com.br/#vantagens",
+                redu_static("#vantagens"),
                 :title => "Vantagens",
                 :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Funcionalidades",
-                "http://www.redu.com.br/#funcionalidades",
+                redu_static("#funcionalidades"),
                 :title => "Funcionalidades",
                 :class => "landing-scroll"
             %>
           </li>
           <li>
             <%= link_to "Planos",
-                "http://www.redu.com.br/#planos",
+                redu_static("#planos"),
                 :title => "Planos",
                 :class => "landing-scroll"
             %>
@@ -95,7 +95,7 @@
             <div class="span2">
               <h3>
                 <%= link_to "Fale Conosco",
-                      "http://www.redu.com.br/contato",
+                      redu_static("contato"),
                       :title => "Fale Conosco",
                       :class => "link-target"
                 %>
