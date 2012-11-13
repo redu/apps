@@ -33,7 +33,7 @@ module AppsHelper
 
   # Retorna a URL base do Redu.
   def redu_domain
-    "http://www.redu.com.br/"
+    ReduApps::Application.config.redu_domain
   end
 
   # Retorna links simples para o Redu.
