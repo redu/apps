@@ -11,12 +11,10 @@ gem 'rails-translate-routes'
 gem 'simple-navigation'
 gem 'activerecord-reputation-system'
 gem 'sunspot_rails'
-gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
 gem 'daemons'
 gem 'aws-sdk'
 gem 'faker'
 gem 'random_data'
-
 gem 'untied-consumer', :git => 'git://github.com/redu/untied-consumer.git'
 
 # Gems used only for assets and not required
