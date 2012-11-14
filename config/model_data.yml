@@ -1,5 +1,5 @@
-User: #Kind that comes in the payload
-  attributes: # Which vars are used from the hash
+User: #Tipo que vem no payload
+  attributes: # Que variaveis sao usadas do hash
     - login
     - first_name
     - last_name
@@ -8,18 +8,18 @@ User: #Kind that comes in the payload
     - password_salt
     - email
     - persistence_token
-  id: uid #How to translate the id
-  include_data: #Necessary default data to include onto our new model
+  id: uid #Como traduzir o id
+  include_data: #Data default que é adicionada
     - role: member
-  name: User # Name of your local model
+  name: User #Nome do modelo local
 Environment:
   attributes:
     - name
     - id
     - user_id
   id: eid
-  check_for: #Checks for dependent models,
-    User: user_id #The key is the model and the value is how we search for it
+  check_for: #Checa por dependencias
+    User: user_id #A chave é o modelo e o valor é como a gente procura por ele
   name: Environment
 
 Course:

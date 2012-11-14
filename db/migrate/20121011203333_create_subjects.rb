@@ -4,7 +4,6 @@ class CreateSubjects < ActiveRecord::Migration
       t.integer :suid
       t.string :name
       t.belongs_to :space
-      t.boolean :zombie
 
       t.timestamps
     end

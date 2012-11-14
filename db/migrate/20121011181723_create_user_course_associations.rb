@@ -4,7 +4,7 @@ class CreateUserCourseAssociations < ActiveRecord::Migration
       t.references :user, :course
       t.integer :ucaid
       t.integer :role_cd
-      t.boolean :zombie
+
       t.timestamps
     end
     add_index :user_course_associations, [:user_id, :course_id]

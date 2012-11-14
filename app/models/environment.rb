@@ -1,5 +1,3 @@
-require 'base_model'
-
 class Environment < ActiveRecord::Base
   include BaseModel
 

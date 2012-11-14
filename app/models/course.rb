@@ -1,5 +1,3 @@
-require 'base_model'
-
 class Course < ActiveRecord::Base
   include BaseModel
   zombify
