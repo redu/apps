@@ -41,6 +41,9 @@ class User < ActiveRecord::Base
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
     # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
     c.primary_key = :uid
+
+    c.require_password_confirmation = false
+    c.validate_password_field = false
   end
 
   def self.find_by_login_or_email(key)
