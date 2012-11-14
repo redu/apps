@@ -6,7 +6,7 @@ describe UntiedObserverHelper do
 
     let(:user) { { 'id' => 1, 'login' => 'sexy_jedi_3000',
       'email' => 'jedi@concil.com', 'first_name' => 'Luke',
-      'password' => '1234', 'password_confirmation' => '1234',
+      'password_salt' => '1234', 'crypted_password' => '1234',
       'last_name' => 'skywalker', coisado: false } } #Outros dados sao irrelevantes...
 
     describe "create_user" do

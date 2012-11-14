@@ -15,7 +15,7 @@ describe FavoritesController do
   context "when listing user favorites" do
     before(:each) do
       @user.apps << [@app1, @app2]
-      controller.stub(:current_user) { @user }
+      controller.stub(current_user: @user)
     end
 
     it "should assign user favorites" do
@@ -26,7 +26,7 @@ describe FavoritesController do
 
   context "when creating user favorite" do
     before(:each) do
-      controller.stub(:current_user) { @user }
+      controller.stub(current_user: @user)
     end
 
     it "should add app to favorites list" do
@@ -51,8 +51,8 @@ describe FavoritesController do
     it "should remove user favorite" do
       assoc_id = @user.user_app_associations.where(app_id: @app1.id).first.id
       expect {
-        delete :destroy, 
-               id: UserAppAssociation.find_by_user_id_and_app_id(@user, @app1), 
+        delete :destroy,
+               id: UserAppAssociation.find_by_user_id_and_app_id(@user, @app1),
                user_id: @user, locale: 'pt-BR'
       }.to change(@user.apps, :count).by(-1)
     end
