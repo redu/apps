@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121019173907) do
+ActiveRecord::Schema.define(:version => 20121114164148) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.integer  "environment_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.boolean  "zombie"
   end
 
   add_index "courses", ["cid", "name", "user_id"], :name => "index_courses_on_cid_and_name_and_user_id"
@@ -84,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.datetime "thumbnail_updated_at"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.boolean  "zombie"
   end
 
   add_index "environments", ["eid", "name", "user_id"], :name => "index_environments_on_eid_and_name_and_user_id"
@@ -163,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.integer  "course_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "zombie"
   end
 
   add_index "spaces", ["sid", "name", "course_id"], :name => "index_spaces_on_sid_and_name_and_course_id"
@@ -173,6 +176,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.integer  "space_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "zombie"
   end
 
   add_index "subjects", ["suid", "name", "space_id"], :name => "index_subjects_on_suid_and_name_and_space_id"
@@ -189,8 +193,11 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
   create_table "user_course_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_id"
+    t.integer  "ucaid"
+    t.integer  "role_cd"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.boolean  "zombie"
   end
 
   add_index "user_course_associations", ["user_id", "course_id"], :name => "index_user_course_associations_on_user_id_and_course_id"
@@ -217,6 +224,7 @@ ActiveRecord::Schema.define(:version => 20121019173907) do
     t.datetime "thumbnail_updated_at"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.boolean  "zombie"
   end
 
   add_index "users", ["uid"], :name => "index_users_on_uid"
