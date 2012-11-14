@@ -1,6 +1,19 @@
 require 'spec_helper'
 
 describe CommentsController do
+  describe "GET show" do
+    before do
+      @app = FactoryGirl.create(:app)
+      @comment = FactoryGirl.create(:common_comment)
+      @app.comments << @comment
+    end
+
+    it "should assign comment" do
+      get :show, { app_id: @app, id: @comment, locale: 'pt-BR' }
+      assigns(:comment).should == @comment
+    end
+  end
+
   describe "POST create" do
     before do
       @app = FactoryGirl.create(:app)
@@ -166,7 +179,7 @@ describe CommentsController do
 
           it 'should destroy answer for proper comment' do
             expect {
-              post :destroy, @params.merge(:comment_id => @comment.id, 
+              post :destroy, @params.merge(:comment_id => @comment.id,
                                            :id => @answer.id)
             }.to change(@comment.answers, :count).by(-1)
           end

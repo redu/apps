@@ -1,4 +1,13 @@
 class CommentsController < ApplicationController
+
+  def show
+    @comment = Comment.includes(:answers).find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     @app = App.find(params[:app_id])
     params[:comment][:author] = current_user

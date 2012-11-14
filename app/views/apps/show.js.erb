@@ -1,11 +1,7 @@
 <% if params[:page] %>
-  $('#comments').append('<%= escape_javascript render partial: "common_comment", collection: @comments %>');
+  $('#comments').append('<%= escape_javascript render partial: "comments/common_comment", collection: @comments %>');
   $('#paginator').html("<%= escape_javascript(link_to_next_page(@comments, 'Mostrar mais...', remote: true, class: 'button-default icon-arrow-down-pagination-gray_16_18-before')) %>")
   <% if @comments.last_page? %>
     $("#pagination-wrapper").remove();
   <% end %>
-<% elsif params[:'show-answers-for'] %>
-  var $container = $('#comments-for-<%= params[:"show-answers-for"] %>');
-  $container.find('.comments').html('<%= escape_javascript render partial: "comment_answer", collection: @answers, locals: { comment: @comment, total: @answers.length } %>');
-  $container.find('.show-more, .last-responses').remove();
 <% end %>

@@ -28,9 +28,8 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
-    @app.update_attribute(:views, @app.views + 1)
+    @app.update_attribute(:views, @app.views + 1) unless params[:page]
     @app_categories = Category.get_names_by_kind @app
-    load_comment_answers if params[:'show-answers-for']
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(10)
     @user = current_user
@@ -43,7 +42,7 @@ class AppsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js {}
+      format.js
       format.html  # show.html.erb
       format.json  { render :json => @app }
     end
@@ -84,10 +83,5 @@ class AppsController < ApplicationController
     @categories = Category.filters_on @apps
     @filters_counter = Category.count_filters_on @categories
     @categories = @categories.uniq # Remove categorias duplicadas
-  end
-
-  def load_comment_answers
-    @comment = @app.comments.find(params[:'show-answers-for'].to_i)
-    @answers = @comment.answers
   end
 end

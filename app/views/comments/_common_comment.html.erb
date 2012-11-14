@@ -31,7 +31,7 @@
         </li>
       <% end %>
       <div class="comments">
-        <%= render partial: 'comment_answer', collection: common_comment.answers.last(2),
+        <%= render partial: 'comments/comment_answer', collection: common_comment.answers.last(2),
                    locals: { comment: common_comment, total: max_2_answers(common_comment.answers.length) } %>
       </div>
       <% if common_comment.answers.length > 2 %>
@@ -39,8 +39,8 @@
           <hr>
           <li class="all-responses">
             <%= link_to "Mostrar todas as #{common_comment.answers.length} respostas",
-                        app_path(@app, :'show-answers-for' => common_comment.id),
-                        remote: true, class: "link-secondary" %>
+                        app_comment_path(@app, common_comment), remote: true,
+                        class: "link-secondary" %>
           </li>
         </div>
       <% end %>
