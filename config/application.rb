@@ -78,9 +78,11 @@ module ReduApps
         new_from_hash_copying_default(untied)
     end
 
-      # Carrega renderers do simple_navigation
-      config.autoload_paths << "#{config.root}/app/navigation_renderers"
+    # Carrega renderers do simple_navigation
+    config.autoload_paths << "#{config.root}/app/navigation_renderers"
 
-      config.paperclip = {}
+    config.paperclip = {}
+
+    config.redu_domain = "http://www.redu.com.br/"
   end
 end

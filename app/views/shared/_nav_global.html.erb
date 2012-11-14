@@ -5,11 +5,11 @@
   <div class="nav-global-inner">
     <div class="nav-global-container">
       <h1>
-        <a class="nav-global-brand logo-redu-gray_140_40 text-replacement" href="http://www.redu.com.br" title="Redu">Redu</a>
+        <%= link_to "Redu", redu_domain, class: "nav-global-brand logo-redu-gray_140_40 text-replacement", title: "Redu" %>
       </h1>
       <div class="nav-global-buttons">
-        <%= link_to "Início", "http://www.redu.com.br/", :class => "nav-global-button", :title => "Início" %>
-        <%= link_to "Ambientes", "http://www.redu.com.br/ambientes", :class => "nav-global-button", :title => "Ambientes" %>
+        <%= link_to "Início", redu_domain, :class => "nav-global-button", :title => "Início" %>
+        <%= link_to "Ambientes", redu_static("ambientes"), :class => "nav-global-button", :title => "Ambientes" %>
         <%= link_to "Aplicativos", root_path, :class => "nav-global-button nav-global-button-active", :title => "Aplicativos" %>
       </div>
       <div class="nav-global-buttons-dropdown button-toolbar">
@@ -24,20 +24,22 @@
             </div>
             <ul class="nav-global-profile-items">
               <li class="nav-global-profile-item link-container">
-                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}" %>" title="Meu Perfil" class="link-target icon-profile-lightblue_16_18-before">Meu Perfil</a>
-                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/editar" %>" title="Editar" class="nav-global-profile-edit link-secondary">editar</a>
+                <%= link_to "Meu Perfil", redu_user_static, class: "link-target icon-profile-lightblue_16_18-before", title: "Meu Perfil" %>
+                <%= link_to "editar", redu_user_static("editar"), class: "nav-global-profile-edit link-secondary", title: "Editar perfil" %>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/messages" %>" title="Mensagens" class="link-target icon-message-lightblue_16_18-before">Mensagens</a>
+                <%= link_to "Mensagens", redu_user_static("messages"), class: "link-target icon-message-lightblue_16_18-before", title: "Mensagens" %>
               </li>
               <li class="nav-global-profile-item link-container">
-                <a href="<%= "http://www.redu.com.br/pessoas/#{current_user.login}/editar" %>" title="Configurações" class="link-target icon-manage-lightblue_16_18-before">Configurações</a>
+                <%= link_to "Configurações", redu_user_static("editar"), class: "link-target icon-manage-lightblue_16_18-before", title: "Configurações" %>
               </li>
+              <!-- Se o usuário for parceiro:
+                <li class="nav-global-profile-item link-container">
+                  <a href="#" title="Parceiro" class="link-target icon-partner-lightblue_16_18-before">Parceiro</a>
+                </li>
+              -->
               <li class="nav-global-profile-item link-container">
-                <a href="#" title="Parceiro" class="link-target icon-partner-lightblue_16_18-before">Parceiro</a>
-              </li>
-              <li class="nav-global-profile-item link-container">
-                <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "link-target" %>
+                <%= link_to "Sair", redu_static("logout"), class: "link-target", title: "Sair" %>
               </li>
             </ul>
           </div>
