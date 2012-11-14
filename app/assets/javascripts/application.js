@@ -102,5 +102,12 @@ $(function() {
     $("#space_id").val($(this).data("space-id"));
     $("#step-1-form").submit();
   });
+
+  $('body').on('click', '[href="#app-checkout-step-1"]', function(e) {
+      e.preventDefault();
+      $('#app-checkout-step-2').modal('hide');
+      $('#app-checkout-step-2').remove();
+      $($(this).attr('href')).modal('show');
+    });
 });
 
