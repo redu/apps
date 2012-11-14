@@ -25,7 +25,6 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'
-  gem 'asset_sync'
 end
 
 group :development do
@@ -39,6 +38,10 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+end
+
+group :production do
+  gem 'asset_sync'
 end
 
 # To use ActiveModel has_secure_password
