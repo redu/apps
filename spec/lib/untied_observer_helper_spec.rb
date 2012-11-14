@@ -4,8 +4,10 @@ describe UntiedObserverHelper do
   let(:helper){ UntiedObserverHelper.instance }
   context "When working with user" do
 
-    let(:user) { {'id' => 1, 'login' => 'sexy_jedi_3000',
-      'first_name' => 'Luke', 'last_name' =>  'skywalker', coisado: false}} #Outros dados sao irrelevantes...
+    let(:user) { { 'id' => 1, 'login' => 'sexy_jedi_3000',
+      'email' => 'jedi@concil.com', 'first_name' => 'Luke',
+      'password' => '1234', 'password_confirmation' => '1234',
+      'last_name' => 'skywalker', coisado: false } } #Outros dados sao irrelevantes...
 
     describe "create_user" do
       it "should add user to database" do

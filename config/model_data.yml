@@ -4,6 +4,8 @@ User: #Kind that comes in the payload
     - first_name
     - last_name
     - id
+    - password
+    - password_confirmation
     - crypted_password
     - password_salt
     - email
