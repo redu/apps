@@ -17,20 +17,20 @@ class ModelHelper
   end
 
   def create_model(payload)
-    modelo = (find(payload[@model_data[:id]]) or @model.new)
-    payload.each_pair {|key, value| modelo.send("#{key.to_s}=", value)} if modelo.zombie #sets the attributes
-    modelo.save
+    temp_model = (find(payload[@model_data[:id]]) or @model.new)
+    payload.each_pair {|key, value| temp_model.send("#{key.to_s}=", value)} if temp_model.zombie #sets the attributes
+    temp_model.save
   end
 
   def update_model(payload)
-    modelo = (find(payload[@model_data[:id]]) or @model.new)
-    payload.each_pair {|key, value| modelo.send("#{key.to_s}=", value)}
-    modelo.save
+    temp_model = (find(payload[@model_data[:id]]) or @model.new)
+    payload.each_pair {|key, value| temp_model.send("#{key.to_s}=", value)}
+    temp_model.save
   end
 
   def destroy_model(payload)
-    modelo = find(payload[@model_data[:id]])
-    modelo.destroy if modelo
+    temp_model = find(payload[@model_data[:id]])
+    temp_model.destroy if temp_model
   end
 
   def self.new(*args, &block)
