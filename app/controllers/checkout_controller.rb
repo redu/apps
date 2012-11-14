@@ -1,9 +1,11 @@
 # encoding: utf-8
 
 class CheckoutController < ApplicationController
+  respond_to :js
 
   def update
     @app_id = params[:app_id]
+    @app = App.find_by_id(@app_id)
     case params[:step]
     when '1'
       step_1
@@ -21,7 +23,6 @@ class CheckoutController < ApplicationController
   def new
     raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
     @app_id = params[:app_id]
-    step_1
   end
 
   protected
@@ -29,29 +30,40 @@ class CheckoutController < ApplicationController
   def step_1
     @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
-    render :step1
+
+    respond_to do |format|
+      format.js { render :step_1 }
+    end
   end
 
   def step_2
     get_params([:space_id], params)
+    @space = Space.find_by_id(@space_id)
     @next_step = 3
-    render :step2
+
+    respond_to do |format|
+      format.js { render :step_2 }
+    end
   end
 
   def step_3
     get_params([:space_id, :create_subject], params)
     @space = Space.find(@space_id)
     @next_step = 4
-    render :step3
+
+    respond_to do |format|
+      format.js { render :step_3 }
+    end
   end
 
   def step_4
     get_params([:space_id, :create_subject, :lecture, :subject], params)
-    @app = App.find(@app_id)
     @subject = @create_subject == 'true' ? create_subject_via_api : Subject.find(@subject)
     create_lecture_via_api
 
-    redirect_to app_path(@app)
+    respond_to do |format|
+      format.js { render :step_4 }
+    end
   end
 
   def get_params(expected_params, params)

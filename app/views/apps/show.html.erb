@@ -1,3 +1,9 @@
+<%= form_tag app_checkout_path(@app), method: :post, remote: true do %>
+  <%= content_tag :button, type: :submit, class: "button-primary button-success" do %>
+    Adicionar a Disciplina
+  <% end %>
+<% end %>
+
 <%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
 <p id="notice"><%= notice %></p>
 <%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
@@ -29,7 +35,7 @@
   <li><%= t 'views', count: @app.views %></li>
   <li><%= t 'review', count: @app.comments.specialized.count %></li>
   <li>
-    <%= t 'comment', 
+    <%= t 'comment',
           count: (@app.comments.common.count + @app.comments.answer.count) %>
   </li>
 </ul>

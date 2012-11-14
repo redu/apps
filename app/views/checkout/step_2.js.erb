@@ -1,0 +1,5 @@
+$("#app-checkout-step-1").modal("hide");
+
+var $modal = $("<%= escape_javascript render 'step2' %>");
+$('body').append($modal);
+$modal.modal('show');

@@ -20,33 +20,6 @@
 //= require_tree .
 
 $(function() {
-
-  // Sequência de passos da modal de adicionar REA à disciplina.
-  // TODO: É só para testes. Em produção será feito de outra maneira.
-  $('body')
-    .on('click', '[href="#modal-add-oer-step-1"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-2').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#modal-add-oer-step-2"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-1').modal('hide');
-      $('#modal-add-oer-step-3').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#modal-add-oer-step-3"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-2').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#system-message-oer-successfully-added"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-3').modal('hide');
-      $($(this).attr('href')).show();
-    });
-
-
   // Expande/colapsa a explicação dos REA.
 
   var oerLinkClass = '.apps-portal-oer-link';
@@ -120,6 +93,14 @@ $(function() {
     $modal.on('hidden', function(e) {
       $modal.remove();
     })
+  });
+
+
+  // Submete o formulário do passo 1 do "Adicionar à Disciplina" através de links.
+  $(document).on("click", "#step-1-form .space-link", function(e) {
+    e.preventDefault();
+    $("#space_id").val($(this).data("space-id"));
+    $("#step-1-form").submit();
   });
 });
 

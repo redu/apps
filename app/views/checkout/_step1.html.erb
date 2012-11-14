@@ -1,0 +1,65 @@
+<%# Modal com o primeiro passo. %>
+<div id="app-checkout-step-1" class="modal hide modal-fill-height modal-grids-14 modal-add-oer">
+  <div class="modal-header">
+    <span class="modal-close icon-close-big-gray_16_18 text-replacement" data-dismiss="modal" title="Fechar">Fechar</span>
+    <h3 class="modal-title">Adicionar à Disciplina</h3>
+    <span class="modal-subtitle"><%= "#{@app.name} - #{@app.author}" %></span>
+  </div>
+  <div class="modal-body">
+    <div class="apps-portal-add-oer-section">
+      <div class="progress-bar-total progress-bar-thick">
+        <div class="progress-bar-completed text-replacement" style="width: 246px;">33%</div>
+      </div>
+      <ol class="apps-portal-add-oer-steps-explaination">
+        <li class="apps-portal-add-oer-step-explaination apps-portal-add-oer-step-current">
+          <h4 class="apps-portal-add-oer-step-title">Passo 1</h4>
+          <p>Escolha uma Disciplina clicando no link em azul. Este aplicativo será adicionado como uma Aula.</p>
+        </li>
+        <li class="apps-portal-add-oer-step-explaination">
+          <h4 class="apps-portal-add-oer-step-title">Passo 2</h4>
+          <p>Escolha entre criar um novo Módulo ou utilizar um existente para alocar a Aula onde este aplicativo estará disponível.</p>
+        </li>
+        <li class="apps-portal-add-oer-step-explaination">
+          <h4 class="apps-portal-add-oer-step-title">Passo 3</h4>
+          <p>Escreva o nome do Módulo e da Aula (ou selecione entre os Módulos existentes e escreva o nome da Aula).</p>
+        </li>
+      </ol>
+    </div>
+    <hr class="list-separator">
+    <div class="apps-portal-add-oer-section">
+      <%= form_tag(app_checkout_path(@app_id, :step => @next_step), id: "step-1-form", remote: true) do %>
+        <%= hidden_field_tag :space_id, "" %>
+        <ul class="list-environment-course-space list-1-columns list-columns-separator">
+          <% @environments.each do |e| %>
+            <li class="list-environment-course-space-item">
+              <div class="list-environment-course-space-header">
+                <%= image_tag e.thumbnail, title: e.name, alt: e.name, class: "list-environment-course-space-image-link" %>
+                <h4 class="list-environment-course-space-title"><%= e.name %></h4>
+              </div>
+              <ul class="list-mix">
+                <% e.courses.each do |c| %>
+                  <li class="list-mix-item icon-course-lightgray_32_34-before">
+                    <div class="list-mix-inner">
+                      <div class="list-mix-content">
+                        <div class="list-mix-header">
+                          <h5 class="list-mix-title"><%= c.name %></h5>
+                        </div>
+                        <ul class="list-mix-body list-space-mini show">
+                          <% c.spaces.each do |s| %>
+                            <li class="list-space-mini-item">
+                              <%= link_to s.name, nil, class: "icon-space-lightblue_16_18-before space-link", "data-space-id" => s.id  %>
+                            </li>
+                          <% end %>
+                        </ul>
+                      </div>
+                    </div>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
