@@ -46,7 +46,7 @@
                         <% c.spaces.each do |s| %>
                           <li class="list-space-mini-item">
                             <%# TODO: Colocar o form englobando toda a lista. %>
-                            <%= form_tag(app_checkout_path(@app_id, :step => @next_step)) do %>
+                            <%= form_tag(app_checkout_path(@app_id, step: @next_step)) do %>
                               <%= hidden_field_tag "space_id", s.id %>
                               <%# TODO: Criar script para submeter o form no click de link. %>
                               <%= content_tag :a, s.name, type: :submit, class: "icon-space-lightblue_16_18-before" %>

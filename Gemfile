@@ -16,6 +16,8 @@ gem 'daemons'
 gem 'aws-sdk'
 gem 'faker'
 gem 'random_data'
+gem 'omniauth-redu', :git => 'git://github.com/redu/omniauth-redu.git'
+gem 'faraday'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -39,6 +41,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'webmock'
 end
 
 # To use ActiveModel has_secure_password

@@ -2,6 +2,11 @@
 require 'spec_helper'
 
 describe App do
+  # AID (ID do aplicativo no Redu)
+  it { should respond_to(:aid) }
+  it { should validate_presence_of(:aid) }
+  it { should validate_uniqueness_of(:aid) }
+
   # Nome
   it { should respond_to(:name) }
   it { should validate_presence_of(:name) }

@@ -1,3 +1,4 @@
+# encoding: utf-8
 
 class CheckoutController < ApplicationController
 
@@ -18,6 +19,7 @@ class CheckoutController < ApplicationController
   end
 
   def new
+    raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
     @app_id = params[:app_id]
     step_1
   end
@@ -25,7 +27,7 @@ class CheckoutController < ApplicationController
   protected
 
   def step_1
-    @environments = current_user.environments(include: {courses: :spaces})
+    @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
     render :step1
   end
@@ -37,31 +39,53 @@ class CheckoutController < ApplicationController
   end
 
   def step_3
-    get_params([:space_id, :create_module], params)
+    get_params([:space_id, :create_subject], params)
     @space = Space.find(@space_id)
     @next_step = 4
     render :step3
   end
 
   def step_4
-    get_params([:space_id, :create_module, :lesson, :subject], params)
-    @subject = if @create_module == 'true'
-      Subject.create(:name => @subject) { |s| s.space = Space.find(@space_id) }
-    else
-      Subject.find(@subject)
-    end
-    lecutre = Lecture.new(:name => @lesson) do |l|
-      l.subject = Subject.find(@subject)
-      l.app = App.find(@app_id)
-    end
-    raise "Invalid data" unless lecutre.save
-    redirect_to app_path(@app_id)
+    get_params([:space_id, :create_subject, :lecture, :subject], params)
+    @app = App.find(@app_id)
+    @subject = @create_subject == 'true' ? create_subject_via_api : Subject.find(@subject)
+    create_lecture_via_api
+
+    redirect_to app_path(@app)
   end
 
   def get_params(expected_params, params)
     expected_params.each do |p|
       self.instance_variable_set("@#{p}",
         params.fetch(p) { raise "Invalid State" })
+    end
+  end
+
+  def create_subject_via_api
+    response = Subject.create_via_api(space_sid: Space.find(@space_id).sid,
+                                      subject: @subject, token: current_user.token)
+    case response.status #TODO
+    when 201
+      subject = JSON.parse response.body
+
+      Subject.new(name: subject['name'], suid: subject['id'])
+    when 401 # Autenticação falhou
+    when 422 # Criação falhou devido a erro na requisição
+    else
+      raise "Unknown status code #{response.status}"
+    end
+  end
+
+  def create_lecture_via_api
+    response = Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
+                                      subject_suid: @subject.suid,
+                                      token: current_user.token)
+    case response.status #TODO
+    when 201
+    when 401 # Autenticação falhou
+    when 422 # Criação falhou devido a erro na requisição
+    else
+      raise "Unknown status code #{response.status}"
     end
   end
 end
