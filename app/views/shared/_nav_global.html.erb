@@ -39,7 +39,7 @@
                 </li>
               -->
               <li class="nav-global-profile-item link-container">
-                <%= link_to "Sair", redu_static("logout"), class: "link-target", title: "Sair" %>
+                <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "link-target" %>
               </li>
             </ul>
           </div>
