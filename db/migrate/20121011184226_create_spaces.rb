@@ -4,7 +4,6 @@ class CreateSpaces < ActiveRecord::Migration
       t.integer :sid
       t.string :name
       t.belongs_to :course
-      t.boolean :zombie
 
       t.timestamps
     end

@@ -5,7 +5,6 @@ class CreateEnvironments < ActiveRecord::Migration
       t.string :name
       t.belongs_to :user
       t.attachment :thumbnail
-      t.boolean :zombie
       t.timestamps
     end
     add_index :environments, [:eid, :name, :user_id]
