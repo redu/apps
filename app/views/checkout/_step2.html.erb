@@ -35,13 +35,13 @@
       <div class="apps-portal-add-oer-step-2-buttons">
         <%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
           <%= hidden_field_tag 'space_id' , @space_id %>
-          <%= hidden_field_tag 'create_module', true %>
+          <%= hidden_field_tag 'create_subject', true %>
           <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
         <% end %>
         <span class="apps-portal-add-oer-step-2-legend">ou</span>
         <%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
           <%= hidden_field_tag 'space_id' , @space_id %>
-          <%= hidden_field_tag 'create_module', false %>
+          <%= hidden_field_tag 'create_subject', false %>
           <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
         <% end %>
       </div>

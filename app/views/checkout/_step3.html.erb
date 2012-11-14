@@ -41,7 +41,7 @@
               <label for="input-2-1">Nome do novo Módulo</label>
             </div>
             <div class="controls span8">
-              <% if @create_module == "true" %>
+              <% if @create_subject == "true" %>
                 <%= text_field_tag "subject", nil, placeholder: "Nome do novo Módulo" %>
               <% else %>
                <%= select_tag "subject", options_from_collection_for_select(@space.subjects, "id", "name") %>
