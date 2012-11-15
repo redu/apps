@@ -51,4 +51,18 @@ module AppsHelper
   def count_comments_for(app)
     Comment.get_by_type(app, :common).length + Comment.get_by_type(app, :answer).length
   end
+
+  # Retorna o título da modal de "Adicionar à Disciplina".
+  def modal_title(space = nil)
+    if space
+      "a \"#{space.name}\""
+    else
+      "à Disciplina"
+    end
+  end
+
+  # Retorna a classe de passo ativo para o passo atual.
+  def step_active_class(step, current_step)
+    " apps-portal-add-oer-step-current" if step == current_step
+  end
 end

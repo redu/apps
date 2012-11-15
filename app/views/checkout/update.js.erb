@@ -1,8 +1,19 @@
-// Remove a modal do passo anterior.
-var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
-$modalNextStep.length && $modalNextStep.modal("hide");
+var $modal;
+
+<%# Se a aula foi criada, exibe a mensagem de sucesso. %>
+<% if @subject %>
+  $modal = $('<%= escape_javascript render "step4" %>');
+
+<%# Passos 1 ao 3. %>
+<% else %>
+  // Remove a modal do passo anterior.
+  var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
+  $modalNextStep.length && $modalNextStep.modal("hide");
+
+  $modal = $('<%= escape_javascript render "step", step: @next_step - 1, space_name: @space %>');
+<% end %>
 
 // Exibe a modal do passo atual.
-$('<%= escape_javascript render "step#{@next_step - 1}" %>')
+$modal
   .appendTo("body")
   .modal("show");

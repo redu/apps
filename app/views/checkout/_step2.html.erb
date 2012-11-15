@@ -1,53 +1,28 @@
-<div id="app-checkout-step-2" class="modal hide modal-fill-height modal-grids-14 modal-add-oer">
-  <div class="modal-header">
-    <span class="modal-close icon-close-big-gray_16_18 text-replacement" data-dismiss="modal" title="Fechar">Fechar</span>
-    <h3 class="modal-title">Adicionar a “<%= @space.name %>”</h3>
-    <span class="modal-subtitle"><%= "#{@app.name} - #{@app.author}" %></span>
-  </div>
-  <div class="modal-body">
-    <div class="apps-portal-add-oer-section">
-      <div class="progress-bar-total progress-bar-thick">
-        <div class="progress-bar-completed text-replacement" style="width: 512px;">66%</div>
-      </div>
-      <ol class="apps-portal-add-oer-steps-explaination">
-        <li class="apps-portal-add-oer-step-explaination apps-portal-add-oer-step-past">
-          <h4 class="apps-portal-add-oer-step-title">Passo 1</h4>
-          <p>Escolha uma Disciplina clicando no link em azul. Este aplicativo será adicionado como uma Aula.</p>
-        </li>
-        <li class="apps-portal-add-oer-step-explaination apps-portal-add-oer-step-current">
-          <h4 class="apps-portal-add-oer-step-title">Passo 2</h4>
-          <p>Escolha entre criar um novo Módulo ou utilizar um existente para alocar a Aula onde este aplicativo estará disponível.</p>
-        </li>
-        <li class="apps-portal-add-oer-step-explaination">
-          <h4 class="apps-portal-add-oer-step-title">Passo 3</h4>
-          <p>Escreva o nome do Módulo e da Aula (ou selecione entre os Módulos existentes e escreva o nome da Aula).</p>
-        </li>
-      </ol>
+<div class="modal-body">
+  <%= render "steps_description", step: step %>
+  <hr class="list-separator">
+  <div class="apps-portal-add-oer-section">
+    <div class="list-environment-course-space-header">
+      <%= image_tag "new/missing_environments_thumb_32.png", :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
+      <h4 class="list-environment-course-space-title">
+        <%= @space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= @space.course.name %> <span class="list-environment-course-space-link">></span> <%= @space.name %>
+      </h4>
     </div>
-    <hr class="list-separator">
-    <div class="apps-portal-add-oer-section">
-      <div class="list-environment-course-space-header">
-        <%= image_tag "new/missing_environments_thumb_32.png", :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
-        <h4 class="list-environment-course-space-title">
-          <%= @space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= @space.course.name %> <span class="list-environment-course-space-link">></span> <%= @space.name %>
-        </h4>
-      </div>
-      <div class="apps-portal-add-oer-step-2-buttons">
-        <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
-          <%= hidden_field_tag 'space_id' , @space_id %>
-          <%= hidden_field_tag 'create_subject', true %>
-          <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
-        <% end %>
-        <span class="apps-portal-add-oer-step-2-legend">ou</span>
-        <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
-          <%= hidden_field_tag 'space_id' , @space_id %>
-          <%= hidden_field_tag 'create_subject', false %>
-          <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
-        <% end %>
-      </div>
+    <div class="apps-portal-add-oer-step-2-buttons">
+      <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , @space_id %>
+        <%= hidden_field_tag 'create_subject', true %>
+        <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
+      <% end %>
+      <span class="apps-portal-add-oer-step-2-legend">ou</span>
+      <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , @space_id %>
+        <%= hidden_field_tag 'create_subject', false %>
+        <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
+      <% end %>
     </div>
   </div>
-  <div class="modal-footer">
-    <%= link_to "Voltar à etapa anterior", app_checkout_path(@app, previous_step: @next_step - 1), remote: true, method: :post, class: "button-default" %>
-  </div>
+</div>
+<div class="modal-footer">
+  <%= link_to "Voltar à etapa anterior", app_checkout_path(@app, previous_step: @next_step - 1), remote: true, method: :post, class: "button-default" %>
 </div>
