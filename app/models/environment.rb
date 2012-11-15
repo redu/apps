@@ -1,5 +1,9 @@
 class Environment < ActiveRecord::Base
-  attr_accessible :eid, :name, :owner
+  include BaseModel
+
+  zombify
+
+  attr_accessible :eid, :name, :zombie, :owner
 
   # Associações
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'

@@ -6,6 +6,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
+
 # require "rails/test_unit/railtie"
 
 if defined?(Bundler)
@@ -66,11 +67,23 @@ module ReduApps
     config.assets.version = '1.0'
     config.autoload_paths += %W(#{config.root}/lib)
 
+    # Observers têm direto a um lart
+    config.autoload_paths << "#{config.root}/app/observers"
+
+    # Configs para auxiliar a integração com o untied
+    File.open("#{Rails.root}/config/model_data.yml") do |file|
+      config.untied = {}
+      untied = Psych.load(file)
+      config.untied['model_data'] = HashWithIndifferentAccess.
+        new_from_hash_copying_default(untied)
+    end
+
     # Carrega renderers do simple_navigation
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
 
     config.paperclip = {}
 
     config.redu_domain = "http://www.redu.com.br/"
+
   end
 end

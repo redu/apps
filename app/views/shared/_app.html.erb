@@ -34,7 +34,7 @@
         <%= app.views %>
       </li>
       <li class="general-list-item-counter icon-comment-gray_16_18-before">
-        <%= Comment.get_by_type(app, :common).length %>
+        <%= count_comments_for(app) %>
       </li>
       <% specialized_comments = Comment.get_by_type(app, :specialized).length %>
       <% if specialized_comments != 0 %>
