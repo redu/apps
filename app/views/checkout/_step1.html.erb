@@ -27,7 +27,7 @@
     </div>
     <hr class="list-separator">
     <div class="apps-portal-add-oer-section">
-      <%= form_tag(app_checkout_path(@app_id, :step => @next_step), id: "step-1-form", remote: true) do %>
+      <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), id: "step-1-form", remote: true) do %>
         <%= hidden_field_tag :space_id, "" %>
         <ul class="list-environment-course-space list-1-columns list-columns-separator">
           <% @environments.each do |e| %>

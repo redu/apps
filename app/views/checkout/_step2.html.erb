@@ -33,13 +33,13 @@
         </h4>
       </div>
       <div class="apps-portal-add-oer-step-2-buttons">
-        <%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
           <%= hidden_field_tag 'space_id' , @space_id %>
           <%= hidden_field_tag 'create_subject', true %>
           <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
         <% end %>
         <span class="apps-portal-add-oer-step-2-legend">ou</span>
-        <%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
           <%= hidden_field_tag 'space_id' , @space_id %>
           <%= hidden_field_tag 'create_subject', false %>
           <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
@@ -48,6 +48,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <a href="#app-checkout-step-1" class="button-default">Voltar à etapa anterior</a>
+    <%= link_to "Voltar à etapa anterior", app_checkout_path(@app, previous_step: @next_step - 1), remote: true, method: :post, class: "button-default" %>
   </div>
 </div>

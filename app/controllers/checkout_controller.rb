@@ -30,29 +30,30 @@ class CheckoutController < ApplicationController
   def step_1
     @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
+    @previous_step = params[:previous_step]
 
     respond_to do |format|
-      format.js { render :step_1 }
+      format.js
     end
   end
 
   def step_2
-    get_params([:space_id], params)
+    get_params([:space_id, :previous_step], params)
     @space = Space.find_by_id(@space_id)
     @next_step = 3
 
     respond_to do |format|
-      format.js { render :step_2 }
+      format.js
     end
   end
 
   def step_3
-    get_params([:space_id, :create_subject], params)
+    get_params([:space_id, :previous_step, :create_subject], params)
     @space = Space.find(@space_id)
     @next_step = 4
 
     respond_to do |format|
-      format.js { render :step_3 }
+      format.js
     end
   end
 
@@ -62,7 +63,7 @@ class CheckoutController < ApplicationController
     create_lecture_via_api
 
     respond_to do |format|
-      format.js { render :step_4 }
+      format.js
     end
   end
 

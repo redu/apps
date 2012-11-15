@@ -1,0 +1,8 @@
+// Remove a modal do passo anterior.
+var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
+$modalNextStep.length && $modalNextStep.modal("hide");
+
+// Exibe a modal do passo atual.
+$('<%= escape_javascript render "step#{@next_step - 1}" %>')
+  .appendTo("body")
+  .modal("show");

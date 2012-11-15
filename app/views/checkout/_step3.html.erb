@@ -6,7 +6,7 @@
   </div>
   <%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "form-horizontal", remote: true) do %>
     <%= hidden_field_tag "space_id", @space.id %>
-    <%= hidden_field_tag "create_module", @create_module %>
+    <%= hidden_field_tag "create_subject", @create_subject %>
     <div class="modal-body">
       <div class="apps-portal-add-oer-section">
         <div class="progress-bar-total progress-bar-thick">
@@ -53,14 +53,14 @@
               <label for="input-2-2">Nome da Aula</label>
             </div>
             <div class="controls span8">
-              <%= text_field_tag "lesson", nil, placeholder: "Aula onde este aplicativo será criado" %>
+              <%= text_field_tag "lecture", nil, placeholder: "Aula onde este aplicativo será criado" %>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#modal-add-oer-step-2" class="button-default">Voltar à etapa anterior</a>
+      <%= link_to "Voltar à etapa anterior", app_checkout_path(@app_id, step: @next_step - 2, previous_step: @next_step - 1, space_id: @space.id), remote: true, method: :post, class: "button-default" %>
       <%= submit_tag "Adicionar a Disciplina", class: "button-success" %>
     </div>
   <% end %>

@@ -103,11 +103,9 @@ $(function() {
     $("#step-1-form").submit();
   });
 
-  $('body').on('click', '[href="#app-checkout-step-1"]', function(e) {
-      e.preventDefault();
-      $('#app-checkout-step-2').modal('hide');
-      $('#app-checkout-step-2').remove();
-      $($(this).attr('href')).modal('show');
-    });
+  // Remove as janelas modais quando fechadas.
+  $(document).on("hidden", ".modal-add-oer", function(e) {
+    $(this).remove();
+  });
 });
 
