@@ -1,14 +1,23 @@
-<%= form_tag(app_checkout_path(@app_id, step: @next_step), class: "form-horizontal", remote: true) do %>
-  <%= hidden_field_tag "space_id", @space.id %>
-  <%= hidden_field_tag "create_subject", @create_subject %>
+<%#
+  Renderiza a janela modal do passo 3.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    space: a disciplina.
+    create_subject: indica se um novo módulo deve ser criado.
+%>
+<%= form_tag(app_checkout_path(app.id, step: step + 1), class: "form-horizontal", remote: true) do %>
+  <%= hidden_field_tag "space_id", space.id %>
+  <%= hidden_field_tag "create_subject", create_subject %>
   <div class="modal-body">
     <%= render "steps_description", step: step %>
     <hr class="list-separator">
     <div class="apps-portal-add-oer-section">
       <div class="list-environment-course-space-header">
-        <%= image_tag @space.course.environment.thumbnail, :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
+        <%= image_tag space.course.environment.thumbnail, :title => space.course.environment.name, :alt => space.course.environment.name, :class => "list-environment-course-space-image-link" %>
         <h4 class="list-environment-course-space-title">
-          <%= @space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= @space.course.name %> <span class="list-environment-course-space-link">></span> <%= @space.name %>
+          <%= space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= space.course.name %> <span class="list-environment-course-space-link">></span> <%= space.name %>
         </h4>
       </div>
       <div class="apps-portal-add-oer-step-3-form">
@@ -17,10 +26,10 @@
             <label for="input-2-1">Nome do novo Módulo</label>
           </div>
           <div class="controls span8">
-            <% if @create_subject == "true" %>
+            <% if create_subject == "true" %>
               <%= text_field_tag "subject", nil, placeholder: "Nome do novo Módulo" %>
             <% else %>
-             <%= select_tag "subject", options_from_collection_for_select(@space.subjects, "id", "name") %>
+             <%= select_tag "subject", options_from_collection_for_select(space.subjects, "id", "name") %>
             <% end %>
           </div>
         </div>
@@ -36,7 +45,7 @@
     </div>
   </div>
   <div class="modal-footer">
-    <%= link_to "Voltar à etapa anterior", app_checkout_path(@app_id, step: @next_step - 2, previous_step: @next_step - 1, space_id: @space.id), remote: true, method: :post, class: "button-default" %>
+    <%= link_to "Voltar à etapa anterior", app_checkout_path(app.id, step: step - 1, previous_step: step, space_id: space.id), remote: true, method: :post, class: "button-default" %>
     <%= submit_tag "Adicionar a Disciplina", class: "button-success" %>
   </div>
 <% end %>

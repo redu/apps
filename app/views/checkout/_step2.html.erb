@@ -1,22 +1,30 @@
+<%#
+  Renderiza a janela modal do passo 2.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    space: a disciplina.
+%>
 <div class="modal-body">
   <%= render "steps_description", step: step %>
   <hr class="list-separator">
   <div class="apps-portal-add-oer-section">
     <div class="list-environment-course-space-header">
-      <%= image_tag @space.course.environment.thumbnail, :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
+      <%= image_tag space.course.environment.thumbnail, :title => space.course.environment.name, :alt => space.course.environment.name, :class => "list-environment-course-space-image-link" %>
       <h4 class="list-environment-course-space-title">
-        <%= @space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= @space.course.name %> <span class="list-environment-course-space-link">></span> <%= @space.name %>
+        <%= space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= space.course.name %> <span class="list-environment-course-space-link">></span> <%= space.name %>
       </h4>
     </div>
     <div class="apps-portal-add-oer-step-2-buttons">
-      <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
-        <%= hidden_field_tag 'space_id' , @space_id %>
+      <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , space.id %>
         <%= hidden_field_tag 'create_subject', true %>
         <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
       <% end %>
       <span class="apps-portal-add-oer-step-2-legend">ou</span>
-      <%= form_tag(app_checkout_path(@app_id, step: @next_step, previous_step: @next_step - 1), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
-        <%= hidden_field_tag 'space_id' , @space_id %>
+      <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , space.id %>
         <%= hidden_field_tag 'create_subject', false %>
         <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
       <% end %>
@@ -24,5 +32,5 @@
   </div>
 </div>
 <div class="modal-footer">
-  <%= link_to "Voltar à etapa anterior", app_checkout_path(@app, previous_step: @next_step - 1), remote: true, method: :post, class: "button-default" %>
+  <%= link_to "Voltar à etapa anterior", app_checkout_path(app, previous_step: step), remote: true, method: :post, class: "button-default" %>
 </div>

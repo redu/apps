@@ -10,7 +10,7 @@ var $modal;
   var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
   $modalNextStep.length && $modalNextStep.modal("hide");
 
-  $modal = $('<%= escape_javascript render "step", step: @next_step - 1, space_name: @space %>');
+  $modal = $('<%= escape_javascript render "step", step: @next_step - 1, app: @app, environments: @environments, space: @space, create_subject: @create_subject %>');
 <% end %>
 
 // Exibe a modal do passo atual.
