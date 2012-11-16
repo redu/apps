@@ -3,3 +3,5 @@ pt-BR:
     users: usuarios
     favorites: favoritos
     comments: comentarios
+    user_sessions: sessoes
+    logout: sair

@@ -84,6 +84,5 @@ module ReduApps
     config.paperclip = {}
 
     config.redu_domain = "http://www.redu.com.br/"
-
   end
 end

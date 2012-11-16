@@ -1,7 +1,9 @@
 require 'spec_helper'
 describe ModelHelper do
   let(:user) { {"uid"=> 22, 'login' => 'sexy_jedi_3000',
-      'first_name' => 'Luke', 'last_name' => 'skywalker'}}
+      'email' => 'jedi@concil.com', 'first_name' => 'Luke',
+      'password_salt' => '1234', 'crypted_password' => '1234',
+      'last_name' => 'skywalker'} }
 
   before(:all) do
     @model_helper = ModelHelper.new(ReduApps::Application.config.untied['model_data']['User'])

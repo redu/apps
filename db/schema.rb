@@ -159,6 +159,16 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
 
   add_index "screen_shots", ["app_id"], :name => "index_screen_shots_on_app_id"
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "spaces", :force => true do |t|
     t.integer  "sid"
     t.string   "name"
@@ -224,9 +234,14 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.datetime "thumbnail_updated_at"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.string   "crypted_password"
+    t.string   "password_salt"
+    t.string   "email"
+    t.string   "persistence_token"
     t.boolean  "zombie"
   end
 
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
   add_index "users", ["uid"], :name => "index_users_on_uid"
 
 end

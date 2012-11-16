@@ -1,7 +1,7 @@
-<style>
-  .main-wrapper { padding-top: 42px; }
-</style>
 <div class="nav-global nav-global-fixed-top">
+  <style>
+    .main-wrapper { padding-top: 42px; }
+  </style>
   <div class="nav-global-inner">
     <div class="nav-global-container">
       <h1>
@@ -39,7 +39,7 @@
                 </li>
               -->
               <li class="nav-global-profile-item link-container">
-                <%= link_to "Sair", redu_static("logout"), class: "link-target", title: "Sair" %>
+                <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "link-target" %>
               </li>
             </ul>
           </div>
