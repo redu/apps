@@ -54,7 +54,7 @@ class AppsController < ApplicationController
 
   def rate
     rating = Integer(params[:rating])
-    unless rating.between?(1, 5)
+    unless App.is_valid_rating_value? rating
       redirect_to :back, notice: "Valor de classificação inválido." and return
     end
     @app = App.find(params[:id])

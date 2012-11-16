@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe CommentsController do
@@ -17,14 +18,16 @@ describe CommentsController do
   describe "POST create" do
     before do
       @app = FactoryGirl.create(:app)
+      @user = FactoryGirl.create(:member)
+      controller.stub(current_user: @user)
     end
 
     context "when creating a comment" do
       before do
-        @user = FactoryGirl.create(:member)
-        @params = { :app_id => @app, :comment => {
-            :author => @user.login, :body => "Ola! Parabens pelo REA." },
-            :locale => 'pt-BR'
+        request.env["HTTP_REFERER"] = app_path @app
+        @params = { app_id: @app, comment: {
+            author: @user.id, body: "Olá! Parabéns pelo REA." },
+            locale: 'pt-BR'
           }
       end
 
@@ -75,12 +78,7 @@ describe CommentsController do
 
         context "which is common" do
           before do
-            @user = FactoryGirl.create(:member)
-            @params = {:app_id => @app, :comment => {
-                :author => @user.login, :body => "Ola! Parabens pelo REA.",
-                :type => :common },
-                :locale => 'pt-BR'
-              }
+            @params[:comment] = @params[:comment].merge(type: :common)
           end
 
           it 'should create a new common comment' do
@@ -99,11 +97,7 @@ describe CommentsController do
         context "which is specialized" do
           before do
             @user = FactoryGirl.create(:specialist)
-            @params = {:app_id => @app, :comment => {
-                :author => @user.login, :body => "Ola! Parabens pelo REA.",
-                :type => :specialized },
-                :locale => 'pt-BR'
-              }
+            @params[:comment] = @params[:comment].merge(type: :specialized)
           end
 
           it 'should create a new specialized comment' do
@@ -117,16 +111,12 @@ describe CommentsController do
               post :create, @params
             }.to_not change(Comment.common, :count).by(1)
           end
-        end # "which is specialized"
+        end # context "which is specialized"
 
         context "which is an answer" do
           before do
-            @comment = FactoryGirl.create(:common_comment, :app => @app)
-            @params = {:app_id => @app, :comment => {
-                :author => @user.login, :body => "Ola! Parabens pelo REA.",
-                :type => :specialized },
-                :comment_id => @comment, :locale => 'pt-BR'
-              }
+            @comment = FactoryGirl.create(:common_comment, app: @app)
+            @params = @params.merge(comment_id: @comment)
           end
 
           it 'should create a new answer for proper comment' do
@@ -136,6 +126,23 @@ describe CommentsController do
           end
         end # context "which is an answer"
       end # context "with valid params"
+
+      context "with an invalid author parameter" do
+        before do
+          @params[:comment] = @params[:comment].merge(author: @user.id+1)
+        end
+
+        it "shouldn't create a new comment" do
+          expect {
+            post :create, @params
+          }.to change(Comment, :count).by(0)
+        end
+
+        it "should notice permission denied message" do
+          post :create, @params
+          flash[:notice].should == "Permissão negada"
+        end
+      end # context "with an invalid author parameter"
     end # context "when creating a comment"
   end
 
@@ -147,9 +154,9 @@ describe CommentsController do
         before do
           @app = FactoryGirl.create(:app)
           @user = FactoryGirl.create(:specialist)
-          @comment = FactoryGirl.create(:specialized_comment, :author => @user,
-                                        :app => @app)
-          @params = { :app_id => @app.id, :id => @comment.id, :locale => 'pt-BR'}
+          @comment = FactoryGirl.create(:specialized_comment, author: @user,
+                                        app: @app)
+          @params = { app_id: @app.id, id: @comment.id, locale: 'pt-BR'}
         end
 
         it 'should destroy one comment' do
@@ -179,8 +186,8 @@ describe CommentsController do
 
           it 'should destroy answer for proper comment' do
             expect {
-              post :destroy, @params.merge(:comment_id => @comment.id,
-                                           :id => @answer.id)
+              post :destroy, @params.merge(comment_id: @comment.id,
+                                           id: @answer.id)
             }.to change(@comment.answers, :count).by(-1)
           end
         end # context "which is an answer"
