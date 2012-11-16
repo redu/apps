@@ -6,7 +6,7 @@
 if Rails.env.production?
   ReduApps::Application.config.session_store :active_record_store,
     :key => '_redu_session',
-    :domain => '.local.redu'
+    :domain => '.redu.com.br'
 else
   ReduApps::Application.config.session_store :active_record_store,
     :key => '_redu_session'
