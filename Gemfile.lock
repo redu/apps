@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/redu/untied-consumer.git
-  revision: 9a14785941163229c7f3081687010da4610fd233
+  revision: 59b298d3a2d3b1291721d8999791fd34b3b1fd54
   specs:
     untied-consumer (0.0.4)
       activemodel
