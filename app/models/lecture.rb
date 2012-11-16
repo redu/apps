@@ -9,9 +9,8 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :name, :subject
 
   def self.create_via_api(params)
-    Connection.post "/api/subjects/#{params[:subject_suid]}/lectures",
-                    parse_lecture(params),
-                    params[:token]
+    Connection.post post_to_api_url(params[:subject_suid]),
+                    parse_lecture(params), params[:token]
   end
 
   def self.parse_lecture(params)
@@ -22,5 +21,9 @@ class Lecture < ActiveRecord::Base
                             }
                }
     }.to_json
+  end
+
+  def self.post_to_api_url(subject_id)
+    "/api/subjects/#{subject_id}/lectures"
   end
 end

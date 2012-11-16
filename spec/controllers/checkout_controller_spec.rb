@@ -9,21 +9,6 @@ describe CheckoutController do
     @params = { app_id: @app.id, locale: 'pt-BR' }
   end
 
-  describe 'GET new' do
-    it 'should render step1' do
-      get :new, @params
-      should render_template(:step1)
-    end
-
-    context 'when trying checkout an inexistent app' do
-      it 'should raise ActiveRecord::RecordNotFound' do
-        expect {
-          get :new, app_id: @app.id+1, locale: 'pt-BR'
-        }.to raise_error ActiveRecord::RecordNotFound
-      end
-    end
-  end # describe 'GET new'
-
   describe 'POST update' do
     before(:each) do
       user = User.last
@@ -38,12 +23,12 @@ describe CheckoutController do
     end
 
     it 'assigns app_id variable' do
-      get :new, @params
+      post :update, @params
       assigns(:app_id).to_i.should == @app.id
     end
 
     it 'assigns next_step variable properly' do
-      get :new, @params
+      post :update, @params
       assigns(:next_step).to_i.should == 2
     end
 
@@ -51,10 +36,9 @@ describe CheckoutController do
 
       context 'when performing a valid request' do
         before do
-          post :update, @params.merge(space_id: @space.id, step: 2)
+          post :update, @params.merge(space_id: @space.id, step: 2,
+                                      previous_step: 1)
         end
-
-        it { should render_template :step2 }
 
         it 'assigns next_step variable properly' do
           assigns(:next_step).to_i.should == 3
@@ -77,10 +61,8 @@ describe CheckoutController do
       context 'when performing a valid request' do
         before do
           post :update, @params.merge(space_id: @space.id, create_subject: false,
-                                      next_step: 4, step: 3)
+                                      next_step: 4, step: 3, previous_step: 2)
         end
-
-        it { should render_template :step3 }
 
         it 'assigns space_id variable' do
           assigns(:space_id).to_i.should == @space.id
@@ -103,18 +85,15 @@ describe CheckoutController do
       context 'when creating lecture in existing subject' do
         before do
           lecture_name = "Nova Aula"
-          stub_request(:post,
-                       "http://www.redu.com.br/api/subjects/#{@subject.suid}/lectures").
-            to_return(:status => 201, body: { name: lecture_name,
-                                              id: 713 }.to_json)
+          stub_request(:post, ReduApps::Application.config.api_url +
+                              Lecture.post_to_api_url(@subject.suid)).
+            to_return(status: 201, body: { name: lecture_name, id: 713 }.to_json)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'false',
                              lecture: lecture_name, subject: @subject.id)
         end
 
         it_behaves_like 'a checkout variables ascriber'
-
-        it { should redirect_to app_path(@app) }
       end
 
       context 'when creating lecture in new subject' do
@@ -122,21 +101,19 @@ describe CheckoutController do
           subject_name = "Novo módulo"
           lecture_name = "Nova Aula"
           new_redu_subject_id = 713
-          stub_request(:post,
-                       "http://www.redu.com.br/api/spaces/#{@space.sid}/subjects").
-            to_return(:status => 201,
+          stub_request(:post, ReduApps::Application.config.api_url +
+                              Subject.post_to_api_url(@space.sid)).
+            to_return(status: 201,
                       body: { name: subject_name, id: new_redu_subject_id }.to_json )
-          stub_request(:post, "http://www.redu.com.br/api/subjects/#{new_redu_subject_id}/lectures").
-            to_return(:status => 201, body: { name: lecture_name,
-                                              id: 713 }.to_json)
+          stub_request(:post, ReduApps::Application.config.api_url +
+                              Lecture.post_to_api_url(new_redu_subject_id)).
+            to_return(status: 201, body: { name: lecture_name, id: 713 }.to_json)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
                              lecture: lecture_name, subject: subject_name)
         end
 
         it_behaves_like 'a checkout variables ascriber'
-
-        it { should redirect_to app_path(@app) }
       end
 
       it 'should raise error if missing params' do

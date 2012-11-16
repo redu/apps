@@ -4,6 +4,7 @@ class CheckoutController < ApplicationController
   respond_to :js
 
   def update
+    raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
     @app_id = params[:app_id]
     @app = App.find_by_id(@app_id)
     case params[:step]
@@ -18,11 +19,6 @@ class CheckoutController < ApplicationController
     else
       step_1
     end
-  end
-
-  def new
-    raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
-    @app_id = params[:app_id]
   end
 
   protected

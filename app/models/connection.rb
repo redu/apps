@@ -16,7 +16,7 @@ class Connection < ActiveRecord::Base
   private
 
   def self.connection_setup(token)
-    conn = Faraday.new(:url => api_url) do | faraday |
+    conn = Faraday.new(:url => api_url) do |faraday|
       faraday.request :url_encoded
       faraday.adapter Faraday.default_adapter
     end
