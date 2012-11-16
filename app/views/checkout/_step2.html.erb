@@ -3,7 +3,7 @@
   <hr class="list-separator">
   <div class="apps-portal-add-oer-section">
     <div class="list-environment-course-space-header">
-      <%= image_tag "new/missing_environments_thumb_32.png", :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
+      <%= image_tag @space.course.environment.thumbnail, :title => @space.course.environment.name, :alt => @space.course.environment.name, :class => "list-environment-course-space-image-link" %>
       <h4 class="list-environment-course-space-title">
         <%= @space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= @space.course.name %> <span class="list-environment-course-space-link">></span> <%= @space.name %>
       </h4>
