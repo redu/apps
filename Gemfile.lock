@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/redu/untied-consumer.git
-  revision: c25d48ba7640266c520b7f00c03b406eb7fc0550
+  revision: 9a14785941163229c7f3081687010da4610fd233
   specs:
     untied-consumer (0.0.4)
       activemodel
@@ -39,7 +39,7 @@ GEM
     activesupport (3.2.5)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    amq-client (0.9.6)
+    amq-client (0.9.8)
       amq-protocol (>= 0.9.4)
       eventmachine
     amq-protocol (0.9.5)
