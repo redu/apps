@@ -7,8 +7,6 @@
     environments: os ambientes.
 %>
 <div class="modal-body">
-  <%= render "steps_description", step: step %>
-  <hr class="list-separator">
   <div class="apps-portal-add-oer-section">
     <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), id: "step-1-form", remote: true) do %>
       <%= hidden_field_tag :space_id, "" %>

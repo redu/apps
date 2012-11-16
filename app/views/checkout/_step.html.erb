@@ -14,5 +14,7 @@
     <h3 class="modal-title">Adicionar <%= modal_title(space) %></h3>
     <span class="modal-subtitle"><%= "#{app.name} - #{app.author}" %></span>
   </div>
+  <%= render "steps_description", step: step %>
+  <hr class="list-separator">
   <%= render "step#{step}", step: step, app: app, environments: environments, space: space, create_subject: create_subject %>
 </div>

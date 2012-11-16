@@ -11,8 +11,6 @@
   <%= hidden_field_tag "space_id", space.id %>
   <%= hidden_field_tag "create_subject", create_subject %>
   <div class="modal-body">
-    <%= render "steps_description", step: step %>
-    <hr class="list-separator">
     <div class="apps-portal-add-oer-section">
       <div class="list-environment-course-space-header">
         <%= image_tag space.course.environment.thumbnail, :title => space.course.environment.name, :alt => space.course.environment.name, :class => "list-environment-course-space-image-link" %>
