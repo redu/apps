@@ -14,7 +14,7 @@
         <% environments.each do |e| %>
           <li class="list-environment-course-space-item">
             <div class="list-environment-course-space-header">
-              <%= image_tag e.thumbnail, title: e.name, alt: e.name, class: "list-environment-course-space-image-link" %>
+              <%= image_tag e.thumbnail, title: e.name, alt: e.name, class: "list-environment-course-space-image-link", size: "32x32" %>
               <h4 class="list-environment-course-space-title"><%= e.name %></h4>
             </div>
             <ul class="list-mix">
