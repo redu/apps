@@ -10,7 +10,7 @@
 
 <% if @favorite_apps_count <= 0 %>
   <div class="oer-apps-none">
-    <%= image_tag "icon-api-gray_128_130.png" %>
+    <%= image_tag "icon-api-gray_128_130.png", size: "128x130" %>
     <p>Você ainda não possui Aplicativos Favoritos. Para adicioná-los, pesquise por um aplicativo na aba “Recursos Educacionais Abertos”, abra a página do mesmo clicando no título e clique no botão “Adicionar a Favoritos”.</p>
   </div>
 <% else %>
@@ -27,7 +27,7 @@
   <% end %>
   <div class="oer-apps-wrapper">
     <ul id="apps" class="list-2-columns list-columns-separator">
-      <%= render partial: 'shared/app', collection: @apps, 
+      <%= render partial: 'shared/app', collection: @apps,
                  locals: { favorite_flag: true } %>
     </ul>
   </div>

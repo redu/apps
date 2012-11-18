@@ -29,7 +29,7 @@
 <% if @apps.size == 0 %>
 
 <div class="oer-apps-none">
-  <%= image_tag "icon-api-gray_128_130.png" %>
+  <%= image_tag "icon-api-gray_128_130.png", size: "128x130" %>
   <p>Sentimos muito, mas não achamos resultado para “<%= params[:search] %>”. Tente outro termo.</p>
 </div>
 
@@ -57,7 +57,7 @@
 
 <div class="oer-apps-wrapper">
   <ul id="apps" class="list-2-columns list-columns-separator">
-    <%= render partial: 'shared/app', collection: @apps, 
+    <%= render partial: 'shared/app', collection: @apps,
                locals: { favorite_flag: false } %>
   </ul>
 </div>
