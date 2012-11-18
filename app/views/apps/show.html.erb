@@ -12,7 +12,7 @@
     <%# Coluna da esquerda. %>
     <div class="oer-left-sidebar">
       <%# Thumbnail. %>
-      <%= image_tag @app.thumbnail.url(:large), alt: @app.name, title: @app.name, class: "oer-thumbnail" %>
+      <%= image_tag @app.thumbnail.url(:large), alt: @app.name, title: @app.name, class: "oer-thumbnail", size: "160x160" %>
 
       <%# Área de classificação. %>
       <%= render "stars" %>
@@ -130,7 +130,7 @@
 
       <div class="oer-images">
         <% @app.screen_shots.each do |ss| %>
-          <%= image_tag ss.screen.url(:original), alt: "Prévia", title: "Prévia", class: screen_shot_class(@app.screen_shots.length) %>
+          <%= image_tag ss.screen.url(:original), alt: "Prévia", title: "Prévia", class: screen_shot_class(@app.screen_shots.length), size: screen_shot_size(@app.screen_shots.length) %>
         <% end %>
       </div>
     </div>

@@ -3,7 +3,7 @@
   <div class="status status-text">
     <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
     <%= link_to redu_user_static("", specialized_comment.author), class: "icon-link" do %>
-      <%= image_tag specialized_comment.author.thumbnail.url(:medium), alt: specialized_comment.author.display_name, title: specialized_comment.author.display_name %>
+      <%= image_tag specialized_comment.author.thumbnail.url(:medium), alt: specialized_comment.author.display_name, title: specialized_comment.author.display_name, size: "64x64" %>
     <% end %>
     <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
     <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>

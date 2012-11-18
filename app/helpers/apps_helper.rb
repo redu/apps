@@ -27,11 +27,25 @@ module AppsHelper
     end
   end
 
+  # Retorna as classes corretas das screenshots do aplicativo.
   def screen_shot_class(length)
     if length == 2
+      # Se existem 2 imagens.
       "oer-image-preview oer-image-preview-small"
     else
+      # Se existe apenas 1 imagem.
       "oer-image-preview oer-image-preview-long"
+    end
+  end
+
+  # Retorna o tamanho correto das screenshots do aplicativo.
+  def screen_shot_size(length)
+    if length == 2
+      # Se existem 2 imagens.
+      "339x200"
+    else
+      # Se existe apenas 1 imagem.
+      "698x200"
     end
   end
 
