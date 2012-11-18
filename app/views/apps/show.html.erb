@@ -1,4 +1,5 @@
-<%= form_tag app_checkout_path(@app), method: :post, remote: true do %>
+
+<%= form_tag app_checkout_path(@app, previous_step: 0), method: :post, remote: true do %>
   <%= content_tag :button, type: :submit, class: "button-primary button-success" do %>
     Adicionar a Disciplina
   <% end %>

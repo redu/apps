@@ -24,9 +24,9 @@ class CheckoutController < ApplicationController
   protected
 
   def step_1
+    get_params([:previous_step], params)
     @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
-    @previous_step = params[:previous_step]
 
     respond_to do |format|
       format.js
