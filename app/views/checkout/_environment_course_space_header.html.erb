@@ -1,0 +1,20 @@
+<%#
+  Renderiza o cabeçalho com nome do ambiente, curso e disciplina.
+
+  Variáveis:
+    environment: o ambiente.
+    course_name: o nome do curso.
+    space_name: o nome da disciplina.
+%>
+<div class="list-environment-course-space-header">
+  <%= image_tag environment.thumbnail, title: environment.name, alt: environment.name, class: "list-environment-course-space-image-link", size: "32x32" %>
+  <h4 class="list-environment-course-space-title">
+    <%= environment.name %>
+    <% if course_name %>
+      <span class="list-environment-course-space-link">></span> <%= course_name %>
+    <% end %>
+    <% if space_name %>
+      <span class="list-environment-course-space-link">></span> <%= space_name %>
+    <% end %>
+  </h4>
+</div>

@@ -8,12 +8,7 @@
 %>
 <div class="modal-body">
   <div class="apps-portal-add-oer-section">
-    <div class="list-environment-course-space-header">
-      <%= image_tag space.course.environment.thumbnail, :title => space.course.environment.name, :alt => space.course.environment.name, :class => "list-environment-course-space-image-link", size: "32x32" %>
-      <h4 class="list-environment-course-space-title">
-        <%= space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= space.course.name %> <span class="list-environment-course-space-link">></span> <%= space.name %>
-      </h4>
-    </div>
+    <%= render "environment_course_space_header", environment: space.course.environment, course_name: space.course.name, space_name: space.name %>
     <div class="apps-portal-add-oer-step-2-buttons">
       <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
         <%= hidden_field_tag 'space_id' , space.id %>

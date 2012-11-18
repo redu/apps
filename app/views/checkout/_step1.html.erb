@@ -13,10 +13,7 @@
       <ul class="list-environment-course-space list-1-columns list-columns-separator">
         <% environments.each do |e| %>
           <li class="list-environment-course-space-item">
-            <div class="list-environment-course-space-header">
-              <%= image_tag e.thumbnail, title: e.name, alt: e.name, class: "list-environment-course-space-image-link", size: "32x32" %>
-              <h4 class="list-environment-course-space-title"><%= e.name %></h4>
-            </div>
+            <%= render "environment_course_space_header", environment: e, course_name: nil, space_name: nil %>
             <ul class="list-mix">
               <% e.courses.each do |c| %>
                 <li class="list-mix-item icon-course-lightgray_32_34-before">

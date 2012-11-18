@@ -12,12 +12,7 @@
   <%= hidden_field_tag "create_subject", create_subject %>
   <div class="modal-body">
     <div class="apps-portal-add-oer-section">
-      <div class="list-environment-course-space-header">
-        <%= image_tag space.course.environment.thumbnail, :title => space.course.environment.name, :alt => space.course.environment.name, :class => "list-environment-course-space-image-link", size: "32x32" %>
-        <h4 class="list-environment-course-space-title">
-          <%= space.course.environment.name %> <span class="list-environment-course-space-link">></span> <%= space.course.name %> <span class="list-environment-course-space-link">></span> <%= space.name %>
-        </h4>
-      </div>
+      <%= render "environment_course_space_header", environment: space.course.environment, course_name: space.course.name, space_name: space.name %>
       <div class="apps-portal-add-oer-step-3-form">
         <div class="control-group row">
           <div class="control-label span3">
