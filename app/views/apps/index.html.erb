@@ -1,71 +1,71 @@
 <% unless params.include? :search %>
-<div class="apps-portal-oer">
-  <div class="apps-portal-oer-explaination">
-    <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
-    <h3 class="apps-portal-oer-explaination-title">O que são R.E.A.s?</h3>
-    <p>São <em>aplicativos</em> de ensino e aprendizagem que estão licenciados de maneira aberta, permitindo que sejam utilizados ou adaptados por qualquer pessoa gratuitamente (<em>em seus Ambientes de Aprendizagem ou em seu Perfil</em>). Podem incluir, também, cursos completos, partes de cursos, módulos, livros didáticos, artigos de pesquisa, vídeos, testes, software e qualquer material ou técnica que possa apoiar o acesso ao conhecimento. (<a href="http://rea.net.br/site/o-que-e-rea/" title="UNESCO/Comunidade REA Brasil">UNESCO/Comunidade REA Brasil</a>)</p>
+  <div class="apps-portal-oer">
+    <div class="apps-portal-oer-explaination">
+      <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
+      <h3 class="apps-portal-oer-explaination-title">O que são R.E.A.s?</h3>
+      <p>São <em>aplicativos</em> de ensino e aprendizagem que estão licenciados de maneira aberta, permitindo que sejam utilizados ou adaptados por qualquer pessoa gratuitamente (<em>em seus Ambientes de Aprendizagem ou em seu Perfil</em>). Podem incluir, também, cursos completos, partes de cursos, módulos, livros didáticos, artigos de pesquisa, vídeos, testes, software e qualquer material ou técnica que possa apoiar o acesso ao conhecimento. (<a href="http://rea.net.br/site/o-que-e-rea/" title="UNESCO/Comunidade REA Brasil">UNESCO/Comunidade REA Brasil</a>)</p>
+    </div>
   </div>
-</div>
 
-<a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
+  <a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
 <% end %>
 
 <ul class="tabs tabs-big">
   <% if params.include? :search %>
-  <li class="tab">
+    <li class="tab">
   <% else %>
-  <li class="tab tab-active">
+    <li class="tab tab-active">
   <% end %>
     <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
   </li>
   <% if current_user %>
-  <li class="tab">
-    <% favorite_apps_count = parentize(@favorite_apps_count) %>
-    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
-  </li>
+    <li class="tab">
+      <% favorite_apps_count = parentize(@favorite_apps_count) %>
+      <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
+    </li>
   <% end %>
 </ul>
 
 <% if @apps.size == 0 %>
 
-<div class="oer-apps-none">
-  <%= image_tag "icon-api-gray_128_130.png", size: "128x130" %>
-  <p>Sentimos muito, mas não achamos resultado para “<%= params[:search] %>”. Tente outro termo.</p>
-</div>
+  <div class="oer-apps-none">
+    <%= image_tag "icon-api-gray_128_130.png", size: "128x130" %>
+    <p>Sentimos muito, mas não achamos resultado para “<%= params[:search] %>”. Tente outro termo.</p>
+  </div>
 
 <% else %>
 
-<% unless !params.include? :search %>
-<div class="apps-portal-search-messages">
-  <span class="apps-portal-search-message">
-    Você buscou por <strong>“<%= params[:search] %>”</strong>.
-    Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @results_counter %>.
-  </span>
-  <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
-</div>
-<% end %>
+  <% unless !params.include? :search %>
+    <div class="apps-portal-search-messages">
+      <span class="apps-portal-search-message">
+        Você buscou por <strong>“<%= params[:search] %>”</strong>.
+        Achamos <strong><%= @results_counter %></strong> <%= t 'result', count: @results_counter %>.
+      </span>
+      <span class="apps-portal-search-message">Use os filtros abaixo para facilitar a busca.</span>
+    </div>
+  <% end %>
 
-<div class="apps-portal-filters">
-  <div class="filters">
-    <% @categories.each do |cat| %>
-      <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
-                  apps_path(filter: filters_url(@filter, cat), search: @search),
-                  :class => filter_class(@filter, cat) %>
-    <% end %>
+  <div class="apps-portal-filters">
+    <div class="filters">
+      <% @categories.each do |cat| %>
+        <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
+                    apps_path(filter: filters_url(@filter, cat), search: @search),
+                    :class => filter_class(@filter, cat) %>
+      <% end %>
+    </div>
   </div>
-</div>
 
-<div class="oer-apps-wrapper">
-  <ul id="apps" class="list-2-columns list-columns-separator">
-    <%= render partial: 'shared/app', collection: @apps,
-               locals: { favorite_flag: false } %>
-  </ul>
-</div>
+  <div class="oer-apps-wrapper">
+    <ul id="apps" class="list-2-columns list-columns-separator">
+      <%= render partial: 'shared/app', collection: @apps,
+                 locals: { favorite_flag: false } %>
+    </ul>
+  </div>
 
-<hr class="list-separator">
+  <hr class="list-separator">
 
-<div id="paginator" class="pagination">
-  <%= render 'shared/apps_pagination' %>
-</div>
+  <div id="paginator" class="pagination">
+    <%= render 'shared/apps_pagination' %>
+  </div>
 
 <% end %>
