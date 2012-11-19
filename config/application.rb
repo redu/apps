@@ -67,7 +67,7 @@ module ReduApps
     config.assets.version = '1.0'
     config.autoload_paths += %W(#{config.root}/lib)
 
-    # Observers têm direto a um lart
+    # Observers têm direto a um lar
     config.autoload_paths << "#{config.root}/app/observers"
 
     # Configs para auxiliar a integração com o untied

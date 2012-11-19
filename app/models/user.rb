@@ -1,5 +1,3 @@
-require 'base_model'
-
 class User < ActiveRecord::Base
   include BaseModel
 
