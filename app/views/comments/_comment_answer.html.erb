@@ -1,0 +1,24 @@
+<li class="status-content response">
+  <%= link_to_if (comment_answer.author == current_user), 'Apagar Resposta', [comment.app, comment_answer],
+             :confirm => 'Esta ação irá apagar sua resposta. Deseja continuar?',
+             :method => :delete,
+             :class => "close icon-close-gray_16_18 replacement" %>
+  <div class="status-text-response status-text">
+    <%= link_to redu_user_static("", comment_answer.author), class: "icon-link" do %>
+      <%= image_tag comment_answer.author.thumbnail.url(:medium), alt: comment_answer.author.display_name, title: comment_answer.author.display_name, size: "32x32" %>
+    <% end %>
+    <%= link_to comment_answer.author.display_name, redu_user_static("", comment_answer.author), class: "link-name" %>
+    <span class="status-info">
+      respondeu:
+    </span>
+    <span class="date">
+      <%= l comment_answer.created_at %>
+    </span>
+    <div class="post-text">
+      <p class="input-user"><%= comment_answer.body %></p>
+    </div>
+  </div>
+  <% unless last_answer?(comment_answer_counter, total) %>
+    <hr>
+  <% end %>
+</li>

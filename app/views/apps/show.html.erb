@@ -1,137 +1,180 @@
-<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>
-<p id="notice"><%= notice %></p>
-<%= image_tag @app.thumbnail.url(:thumb) %><h1> <%= @app.name %> </h1>
-<% if @user %>
-  <%= link_to "1", rate_app_path(@app, rating: 1), method: "post" %>
-  <%= link_to "2", rate_app_path(@app, rating: 2), method: "post" %>
-  <%= link_to "3", rate_app_path(@app, rating: 3), method: "post" %>
-  <%= link_to "4", rate_app_path(@app, rating: 4), method: "post" %>
-  <%= link_to "5", rate_app_path(@app, rating: 5), method: "post" %>
-  <%= @app.reputation_for(:rating) %>/5
-  <br />
-  <% if @evaluated %>
-    Você deu <%= @user_rating %> a este aplicativo
-  <% else %>
-    Classifique este recurso
-  <% end %>
-<% else %>
-  <%# TODO exibir rating do app sem opção de o usuário dar rate %>
-<% end %>
-<ul>
-  <% @app.attributes.except("id", "thumbnail_file_name", "thumbnail_content_type",
-      "thumbnail_file_size", "thumbnail_updated_at", "created_at", "name",
-      "updated_at").each do |att|
-        %>
-    <% unless att.first == 'views' %>
-      <li><%= t(att.first) %>: <%= att.second %></li>
+<div class="oer-main-wrapper">
+
+  <div class="oer-header">
+    <h3 class="oer-title"><%= @app.name %></h3>
+
+    <% if @favorite %>
+      <span class="icon-favorite-blue_32_34 show text-replacement pull-right" rel="tooltip" title="Este é um Aplicativo Favorito." data-placement="left">Favorito</span>
     <% end %>
-  <% end %>
-  <li><%= t 'views', count: @app.views %></li>
-  <li><%= t 'review', count: @app.comments.specialized.count %></li>
-  <li>
-    <%= t 'comment', 
-          count: (@app.comments.common.count + @app.comments.answer.count) %>
-  </li>
-</ul>
-<% @app.screen_shots.each do |ss| %>
-  <%= image_tag ss.screen.url(:original) %>
-<% end %>
-
-<h2>Resenhas</h2>
-<% @app.comments.specialized.each do |comment| %>
-  <p>
-    <%= image_tag comment.author.thumbnail.url(:medium) %>
-    <%= "#{comment.author.first_name} #{comment.author.last_name}" %> (especialista)
-    escreveu uma resenha sobre este aplicativo:<br /><%= l comment.created_at %>
-  </p>
-  <p>
-    <%= comment.body %>
-    <%= link_to 'Apagar Comentário', [comment.app, comment],
-               :confirm => 'Tem certeza?',
-               :method => :delete %>
-  </p>
-<% end %>
-
-<h2>Escrever uma resenha</h2>
-<%= form_for([@app, @app.comments.build]) do |f| %>
-  <div class="field">
-    <%= f.label :autor %> (login do usuário)<br />
-    <%= f.text_field :author %>
   </div>
-  <div class="field">
-    <%= f.label :corpo %><br />
-    <%= f.text_area :body %>
-  </div>
-    <%= f.hidden_field :type, :value => 'specialized' %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
 
-<h2>Comentários</h2>
-<% @app.comments.common.each do |comment| %>
-  <p>
-    <%= image_tag comment.author.thumbnail.url(:medium) %>
-    <%= "#{comment.author.first_name} #{comment.author.last_name}" %>
-    comentou sobre este aplicativo:
-    <br /><%= l comment.created_at %>
-  </p>
-  <p>
-    <%= comment.body %>
-    <%= link_to 'Apagar Comentário', [comment.app, comment],
-               :confirm => 'Tem certeza?',
-               :method => :delete %>
-  </p>
-  <% comment.answers.each do |answer| %>
-    <p>
-      <%= image_tag answer.author.thumbnail.url(:medium) %>
-      <b><%= "#{answer.author.first_name} #{answer.author.last_name}" %></b>
-      respondeu:<br /><%= l answer.created_at %>
-    </p>
-    <%= answer.body %>
-    <%= link_to 'Apagar Resposta', [comment.app, comment, answer],
-               :confirm => 'Tem certeza?',
-               :method => :delete %>
-  <% end %>
+  <div class="oer-body clearfix">
+    <%# Coluna da esquerda. %>
+    <div class="oer-left-sidebar">
+      <%# Thumbnail. %>
+      <%= image_tag @app.thumbnail.url(:large), alt: @app.name, title: @app.name, class: "oer-thumbnail", size: "160x160" %>
 
-  <h2>Responder</h2>
-  <%= form_for([@app, comment, @app.comments.build]) do |f| %>
-    <div class="field">
-      <%= f.label :autor %> (login do usuário)<br />
-      <%= f.text_field :author %>
+      <%# Área de classificação. %>
+      <%= render "stars" %>
+
+      <%# Contadores. %>
+      <ul class="oer-counters">
+        <li class="oer-counter legend icon-star-empty-gray_16_18-before">
+          <%= t 'evaluation', count: @evaluations %>.
+        </li>
+        <li class="oer-counter legend icon-favorite-gray_16_18-before">
+          <%= t 'favorite', count: @app.users.count %>.
+        </li>
+        <li class="oer-counter legend icon-seen-gray_16_18-before">
+          <%= t 'view', count: @app.views %>.
+        </li>
+        <% if @app.comments.specialized.length > 0 %>
+          <li class="oer-counter legend icon-specialist-gray_16_18-before">
+            <%= t 'review', count: @app.comments.specialized.length %>.
+          </li>
+        <% end %>
+        <li class="oer-counter legend icon-comment-gray_16_18-before">
+          <%= t 'comment',
+                count: count_comments_for(@app) %>.
+        </li>
+      </ul>
+
+      <hr class="oer-data-separator">
+
+      <%# Creative Commons. %>
+      <div class="oer-cc">
+        <%= link_to "Licença por Atribução (by)", "http://creativecommons.org.br/as-licencas/", class: "cc-by-88_31 text-replacement", target: "_blank", rel: "popover", "data-original-title" => "Licença por Atribuição (by)", "data-content" => "Esta licença permite que outros distribuam, remixem, adaptem ou criem obras derivadas, mesmo que para uso com fins comerciais, contanto que seja dado crédito pela criação original. Esta é a licença menos restritiva de todas as oferecidas, em termos de quais usos outras pessoas podem fazer de sua obra.", "data-placement" => "bottom" %>
+      </div>
     </div>
-    <div class="field">
-      <%= f.label :corpo %><br />
-      <%= f.text_area :body %>
+
+    <%# Coluna do meio. %>
+    <div class="oer-middle-sidebar">
+
+      <div class="oer-info-n-buttons clearfix">
+        <%# Informações. %>
+        <ul class="oer-info">
+          <li class="oer-info-item">
+            <em class="oer-info-key">Autor:</em>
+            <span class="oer-info-value"><%= @app.author %></span>
+          </li>
+          <% @app_categories.each do |category| %>
+            <li class="oer-info-item">
+              <em class="oer-info-key"><%= category.first %>:</em>
+              <span class="oer-info-value"><%= category.second.join(", ") %></span>
+            </li>
+          <% end %>
+          <li class="oer-info-item">
+            <em class="oer-info-key">Objetivo:</em>
+            <span class="oer-info-value"><%= @app.objective %></span>
+          </li>
+          <li class="oer-info-item">
+            <em class="oer-info-key">Sinopse:</em>
+            <span class="oer-info-value"><%= @app.synopsis %></span>
+          </li>
+          <li class="oer-info-item">
+            <em class="oer-info-key">Descrição:</em>
+            <span class="oer-info-value"><%= @app.description %></span>
+          </li>
+        </ul>
+
+        <%# Botões. %>
+        <div class="oer-buttons">
+          <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
+          <% unless @favorite || !current_user %>
+            <%= form_tag user_favorites_path(current_user.id), method: "post" do %>
+              <%= hidden_field_tag :app_id , @app.id %>
+              <%= content_tag :button, :type => :submit, class: "button-primary" do %>
+                Adicionar a Favoritos
+              <% end %>
+            <% end %>
+          <% end %>
+          <%= form_tag app_checkout_path(@app), method: "post" do %>
+            <%= content_tag :button, :type => :submit, :class => "button-primary", :'data-target' => "#modal-add-oer-step-1", :'data-toggle' => "modal", class: "button-success"  do %>
+              Adicionar a Disciplina
+            <% end %>
+          <% end %>
+          <% if @favorite %>
+            <%= link_to "Remover dos Favoritos", user_favorite_path(current_user, @favorite), :method => "delete", :class => "icon-favorite-delete-lightblue_16_18-before", :title => "Remover dos Favoritos" %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="oer-meta-wrapper">
+        <ul class="oer-meta meta-data-column-1">
+          <li class="oer-meta-item">
+            <span class="legend"><em>Publicador:</em> <%= @app.publishers %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>Detentor dos Direitos:</em> <%= @app.copyright %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>Submetido por:</em> <%= @app.submitters %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>Classificação:</em> <%= @app.classification %></span>
+          </li>
+        </ul>
+
+        <ul class="oer-meta meta-data-column-2">
+          <li class="oer-meta-item">
+            <span class="legend"><em>Língua:</em> <%= @app.language %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>País de Origem:</em> <%= @app.country %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>Origem:</em> <%= @app.url %></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="oer-images">
+        <% @app.screen_shots.each do |ss| %>
+          <%= image_tag ss.screen.url(:original), alt: "Prévia", title: "Prévia", class: screen_shot_class(@app.screen_shots.length), size: screen_shot_size(@app.screen_shots.length) %>
+        <% end %>
+      </div>
     </div>
-      <%= f.hidden_field :type, :value => 'answer' %>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+  </div>
+</div>
+
+<ol class="statuses oer-comments">
+  <%= render partial: 'specialized_comment', collection: @app.comments.specialized %>
+
+  <% if current_user %>
+    <!-- Botões de comentários -->
+    <li>
+      <hr class="list-separator">
+      <div class="status status-buttons reply-buttons">
+        <ul class="status-text">
+          <li>
+            <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
+          </li>
+          <% if current_user.specialist? %>
+            <li>
+              <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
+            </li>
+          <% end %>
+        </ul>
+        <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_type: "common" %>
+        <% if current_user.specialist? %>
+          <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialized" %>
+        <% end %>
+      </div>
+    </li>
   <% end %>
-<% end %>
 
-<h2>Comentar sobre este aplicativo</h2>
-<%= form_for([@app, @app.comments.build]) do |f| %>
-  <div class="field">
-    <%= f.label :autor %> (login do usuário)<br />
-    <%= f.text_field :author %>
+  <!-- Comentários comuns -->
+  <div id="comments" >
+    <%= render partial: 'comments/common_comment', collection: @comments %>
   </div>
-  <div class="field">
-    <%= f.label :corpo %><br />
-    <%= f.text_area :body %>
-  </div>
-    <%= f.hidden_field :type, :value => 'common' %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</ol>
 
-<%= link_to 'Back', apps_path %>
-<%= link_to 'Preview', preview_app_path(@app) %>
-<%= form_tag user_favorites_path(@user.id), :method => "post" do %>
-   <%= hidden_field_tag :app_id , @app.id %>
-   <%= submit_tag("Adcionar a Favoritos") %>
-<%= link_to 'Adicionar Aplicativo a uma aula', app_checkout_path(@app) %>
+<% unless @comments.last_page? %>
+  <div id="pagination-wrapper">
+    <hr class="list-separator">
+    <div id="paginator" class="pagination">
+      <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
+                            class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+    </div>
+  </div>
 <% end %>
-<%= render_navigation :renderer => :breadcrumbs, :join_with => " &gt; " %>

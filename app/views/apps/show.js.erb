@@ -1,0 +1,7 @@
+<% if params[:page] %>
+  $('#comments').append('<%= escape_javascript render partial: "comments/common_comment", collection: @comments %>');
+  $('#paginator').html("<%= escape_javascript(link_to_next_page(@comments, 'Mostrar mais...', remote: true, class: 'button-default icon-arrow-down-pagination-gray_16_18-before')) %>")
+  <% if @comments.last_page? %>
+    $("#pagination-wrapper").remove();
+  <% end %>
+<% end %>

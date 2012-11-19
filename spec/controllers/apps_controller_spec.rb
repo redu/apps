@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe AppsController do
@@ -6,7 +7,7 @@ describe AppsController do
 
     context "when assigning variables" do
       before do
-        get :index , :locale => 'pt-BR'
+        get :index , locale: 'pt-BR'
       end
 
       it "assigns @apps variable" do
@@ -20,7 +21,7 @@ describe AppsController do
 
     context "when filtering app by category" do
       before(:each) do
-        @categories = (0..3).collect {|i| Category.create(:name => "Cat #{i}")}
+        @categories = (0..3).collect {|i| Category.create(name: "Cat #{i}")}
         @apps = 10.times.collect do |i|
           # app = App.create(:name => "App #{i}")
           app = FactoryGirl.create(:app)
@@ -30,13 +31,13 @@ describe AppsController do
       end
 
       xit "should return correct number of apps" do
-        get :index , :filter => [@categories.first.name], :locale => 'pt-BR'
+        get :index , filter: [@categories.first.name], locale: 'pt-BR'
         correct_number = @apps.select {|a| a.categories.include?(@categories.first) }.length
         assigns(:apps).length.should == correct_number
       end
 
       xit "should return corret type of apps" do
-        get :index, :filter => [@categories.first.name], :locale => 'pt-BR'
+        get :index, filter: [@categories.first.name], locale: 'pt-BR'
         assigns(:apps).all? {|a| a.categories.include?(@categories.first)}.should == true
       end
     end
@@ -112,18 +113,24 @@ describe AppsController do
     before do
       @app = FactoryGirl.create(:app)
       @user = FactoryGirl.create(:user)
+      request.env["HTTP_REFERER"] = app_path(@app)
       controller.stub(current_user: @user)
     end
 
     context "with valid params" do
       before do
-        request.env["HTTP_REFERER"] = app_path(@app)
-        @params = { :id => @app, :rating => 5, :locale => 'pt-BR' }
+        @params = { id: @app, rating: 5, locale: 'pt-BR' }
       end
 
       it "redirects to HTTP referer" do
         post :rate, @params
         should respond_with(:redirect)
+      end
+
+      it "shoudl set flash notice message" do
+        post :rate, @params
+        flash[:notice].should ==
+          "Você classificou o recurso com #{@params[:rating]}."
       end
 
       context "when user hasn't rated before" do
@@ -151,5 +158,11 @@ describe AppsController do
         end
       end # context "when user has rated before"
     end # context "with valid params"
+
+    context "with invalid rating values" do
+      [-50, -5, -1, 0, 6, 7, 10, 50].each do |invalid_value|
+        it_should_behave_like "a hater of rating cheaters", invalid_value
+      end
+    end # context "with invalid rating values"
   end # describe "POST rate"
 end
