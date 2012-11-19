@@ -32,9 +32,12 @@
     </ul>
   </div>
 
-  <hr class="list-separator">
+  <% if @apps.num_pages > 1 %>
+    <hr class="list-separator">
 
-  <div id="paginator" class="pagination">
-    <%= render 'shared/apps_pagination' %>
-  </div>
+    <div id="paginator" class="pagination">
+      <%= render 'shared/apps_pagination' %>
+    </div>
+  <% end %>
+
 <% end %>
