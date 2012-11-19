@@ -1,0 +1,32 @@
+<li>
+  <hr class="list-separator">
+  <div class="status status-text">
+    <span class="specialist-icon icon-specialist-gray_32_34-before text-replacement">Especialista</span>
+    <%= link_to redu_user_static("", specialized_comment.author), class: "icon-link" do %>
+      <%= image_tag specialized_comment.author.thumbnail.url(:medium), alt: specialized_comment.author.display_name, title: specialized_comment.author.display_name, size: "64x64" %>
+    <% end %>
+    <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
+    <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
+    <%= link_to_if (specialized_comment.author == current_user), 'Apagar Crítica', [specialized_comment.app, specialized_comment],
+                :confirm => 'Esta ação irá apagar sua crítica. Deseja continuar?',
+                :method => :delete,
+                :class => "close icon-close-gray_16_18 replacement" %>
+    <span class="date"><%= l specialized_comment.created_at %></span>
+  </div>
+  <div class="status-container specialist">
+    <div class="status-content">
+      <div class="post-text">
+        <p class="input-user">
+          <%= specialized_comment.body %>
+        </p>
+      </div>
+      <!-- TODO: Adicionar quando implementar opção de expandir crítica do especialista.
+      <hr class="link-separator">
+      <ul>
+        <li class="last-responses">
+          <a href="#" class="link-secondary">Mostrar toda a crítica do especialista</a>
+        </li>
+      </ul> -->
+    </div>
+  </div>
+</li>

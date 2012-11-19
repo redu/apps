@@ -1,128 +1,182 @@
-.oer-main {
-  margin: 10px 20px 20px 20px;
-  overflow: auto;
-    
-  h2 {
-    margin-bottom: 20px;
-    float: left;
-  }
-}
+// ==========================================================================
+// Estilos da área de informação sobre um aplicativo
+// ==========================================================================
 
 
-.oer-add-favorite {
-  float: right;
-  padding-left: 5px;
-  cursor: pointer;
-}
+.oer-main-wrapper { padding: 10px 20px 20px; }
 
-.oer-data {
+.oer-header { overflow: hidden; }
+
+// Título com o nome do aplicativo.
+.oer-title {
+  @include heading(2);
   float: left;
-  clear: left;
-  margin-right: 18px;
-    
-  li {
-    padding: 0 5px 3px 0;
-    list-style: none;
-    font-size: 11px;
-    color: $gray5;
-  }
-
-  h6 {
-    color: $gray5;
-    float: right;
-        
-    span { color: $gray3; }
-  }
 }
 
-.oer-stars li {
-  float: left;
-  cursor: pointer;
-}
+.oer-header +
+.oer-body { margin-top: 20px; }
 
-.data-app {
-  clear: both;
-  padding: 15px 0 20px 0;
+
+// Coluna esquerda.
+// ==========================================================================
+
+.oer-left-sidebar { float: left; }
+
+.oer-thumbnail +
+.oer-rating { margin-top: 20px; }
+
+.oer-stars-n-value {
   margin-bottom: 20px;
-  border-bottom: 1px solid $gray4;
+  overflow: hidden;
 }
 
-.oer-cc {
-  text-align: center;
-    
-  img {
-    padding-bottom: 4px;
-    cursor: pointer;
-  }
+// Estrelas.
+
+.oer-stars {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  float: left;
 }
 
-.oer-info-app {
+.oer-star {
+  float: left;
+
+  & +
+  & { margin-left: 5px; }
+}
+
+// A nota média.
+
+.oer-rating-value {
+  @include heading(6);
+  float: right;
+  text-align: right;
+  color: $gray5;
+}
+
+.oer-rating-value-max { color: $gray3; }
+
+.oer-rating +
+.oer-counters { margin-top: 7px; }
+
+// Contadores.
+
+.oer-counters {
+  margin: 0;
+  list-style: none;
+}
+
+.oer-counter {
+  line-height: 18px;
+
+  & +
+  & { margin-top: 5px; }
+}
+
+.oer-data-separator {
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: $gray4;
+}
+
+.oer-counters +
+.oer-data-separator,
+.oer-data-separator +
+.oer-cc { margin-top: 20px; }
+
+// Creative Commons.
+
+.oer-cc { text-align: center; }
+
+
+// Coluna do meio.
+// ==========================================================================
+
+.oer-middle-sidebar { float: right; }
+
+.oer-info {
+  float: left;
+  list-style: none;
+  margin: 0;
   color: $gray6;
-  float: left;
-    
-  p { margin: 0; }
 }
 
-.info {
-  clear: left;
-  float: left;
-  font-style: italic;
+.oer-info-item {
+  overflow: hidden;
+
+  & +
+  & { margin-top: 5px; }
+}
+
+.oer-info-key {
   text-align: right;
   width: 60px;
 }
 
-.description {
-  padding: 0 0 8px 10px;
-  float: left;
-  width: 475px;
-}
+.oer-info-value { width: 468px; }
+
+.oer-info-key,
+.oer-info-value { float: left; }
+
+.oer-info-key +
+.oer-info-value { margin-left: 10px; }
 
 .oer-buttons {
   float: right;
-    
+
   button {
     display: block;
     clear: both;
     width: 158px;
     margin-bottom: 12px;
   }
-    
+
   a { margin-top: 8px; }
 }
 
-.oer-meta-data {
-  font-size: 11px;
-  color: $gray5;
-    
-  p {
-    margin: 0; 
-    span { font-style: italic; }
-  }
+.oer-info-n-buttons +
+.oer-meta-wrapper { margin-top: 20px; }
+
+.oer-meta-wrapper {
+  overflow: hidden;
+  padding-left: 70px;
 }
-    
-.meta-data-column-1 {
-  margin-left: 70px;
+
+.oer-meta {
+  list-style: none;
+  margin: 0;
   float: left;
 }
 
-.meta-data-column-2 {
-  float: right;
-  width: 345px;
+.oer-meta-item {
+  line-height: 14px;
+
+  & +
+  & { margin-top: 5px; }
 }
 
-.oer-images {
-  float: right;
-    
-  img {
-    float: right;
-    margin: 15px 3px 10px 15px;
-    border: 1px solid white;
-    @include box-shadow($shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.5));
-  }
-  
-  .small-image {
-      background-color: gray;
-      width: 339px;
-      height: 200px;
-  }
+.meta-data-column-1 { width: 280px; }
+
+.meta-data-column-2 { width: 350px; }
+
+.meta-data-column-1 +
+.meta-data-column-2 { margin-left: 20px; }
+
+.oer-meta-wrapper +
+.oer-images { margin-top: 10px; }
+
+.oer-image-preview {
+  @include box-shadow($shadow: 0 1px 9px 1px rgba(0, 0, 0, 0.5));
+  border: 1px solid $white;
+  margin: 10px 9px;
+}
+
+.oer-image-preview-long { @include size(698px, 200px); }
+
+.oer-image-preview-small {
+  @include size(339px, 200px);
+  float: left;
 }

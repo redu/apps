@@ -3,24 +3,27 @@
 	.icon-link {
 		width: 64px;
 
-		img { 
+		img {
 			height: 64px;
-			width: 64px; 
+			width: 64px;
 		}
 	}
 
-	.status { 
-		padding: 10px 20px;
+	.status {
 
-		.button-comment, 
-		.button-review { display: inline-block; } 
+		.button-comment,
+		.button-review {
+			display: inline-block;
+			vertical-align: middle;
+			line-height: 34px;
 
-		&.status-buttons { text-align: center; }
+			&[class*="icon-"][class*="-before"]:before { margin-right: 10px; }
+		}
 	}
 
-	.create-response { 
+	.create-response {
 		margin-top: 13px;
-		margin-left: 74px; 
+		margin-left: 74px;
 	}
 
 	.status-container {
@@ -31,16 +34,6 @@
 			font-family: arial, sans-serif;
 
 			h5 { margin: 20px 0; }
-
-		}
-		.last-responses {
-			color: $blue3;
-			text-align: center;
-			font-size: 11px;
-			margin-bottom: 7px;
-			cursor: pointer;
-
-			&:hover { color: $blue4; }
 		}
 	}
 
@@ -49,24 +42,35 @@
 	  left: 35px;
 	  margin-top: 80px;
 	  position: absolute;
- 	}
+	}
 
-	.button-comment { 
-		display: inline;
+	.status-buttons {
 		text-align: center;
-		li a { text-decoration: none; }
 
-		& + .create-response {
-			&:before { margin-right: 452px; }
+		li {
+			display: inline; }
+
+		li a {
+			&[class*="icon-"][class*="-before"]:before {
+				vertical-align: middle;
+			}
+
+			text-decoration: none;
+			display: inline;
+			margin-top: 8px;
 		}
 	}
 
-	.button-review { 
-		text-align: center;
-		li a { text-decoration: none; }
+ .button-big {
+		padding-top: 3px;
+		padding-bottom: 3px;
+	}
+}
 
-		& + .create-response {
-			&:before { margin-right: 452px; }
-		}
-	}	
+.flap-to-comment:before { margin-right: 555px; }
+
+.flap-to-review:before { margin-right: 305px; }
+
+.status li {
+	margin:0 ;
 }

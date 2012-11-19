@@ -1,0 +1,15 @@
+<%#
+  Renderiza uma estrela.
+  Caso algum usuário estiver logado, a estrela é clicável para o voto. Caso contrário a estrela é apenas mostrada.
+
+  Variáveis locais:
+    index: indica o número ordenal da estrela.
+    type: indica o tipo de estrela (lightgray, gray ou blue).
+%>
+<li class="oer-star">
+  <% if current_user %>
+    <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-" + type + "_16_18 show text-replacement", "data-star-color" => type %>
+  <% else %>
+    <span class="icon-star-full-" + "<%= type %>" + "_16_18 show text-replacement"><%= index + 1 %></span>
+  <% end %>
+</li>
