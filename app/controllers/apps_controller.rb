@@ -8,12 +8,10 @@ class AppsController < ApplicationController
       @apps = search(params[:filter]).results
       @categories = Category.filter if params[:filter] && !params[:search]
       assign_searching_variables unless !params[:search]
-      @user_app_associations = App.favorited_by(@apps, current_user) if current_user
       @apps = Kaminari.paginate_array(@apps).page(params[:page])
     else
-      @apps = App.includes(:comments, :categories, :user_app_associations).
+      @apps = App.includes(:comments, :categories).
         page(params[:page])
-      @user_app_associations = App.favorited_by(@apps, current_user) if current_user
       @categories = Category.filter
     end
     @favorite_apps_count = current_user.apps.count if current_user
@@ -65,7 +63,7 @@ class AppsController < ApplicationController
   private
 
   def search(filters = nil)
-    App.search(include: [:comments, :categories, :user_app_associations]) do
+    App.search(include: [:comments, :categories]) do
       fulltext params[:search] do
         boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
         query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca

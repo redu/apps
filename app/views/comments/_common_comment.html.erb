@@ -6,10 +6,12 @@
     <% end %>
     <%= link_to common_comment.author.display_name, redu_user_static("", common_comment.author), class: "link-name" %>
     comentou sobre este aplicativo:
-    <%= link_to_if (common_comment.author == current_user), 'Apagar Comentário', [common_comment.app, common_comment],
-               :confirm => 'Ao apagar este comentário, você também removerá todas as respostas. Deseja continuar?',
-               :method => :delete,
-               :class => "close icon-close-gray_16_18 replacement" %>
+    <% if (can? :manage, common_comment) %>
+      <%= link_to 'Apagar Comentário', [common_comment.app, common_comment],
+                 :confirm => 'Ao apagar este comentário, você também removerá todas as respostas. Deseja continuar?',
+                 :method => :delete,
+                 :class => "close icon-close-gray_16_18 replacement" %>
+   <% end %>
     <span class="date"><%= l common_comment.created_at %></span>
   </div>
   <div class="status-container">
@@ -47,10 +49,12 @@
     </ol>
   <% end %>
   </div>
-  <ul class="actions clearfix">
-    <li>
-      <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
-    </li>
-  </ul>
-  <%= render "create_response", klass: nil, model_object: [@app, common_comment, @app.comments.build], comment_type: "answer" %>
+  <% if can? :create, Comment %>
+    <ul class="actions clearfix">
+      <li>
+        <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
+      </li>
+    </ul>
+    <%= render "create_response", klass: nil, model_object: [@app, common_comment, @app.comments.build], comment_type: "answer" %>
+  <% end %>
 </li>

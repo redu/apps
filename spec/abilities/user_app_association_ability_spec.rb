@@ -29,5 +29,15 @@ describe 'UserAppAssociation ability' do
       'associated with it' do
         subject.should_not be_able_to(:manage, user_app_assoc)
     end
+
+    context 'when favorited an app' do
+      let(:favorited_app) { FactoryGirl.create(:user_app_association,
+                                               user: user) }
+
+      it 'should not be able to create an UserAppAssociation' do
+        subject.should_not \
+          be_able_to(:create, UserAppAssociation.new(app: favorited_app.app))
+      end
+    end
   end
 end

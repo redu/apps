@@ -43,8 +43,8 @@ describe 'Comment ability' do
         subject.should be_able_to(:create, Comment.new(type: :specialized))
       end
 
-      it 'should not be able to create a common Comment' do
-        subject.should_not be_able_to(:create, Comment.new(type: :common))
+      it 'should be able to create a common Comment' do
+        subject.should be_able_to(:create, Comment.new(type: :common))
       end
     end
 

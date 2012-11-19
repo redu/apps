@@ -5,9 +5,9 @@ module CommentAbility
     can :read, Comment
 
     if user
-      can :create, Comment do |comment|
-        (comment.common? && user.member?) ||
-          (comment.specialized? && user.specialist?)
+      can :create, Comment
+      cannot :create, Comment do |comment|
+        comment.specialized? && !user.specialist?
       end
 
       can :manage, Comment, user_id: user.id

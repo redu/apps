@@ -11,6 +11,14 @@ describe 'App ability' do
     it 'should be able to read an App' do
       subject.should be_able_to(:read, app)
     end
+
+    it 'should not be able to rate an App' do
+      subject.should_not be_able_to(:rate, app)
+    end
+
+    it 'should not be able to checkout an App' do
+      subject.should_not be_able_to(:checkout, app)
+    end
   end
 
   context 'when logged in' do
@@ -18,6 +26,14 @@ describe 'App ability' do
 
     it 'should be able to read an App' do
       subject.should be_able_to(:read, app)
+    end
+
+    it 'should be able to rate an App' do
+      subject.should be_able_to(:rate, app)
+    end
+
+    it 'should be able to checkout an App' do
+      subject.should be_able_to(:checkout, app)
     end
   end
 end

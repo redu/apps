@@ -44,7 +44,7 @@
       <% end %>
     </ul>
   </div>
-  <% if favorite_flag || @user_app_associations.collect(&:id).include?(app.id) %>
+  <% if favorite_flag %>
     <%= link_to "Abrir", preview_app_path(app), :class => "button-default",
                 :"data-toggle" => "modal-app", :"data-modal-title" => app.name,
                 :"data-modal-subtitle" => app.author, :"data-modal-url" => app.url %>
