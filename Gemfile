@@ -17,6 +17,7 @@ gem 'faker'
 gem 'random_data'
 gem 'authlogic'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.
