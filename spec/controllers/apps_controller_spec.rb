@@ -67,7 +67,7 @@ describe AppsController do
       context "when user is logged in" do
         before do
           @user = FactoryGirl.create(:user)
-          session[:user_uid] = @user.uid
+          controller.stub(current_user: @user)
         end
 
         it "assigns the current user" do
@@ -113,8 +113,7 @@ describe AppsController do
     before do
       @app = FactoryGirl.create(:app)
       @user = FactoryGirl.create(:user)
-      session[:user_uid] = @user.uid # Seta usuário da sessão
-      request.env["HTTP_REFERER"] = app_path(@app)
+      controller.stub(current_user: @user)
     end
 
     context "with valid params" do

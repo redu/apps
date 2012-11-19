@@ -1,7 +1,7 @@
-<style>
-  .main-wrapper { padding-top: 42px; }
-</style>
 <div class="nav-global nav-global-fixed-top">
+  <style>
+    .main-wrapper { padding-top: 42px; }
+  </style>
   <div class="nav-global-inner">
     <div class="nav-global-container">
       <h1>
@@ -9,7 +9,8 @@
       </h1>
       <div class="nav-global-buttons">
         <%= link_to "Início", redu_domain, :class => "nav-global-button", :title => "Início" %>
-        <%= link_to "Ambientes", redu_static("ambientes"), :class => "nav-global-button", :title => "Ambientes" %>
+        <%= link_to "Ensine", redu_static("ensine"), :class => "nav-global-button", :title => "Ensine" %>
+        <%= link_to "Cursos", redu_static("cursos"), :class => "nav-global-button", :title => "Cursos" %>
         <%= link_to "Aplicativos", root_path, :class => "nav-global-button nav-global-button-active", :title => "Aplicativos" %>
       </div>
       <div class="nav-global-buttons-dropdown button-toolbar">
@@ -39,7 +40,7 @@
                 </li>
               -->
               <li class="nav-global-profile-item link-container">
-                <%= link_to "Sair", redu_static("logout"), class: "link-target", title: "Sair" %>
+                <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "link-target" %>
               </li>
             </ul>
           </div>

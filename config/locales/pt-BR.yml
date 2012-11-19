@@ -248,3 +248,11 @@ pt-BR:
   activerecord:
     errors:
       <<: *errors
+
+  authlogic:
+    error_messages:
+      login_blank: login ou e-mail não pode ficar em branco
+      login_not_found: login ou e-mail e senha inválidos
+      login_invalid: login ou e-mail e senha inválidos
+      password_blank: senha não pode ficar em branco
+      password_invalid: login ou e-mail e senha inválidos

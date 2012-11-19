@@ -14,7 +14,8 @@ describe FavoritesController do
 
   context "when listing user favorites" do
     before(:each) do
-       @user.apps << [@app1, @app2]
+      @user.apps << [@app1, @app2]
+      controller.stub(current_user: @user)
     end
 
     it "should assign user favorites" do
@@ -24,6 +25,10 @@ describe FavoritesController do
   end
 
   context "when creating user favorite" do
+    before(:each) do
+      controller.stub(current_user: @user)
+    end
+
     it "should add app to favorites list" do
       post :create, app_id: @app1, user_id: @user, locale: 'pt-BR'
       @user.apps.should include @app1

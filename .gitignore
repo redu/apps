@@ -33,3 +33,6 @@ public/system/*
 # Ignora arquivos de dados do solr (indexes e mais)
 solr/data/*
 solr/pids/*
+
+# Ignora os executáveis gerados pelo bundler
+bin

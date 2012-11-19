@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/redu/untied-consumer.git
-  revision: be74c7991e500f0e5985267b5dc1bcd4fe9958d2
+  revision: 59b298d3a2d3b1291721d8999791fd34b3b1fd54
   specs:
     untied-consumer (0.0.4)
       activemodel
@@ -39,7 +39,7 @@ GEM
     activesupport (3.2.5)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    amq-client (0.9.5)
+    amq-client (0.9.8)
       amq-protocol (>= 0.9.4)
       eventmachine
     amq-protocol (0.9.5)
@@ -51,6 +51,9 @@ GEM
     asset_sync (0.5.0)
       activemodel
       fog
+    authlogic (3.1.3)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
     aws-sdk (1.7.1)
       httparty (~> 0.7)
       json (~> 1.4)
@@ -231,6 +234,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-reputation-system
   asset_sync
+  authlogic
   aws-sdk
   coffee-rails (~> 3.2.1)
   compass-rails
