@@ -113,6 +113,7 @@ describe AppsController do
     before do
       @app = FactoryGirl.create(:app)
       @user = FactoryGirl.create(:user)
+      request.env["HTTP_REFERER"] = app_path(@app)
       controller.stub(current_user: @user)
     end
 
