@@ -1,0 +1,7 @@
+<% if @valid_credentials %>
+  var $newHeader = $("<%= escape_javascript render 'shared/nav_global' %>");
+  $(".header-not-logged-in").replaceWith($newHeader);
+<% else %>
+  var $newForm = $("<%= escape_javascript render 'shared/form_sign_in' %>");
+  $("#sign-in-form").replaceWith($newForm);
+<% end %>

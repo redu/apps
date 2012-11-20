@@ -60,8 +60,8 @@ $(function() {
     // Cria a modal.
     var $modal = $(document.createElement('div'))
       .attr({
-        'id': $this.attr('href')
-      , 'class': 'modal hide modal-fill-horizontal'
+        'id': $this.attr('href'),
+        'class': 'modal hide modal-fill-horizontal'
       });
     var $header = $(document.createElement('div'))
       .attr('class', 'modal-header')
@@ -70,15 +70,15 @@ $(function() {
     var $body = $(document.createElement('div'))
       .attr('class', 'modal-body')
       .append($(document.createElement('iframe')).attr({
-        'frameborder': '0'
-      , 'scrolling': 'no'
-      , 'src': $this.data('modal-url')
-      }))
+        'frameborder': '0',
+        'scrolling': 'no',
+        'src': $this.data('modal-url')
+      }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')
       .append($(document.createElement('button')).attr({
-        'class': 'button-default'
-      , 'data-dismiss': 'modal'
+        'class': 'button-default',
+        'data-dismiss': 'modal'
       }).html('Fechar'));
     $('body').append($modal.append($header).append($body).append($footer));
 
@@ -92,7 +92,7 @@ $(function() {
     // Remove a modal quando for fechada.
     $modal.on('hidden', function(e) {
       $modal.remove();
-    })
+    });
   });
 
 
@@ -106,6 +106,96 @@ $(function() {
   // Remove as janelas modais quando fechadas.
   $(document).on("hidden", ".modal-add-oer", function(e) {
     $(this).remove();
+  });
+
+  // Comportamento de hover in/out das estrelas.
+  var unratedStar = "icon-star-full-lightgray_16_18";
+  var ratedStar = "icon-star-full-gray_16_18";
+  var userRatedStar = "icon-star-full-blue_16_18";
+  var starsWrapper = "oer-stars-user-rated";
+
+  $("." + starsWrapper + " a").hover(function() {
+    var index = $(this).html();
+    var $stars = $(this).parents("." + starsWrapper).find("a");
+
+    $stars.each(function(i) {
+      if (i < index) {
+        $(this).removeClass(unratedStar + " " + ratedStar).addClass(userRatedStar);
+      }
+    });
+  }, function() {
+    var index = $(this).html();
+    var $stars = $(this).parents("." + starsWrapper).find("a");
+
+    // Retorna as classes originais das estrelas.
+    $stars.each(function(i) {
+      if (i < index) {
+        $(this).removeClass(userRatedStar).addClass("icon-star-full-" + $(this).data("star-color") + "_16_18");
+      }
+    });
+  });
+
+
+  // Realiza o comportamento dos botões de comentar (comum e especialista).
+  var openClass = "open";
+  var buttonCommentClass = "button-comment";
+  var buttonReviewClass = "button-review";
+  var createResponseCommentClass = "flap-to-comment";
+  var createResponseReviewClass = "flap-to-review";
+  var containerClass = "reply-buttons";
+
+  $.fn.replyBehavior = function(options) {
+    var settings = $.extend({}, options);
+
+    return this.each(function() {
+      $(document).on("click", "." + settings.buttonClass, function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var $container = $this.parents("." + settings.containerClass);
+        var $createResponse = $container.find("." + settings.createResponseClass);
+        var $listItem = $container.find("." + settings.buttonClass).parent();
+
+        // Se o botão está ativo e for clicado, esconde a área de texto.
+        if ($listItem.hasClass(settings.openClass)) {
+          $createResponse.slideUp(150, "swing");
+
+        } else {
+          // Esconde a área de texto do outro botão.
+          $container.find("." + settings.otherButtonClass).parent().removeClass(settings.openClass);
+          $container.find("." + settings.otherResponseClass).slideUp(150, "swing");
+          // Mostra a área de texto do botão clicado.
+          $createResponse.slideDown(150, "swing");
+          $createResponse.find("textarea").focus();
+        }
+
+        $listItem.toggleClass(settings.openClass);
+      });
+    });
+  };
+
+  // Adiciona o comportamento para o botão de comentário comum.
+  $("." + buttonCommentClass).replyBehavior({
+    buttonClass: buttonCommentClass,
+    createResponseClass: createResponseCommentClass,
+    otherButtonClass: buttonReviewClass,
+    otherResponseClass: createResponseReviewClass,
+    openClass: openClass,
+    containerClass: containerClass
+  });
+
+  // Adiciona o comportamento para o botão de comentário especialista.
+  $("." + buttonReviewClass).replyBehavior({
+    buttonClass: buttonReviewClass,
+    createResponseClass: createResponseReviewClass,
+    otherButtonClass: buttonCommentClass,
+    otherResponseClass: createResponseCommentClass,
+    openClass: openClass,
+    containerClass: containerClass
+  });
+
+  // No cancelar, remove também a classe de aberto.
+  $(document).on("click", "." + containerClass + " .cancel", function(e) {
+    $("." + buttonReviewClass + ", ." + buttonCommentClass).parent().removeClass(openClass);
   });
 });
 

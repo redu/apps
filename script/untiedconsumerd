@@ -1,14 +1,24 @@
 #!/usr/bin/env ruby
 # -*- encoding : utf-8 -*-
 
+# Aqui o Untied::Consumer::Worker é inicializado como um Deamon. Para mais
+# informações usar script/untiedconsumerd -h. Os efeitos colaterais deste
+# executável são:
+#   - Um processo o nome untied_apps é criado
+#   - O ID do processo é guardado na pasta /tmp/pids/untied_apps.pid
+#   - Caso algo seja impresso no STDOUT, a saída vai para log/untied_apps.output
 require 'bundler/setup'
 require 'untied-consumer'
 require 'untied-consumer/worker'
 
-log_dir = File.expand_path('../../log',  __FILE__)
-pids_dir = File.expand_path('../../tmp/pids', __FILE__)
-
-puts log_dir, pids_dir
+@options = {
+  log_dir: File.expand_path('../../log',  __FILE__),
+  pids_dir: File.expand_path('../../tmp/pids', __FILE__),
+  pname: 'untied_apps',
+  rails_path: File.expand_path(File.join(File.dirname(__FILE__), '..', 'config', 'environment'))
+}
 
 worker = Untied::Consumer::Worker.new
-worker.daemonize(pids_dir: pids_dir, log_dir: log_dir, pname: 'untied_apps')
+worker.daemonize(@options) do
+  require @options[:rails_path]
+end

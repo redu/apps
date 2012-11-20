@@ -15,9 +15,10 @@ gem 'daemons'
 gem 'aws-sdk'
 gem 'faker'
 gem 'random_data'
-gem 'omniauth-redu', :git => 'git://github.com/redu/omniauth-redu.git'
+gem 'omniauth-redu', git: 'git://github.com/redu/omniauth-redu.git'
 gem 'faraday'
-gem 'untied-consumer', :git => 'git://github.com/redu/untied-consumer.git'
+gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
+gem 'authlogic'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,7 +26,7 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'compass-rails'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', platforms: :ruby
   gem 'uglifier', '>= 1.0.3'
 end
 

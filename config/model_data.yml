@@ -4,18 +4,23 @@ User: #Tipo que vem no payload
     - first_name
     - last_name
     - id
-  id: uid #Como traduzir o id
-  include_data: #Data default que é adicionada
+    - crypted_password
+    - password_salt
+    - email
+    - persistence_token
+  id: uid # Como traduzir o id
+  include_data: # Data default que é adicionada
     - role: member
-  name: User #Nome do modelo local
+  name: User # Nome do modelo local
+
 Environment:
   attributes:
     - name
     - id
     - user_id
   id: eid
-  check_for: #Checa por dependencias
-    User: user_id #A chave é o modelo e o valor é como a gente procura por ele
+  check_for: # Checa por dependencias
+    User: user_id # A chave é o modelo e o valor é como a gente procura por ele
   name: Environment
 
 Course:

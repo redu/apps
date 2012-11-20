@@ -1,18 +1,18 @@
 <li class="general-list-item">
   <% if favorite_flag %>
-    <%= link_to "Fechar", user_favorite_path(current_user, app),
-                :confirm => "Are you sure?", :method => :delete,
+    <%= link_to "Remover dos favoritos", user_favorite_path(current_user, app),
+                :confirm => "Esta ação irá remover este aplicativo dos seus favoritos. Deseja continuar?", :method => :delete,
                 :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
   <% end %>
   <div class="general-list-item-body">
     <div class="general-list-item-column">
       <%= link_to app_path(app), title: app.name do %>
-        <%= image_tag app.thumbnail(:medium), title: app.name, alt: app.name %>
+        <%= image_tag app.thumbnail(:medium), title: app.name, alt: app.name, size: "90x90" %>
       <% end %>
     </div>
     <div class="general-list-item-column">
       <h4 class="general-list-item-title">
-        <%= link_to truncate(app.name, :length => 40), app_path(app), 
+        <%= link_to truncate(app.name, :length => 40), app_path(app),
             title: app.name, class: "general-list-item-title-link" %>
       </h4>
       <span class="legend">Autor: <%= app.author %></span>
@@ -45,8 +45,8 @@
     </ul>
   </div>
   <% if favorite_flag || @user_app_associations.collect(&:id).include?(app.id) %>
-    <%= link_to "Abrir", preview_app_path(app), :class => "button-default", 
-                :"data-toggle" => "modal-app", :"data-modal-title" => app.name, 
+    <%= link_to "Abrir", preview_app_path(app), :class => "button-default",
+                :"data-toggle" => "modal-app", :"data-modal-title" => app.name,
                 :"data-modal-subtitle" => app.author, :"data-modal-url" => app.url %>
   <% end %>
 </li>

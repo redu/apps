@@ -32,6 +32,8 @@ class App < ActiveRecord::Base
 
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
+  MIN_RATING = 1
+  MAX_RATING = 5
 
   scope :filter, lambda { |filters|
     includes(:categories).where(categories: { id: filters })
@@ -52,5 +54,9 @@ class App < ActiveRecord::Base
   def self.favorited_by(apps, user)
     apps.collect(&:user_app_associations).flatten.
       select { |a| a.user_id == user.id }
+  end
+
+  def self.is_valid_rating_value?(value)
+    value.between?(MIN_RATING, MAX_RATING)
   end
 end

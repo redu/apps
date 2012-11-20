@@ -1,11 +1,9 @@
-require 'base_model'
-
 class User < ActiveRecord::Base
   include BaseModel
 
   zombify
 
-  attr_accessible :uid, :login, :first_name, :last_name,:role, :thumbnail
+  attr_accessible :uid, :login, :email, :first_name, :last_name,:role, :thumbnail
 
   # Atributos de usuário Redu
   validates_presence_of :uid, :login, :first_name, :last_name, :role
@@ -37,11 +35,24 @@ class User < ActiveRecord::Base
                                                             large: "x90",
                                                             larger: "x140" }})
 
+  acts_as_authentic do |c|
+    c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
+    # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
+    c.primary_key = :uid
+
+    c.require_password_confirmation = false
+    c.validate_password_field = false
+  end
+
+  def self.find_by_login_or_email(key)
+    User.find_by_login(key) || User.find_by_email(key)
+  end
+
   def to_param
     login
   end
 
   def display_name
-    self.first_name + " " + self.last_name
+    "#{self.first_name} #{self.last_name}"
   end
 end

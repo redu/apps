@@ -4527,6 +4527,7 @@ a.icon-teacher-gray_16_18-before:hover:before, .icon-teacher-gray_16_18-before:h
 .nav-global-brand {
   float: left;
   margin-right: 40px;
+  text-decoration: none;
 }
 
 .nav-global-buttons {

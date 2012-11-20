@@ -92,4 +92,31 @@ describe App do
     it { should respond_to(:reputation_for) }
     it { should respond_to(:evaluators_for) }
   end
+
+  it "should have set 1 as minimum rating value" do
+    App::MIN_RATING.should == 1
+  end
+
+  it "should have set 5 as maximum rating value" do
+    App::MAX_RATING.should == 5
+  end
+
+  describe :is_valid_rating_value do
+    before do
+      @valid_values = [1, 2, 3, 4, 5]
+      @invalid_values = [-50, -5, -1, 0, 6, 10, 50]
+    end
+
+    it "shouldn't accept invalid values" do
+      @invalid_values.each do |invalid_value|
+        App.is_valid_rating_value?(invalid_value).should be_false
+      end
+    end
+
+    it "should accept valid values" do
+      @valid_values.each do |valid_value|
+        App.is_valid_rating_value?(valid_value).should be_true
+      end
+    end
+  end
 end

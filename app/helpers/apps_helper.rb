@@ -27,26 +27,46 @@ module AppsHelper
     end
   end
 
+  # Retorna as classes corretas das screenshots do aplicativo.
+  def screen_shot_class(length)
+    if length == 2
+      # Se existem 2 imagens.
+      "oer-image-preview oer-image-preview-small"
+    else
+      # Se existe apenas 1 imagem.
+      "oer-image-preview oer-image-preview-long"
+    end
+  end
+
+  # Retorna o tamanho correto das screenshots do aplicativo.
+  def screen_shot_size(length)
+    if length == 2
+      # Se existem 2 imagens.
+      "339x200"
+    else
+      # Se existe apenas 1 imagem.
+      "698x200"
+    end
+  end
+
   # Chama join para um array de entidades que possuem name
   def names_for(entities)
     entities.collect(&:name).join(", ")
   end
 
-  # Retorna a URL base do Redu.
-  def redu_domain
-    ReduApps::Application.config.redu_domain
+  # Retorna 2 se length for maior que 2 ou length se menor.
+  def max_2_answers(length)
+    if length > 2
+      2
+    else
+      length
+    end
   end
 
-  # Retorna links simples para o Redu.
-  def redu_static(area)
-    redu_domain + area
+  # Verifica se a resposta da vez é a última.
+  def last_answer?(index, total)
+    index + 1 == total
   end
-
-  # Retorna links relacionados a usuários para o Redu.
-  def redu_user_static(area = "", user = current_user)
-    redu_domain + "pessoas/" + user.login + "/" + area
-  end
-
   # Conta os comentários de uma aplicação (comuns + respostas)
   def count_comments_for(app)
     Comment.get_by_type(app, :common).length + Comment.get_by_type(app, :answer).length

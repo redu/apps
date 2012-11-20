@@ -10,7 +10,18 @@ pt-BR:
   submitters: "Quem submeteu"
   url: "Endereço de origem"
   copyright: "Detentor dos direitos"
-  views: 
+  star:
+    one: "1 estrela"
+    other: "%{count} estrelas"
+  evaluation:
+    zero: "Nenhuma classificação"
+    one: "1 classificação"
+    other: "%{count} classificações"
+  favorite:
+    zero: "Nenhum favorito"
+    one: "1 favorito"
+    other: "%{count} favoritos"
+  view:
     zero: "Nenhuma visualização"
     one: "1 visualização"
     other: "%{count} visualizações"
@@ -26,8 +37,8 @@ pt-BR:
     other: "%{count} críticas de especialista"
   comment:
     zero: "Nenhum comentário"
-    one: "comentário"
-    other: "comentários"
+    one: "1 comentário"
+    other: "%{count} comentários"
   result:
     one: "resultado"
     other: "resultados"
@@ -41,7 +52,7 @@ pt-BR:
     - Sex
     - Sáb
     abbr_month_names:
-    - 
+    -
     - Jan
     - Fev
     - Mar
@@ -67,7 +78,7 @@ pt-BR:
       long: ! '%d de %B de %Y'
       short: ! '%d de %B'
     month_names:
-    - 
+    -
     - Janeiro
     - Fevereiro
     - Março
@@ -237,3 +248,11 @@ pt-BR:
   activerecord:
     errors:
       <<: *errors
+
+  authlogic:
+    error_messages:
+      login_blank: login ou e-mail não pode ficar em branco
+      login_not_found: login ou e-mail e senha inválidos
+      login_invalid: login ou e-mail e senha inválidos
+      password_blank: senha não pode ficar em branco
+      password_invalid: login ou e-mail e senha inválidos

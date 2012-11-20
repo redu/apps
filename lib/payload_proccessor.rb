@@ -5,8 +5,10 @@ class PayloadProccessor
   end
 
   def proccess(payload)
-    new_payload = payload.reject { |key, value| not @model_data['attributes'].include?(key) } #removes useless stuff
-    new_payload.merge(@model_data['id'] => new_payload.delete('id')) #translates the id
+    new_payload = payload.reject do |key, value| # Remove atributos irrelevantes
+      not @model_data['attributes'].include?(key)
+    end
+    new_payload.merge(@model_data['id'] => new_payload.delete('id'))  # Traduz o id
   end
 
   def dependencies

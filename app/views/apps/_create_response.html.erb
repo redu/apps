@@ -1,0 +1,21 @@
+<%#
+  Renderiza o balão cinza com a área de texto de responder.
+
+  Variáveis locais:
+    klass: classe adicional a ser adicionada no wrapper.
+    model_object: o modelo de objeto usado pelo formulário.
+    comment_type: indica o tipo de resposta (common, specialized ou answer).
+%>
+<div class="create-response <%= klass %>">
+  <%= form_for(model_object) do |f| %>
+    <fieldset>
+      <%= f.text_area :body, rows: "6" %>
+      <%= f.hidden_field :type, value: comment_type %>
+      <%= f.hidden_field :author, value: current_user.id %>
+      <div class="status-buttons">
+        <%= link_to "Cancelar", nil, class: "button-default cancel" %>
+        <%= submit_tag "Enviar", class: "button-primary" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
