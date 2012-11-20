@@ -5,7 +5,6 @@ ReduApps::Application.routes.draw do
     match '/checkout'  => 'checkout#update', :via => :post
     match '/checkout' => 'checkout#new', :via => :get
     member do
-      get 'preview'
       post 'rate'
     end
     resources :comments, :except => :edit do

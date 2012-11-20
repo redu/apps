@@ -48,10 +48,6 @@ class AppsController < ApplicationController
     end
   end
 
-  def preview
-    @app = App.find(params[:id])
-  end
-
   def rate
     rating = Integer(params[:rating])
     unless App.is_valid_rating_value? rating
