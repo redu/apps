@@ -64,6 +64,12 @@ describe App do
   # Screenshots do aplicativo
   it { should have_many(:screen_shots) }
 
+  #Id do app no redu
+  it { should respond_to(:core_id) }
+
+  #Url do objeto do aplicativo
+  it {should respond_to(:app_url) }
+
   describe "has many categories" do
     before do
       @app = FactoryGirl.create(:app)
