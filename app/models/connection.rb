@@ -1,32 +1,27 @@
-class Connection < ActiveRecord::Base
-  def self.get(url, token)
-    logger.debug "(Faraday) Get #{url} com token #{token}"
-    conn = connection_setup(token)
-
-    conn.get url
+class Connection
+  def initialize(token, opts = {})
+    @token = token
+    @config = opts.merge(url: ReduApps::Application.config.api_url)
   end
 
-  def self.post(url, data, token)
-    logger.debug "(Faraday) Post #{url} com token #{token} e dados: #{data}"
-    conn = connection_setup(token)
+  def get(url)
+    connection.get url
+  end
 
-    conn.post url, data
+  def post(url, data)
+    connection.post url, data
   end
 
   private
 
-  def self.connection_setup(token)
-    conn = Faraday.new(:url => api_url) do |faraday|
+  def connection
+    @conn ||= Faraday.new(url: @config[:url]) do |faraday|
       faraday.request :url_encoded
       faraday.adapter Faraday.default_adapter
+      faraday.headers = { 'Authorization' => "OAuth #{@token}",
+                          'Content-type' => 'application/json' }
     end
-    conn.headers = { 'Authorization' => "OAuth #{token}",
-                     'Content-type' => 'application/json' }
 
-    conn
-  end
-
-  def self.api_url
-    ReduApps::Application.config.api_url
+    @conn
   end
 end

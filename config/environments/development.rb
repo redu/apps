@@ -39,5 +39,5 @@ ReduApps::Application.configure do
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
   # URL de requisições à API do Redu no ambiente de desenvolvimento
-  config.api_url = "http://localhost:3001/api"
+  config.api_url = "http://localhost:3001"
 end

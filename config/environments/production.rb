@@ -79,5 +79,5 @@ ReduApps::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # URL de requisições à API do Redu no ambiente de produção
-  config.api_url = "http://redu.com.br/api"
+  config.api_url = "http://redu.com.br"
 end

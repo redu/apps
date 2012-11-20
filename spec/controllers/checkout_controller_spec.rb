@@ -5,7 +5,7 @@ require 'spec_helper'
 describe CheckoutController do
   before(:each) do
     @app = FactoryGirl.create(:app)
-    @user = FactoryGirl.create(:user)
+    controller.stub(current_user: FactoryGirl.create(:user))
     @params = { app_id: @app.id, locale: 'pt-BR' }
   end
 
@@ -18,17 +18,16 @@ describe CheckoutController do
                               environment: environment)
       environment.courses << course
       @space = Space.create(name: "Disciplina", sid: 231, course: course)
-
       @subject = Subject.create(name: "Módulo", suid: 75, space: @space)
     end
 
     it 'assigns app_id variable' do
-      post :update, @params
+      post :update, @params.merge(previous_step: 1)
       assigns(:app_id).to_i.should == @app.id
     end
 
     it 'assigns next_step variable properly' do
-      post :update, @params
+      post :update, @params.merge(previous_step: 1)
       assigns(:next_step).to_i.should == 2
     end
 
@@ -81,10 +80,11 @@ describe CheckoutController do
     end
 
     context 'after step 3' do
+      let(:lecture_name) { "Nova Aula" }
+      let(:subject_name) { "Novo módulo" }
 
       context 'when creating lecture in existing subject' do
         before do
-          lecture_name = "Nova Aula"
           stub_request(:post, ReduApps::Application.config.api_url +
                               Lecture.post_to_api_url(@subject.suid)).
             to_return(status: 201, body: { name: lecture_name, id: 713 }.to_json)
@@ -94,12 +94,10 @@ describe CheckoutController do
         end
 
         it_behaves_like 'a checkout variables ascriber'
-      end
+      end # context 'when creating lecture in existing subject'
 
       context 'when creating lecture in new subject' do
         before do
-          subject_name = "Novo módulo"
-          lecture_name = "Nova Aula"
           new_redu_subject_id = 713
           stub_request(:post, ReduApps::Application.config.api_url +
                               Subject.post_to_api_url(@space.sid)).
@@ -114,6 +112,36 @@ describe CheckoutController do
         end
 
         it_behaves_like 'a checkout variables ascriber'
+      end # context 'when creating lecture in new subject'
+
+      context 'when Redu API returns Unauthorized status code' do
+        before do
+          stub_request(:post, ReduApps::Application.config.api_url +
+                              Subject.post_to_api_url(@space.sid)).
+            to_return(status: 401)
+          post :update,
+               @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
+                             lecture: lecture_name, subject: subject_name)
+        end
+
+        it 'should set flash error message' do
+          flash[:error].should == "Você não está autorizado a adicionar o aplicativo a esta disciplina."
+        end
+      end
+
+      context 'when Redu API returns BadRequest status code' do
+        before do
+          stub_request(:post, ReduApps::Application.config.api_url +
+                              Subject.post_to_api_url(@space.sid)).
+            to_return(status: 422)
+          post :update,
+               @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
+                             lecture: lecture_name, subject: subject_name)
+        end
+
+        it 'should set flash error message' do
+          flash[:error].should == "Por favor, verifique os campos preenchidos."
+        end
       end
 
       it 'should raise error if missing params' do

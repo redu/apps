@@ -16,7 +16,7 @@ SimpleNavigation::Configuration.run do |navigation|
                   unless: Proc.new { !params.has_key? :search },
                   class: "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before"
       portal.item :favorites, 'Aplicativos Favoritos',
-                  user_favorites_path(current_user),
+                  user_favorites_path(current_user || 0),
                   class: "breadcrumb-mini-link icon-favorite-lightblue_16_18-before"
     end
   end

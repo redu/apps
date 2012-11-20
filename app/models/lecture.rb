@@ -9,8 +9,18 @@ class Lecture < ActiveRecord::Base
   validates_presence_of :name, :subject
 
   def self.create_via_api(params)
-    Connection.post post_to_api_url(params[:subject_suid]),
-                    parse_lecture(params), params[:token]
+    conn = Connection.new(params[:token])
+    response = conn.post post_to_api_url(params[:subject_suid]),
+                         parse_lecture(params)
+    case response.status #TODO
+    when 201
+    when 401 # Permissão negada
+      raise ActiveResource::UnauthorizedAccess.new(response)
+    when 422 # Payload mal formatado
+      raise ActiveResource::BadRequest.new(response)
+    else
+      raise "Unknown status code #{response.status}"
+    end
   end
 
   def self.parse_lecture(params)

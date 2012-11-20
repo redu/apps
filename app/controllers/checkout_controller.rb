@@ -1,7 +1,9 @@
 # encoding: utf-8
-
 class CheckoutController < ApplicationController
   respond_to :js
+
+  rescue_from ActiveResource::UnauthorizedAccess, with: :unauthorized
+  rescue_from ActiveResource::BadRequest, with: :bad_request
 
   def update
     raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
@@ -71,30 +73,31 @@ class CheckoutController < ApplicationController
   end
 
   def create_subject_via_api
-    response = Subject.create_via_api(space_sid: Space.find(@space_id).sid,
-                                      subject: @subject, token: current_user.token)
-    case response.status #TODO
-    when 201
-      subject = JSON.parse response.body
-
-      Subject.new(name: subject['name'], suid: subject['id'])
-    when 401 # Autenticação falhou
-    when 422 # Criação falhou devido a erro na requisição
-    else
-      raise "Unknown status code #{response.status}"
-    end
+    Subject.create_via_api(space_sid: Space.find(@space_id).sid,
+                           subject: @subject, token: current_user.token)
   end
 
   def create_lecture_via_api
-    response = Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
-                                      subject_suid: @subject.suid,
-                                      token: current_user.token)
-    case response.status #TODO
-    when 201
-    when 401 # Autenticação falhou
-    when 422 # Criação falhou devido a erro na requisição
-    else
-      raise "Unknown status code #{response.status}"
+    Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
+                           subject_suid: @subject.suid,
+                           token: current_user.token)
+  end
+
+  private
+
+  def unauthorized
+    flash[:error] = "Você não está autorizado a adicionar o aplicativo a esta disciplina."
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def bad_request
+    flash[:error] = "Por favor, verifique os campos preenchidos."
+
+    respond_to do |format|
+      format.js
     end
   end
 end
