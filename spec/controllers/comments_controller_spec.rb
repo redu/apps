@@ -126,23 +126,6 @@ describe CommentsController do
           end
         end # context "which is an answer"
       end # context "with valid params"
-
-      context "with an invalid author parameter" do
-        before do
-          @params[:comment] = @params[:comment].merge(author: @user.id+1)
-        end
-
-        it "shouldn't create a new comment" do
-          expect {
-            post :create, @params
-          }.to change(Comment, :count).by(0)
-        end
-
-        it "should notice permission denied message" do
-          post :create, @params
-          flash[:notice].should == "Permissão negada"
-        end
-      end # context "with an invalid author parameter"
     end # context "when creating a comment"
   end
 
@@ -154,6 +137,7 @@ describe CommentsController do
         before do
           @app = FactoryGirl.create(:app)
           @user = FactoryGirl.create(:specialist)
+          controller.stub(current_user: @user)
           @comment = FactoryGirl.create(:specialized_comment, author: @user,
                                         app: @app)
           @params = { app_id: @app.id, id: @comment.id, locale: 'pt-BR'}
@@ -179,7 +163,8 @@ describe CommentsController do
 
         context "which is an answer" do
           before do
-            @answer = FactoryGirl.create(:comment)
+            @answer = FactoryGirl.create(:comment, :app => @app,
+                                         :author => @user)
             @comment.answers << @answer
             @comment.save
           end

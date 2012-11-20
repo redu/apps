@@ -1,5 +1,7 @@
 
 class UserSessionsController < ApplicationController
+  skip_authorization_check
+
   def create
     @user_session = UserSession.new(params[:user_session])
     @valid_credentials = @user_session.save

@@ -4,6 +4,9 @@ class FavoritesController < ApplicationController
   helper :formatting
 
   def index
+    @user = User.find_by_login(params[:user_id])
+    authorize! :manage, @user
+
     @apps = current_user.apps.includes(:categories, :comments)
     @favorite_apps_count = @apps.length
     @favorite_apps_filters = Category.filters_on @apps
@@ -13,12 +16,21 @@ class FavoritesController < ApplicationController
   end
 
   def create
-    current_user.apps << App.find(params[:app_id])
+    @user = User.find_by_login(params[:user_id])
+    @app = App.find(params[:app_id])
+    @user_app_association = UserAppAssociation.new(:app => @app)
+    @user_app_association.user = @user
+    authorize! :create, @user_app_association
+
+    @user_app_association.save
     redirect_to action: "index"
   end
 
   def destroy
-    UserAppAssociation.find(params[:id]).destroy
+    @user_app_association = UserAppAssociation.find(params[:id])
+    authorize! :destroy, @user_app_association
+
+    @user_app_association.destroy
     redirect_to action: "index"
   end
 

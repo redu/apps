@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 require 'authlogic/test_case'
 
@@ -53,6 +54,27 @@ describe ApplicationController do
 
       it 'current_user_session is a helper method' do
         controller._helper_methods.should include(:current_user_session)
+      end
+    end
+  end
+
+  describe 'AccessDenied' do
+    controller do
+      def show
+        raise CanCan::AccessDenied
+      end
+    end
+
+    context 'when the user does not have access to some action' do
+      before do
+        get :show, id: 'anyid'
+      end
+
+      it { should set_the_flash.to(I18n.t :you_do_not_have_access) }
+      it { should redirect_to root_path }
+
+      it 'should set session[:return_to] to request path' do
+        session[:return_to].should == "/anonymous/anyid"
       end
     end
   end

@@ -4,6 +4,8 @@ class AppsController < ApplicationController
   helper :formatting
 
   def index
+    authorize! :show, App
+
     if params[:filter] || params[:search]
       @apps = search(params[:filter]).results
       @categories = Category.filter if params[:filter] && !params[:search]
@@ -26,6 +28,8 @@ class AppsController < ApplicationController
 
   def show
     @app = App.find(params[:id])
+    authorize! :show, App
+
     @app.update_attribute(:views, @app.views + 1) unless params[:page]
     @app_categories = Category.get_names_by_kind @app
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
@@ -48,9 +52,12 @@ class AppsController < ApplicationController
 
   def preview
     @app = App.find(params[:id])
+    authorize! :show, App
   end
 
   def rate
+    authorize! :rate, App
+
     rating = Integer(params[:rating])
     unless App.is_valid_rating_value? rating
       redirect_to :back, notice: "Valor de classificação inválido." and return

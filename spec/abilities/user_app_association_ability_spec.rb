@@ -20,6 +20,14 @@ describe 'UserAppAssociation ability' do
       subject.should be_able_to(:create, UserAppAssociation.new)
     end
 
+    it 'should_not be able to create an UserAppAssociation associated to ' \
+      'another user' do
+        another_user = FactoryGirl.create(:user)
+        assoc = UserAppAssociation.new
+        assoc.user = another_user
+        subject.should_not be_able_to(:create, assoc)
+    end
+
     it 'should be able to manage an UserAppAssociation if associated with it' do
       user_app_assoc.user = user
       subject.should be_able_to(:manage, user_app_assoc)
