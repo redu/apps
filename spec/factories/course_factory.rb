@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :course do
-    sequence(:cid)
+    sequence(:core_id)
     name "Novo Curso"
     owner { FactoryGirl.create(:user) }
     environment { FactoryGirl.create(:environment) }

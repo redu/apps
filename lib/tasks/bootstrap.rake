@@ -41,18 +41,18 @@ namespace :bootstrap do
   desc "Create stuff"
   task create_stuff: :environment do
     env = Environment.create(name: "Ambiente",
-                             eid: 2) {|e| e.owner = FactoryGirl.create(:user)}
+                             core_id: 2) {|e| e.owner = FactoryGirl.create(:user)}
 
-    course = Course.create(name: "cc", cid: 9) do |c|
+    course = Course.create(name: "cc", core_id: 9) do |c|
       c.owner = FactoryGirl.create(:user)
       c.environment = env
     end
     env.courses << course
     space = Space.create(name: "coisado",
-                         sid: 231) {|s| s.course = course }
+                         core_id: 231) {|s| s.course = course }
 
     subject = Subject.create(name: "ciencias",
-                             suid: 75) {|s| s.space = space }
+                             core_id: 75) {|s| s.space = space }
   end
 
   desc "Run all"

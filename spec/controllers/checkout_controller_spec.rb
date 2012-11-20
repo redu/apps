@@ -19,19 +19,19 @@ describe CheckoutController do
   context 'when posting update' do
     before(:each) do
       @env = Environment.create(name: "A",
-        eid: 2) { |e| e.owner = User.last }
+        core_id: 2) { |e| e.owner = User.last }
       @env.users << User.last
       @course = Course.create(name: "c",
-        cid: 9) do |c|
+        core_id: 9) do |c|
         c.owner = User.last
         c.environment = @env
       end
       @env.courses << @course
       @space = Space.create(name: "espaco",
-        sid: 231) { |s| s.course = @course }
+        core_id: 231) { |s| s.course = @course }
 
       @subject = Subject.create(name: "subject",
-        suid: 75) { |s| s.space = @space }
+        core_id: 75) { |s| s.space = @space }
     end
     context 'after step 1' do
       it 'should render step 2' do

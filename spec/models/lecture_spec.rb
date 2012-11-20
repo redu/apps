@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Lecture do
   # ID do Lecture no Redu
-  it { should respond_to(:lid) }
-  it { should_not validate_presence_of(:lid) }
-  it { should_not validate_uniqueness_of(:lid) }
+  it { should respond_to(:core_id) }
+  it { should_not validate_presence_of(:core_id) }
+  it { should_not validate_uniqueness_of(:core_id) }
 
   # Nome do Lecture
   it { should respond_to(:name) }

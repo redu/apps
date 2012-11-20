@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Course do
   # ID do Course no Redu
-  it { should respond_to(:cid) }
-  it { should validate_presence_of(:cid) }
-  it { should validate_uniqueness_of(:cid) }
+  it { should respond_to(:core_id) }
+  it { should validate_presence_of(:core_id) }
+  it { should validate_uniqueness_of(:core_id) }
 
   # Nome do Course
   it { should respond_to(:name) }

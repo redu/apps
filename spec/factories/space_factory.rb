@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :space do
-    sequence(:sid)
+    sequence(:core_id)
     name "Nova Disciplina"
     course { FactoryGirl.create(:course) }
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114164148) do
+ActiveRecord::Schema.define(:version => 20121121133239) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
   add_index "comments", ["user_id", "app_id", "in_response_to_id", "type_cd"], :name => "index_comments_on_user_and_app_and_type_columns"
 
   create_table "courses", :force => true do |t|
-    t.integer  "cid"
+    t.integer  "core_id"
     t.string   "name"
     t.integer  "user_id"
     t.integer  "environment_id"
@@ -73,10 +73,10 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.boolean  "zombie"
   end
 
-  add_index "courses", ["cid", "name", "user_id"], :name => "index_courses_on_cid_and_name_and_user_id"
+  add_index "courses", ["core_id", "name", "user_id"], :name => "index_courses_on_core_id_and_name_and_user_id"
 
   create_table "environments", :force => true do |t|
-    t.integer  "eid"
+    t.integer  "core_id"
     t.string   "name"
     t.integer  "user_id"
     t.string   "thumbnail_file_name"
@@ -88,10 +88,10 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.boolean  "zombie"
   end
 
-  add_index "environments", ["eid", "name", "user_id"], :name => "index_environments_on_eid_and_name_and_user_id"
+  add_index "environments", ["core_id", "name", "user_id"], :name => "index_environments_on_core_id_and_name_and_user_id"
 
   create_table "lectures", :force => true do |t|
-    t.integer  "lid"
+    t.integer  "core_id"
     t.string   "name"
     t.integer  "subject_id"
     t.integer  "app_id"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.datetime "updated_at",       :null => false
   end
 
-  add_index "lectures", ["lid", "name", "subject_id"], :name => "index_lectures_on_lid_and_name_and_subject_id"
+  add_index "lectures", ["core_id", "name", "subject_id"], :name => "index_lectures_on_core_id_and_name_and_subject_id"
 
   create_table "rs_evaluations", :force => true do |t|
     t.string   "reputation_name"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "spaces", :force => true do |t|
-    t.integer  "sid"
+    t.integer  "core_id"
     t.string   "name"
     t.integer  "course_id"
     t.datetime "created_at", :null => false
@@ -178,10 +178,10 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.boolean  "zombie"
   end
 
-  add_index "spaces", ["sid", "name", "course_id"], :name => "index_spaces_on_sid_and_name_and_course_id"
+  add_index "spaces", ["core_id", "name", "course_id"], :name => "index_spaces_on_core_id_and_name_and_course_id"
 
   create_table "subjects", :force => true do |t|
-    t.integer  "suid"
+    t.integer  "core_id"
     t.string   "name"
     t.integer  "space_id"
     t.datetime "created_at", :null => false
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.boolean  "zombie"
   end
 
-  add_index "subjects", ["suid", "name", "space_id"], :name => "index_subjects_on_suid_and_name_and_space_id"
+  add_index "subjects", ["core_id", "name", "space_id"], :name => "index_subjects_on_core_id_and_name_and_space_id"
 
   create_table "user_app_associations", :force => true do |t|
     t.integer  "user_id"
@@ -203,14 +203,14 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
   create_table "user_course_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "course_id"
-    t.integer  "ucaid"
+    t.integer  "core_id"
     t.integer  "role_cd"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.boolean  "zombie"
   end
 
-  add_index "user_course_associations", ["user_id", "course_id"], :name => "index_user_course_associations_on_user_id_and_course_id"
+  add_index "user_course_associations", ["core_id", "user_id", "course_id"], :name => "index_user_course_associations_on_core_id_and_user_and_course"
 
   create_table "user_environment_associations", :force => true do |t|
     t.integer  "user_id"
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
   add_index "user_environment_associations", ["user_id", "environment_id"], :name => "index_user_environment_associations_on_user_and_environment_ids"
 
   create_table "users", :force => true do |t|
-    t.integer  "uid"
+    t.integer  "core_id"
     t.string   "token"
     t.string   "login"
     t.string   "first_name"
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(:version => 20121114164148) do
     t.boolean  "zombie"
   end
 
+  add_index "users", ["core_id"], :name => "index_users_on_core_id"
   add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
-  add_index "users", ["uid"], :name => "index_users_on_uid"
 
 end
