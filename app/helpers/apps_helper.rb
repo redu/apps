@@ -54,10 +54,10 @@ module AppsHelper
     entities.collect(&:name).join(", ")
   end
 
-  # Retorna 2 se length for maior que 2 ou length se menor.
-  def max_2_answers(length)
-    if length > 2
-      2
+  # Retorna 3 se length for maior que 3 ou length se menor.
+  def max_3_answers(length)
+    if length > 3
+      3
     else
       length
     end
