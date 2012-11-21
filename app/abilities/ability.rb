@@ -5,6 +5,7 @@ class Ability
   include UserAppAssociationAbility
   include CommentAbility
   include UserAbility
+  include UserSessionAbility
 
   def initialize(user)
     execute_rules(user)
