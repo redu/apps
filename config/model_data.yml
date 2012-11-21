@@ -8,6 +8,7 @@ User: #Tipo que vem no payload
     - password_salt
     - email
     - persistence_token
+    - client_applications
   id: uid # Como traduzir o id
   include_data: # Data default que é adicionada
     - role: member

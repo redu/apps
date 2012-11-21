@@ -4,6 +4,7 @@ This is the Redu Applications Portal project, which offers Educational Resources
 for online courses in [Redu](http://redu.com.br).
 
 ## Setup
+
 ### Paperclip
 Run
 ```shell
@@ -39,14 +40,27 @@ $ script/untiedconsumerd start
 
 For more information: ``script/untiedconsumerd -h``.
 
-## Static assets and AWS
+## Configuration
 
-In production mode it's necessary to setup the following environment variables in order to sync compiled static assets to S3 buckets:
+### Static assets and AWS
 
-```sh
-export AWS_ACCESS_KEY_ID=xxxx
-export AWS_SECRET_ACCESS_KEY=xxxx
-export FOG_DIRECTORY=xxxx
+In production mode it's necessary to create a file config/s3.yml in order to sync compiled static assets to S3 buckets:
+
+```yaml
+production:
+  access_key_id: 'ccc'
+  secret_access_key: 'xxx'
+  bucket: 'redu.apps.production'
+```
+
+### Core communication
+
+You need to inform the Client Application ID from core serice. To do so, add the following configuration on config/application.rb or in environment specific configuration:
+
+```ruby
+config.client_application = {
+  :secret => 'xxx'
+}
 ```
 
 More information is avalible [here](https://github.com/rumblelabs/asset_sync).
