@@ -21,7 +21,7 @@ pt-BR:
     zero: "Nenhum favorito"
     one: "1 favorito"
     other: "%{count} favoritos"
-  view:
+  views:
     zero: "Nenhuma visualização"
     one: "1 visualização"
     other: "%{count} visualizações"
