@@ -19,7 +19,7 @@ class UserSessionsController < ApplicationController
     @current_user = current_user_session.user
 
     respond_to do |format|
-      format.js
+      format.js { render js: "window.location='#{path_to_be_back}';" }
     end
   end
 end

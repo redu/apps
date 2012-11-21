@@ -3,6 +3,36 @@ require 'spec_helper'
 require 'authlogic/test_case'
 
 describe ApplicationController do
+  describe 'Helpers' do
+    context 'path_to_be_back helper' do
+      it 'path_to_be_back is a helper method' do
+        controller._helper_methods.should include(:path_to_be_back)
+      end
+
+      it 'has a private method path_to_be_back' do
+        controller.private_methods.should include(:path_to_be_back)
+      end
+
+      context 'when the request is made' do
+        before do
+          request.env['HTTP_REFERER'] = "http://http-referer.com"
+          request.env['REQUEST_URI'] = "http://request-uri"
+        end
+
+        it 'path_to_be_back returns the http referrer if its through AJAX' do
+          request.env['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+          controller.send(:path_to_be_back).should ==
+            request.env['HTTP_REFERER']
+        end
+
+        it 'path_to_be_back returns the http uri if its not' \
+          'through AJAX' do
+            controller.send(:path_to_be_back).should == request.env['REQUEST_URI']
+        end
+      end
+    end
+  end
+
   describe 'AuthlogicHelpers' do
     include Authlogic::TestCase
 

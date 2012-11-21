@@ -60,4 +60,30 @@ describe User do
       User.find_by_login_or_email(@user.email).should == @user
     end
   end
+
+  context '#client_applications' do
+    let(:user) { User.new }
+    let(:apps_example) do
+      [{"user_token"=>"7I8EzS03niDeYTxgKMqsmbFSqN9ZItoEr5N7zUO2", "id"=>12,
+        "name"=>"Portal de aplicativos", "secret" => "xxx"}]
+    end
+
+    it "should assing #token for apps application" do
+      user.client_applications = apps_example
+      user.token.should == apps_example.first["user_token"]
+    end
+
+    it "should not fail with nil" do
+      expect {
+        user.client_applications = nil
+      }.to_not raise_error
+    end
+
+    it "should work with update attributes" do
+      user = FactoryGirl.create(:user)
+      apps_example.first['token'] = "123"
+      user.update_attributes({:client_applications => apps_example})
+      user.token = "123"
+    end
+  end
 end

@@ -3,7 +3,8 @@ class User < ActiveRecord::Base
 
   zombify
 
-  attr_accessible :core_id, :login, :email, :first_name, :last_name,:role, :thumbnail
+  attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
+  :thumbnail, :client_applications
 
   # Atributos de usuário Redu
   validates_presence_of :core_id, :login, :first_name, :last_name, :role
@@ -54,5 +55,13 @@ class User < ActiveRecord::Base
 
   def display_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def client_applications=(apps)
+    apps ||= []
+    secret = ReduApps::Application.config.client_application.
+      fetch(:secret, nil)
+    core_app = apps.detect { |a| a['secret'] == secret } || {}
+    self.token = core_app.fetch('user_token', nil)
   end
 end

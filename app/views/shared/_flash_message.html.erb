@@ -1,8 +1,6 @@
-<% ["info", "notice", "error"].each do |type| %>
-  <% if flash[type.to_sym] %>
-    <div class="system-message message-warning fade in">
-      <a data-dismiss="alert" class="message-close">×</a>
-      <p><strong>Opa!</strong> <%= h(flash[type.to_sym]) %></p>
-    </div>
-  <% end %>
+<% flash.each do |type, message| %>
+  <div class="system-message message-<%= flash_message_class(type) %> fade in">
+    <a data-dismiss="alert" class="message-close">×</a>
+    <p><%= h(message) %></p>
+  </div>
 <% end %>
