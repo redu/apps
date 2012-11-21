@@ -33,18 +33,11 @@ describe FavoritesController do
       post :create, app_id: @app1, user_id: @user, locale: 'pt-BR'
       @user.apps.should include @app1
     end
-
-    it "should not allow duplicate favorites" do
-      @user.apps << @app1
-      expect {
-         post :create, app_id: @app1, user_id: @user, locale: 'pt-BR'
-      }.to raise_exception(ActiveRecord::RecordInvalid,
-                           'A validação falhou: User já está em uso')
-    end
   end
 
   context "when destroying user favorite" do
     before(:each) do
+      controller.stub(current_user: @user)
       @user.apps << [@app1, @app2]
     end
 

@@ -15,9 +15,11 @@ SimpleNavigation::Configuration.run do |navigation|
       portal.item :search, 'Busca de Aplicativos', apps_path,
                   unless: Proc.new { !params.has_key? :search },
                   class: "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before"
-      portal.item :favorites, 'Aplicativos Favoritos',
-                  user_favorites_path(current_user),
-                  class: "breadcrumb-mini-link icon-favorite-lightblue_16_18-before"
+      if can? :manage, UserAppAssociation
+        portal.item :favorites, 'Aplicativos Favoritos',
+                    user_favorites_path(current_user),
+                    class: "breadcrumb-mini-link icon-favorite-lightblue_16_18-before"
+      end
     end
   end
 end
