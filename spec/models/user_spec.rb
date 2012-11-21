@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe User do
-  # UID Identificador do usuário Redu
-  it { should respond_to(:uid) }
-  it { should validate_presence_of(:uid) }
-  it { should validate_uniqueness_of(:uid) }
+  # Identificador do usuário Redu
+  it { should respond_to(:core_id) }
+  it { should validate_presence_of(:core_id) }
+  it { should validate_uniqueness_of(:core_id) }
 
   # Login do usuário Redu
   it { should respond_to(:login) }

@@ -11,7 +11,7 @@ describe PayloadProccessor do
 
     it 'should translate id' do
       new_load = @proccessor.proccess(payload)
-      new_load.fetch("uid", nil).should == payload["id"]
+      new_load.fetch("core_id", nil).should == payload["id"]
     end
 
     it 'should remove useless data' do

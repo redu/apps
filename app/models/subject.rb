@@ -2,7 +2,7 @@ class Subject < ActiveRecord::Base
   include BaseModel
   zombify
 
-  attr_accessible :name, :suid, :space
+  attr_accessible :name, :core_id, :space
 
   belongs_to :space
   has_many :lectures

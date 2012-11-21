@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :user do
-    sequence(:uid) { |n| n }
+    sequence(:core_id)
     sequence(:login) { |n| "user#{n}" }
     last_name 'da Silva'
     first_name 'Joao'
