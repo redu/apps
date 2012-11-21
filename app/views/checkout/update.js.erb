@@ -1,8 +1,20 @@
-var $modal;
+<% if flash[:error] %>
+  $('<%= escape_javascript render "step_error" %>')
+    .appendTo("body")
+    .show();
 
 <%# Se a aula foi criada, exibe a mensagem de sucesso. %>
-<% if @subject %>
-  $modal = $('<%= escape_javascript render "step4" %>');
+<% elsif @lecture_href %>
+  $('<%= escape_javascript render "step4", lecture_href: @lecture_href %>')
+    .appendTo("body")
+    .show();
+  <%# Desabilita os botões. %>
+  $("#app-checkout-step-3 .button-default, #app-checkout-step-3 .button-success")
+    .addClass("button-disabled");
+  <%# Fecha a modal quando a mensagem de sucesso for fechada. %>
+  $("#app-checkout-step-4").on("closed", function(e) {
+    $("#app-checkout-step-3").modal("hide");
+  });
 
 <%# Passos 1 ao 3. %>
 <% else %>
@@ -10,10 +22,9 @@ var $modal;
   var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
   $modalNextStep.length && $modalNextStep.modal("hide");
 
-  $modal = $('<%= escape_javascript render "step", step: @next_step - 1, app: @app, environments: @environments, space: @space, create_subject: @create_subject %>');
+  $('<%= escape_javascript render "step", step: (@next_step - 1), app: @app,
+                                  environments: @environments, space: @space,
+                                  create_subject: @create_subject %>')
+    .appendTo("body")
+    .modal("show");
 <% end %>
-
-// Exibe a modal do passo atual.
-$modal
-  .appendTo("body")
-  .modal("show");

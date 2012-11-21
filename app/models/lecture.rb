@@ -14,6 +14,8 @@ class Lecture < ActiveRecord::Base
                          parse_lecture(params)
     case response.status #TODO
     when 201
+      lecture = JSON.parse response.body
+      lecture_href = lecture['links'].detect {|l| l['rel'] == "self" }['href']
     when 401 # Permissão negada
       raise ActiveResource::UnauthorizedAccess.new(response)
     when 422 # Payload mal formatado
