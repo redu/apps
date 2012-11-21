@@ -19,6 +19,7 @@ gem 'omniauth-redu', git: 'git://github.com/redu/omniauth-redu.git'
 gem 'faraday'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
 gem 'authlogic'
+gem 'patron'
 
 # Gems used only for assets and not required
 # in production environments by default.

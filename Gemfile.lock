@@ -176,6 +176,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.4.0)
       mime-types
+    patron (0.4.18)
     polyglot (0.3.3)
     pr_geohash (1.0.0)
     rack (1.4.1)
@@ -280,6 +281,7 @@ DEPENDENCIES
   mysql2
   omniauth-redu!
   paperclip
+  patron
   rails (= 3.2.5)
   rails-translate-routes
   random_data

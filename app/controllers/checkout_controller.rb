@@ -4,6 +4,8 @@ class CheckoutController < ApplicationController
 
   rescue_from ActiveResource::UnauthorizedAccess, with: :unauthorized
   rescue_from ActiveResource::BadRequest, with: :bad_request
+  rescue_from Patron::ConnectionFailed, with: :connection_failed
+  rescue_from Patron::TimeoutError, with: :connection_failed
 
   def update
     raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
@@ -95,6 +97,14 @@ class CheckoutController < ApplicationController
 
   def bad_request
     flash[:error] = "Por favor, verifique os campos preenchidos."
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def connection_failed
+    flash[:error] = "Não foi possível adicionar à disciplina. Por favor, cheque sua conexão."
 
     respond_to do |format|
       format.js

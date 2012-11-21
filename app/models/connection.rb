@@ -17,7 +17,7 @@ class Connection
   def connection
     @conn ||= Faraday.new(url: @config[:url]) do |faraday|
       faraday.request :url_encoded
-      faraday.adapter Faraday.default_adapter
+      faraday.adapter :patron
       faraday.headers = { 'Authorization' => "OAuth #{@token}",
                           'Content-type' => 'application/json' }
     end
