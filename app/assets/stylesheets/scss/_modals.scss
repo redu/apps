@@ -40,6 +40,13 @@
 
   .button-default +
   .button-success { margin-left: 5px; }
+
+  &.system-message {
+    width: 518px;
+
+    p +
+    .button-success { margin-top: 10px; }
+  }
 }
 
 .apps-portal-content {
@@ -107,6 +114,8 @@
   vertical-align: middle;
   margin-bottom: 80px;
 }
+
+.apps-portal-add-oer-step-2-button { display: inline-block; }
 
 // Legenda com "ou".
 .apps-portal-add-oer-step-2-legend {

@@ -1,5 +1,5 @@
 <hr class="list-separator">
-<li class="status">
+<li class="status clearfix">
   <div class="status-text">
     <%= link_to redu_user_static("", common_comment.author), class: "icon-link" do %>
       <%= image_tag common_comment.author.thumbnail.url(:medium), alt: common_comment.author.display_name, title: common_comment.author.display_name, size: "64x64" %>
@@ -26,17 +26,17 @@
   <%# Respostas ao comentário %>
   <% if common_comment.answers.length != 0 %>
     <ol id="comments-for-<%= common_comment.id %>" class="responses status-content">
-      <% if common_comment.answers.length > 2 %>
+      <% if common_comment.answers.length > 3 %>
         <li class="last-responses">
           <p class="legend">Visualizando as últimas respostas...</p>
           <hr>
         </li>
       <% end %>
       <div class="comments">
-        <%= render partial: 'comments/comment_answer', collection: common_comment.answers.last(2),
-                   locals: { comment: common_comment, total: max_2_answers(common_comment.answers.length) } %>
+        <%= render partial: 'comments/comment_answer', collection: common_comment.answers.last(3),
+                   locals: { comment: common_comment, total: max_3_answers(common_comment.answers.length) } %>
       </div>
-      <% if common_comment.answers.length > 2 %>
+      <% if common_comment.answers.length > 3 %>
         <div class="show-more">
           <hr>
           <li class="all-responses">

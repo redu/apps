@@ -1,0 +1,29 @@
+<%#
+  Renderiza a janela modal do passo 2.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    space: a disciplina.
+%>
+<div class="modal-body">
+  <div class="apps-portal-add-oer-section">
+    <%= render "environment_course_space_header", environment: space.course.environment, course_name: space.course.name, space_name: space.name %>
+    <div class="apps-portal-add-oer-step-2-buttons">
+      <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , space.id %>
+        <%= hidden_field_tag 'create_subject', true %>
+        <%= submit_tag("Criar um novo Módulo", class: "button-primary") %>
+      <% end %>
+      <span class="apps-portal-add-oer-step-2-legend">ou</span>
+      <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), class: "apps-portal-add-oer-step-2-button", remote: true) do %>
+        <%= hidden_field_tag 'space_id' , space.id %>
+        <%= hidden_field_tag 'create_subject', false %>
+        <%= submit_tag("Utilizar um Módulo existente", class: "button-primary") %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <%= link_to "Voltar à etapa anterior", app_checkout_path(app, previous_step: step), remote: true, method: :post, class: "button-default" %>
+</div>

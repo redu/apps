@@ -34,4 +34,7 @@ ReduApps::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # URL de requisições à API do Redu no ambiente de testes
+  config.api_url = "http://www.redu.com.br"
 end

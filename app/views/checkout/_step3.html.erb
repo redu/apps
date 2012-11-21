@@ -1,0 +1,44 @@
+<%#
+  Renderiza a janela modal do passo 3.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    space: a disciplina.
+    create_subject: indica se um novo módulo deve ser criado.
+%>
+<%= form_tag(app_checkout_path(app.id, step: step + 1), class: "form-horizontal", remote: true) do %>
+  <%= hidden_field_tag "space_id", space.id %>
+  <%= hidden_field_tag "create_subject", create_subject %>
+  <div class="modal-body">
+    <div class="apps-portal-add-oer-section">
+      <%= render "environment_course_space_header", environment: space.course.environment, course_name: space.course.name, space_name: space.name %>
+      <div class="apps-portal-add-oer-step-3-form">
+        <div class="control-group row">
+          <div class="control-label span3">
+            <label for="input-2-1">Nome do novo Módulo</label>
+          </div>
+          <div class="controls span8">
+            <% if create_subject == "true" %>
+              <%= text_field_tag "subject", nil, placeholder: "Nome do novo Módulo" %>
+            <% else %>
+             <%= select_tag "subject", options_from_collection_for_select(space.subjects, "id", "name") %>
+            <% end %>
+          </div>
+        </div>
+        <div class="control-group row">
+          <div class="control-label span3">
+            <label for="input-2-2">Nome da Aula</label>
+          </div>
+          <div class="controls span8">
+            <%= text_field_tag "lecture", nil, placeholder: "Aula onde este aplicativo será criado" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= link_to "Voltar à etapa anterior", app_checkout_path(app.id, step: step - 1, previous_step: step, space_id: space.id), remote: true, method: :post, class: "button-default" %>
+    <%= submit_tag "Adicionar a Disciplina", class: "button-success" %>
+  </div>
+<% end %>

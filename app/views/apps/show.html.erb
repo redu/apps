@@ -89,10 +89,8 @@
             <% end %>
           <% end %>
           <% if can? :checkout, @app %>
-            <%= form_tag app_checkout_path(@app), method: "post" do %>
-              <%= content_tag :button, :type => :submit, :class => "button-primary", :'data-target' => "#modal-add-oer-step-1", :'data-toggle' => "modal", class: "button-success"  do %>
-                Adicionar a Disciplina
-              <% end %>
+            <%= form_tag app_checkout_path(@app, previous_step: 0), method: :post, remote: true do %>
+              <%= content_tag :button, "Adicionar a Disciplina", class: "button-success" %>
             <% end %>
           <% end %>
           <% if can? :destroy, @favorite %>

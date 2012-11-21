@@ -17,8 +17,8 @@ SimpleNavigation::Configuration.run do |navigation|
                   class: "breadcrumb-mini-link icon-magnifier-lightblue_16_18-before"
       if can? :manage, UserAppAssociation
         portal.item :favorites, 'Aplicativos Favoritos',
-                    user_favorites_path(current_user),
-                    class: "breadcrumb-mini-link icon-favorite-lightblue_16_18-before"
+          user_favorites_path(current_user || 0),
+          class: "breadcrumb-mini-link icon-favorite-lightblue_16_18-before"
       end
     end
   end

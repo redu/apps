@@ -1,6 +1,7 @@
 class CreateApps < ActiveRecord::Migration
   def change
     create_table :apps do |t|
+      t.integer :aid
       t.string :name
       t.string :author
       t.string :language

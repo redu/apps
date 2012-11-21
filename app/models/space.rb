@@ -2,7 +2,7 @@ class Space < ActiveRecord::Base
   include BaseModel
   zombify
 
-  attr_accessible :name, :sid, :course
+  attr_accessible :name, :sid, :course, :owner
 
   # Associações
   belongs_to :course

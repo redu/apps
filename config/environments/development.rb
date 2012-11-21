@@ -37,4 +37,7 @@ ReduApps::Application.configure do
 
   # Diretório de instalação do imagemagick (necessário para o Paperclip)
   Paperclip.options[:command_path] = "/usr/local/bin/"
+
+  # URL de requisições à API do Redu no ambiente de desenvolvimento
+  config.api_url = "http://localhost:3001"
 end
