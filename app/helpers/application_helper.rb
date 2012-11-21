@@ -22,13 +22,4 @@ module ApplicationHelper
   def redu_user_static(area = "", user = current_user)
     redu_domain + "pessoas/" + user.login + "/" + area
   end
-
-  # Indica a url atual, utilizada no login com o Facebook.
-  def path_to_be_back
-    if request.xhr?
-      request.headers["HTTP_REFERER"]
-    else
-      request.headers["REQUEST_URI"]
-    end
-  end
 end
