@@ -50,11 +50,6 @@ class AppsController < ApplicationController
     end
   end
 
-  def preview
-    @app = App.find(params[:id])
-    authorize! :show, App
-  end
-
   def rate
     authorize! :rate, App
 
