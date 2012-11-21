@@ -9,7 +9,12 @@ class ApplicationController < ActionController::Base
     session[:return_to] ||= request.fullpath
 
     flash[:notice] = t :you_do_not_have_access
-    redirect_to root_path
+
+    if request.xhr?
+      render js: "window.location.pathname='#{root_path}';"
+    else
+      redirect_to root_path
+    end
   end
 
   private
