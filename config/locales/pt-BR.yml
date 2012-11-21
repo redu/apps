@@ -256,3 +256,5 @@ pt-BR:
       login_invalid: login ou e-mail e senha inválidos
       password_blank: senha não pode ficar em branco
       password_invalid: login ou e-mail e senha inválidos
+
+  you_do_not_have_access: Você não tem acesso a essa página.

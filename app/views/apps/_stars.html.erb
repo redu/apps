@@ -1,12 +1,12 @@
 <div class="oer-rating">
   <div class="oer-stars-n-value">
     <%# Estrelas. %>
-    <ol class="oer-stars<%= " oer-stars-user-rated" if current_user %>">
+    <ol class="oer-stars<%= " oer-stars-user-rated" if can? :rate, @app %>">
       <% app_rating = @app.reputation_for(:rating) %>
       <% user_rating = @user_rating.to_i || 0 %>
       <% index = user_rating || 0 %>
       <%# Renderiza as estrelas azuis da nota do usuário. %>
-      <% if current_user %>
+      <% if can? :rate, @app %>
         <% user_rating.times do |n| %>
           <%= render "star", index: n, type: "blue" %>
         <% end %>
@@ -30,7 +30,7 @@
   </div>
 
   <%# Nota do usuário. %>
-  <% if current_user %>
+  <% if can? :rate, @app %>
     <span class="legend show">
       <% if @evaluated %>
         Você classificou em <%= t "star", count: user_rating %>.

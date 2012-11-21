@@ -4,12 +4,11 @@ describe CheckoutController do
   before(:each) do
     @app = FactoryGirl.create(:app)
     @user = FactoryGirl.create(:user)
+    controller.stub(current_user: @user)
     @params = {app_id: @app.id, locale: 'pt-BR'}
   end
 
   context 'when geting new' do
-    before { controller.stub(current_user: @user) }
-
     it "should render step1" do
       get :new, @params
       should render_template(:step1)

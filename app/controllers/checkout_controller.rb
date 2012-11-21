@@ -2,6 +2,8 @@
 class CheckoutController < ApplicationController
 
   def update
+    authorize! :checkout, App
+
     @app_id = params[:app_id]
     case params[:step]
     when '1'
@@ -18,6 +20,8 @@ class CheckoutController < ApplicationController
   end
 
   def new
+    authorize! :checkout, App
+
     @app_id = params[:app_id]
     step_1
   end

@@ -1,4 +1,6 @@
 class UserAppAssociation < ActiveRecord::Base
+  attr_accessible :app
+
   belongs_to :user
   belongs_to :app
 
