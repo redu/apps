@@ -59,7 +59,7 @@ class AppsController < ApplicationController
     end
     @app = App.find(params[:id])
     @app.add_or_update_evaluation(:rating, rating, current_user)
-    redirect_to :back, notice: "Você classificou o recurso com #{rating}."
+    redirect_to :back, flash: { info: "Você classificou o recurso com #{rating}." }
   end
 
   private

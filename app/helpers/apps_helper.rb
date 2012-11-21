@@ -71,4 +71,16 @@ module AppsHelper
   def count_comments_for(app)
     Comment.get_by_type(app, :common).length + Comment.get_by_type(app, :answer).length
   end
+
+  # Retorna a classe correta dependendo do tipo de mensagem.
+  def flash_message_class(type)
+    case type
+    when :info
+      "info"
+    when :notice
+      "success"
+    when :error
+      "werning"
+    end
+  end
 end
