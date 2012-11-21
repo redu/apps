@@ -80,7 +80,7 @@ module AppsHelper
     when :notice
       "success"
     when :error
-      "werning"
+      "warning"
     end
   end
 end
