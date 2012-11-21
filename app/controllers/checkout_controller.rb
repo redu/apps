@@ -79,13 +79,13 @@ class CheckoutController < ApplicationController
   end
 
   def create_subject_via_api
-    Subject.create_via_api(space_sid: Space.find(@space_id).sid,
+    Subject.create_via_api(space_sid: Space.find(@space_id).core_id,
                            subject: @subject, token: current_user.token)
   end
 
   def create_lecture_via_api
     Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
-                           subject_suid: @subject.suid,
+                           subject_suid: @subject.core_id,
                            token: current_user.token)
   end
 

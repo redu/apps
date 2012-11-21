@@ -12,14 +12,20 @@ describe CheckoutController do
 
   describe 'POST update' do
     before(:each) do
-      user = User.last
-      environment = Environment.create(name: "Ambiente", eid: 2, owner: user)
-      environment.users << user
-      course = Course.create(name: "Curso", cid: 9, owner: user,
-                              environment: environment)
-      environment.courses << course
-      @space = Space.create(name: "Disciplina", sid: 231, course: course)
-      @subject = Subject.create(name: "Módulo", suid: 75, space: @space)
+      @env = Environment.create(name: "A",
+        core_id: 2) { |e| e.owner = User.last }
+      @env.users << User.last
+      @course = Course.create(name: "c",
+        core_id: 9) do |c|
+        c.owner = User.last
+        c.environment = @env
+      end
+      @env.courses << @course
+      @space = Space.create(name: "espaco",
+        core_id: 231) { |s| s.course = @course }
+
+      @subject = Subject.create(name: "subject",
+        core_id: 75) { |s| s.space = @space }
     end
 
     it 'assigns app_id variable' do
@@ -87,7 +93,7 @@ describe CheckoutController do
       context 'when creating lecture in existing subject' do
         before do
           stub_request(:post, ReduApps::Application.config.api_url +
-                              Lecture.post_to_api_url(@subject.suid)).
+                              Lecture.post_to_api_url(@subject.core_id)).
             to_return(status: 201, body: { name: lecture_name, id: 713 }.to_json)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'false',
@@ -101,7 +107,7 @@ describe CheckoutController do
         before do
           new_redu_subject_id = 713
           stub_request(:post, ReduApps::Application.config.api_url +
-                              Subject.post_to_api_url(@space.sid)).
+                              Subject.post_to_api_url(@space.core_id)).
             to_return(status: 201,
                       body: { name: subject_name, id: new_redu_subject_id }.to_json )
           stub_request(:post, ReduApps::Application.config.api_url +
@@ -118,7 +124,7 @@ describe CheckoutController do
       context 'when Redu API returns Unauthorized status code' do
         before do
           stub_request(:post, ReduApps::Application.config.api_url +
-                              Subject.post_to_api_url(@space.sid)).
+                              Subject.post_to_api_url(@space.core_id)).
             to_return(status: 401)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
@@ -133,7 +139,7 @@ describe CheckoutController do
       context 'when Redu API returns BadRequest status code' do
         before do
           stub_request(:post, ReduApps::Application.config.api_url +
-                              Subject.post_to_api_url(@space.sid)).
+                              Subject.post_to_api_url(@space.core_id)).
             to_return(status: 422)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'true',

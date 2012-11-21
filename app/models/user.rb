@@ -3,12 +3,12 @@ class User < ActiveRecord::Base
 
   zombify
 
-  attr_accessible :uid, :login, :email, :first_name, :last_name, :role, :thumbnail,
-    :client_applications
+  attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
+  :thumbnail, :client_applications
 
   # Atributos de usuário Redu
-  validates_presence_of :uid, :login, :first_name, :last_name, :role
-  validates_uniqueness_of :uid, :login
+  validates_presence_of :core_id, :login, :first_name, :last_name, :role
+  validates_uniqueness_of :core_id, :login
   validates_length_of :login, minimum: 5, maximum: 20
 
   # Role (especialista / membro)
@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
     # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
-    c.authlogic_record_primary_key = :uid
+    c.authlogic_record_primary_key = :core_id
 
     c.require_password_confirmation = false
     c.validate_password_field = false

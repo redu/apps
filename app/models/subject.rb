@@ -2,7 +2,7 @@ class Subject < ActiveRecord::Base
   include BaseModel
   zombify
 
-  attr_accessible :name, :suid, :space
+  attr_accessible :name, :core_id, :space
 
   belongs_to :space
   has_many :lectures
@@ -17,7 +17,7 @@ class Subject < ActiveRecord::Base
     when 201
       subject = JSON.parse response.body
 
-      Subject.new(name: subject['name'], suid: subject['id'])
+      Subject.new(name: subject['name'], core_id: subject['id'])
     when 401 # Permissão negada
       raise ActiveResource::UnauthorizedAccess.new(response)
     when 422 # Payload mal formatado

@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :environment do
-    sequence(:eid)
+    sequence(:core_id)
     name "Ambiente Virtual de Aprendizagem"
     owner { FactoryGirl.create(:user) }
   end

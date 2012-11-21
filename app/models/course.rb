@@ -2,7 +2,7 @@ class Course < ActiveRecord::Base
   include BaseModel
   zombify
 
-  attr_accessible :cid, :name, :owner, :environment
+  attr_accessible :core_id, :name, :owner, :environment
 
   # Associações
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
@@ -14,6 +14,6 @@ class Course < ActiveRecord::Base
 
   has_many :spaces
   # Validadores
-  validates_presence_of :cid, :name, :owner, :environment
-  validates_uniqueness_of :cid
+  validates_presence_of :core_id, :name, :owner, :environment
+  validates_uniqueness_of :core_id
 end
