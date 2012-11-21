@@ -1,11 +1,11 @@
 <hr class="list-separator">
-<li class="status">
+<li class="status clearfix">
   <div class="status-text">
     <%= link_to redu_user_static("", common_comment.author), class: "icon-link" do %>
       <%= image_tag common_comment.author.thumbnail.url(:medium), alt: common_comment.author.display_name, title: common_comment.author.display_name, size: "64x64" %>
     <% end %>
     <%= link_to common_comment.author.display_name, redu_user_static("", common_comment.author), class: "link-name" %>
-    comentou sobre este aplicativo:
+    <span class="status-info">comentou sobre este aplicativo:</span>
     <% if (can? :manage, common_comment) %>
       <%= link_to 'Apagar Comentário', [common_comment.app, common_comment],
                  :confirm => 'Ao apagar este comentário, você também removerá todas as respostas. Deseja continuar?',
