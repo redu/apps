@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-  include BaseModel
+  attr_reader :thumbnail_remote_url
 
+  include BaseModel
   zombify
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
@@ -73,5 +74,12 @@ class User < ActiveRecord::Base
       fetch(:secret, nil)
     core_app = apps.detect { |a| a['secret'] == secret } || {}
     self.token = core_app.fetch('user_token', nil)
+  end
+
+  # Adiciona thumbnail a partir de URL
+  def thumbnail_remote_url=(url)
+    return unless url
+    self.thumbnail = URI.parse(url)
+    @thumbnail_remote_url = url
   end
 end
