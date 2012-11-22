@@ -16,7 +16,7 @@ describe Course do
   it { should belong_to(:owner) }
 
   # Usuários que participam do Course
-  it { should have_many(:user_course_associations), :dependent => :destroy }
+  it { should have_many(:user_course_associations).dependent(:destroy) }
   it { should have_many(:users).through(:user_course_associations) }
 
   # Ambiente ao qual o Course pertence

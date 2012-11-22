@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :apps, through: :user_app_associations
 
   # Ambientes em que o usuário pode adicionar aplicativos
-  has_many :user_environment_associations
+  has_many :user_environment_associations, dependent: :destroy
   has_many :environments, through: :user_environment_associations
 
   # Cursos em que o usuário pode adicionar aplicativos
@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :user_course_associations
 
   # Comentários
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   # Thumbnail
   has_attached_file :thumbnail,

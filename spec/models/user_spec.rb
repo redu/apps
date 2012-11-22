@@ -28,21 +28,21 @@ describe User do
   it { FactoryGirl.create(:specialist).role.should == :specialist }
 
   # Aplicativos favoritos do usuário (ou simplesmente aplicativos do usuário)
-  it { should have_many(:user_app_associations) }
+  it { should have_many(:user_app_associations).dependent(:destroy) }
   it { should have_many(:apps).through(:user_app_associations) }
 
   # Comentários que usuário cria em aplicativos
-  it { should have_many(:comments) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   # Thumbnail do usuário
   it { should have_attached_file(:thumbnail) }
 
   # Ambientes de que o usuário participa
-  it { should have_many(:user_environment_associations) }
+  it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments).through(:user_environment_associations) }
 
   # Disciplinas de que o usuário participa
-  it { should have_many(:user_course_associations) }
+  it { should have_many(:user_course_associations).dependent(:destroy) }
   it { should have_many(:courses).through(:user_course_associations) }
 
   # Campos necessários à autenticação

@@ -21,7 +21,7 @@ describe Comment do
   it { should ensure_length_of(:body).is_at_least(2)}
 
   # Respostas
-  it { should have_many(:answers) }
+  it { should have_many(:answers).dependent(:destroy) }
 
   # No caso de respostas, comentário respondido
   it { should respond_to(:in_response_to) }

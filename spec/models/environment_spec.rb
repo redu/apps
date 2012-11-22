@@ -16,7 +16,7 @@ describe Environment do
   it { should validate_presence_of(:owner) }
 
   # Usuários do Environment
-  it { should have_many(:user_environment_associations) }
+  it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:users).through(:user_environment_associations) }
 
   # Thumbnail

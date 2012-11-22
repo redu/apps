@@ -15,8 +15,8 @@ describe App do
   it { should have_many(:lectures) }
 
   # Categorias
-  it {should have_many(:app_category_associations)}
-  it {should have_many(:categories).through(:app_category_associations)}
+  it { should have_many(:app_category_associations).dependent(:destroy) }
+  it { should have_many(:categories).through(:app_category_associations) }
 
   # Autor
   it { should respond_to(:author) }
@@ -57,17 +57,17 @@ describe App do
   it { should have_attached_file(:thumbnail) }
 
   # Comentários
-  it { should have_many(:comments) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   # Aplicativos favoritos de usuários (ou simplesmente aplicativos de usuários)
-  it { should have_many(:user_app_associations) }
+  it { should have_many(:user_app_associations).dependent(:destroy) }
   it { should have_many(:users).through(:user_app_associations) }
 
   # Total de visualizações do aplicativo
   it { should respond_to(:views) }
 
   # Screenshots do aplicativo
-  it { should have_many(:screen_shots) }
+  it { should have_many(:screen_shots).dependent(:destroy) }
 
   describe "has many categories" do
     before do

@@ -22,7 +22,7 @@ class App < ActiveRecord::Base
   has_many :lectures
 
   # Screen shots
-  has_many :screen_shots
+  has_many :screen_shots, dependent: :destroy
 
   # Thumbnail
   has_attached_file :thumbnail,
