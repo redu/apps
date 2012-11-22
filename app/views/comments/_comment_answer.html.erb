@@ -1,5 +1,5 @@
 <li class="status-content response">
-  <% if can? :create, Comment %>
+  <% if can? :destroy, comment_answer %>
     <%= link_to 'Apagar Resposta', [comment.app, comment_answer],
                :confirm => 'Esta ação irá apagar sua resposta. Deseja continuar?',
                :method => :delete,
