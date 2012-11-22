@@ -67,3 +67,14 @@ UserCourseAssociation:
     User: user_id
     Course: course_id
   name: UserCourseAssociation
+
+UserEnvironmentAssociation:
+  attributes:
+    - id
+    - user_id
+    - environment_id
+  id: core_id
+  check_for:
+    User: user_id
+    Environment: environment_id
+  name: UserEnvironmentAssociation
