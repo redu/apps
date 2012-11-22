@@ -24,7 +24,7 @@ FactoryGirl.define do
 
       factory :complete_app_with_comments do
         after(:create) do |app|
-          2.times do 
+          2.times do
             app.comments << FactoryGirl.create(:specialized_comment, :app => app)
             app.comments << FactoryGirl.create(:comment, :app => app)
           end

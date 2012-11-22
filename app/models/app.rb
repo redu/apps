@@ -51,6 +51,12 @@ class App < ActiveRecord::Base
     end
   end
 
+
+  def get_rating_by(user)
+    self.evaluations.where(source_id: user.id, source_type: "User",
+                           reputation_name: "rating").first.value
+  end
+
   def self.favorited_by(apps, user)
     apps.collect(&:user_app_associations).flatten.
       select { |a| a.user_id == user.id }

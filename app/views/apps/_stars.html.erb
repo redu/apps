@@ -2,7 +2,6 @@
   <div class="oer-stars-n-value">
     <%# Estrelas. %>
     <ol class="oer-stars<%= " oer-stars-user-rated" if can? :rate, @app %>">
-      <% app_rating = @app.reputation_for(:rating) %>
       <% user_rating = @user_rating.to_i || 0 %>
       <% index = user_rating || 0 %>
       <%# Renderiza as estrelas azuis da nota do usuário. %>
@@ -12,8 +11,8 @@
         <% end %>
       <% end %>
       <%# Renderiza as estrelas cinza escuro da média de classificação. %>
-      <% if app_rating > user_rating %>
-        <% (app_rating - user_rating).to_i.times do |n| %>
+      <% if @app_rating > user_rating %>
+        <% (@app_rating - user_rating).to_i.times do |n| %>
           <%= render "star", index: index, type: "gray" %>
           <% index += 1 %>
         <% end %>
@@ -26,7 +25,7 @@
     </ol>
 
     <%# Nota média. %>
-    <span class="oer-rating-value"><%= app_rating %><span class="oer-rating-value-max">/5</span></span>
+    <span class="oer-rating-value"><%= @app_rating %><span class="oer-rating-value-max">/5</span></span>
   </div>
 
   <%# Nota do usuário. %>
