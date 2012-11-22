@@ -6,8 +6,8 @@ describe PayloadProccessor do
   end
   describe 'proccess' do
     let(:payload) {{"id"=> 22, 'login' => 'sexy_jedi_3000',
-      'first_name' => 'Luke', 'last_name' => 'skywalker', coisado: 'aaaa',
-      'coisa_inutil' => 2}}
+      'first_name' => 'Luke', 'last_name' => 'skywalker', thingy: 'aaaa',
+      'useless_thing' => 2}}
 
     it 'should translate id' do
       new_load = @proccessor.proccess(payload)
@@ -16,7 +16,7 @@ describe PayloadProccessor do
 
     it 'should remove useless data' do
       new_load = @proccessor.proccess(payload)
-      new_load.fetch("coisa_inutil", nil).should be_nil
+      new_load.fetch("useless_thing", nil).should be_nil
     end
   end
 end
