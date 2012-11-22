@@ -18,7 +18,7 @@ describe Connection do
     end
 
     it "should perform POST request" do
-      connection.post("/api/spaces/1/subjects", { name: "Meu Módulo"} ) { }
+      connection.post("/api/spaces/1/subjects", { name: "Meu Módulo"} )
     end
   end # context "when performing requests"
 end

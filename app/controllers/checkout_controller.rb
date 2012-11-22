@@ -1,13 +1,13 @@
 # encoding: utf-8
-#
-# CheckoutController é responsável pela adição de aplicativos a aulas no Redu.
-# Como ela acontece através de um wizard, todas as requisições que chegam a este
-# controlador são direcionadas a CheckoutController#update e respondidas através
-# de JavaScript. Incluída entre as atribuições de CheckoutController está a
-# realização de requisições à API do Redu para criação de lectures / subjects
-# – que acontecem no último passo do wizard.
-#
 class CheckoutController < ApplicationController
+  #
+  # CheckoutController é responsável pela adição de aplicativos a aulas no Redu.
+  # Como ela acontece através de um wizard, todas as requisições que chegam a este
+  # controlador são direcionadas a CheckoutController#update e respondidas através
+  # de JavaScript. Incluída entre as atribuições de CheckoutController está a
+  # realização de requisições à API do Redu para criação de lectures / subjects
+  # – que acontecem no último passo do wizard.
+  #
   respond_to :js
 
   rescue_from ActiveResource::UnauthorizedAccess, with: :unauthorized

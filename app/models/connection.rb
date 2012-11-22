@@ -29,7 +29,8 @@ class Connection
   def handle_response(response, &block)
     case response.status
     when 201
-      yield(response)
+      entity = JSON.parse response.body
+      yield(response, entity) if block_given?
     when 401 # Permissão negada
       raise ActiveResource::UnauthorizedAccess.new(response)
     when 422 # Payload mal formatado

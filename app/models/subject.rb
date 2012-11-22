@@ -12,9 +12,8 @@ class Subject < ActiveRecord::Base
   def self.create_via_api(params)
     conn = Connection.new(params[:token])
     conn.post(post_to_api_url(params[:space_sid]),
-                         parse_subject(params)) do |response|
-      subject = JSON.parse response.body
-      Subject.new(name: subject['name'], core_id: subject['id'])
+              parse_subject(params)) do |response, entity|
+      Subject.new(name: entity['name'], core_id: entity['id'])
     end
   end
 
