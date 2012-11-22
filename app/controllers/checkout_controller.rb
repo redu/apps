@@ -1,4 +1,12 @@
 # encoding: utf-8
+#
+# CheckoutController é responsável pela adição de aplicativos a aulas no Redu.
+# Como ela acontece através de um wizard, todas as requisições que chegam a este
+# controlador são direcionadas a CheckoutController#update e respondidas através
+# de JavaScript. Incluída entre as atribuições de CheckoutController está a
+# realização de requisições à API do Redu para criação de lectures / subjects
+# – que acontecem no último passo do wizard.
+#
 class CheckoutController < ApplicationController
   respond_to :js
 
@@ -63,7 +71,11 @@ class CheckoutController < ApplicationController
     get_params([:space_id, :create_subject, :lecture, :subject], params)
     @next_step = 4
     @space = Space.find_by_id(@space_id)
-    @subject = @create_subject == 'true' ? create_subject_via_api : Subject.find(@subject)
+    @subject = if @create_subject == 'true'
+      create_subject_via_api
+    else
+      Subject.find(@subject)
+    end
     @lecture_href = create_lecture_via_api
 
     respond_to do |format|

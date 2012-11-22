@@ -11,19 +11,10 @@ class Subject < ActiveRecord::Base
 
   def self.create_via_api(params)
     conn = Connection.new(params[:token])
-    response = conn.post post_to_api_url(params[:space_sid]),
-                         parse_subject(params)
-    case response.status
-    when 201
+    conn.post(post_to_api_url(params[:space_sid]),
+                         parse_subject(params)) do |response|
       subject = JSON.parse response.body
-
       Subject.new(name: subject['name'], core_id: subject['id'])
-    when 401 # Permissão negada
-      raise ActiveResource::UnauthorizedAccess.new(response)
-    when 422 # Payload mal formatado
-      raise ActiveResource::BadRequest.new(response)
-    else
-      raise "Unknown status code #{response.status}"
     end
   end
 

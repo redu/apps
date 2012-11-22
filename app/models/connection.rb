@@ -8,8 +8,9 @@ class Connection
     connection.get url
   end
 
-  def post(url, data)
-    connection.post url, data
+  def post(url, data, &block)
+    response = connection.post(url, data)
+    handle_response(response, &block)
   end
 
   private
@@ -23,5 +24,18 @@ class Connection
     end
 
     @conn
+  end
+
+  def handle_response(response, &block)
+    case response.status
+    when 201
+      yield(response)
+    when 401 # Permissão negada
+      raise ActiveResource::UnauthorizedAccess.new(response)
+    when 422 # Payload mal formatado
+      raise ActiveResource::BadRequest.new(response)
+    else
+      raise "Unknown status code #{response.status}"
+    end
   end
 end

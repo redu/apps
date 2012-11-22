@@ -10,18 +10,10 @@ class Lecture < ActiveRecord::Base
 
   def self.create_via_api(params)
     conn = Connection.new(params[:token])
-    response = conn.post post_to_api_url(params[:subject_suid]),
-                         parse_lecture(params)
-    case response.status #TODO
-    when 201
+    conn.post(post_to_api_url(params[:subject_suid]),
+                         parse_lecture(params)) do |response|
       lecture = JSON.parse response.body
       lecture_href = lecture['links'].detect {|l| l['rel'] == "self" }['href']
-    when 401 # Permissão negada
-      raise ActiveResource::UnauthorizedAccess.new(response)
-    when 422 # Payload mal formatado
-      raise ActiveResource::BadRequest.new(response)
-    else
-      raise "Unknown status code #{response.status}"
     end
   end
 
