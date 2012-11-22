@@ -57,6 +57,16 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  # Associa token ao User.
+  #
+  # Ao receber uma lista do tipo:
+  #   [{
+  #    :user_token => "foo",
+  #    :secret => "xxx",
+  #   }]
+  # Associa o :user_toke a self.token caso ReduApps::Application.config.
+  # client_application possua o mesmo :secret. Caso contrário ignora a lista
+  # recebida.
   def client_applications=(apps)
     apps ||= []
     secret = ReduApps::Application.config.client_application.
