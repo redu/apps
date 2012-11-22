@@ -11,6 +11,6 @@ shared_examples 'a hater of rating cheaters' do |rating_value|
   end
 
   it "should set flash notice message" do
-    flash[:notice].should == "Valor de classificação inválido."
+    flash[:error].should == "Valor de classificação inválido."
   end
 end

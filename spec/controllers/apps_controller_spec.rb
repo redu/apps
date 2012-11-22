@@ -127,12 +127,6 @@ describe AppsController do
         should respond_with(:redirect)
       end
 
-      it "shoudl set flash notice message" do
-        post :rate, @params
-        flash[:notice].should ==
-          "Você classificou o recurso com #{@params[:rating]}."
-      end
-
       context "when user hasn't rated before" do
         it "should create a new reputation value" do
           expect {
