@@ -335,4 +335,52 @@ describe UntiedObserverHelper do
       end
     end
   end
+
+  context "When working with user_environment_association" do
+    let(:association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
+      "user_id" => 1, "role" => 2, "environment_id" => 1, "id" => 1,
+      "created_at" => "2012-11-06T09:18:23-02:00" }}
+    let(:orphan_association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
+      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 123,
+      "created_at" => "2012-11-06T09:18:23-02:00" }}
+
+    before(:all) do
+      @environment = FactoryGirl.create(:environment)
+    end
+
+    after(:all) do
+      @environment.owner.destroy
+      @environment.destroy
+      FactoryGirl.reload
+    end
+
+    describe 'create_user_environment_association' do
+      it 'should add association to database' do
+        helper.create_proxy("user_environment_association", association)
+      end
+
+      it 'should create zombie user and environment' do
+        helper.create_proxy("user_environment_association", orphan_association)
+        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Environment.find_by_core_id(orphan_association['environment_id']).
+          should_not be_nil
+      end
+
+      it 'should complete zombie association' do
+        UserEnvironmentAssociation.new(core_id: orphan_association['id']).
+          save(validate: false)
+        helper.create_proxy("user_environment_association", association)
+        UserEnvironmentAssociation.find_by_core_id(orphan_association['id']).
+          should be_valid
+      end
+    end
+
+    describe 'destroy_user_environment_association' do
+      it 'should erase user_environment_association from database' do
+        UserEnvironmentAssociation.new(core_id: 1).save(validate: false)
+        helper.destroy_proxy("user_environment_association", association)
+        UserEnvironmentAssociation.find_by_core_id(1).should be_nil
+      end
+    end
+  end
 end

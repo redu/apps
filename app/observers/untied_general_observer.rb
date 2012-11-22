@@ -3,7 +3,7 @@ class UntiedGeneralObserver < UntiedObserverHelper
   # dos modelos
 
   observe(:user, :environment, :course, :space, :subject,
-    :user_course_association, :from => :core)
+    :user_course_association, :user_environment_association, :from => :core)
   def after_create(payload)
     kind = payload.keys[0]
     self.create_proxy(kind, payload.values[0])

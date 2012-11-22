@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121121172614) do
+ActiveRecord::Schema.define(:version => 20121122133651) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -219,6 +219,8 @@ ActiveRecord::Schema.define(:version => 20121121172614) do
     t.integer  "environment_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "core_id"
+    t.boolean  "zombie"
   end
 
   add_index "user_environment_associations", ["user_id", "environment_id"], :name => "index_user_environment_associations_on_user_and_environment_ids"
