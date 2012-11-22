@@ -20,33 +20,6 @@
 //= require_tree .
 
 $(function() {
-
-  // Sequência de passos da modal de adicionar REA à disciplina.
-  // TODO: É só para testes. Em produção será feito de outra maneira.
-  $('body')
-    .on('click', '[href="#modal-add-oer-step-1"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-2').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#modal-add-oer-step-2"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-1').modal('hide');
-      $('#modal-add-oer-step-3').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#modal-add-oer-step-3"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-2').modal('hide');
-      $($(this).attr('href')).modal('show');
-    })
-    .on('click', '[href="#system-message-oer-successfully-added"]', function(e) {
-      e.preventDefault();
-      $('#modal-add-oer-step-3').modal('hide');
-      $($(this).attr('href')).show();
-    });
-
-
   // Expande/colapsa a explicação dos REA.
 
   var oerLinkClass = '.apps-portal-oer-link';
@@ -87,8 +60,8 @@ $(function() {
     // Cria a modal.
     var $modal = $(document.createElement('div'))
       .attr({
-        'id': $this.attr('href')
-      , 'class': 'modal hide modal-fill-horizontal'
+        'id': $this.attr('href'),
+        'class': 'modal hide modal-fill-horizontal'
       });
     var $header = $(document.createElement('div'))
       .attr('class', 'modal-header')
@@ -97,15 +70,15 @@ $(function() {
     var $body = $(document.createElement('div'))
       .attr('class', 'modal-body')
       .append($(document.createElement('iframe')).attr({
-        'frameborder': '0'
-      , 'scrolling': 'no'
-      , 'src': $this.data('modal-url')
-      }))
+        'frameborder': '0',
+        'scrolling': 'no',
+        'src': $this.data('modal-url')
+      }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')
       .append($(document.createElement('button')).attr({
-        'class': 'button-default'
-      , 'data-dismiss': 'modal'
+        'class': 'button-default',
+        'data-dismiss': 'modal'
       }).html('Fechar'));
     $('body').append($modal.append($header).append($body).append($footer));
 
@@ -119,9 +92,21 @@ $(function() {
     // Remove a modal quando for fechada.
     $modal.on('hidden', function(e) {
       $modal.remove();
-    })
+    });
   });
 
+
+  // Submete o formulário do passo 1 do "Adicionar à Disciplina" através de links.
+  $(document).on("click", "#step-1-form .space-link", function(e) {
+    e.preventDefault();
+    $("#space_id").val($(this).data("space-id"));
+    $("#step-1-form").submit();
+  });
+
+  // Remove as janelas modais quando fechadas.
+  $(document).on("hidden", ".modal-add-oer", function(e) {
+    $(this).remove();
+  });
 
   // Comportamento de hover in/out das estrelas.
   var unratedStar = "icon-star-full-lightgray_16_18";
@@ -137,7 +122,7 @@ $(function() {
       if (i < index) {
         $(this).removeClass(unratedStar + " " + ratedStar).addClass(userRatedStar);
       }
-    })
+    });
   }, function() {
     var index = $(this).html();
     var $stars = $(this).parents("." + starsWrapper).find("a");
@@ -147,7 +132,7 @@ $(function() {
       if (i < index) {
         $(this).removeClass(userRatedStar).addClass("icon-star-full-" + $(this).data("star-color") + "_16_18");
       }
-    })
+    });
   });
 
 
@@ -186,7 +171,7 @@ $(function() {
         $listItem.toggleClass(settings.openClass);
       });
     });
-  }
+  };
 
   // Adiciona o comportamento para o botão de comentário comum.
   $("." + buttonCommentClass).replyBehavior({

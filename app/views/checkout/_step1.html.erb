@@ -1,0 +1,42 @@
+<%#
+  Renderiza a janela modal do passo 1.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    environments: os ambientes.
+%>
+<div class="modal-body">
+  <div class="apps-portal-add-oer-section">
+    <%= form_tag(app_checkout_path(app.id, step: step + 1, previous_step: step), id: "step-1-form", remote: true) do %>
+      <%= hidden_field_tag :space_id, "" %>
+      <ul class="list-environment-course-space list-1-columns list-columns-separator">
+        <% environments.each do |e| %>
+          <li class="list-environment-course-space-item">
+            <%= render "environment_course_space_header", environment: e, course_name: nil, space_name: nil %>
+            <ul class="list-mix">
+              <% e.courses.each do |c| %>
+                <li class="list-mix-item icon-course-lightgray_32_34-before">
+                  <div class="list-mix-inner">
+                    <div class="list-mix-content">
+                      <div class="list-mix-header">
+                        <h5 class="list-mix-title"><%= c.name %></h5>
+                      </div>
+                      <ul class="list-mix-body list-space-mini show">
+                        <% c.spaces.each do |s| %>
+                          <li class="list-space-mini-item">
+                            <%= link_to s.name, nil, class: "icon-space-lightblue_16_18-before space-link", "data-space-id" => s.id  %>
+                          </li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+</div>

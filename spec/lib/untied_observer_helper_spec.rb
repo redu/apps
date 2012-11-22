@@ -19,7 +19,7 @@ describe UntiedObserverHelper do
       end
 
       it 'should complete zombie user' do
-        User.new(uid: 1).save(validate: false)
+        User.new(core_id: 1).save(validate: false)
         helper.create_proxy("user", user).should == true
       end
     end
@@ -28,7 +28,7 @@ describe UntiedObserverHelper do
 
       it "should update user in database" do
         User.create(login: "darth", first_name: "anny", last_name: "skywalker",
-          uid: 1)
+          core_id: 1)
         helper.update_proxy("user", user).should == true
       end
     end
@@ -37,9 +37,9 @@ describe UntiedObserverHelper do
 
       it "should erase user from database" do
         User.create(login: "darth", first_name: "anny", last_name: "skywalker",
-          uid: 1)
+          core_id: 1)
         helper.destroy_proxy("user", user)
-        User.find_by_uid(user[:id]).should be_nil
+        User.find_by_core_id(user[:id]).should be_nil
       end
     end
   end
@@ -51,7 +51,7 @@ describe UntiedObserverHelper do
       "user_id" => 67 }}
 
     before(:all) do
-      @user = FactoryGirl.create(:user, uid: 1)
+      @user = FactoryGirl.create(:user, core_id: 1)
     end
     after(:all)  do
       @user.destroy
@@ -66,20 +66,20 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user' do
         helper.create_proxy("environment", environment_no_owner)
-        User.find_by_uid(environment_no_owner['user_id']).should_not be_nil
+        User.find_by_core_id(environment_no_owner['user_id']).should_not be_nil
       end
 
       it 'should complete zombie environment' do
-        Environment.new(eid: environment['id']).save(validate: false) #Beware! it's a zombie
+        Environment.new(core_id: environment['id']).save(validate: false) #Beware! it's a zombie
         helper.create_proxy("environment", environment)
-        Environment.find_by_eid(environment['id']).should be_valid
+        Environment.find_by_core_id(environment['id']).should be_valid
       end
     end
 
     describe 'update_environment' do
 
       it 'should update environment in database' do
-        Environment.create(name: "Ambiente mais lindo do mundo", eid: 3,
+        Environment.create(name: "Ambiente mais lindo do mundo", core_id: 3,
           owner: @user)
         helper.update_proxy("environment", environment).should == true
       end
@@ -88,10 +88,10 @@ describe UntiedObserverHelper do
     describe 'destroy_environment' do
 
       it 'should erase environment from database' do
-        Environment.create(name: "Ambiente mais lindo do mundo", eid: 3,
+        Environment.create(name: "Ambiente mais lindo do mundo", core_id: 3,
           owner: @user)
         helper.destroy_proxy("environment", environment)
-        Environment.find_by_eid(environment['id']).should be_nil
+        Environment.find_by_core_id(environment['id']).should be_nil
       end
     end
   end
@@ -108,7 +108,7 @@ describe UntiedObserverHelper do
       "user_id" => 77, "environment_id" =>  99 }} #curso sem environment_id e user_id
 
     before(:all) do
-      @course = FactoryGirl.create(:course, cid: 2)
+      @course = FactoryGirl.create(:course, core_id: 2)
     end
 
     after(:all) do
@@ -127,19 +127,19 @@ describe UntiedObserverHelper do
 
       it 'should create zombie environment' do
         helper.create_proxy("course", homeless_course)
-        Environment.find_by_eid(homeless_course["environment_id"]).should_not be_nil
+        Environment.find_by_core_id(homeless_course["environment_id"]).should_not be_nil
       end
 
       it 'should create zombie owner and environment' do
         helper.create_proxy("course", orphan_course)
-        Environment.find_by_eid(orphan_course["environment_id"]).should_not be_nil
-        User.find_by_uid(orphan_course["user_id"]).should_not be_nil
+        Environment.find_by_core_id(orphan_course["environment_id"]).should_not be_nil
+        User.find_by_core_id(orphan_course["user_id"]).should_not be_nil
       end
 
       it 'should comple zombie course' do
-        Course.new(cid: course["id"]).save(validate: false) #ZOMBIE
+        Course.new(core_id: course["id"]).save(validate: false) #ZOMBIE
         helper.create_proxy("course", course)
-        Course.find_by_cid(course["id"]).should be_valid
+        Course.find_by_core_id(course["id"]).should be_valid
       end
     end
 
@@ -153,9 +153,9 @@ describe UntiedObserverHelper do
     describe 'destroy_course' do
 
       it 'Should erase course from database' do
-        Course.new(cid: course["id"]).save(validate: false) # o curso não precisa ser valido
+        Course.new(core_id: course["id"]).save(validate: false) # o curso não precisa ser valido
         helper.destroy_proxy("course", course)
-        Course.find_by_cid(course["id"]).should be_nil
+        Course.find_by_core_id(course["id"]).should be_nil
       end
     end
   end
@@ -190,13 +190,13 @@ describe UntiedObserverHelper do
 
       it 'should create zombie course' do
         helper.create_proxy("space", orphan_space)
-        Course.find_by_cid(orphan_space["course_id"]).should_not be_nil
+        Course.find_by_core_id(orphan_space["course_id"]).should_not be_nil
       end
 
       it 'should complete zombie space' do
-        Space.new(sid: space["id"]).save(validate: false)
+        Space.new(core_id: space["id"]).save(validate: false)
         helper.create_proxy("space", space)
-        Space.find_by_sid(space["id"]).should be_valid
+        Space.find_by_core_id(space["id"]).should be_valid
       end
     end
 
@@ -210,9 +210,9 @@ describe UntiedObserverHelper do
     describe 'destroy_space' do
 
       it 'should erase space from database' do
-        Space.new(sid: space["id"])
+        Space.new(core_id: space["id"])
         helper.destroy_proxy("space", space)
-        Space.find_by_sid(space["id"]).should be_nil
+        Space.find_by_core_id(space["id"]).should be_nil
       end
     end
   end
@@ -248,13 +248,13 @@ describe UntiedObserverHelper do
 
       it 'should create zombie space' do
         helper.create_proxy("subject", orphan_subject)
-        Space.find_by_sid(orphan_subject["space_id"]).should_not be_nil
+        Space.find_by_core_id(orphan_subject["space_id"]).should_not be_nil
       end
 
       it 'should complete zombie subject' do
-        Subject.new(suid: subject["id"]).save(validate: false)
+        Subject.new(core_id: subject["id"]).save(validate: false)
         helper.create_proxy("subject", subject)
-        Subject.find_by_suid(subject["id"]).should be_valid
+        Subject.find_by_core_id(subject["id"]).should be_valid
       end
     end
 
@@ -268,9 +268,9 @@ describe UntiedObserverHelper do
     describe 'destroy_subject' do
 
       it 'should erase subject from database' do
-        Subject.new(suid: subject["id"]).save(validate: false)
+        Subject.new(core_id: subject["id"]).save(validate: false)
         helper.destroy_proxy("subject", subject)
-        Subject.find_by_suid(subject["id"]).should be_nil
+        Subject.find_by_core_id(subject["id"]).should be_nil
       end
     end
   end
@@ -306,14 +306,14 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user and course' do
         helper.create_proxy("user_course_association", orphan_association)
-        User.find_by_uid(orphan_association['user_id']).should_not be_nil
-        Course.find_by_cid(orphan_association['course_id']).should_not be_nil
+        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Course.find_by_core_id(orphan_association['course_id']).should_not be_nil
       end
 
       it 'should complete zombie association' do
-        UserCourseAssociation.new(ucaid: orphan_association['id']).save(validate: false)
+        UserCourseAssociation.new(core_id: orphan_association['id']).save(validate: false)
         helper.create_proxy("user_course_association", association)
-        UserCourseAssociation.find_by_ucaid(orphan_association['id']).should be_valid
+        UserCourseAssociation.find_by_core_id(orphan_association['id']).should be_valid
       end
     end
 
@@ -322,16 +322,64 @@ describe UntiedObserverHelper do
       it 'should update association in database' do
         UserCourseAssociation.create()
         helper.update_proxy("user_course_association", association)
-        UserCourseAssociation.find_by_ucaid(1).role.should == :member
+        UserCourseAssociation.find_by_core_id(1).role.should == :member
       end
     end
 
     describe 'destroy_user_course_association' do
 
       it 'should erase use_course_associaiton from database' do
-        UserCourseAssociation.new(ucaid: 1).save(validate: false)
+        UserCourseAssociation.new(core_id: 1).save(validate: false)
         helper.destroy_proxy("user_course_association", association)
-        UserCourseAssociation.find_by_ucaid(1).should be_nil
+        UserCourseAssociation.find_by_core_id(1).should be_nil
+      end
+    end
+  end
+
+  context "When working with user_environment_association" do
+    let(:association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
+      "user_id" => 1, "role" => 2, "environment_id" => 1, "id" => 1,
+      "created_at" => "2012-11-06T09:18:23-02:00" }}
+    let(:orphan_association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
+      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 123,
+      "created_at" => "2012-11-06T09:18:23-02:00" }}
+
+    before(:all) do
+      @environment = FactoryGirl.create(:environment)
+    end
+
+    after(:all) do
+      @environment.owner.destroy
+      @environment.destroy
+      FactoryGirl.reload
+    end
+
+    describe 'create_user_environment_association' do
+      it 'should add association to database' do
+        helper.create_proxy("user_environment_association", association)
+      end
+
+      it 'should create zombie user and environment' do
+        helper.create_proxy("user_environment_association", orphan_association)
+        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Environment.find_by_core_id(orphan_association['environment_id']).
+          should_not be_nil
+      end
+
+      it 'should complete zombie association' do
+        UserEnvironmentAssociation.new(core_id: orphan_association['id']).
+          save(validate: false)
+        helper.create_proxy("user_environment_association", association)
+        UserEnvironmentAssociation.find_by_core_id(orphan_association['id']).
+          should be_valid
+      end
+    end
+
+    describe 'destroy_user_environment_association' do
+      it 'should erase user_environment_association from database' do
+        UserEnvironmentAssociation.new(core_id: 1).save(validate: false)
+        helper.destroy_proxy("user_environment_association", association)
+        UserEnvironmentAssociation.find_by_core_id(1).should be_nil
       end
     end
   end

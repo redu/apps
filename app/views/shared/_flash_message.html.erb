@@ -1,0 +1,6 @@
+<% flash.each do |type, message| %>
+  <div class="system-message message-<%= flash_message_class(type) %> fade in">
+    <a data-dismiss="alert" class="message-close">×</a>
+    <p><%= h(message) %></p>
+  </div>
+<% end %>

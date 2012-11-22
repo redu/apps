@@ -1,11 +1,16 @@
 .oer-comments {
 
-	.icon-link {
-		width: 64px;
+	.status-info { color: $gray6; }
 
-		img {
-			height: 64px;
+	.responses .status-content .post-text { margin-left: 40px; }
+
+	.specialist { min-height: 110px; }
+
+	.status-text {
+		> .icon-link {
 			width: 64px;
+
+			img { @include square(64px); }
 		}
 	}
 
@@ -29,12 +34,6 @@
 	.status-container {
 		margin-left: 74px;
 		margin-top: -36px;
-
-		&.specialist {
-			font-family: arial, sans-serif;
-
-			h5 { margin: 20px 0; }
-		}
 	}
 
 	.specialist-icon {
@@ -70,7 +69,3 @@
 .flap-to-comment:before { margin-right: 555px; }
 
 .flap-to-review:before { margin-right: 305px; }
-
-.status li {
-	margin:0 ;
-}

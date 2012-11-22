@@ -54,10 +54,10 @@ module AppsHelper
     entities.collect(&:name).join(", ")
   end
 
-  # Retorna 2 se length for maior que 2 ou length se menor.
-  def max_2_answers(length)
-    if length > 2
-      2
+  # Retorna 3 se length for maior que 3 ou length se menor.
+  def max_3_answers(length)
+    if length > 3
+      3
     else
       length
     end
@@ -70,5 +70,31 @@ module AppsHelper
   # Conta os comentários de uma aplicação (comuns + respostas)
   def count_comments_for(app)
     Comment.get_by_type(app, :common).length + Comment.get_by_type(app, :answer).length
+  end
+
+  # Retorna a classe correta dependendo do tipo de mensagem.
+  def flash_message_class(type)
+    case type
+    when :info
+      "info"
+    when :notice
+      "success"
+    when :error
+      "warning"
+    end
+  end
+
+  # Retorna o título da modal de "Adicionar à Disciplina".
+  def modal_title(space = nil)
+    if space
+      "a \"#{space.name}\""
+    else
+      "à Disciplina"
+    end
+  end
+
+  # Retorna a classe de passo ativo para o passo atual.
+  def step_active_class(step, current_step)
+    " apps-portal-add-oer-step-current" if step == current_step
   end
 end

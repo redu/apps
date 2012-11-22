@@ -1,9 +1,11 @@
 # encoding: utf-8
 
 class App < ActiveRecord::Base
-  attr_accessible :name, :thumbnail, :views
+  attr_accessible :aid, :name, :thumbnail, :views, :url, :author, :language
 
-  validates_presence_of :name, :author, :language
+  validates_presence_of :aid, :name, :author, :language
+
+  validates_uniqueness_of :aid
 
   # Categorias
   has_many :app_category_associations, dependent: :destroy
@@ -20,7 +22,7 @@ class App < ActiveRecord::Base
   has_many :lectures
 
   # Screen shots
-  has_many :screen_shots
+  has_many :screen_shots, dependent: :destroy
 
   # Thumbnail
   has_attached_file :thumbnail,

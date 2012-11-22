@@ -1,6 +1,6 @@
 <div class="oer-main-wrapper">
 
-  <div class="oer-header">
+  <div class="oer-header clearfix">
     <h3 class="oer-title"><%= @app.name %></h3>
 
     <% if @favorite %>
@@ -26,7 +26,7 @@
           <%= t 'favorite', count: @app.users.count %>.
         </li>
         <li class="oer-counter legend icon-seen-gray_16_18-before">
-          <%= t 'view', count: @app.views %>.
+          <%= t 'views', count: @app.views %>.
         </li>
         <% if @app.comments.specialized.length > 0 %>
           <li class="oer-counter legend icon-specialist-gray_16_18-before">
@@ -79,21 +79,21 @@
 
         <%# Botões. %>
         <div class="oer-buttons">
-          <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
-          <% unless @favorite || !current_user %>
-            <%= form_tag user_favorites_path(current_user.id), method: "post" do %>
+          <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.core_url %>">Abrir este Recurso</button>
+          <% if can? :create, UserAppAssociation.new(app: @app)   %>
+            <%= form_tag user_favorites_path(current_user), method: "post" do %>
               <%= hidden_field_tag :app_id , @app.id %>
               <%= content_tag :button, :type => :submit, class: "button-primary" do %>
                 Adicionar a Favoritos
               <% end %>
             <% end %>
           <% end %>
-          <%= form_tag app_checkout_path(@app), method: "post" do %>
-            <%= content_tag :button, :type => :submit, :class => "button-primary", :'data-target' => "#modal-add-oer-step-1", :'data-toggle' => "modal", class: "button-success"  do %>
-              Adicionar a Disciplina
+          <% if can? :checkout, @app %>
+            <%= form_tag app_checkout_path(@app, previous_step: 0), method: :post, remote: true do %>
+              <%= content_tag :button, "Adicionar a Disciplina", class: "button-success" %>
             <% end %>
           <% end %>
-          <% if @favorite %>
+          <% if can? :destroy, @favorite %>
             <%= link_to "Remover dos Favoritos", user_favorite_path(current_user, @favorite), :method => "delete", :class => "icon-favorite-delete-lightblue_16_18-before", :title => "Remover dos Favoritos" %>
           <% end %>
         </div>
@@ -140,7 +140,7 @@
 <ol class="statuses oer-comments">
   <%= render partial: 'specialized_comment', collection: @app.comments.specialized %>
 
-  <% if current_user %>
+  <% if can? :create, Comment %>
     <!-- Botões de comentários -->
     <li>
       <hr class="list-separator">
@@ -149,14 +149,14 @@
           <li>
             <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
           </li>
-          <% if current_user.specialist? %>
+          <% if can? :create, Comment.new(type: :specialized) %>
             <li>
               <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
             </li>
           <% end %>
         </ul>
         <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_type: "common" %>
-        <% if current_user.specialist? %>
+        <% if can? :create, Comment.new(type: :specialized) %>
           <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialized" %>
         <% end %>
       </div>
@@ -164,17 +164,21 @@
   <% end %>
 
   <!-- Comentários comuns -->
-  <div id="comments" >
-    <%= render partial: 'comments/common_comment', collection: @comments %>
-  </div>
+  <% if can? :read, Comment %>
+    <div id="comments" >
+      <%= render partial: 'comments/common_comment', collection: @comments %>
+    </div>
+  <% end %>
 </ol>
 
-<% unless @comments.last_page? %>
-  <div id="pagination-wrapper">
-    <hr class="list-separator">
-    <div id="paginator" class="pagination">
-      <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
-                            class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+<% if can? :read, Comment %>
+  <% unless @comments.last_page? %>
+    <div id="pagination-wrapper">
+      <hr class="list-separator">
+      <div id="paginator" class="pagination">
+        <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
+                              class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+      </div>
     </div>
-  </div>
+  <% end %>
 <% end %>

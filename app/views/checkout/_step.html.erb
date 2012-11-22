@@ -1,0 +1,20 @@
+<%#
+  Renderiza a janela modal de um passo.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+    environments: os ambientes.
+    space: a disciplina.
+    create_subject: indica se um novo módulo deve ser criado.
+%>
+<div id="app-checkout-step-<%= step %>" class="modal hide modal-fill-height modal-grids-14 modal-add-oer">
+  <div class="modal-header">
+    <span class="modal-close icon-close-big-gray_16_18 text-replacement" data-dismiss="modal" title="Fechar">Fechar</span>
+    <h3 class="modal-title">Adicionar <%= modal_title(space) %></h3>
+    <span class="modal-subtitle"><%= "#{app.name} - #{app.author}" %></span>
+  </div>
+  <%= render "steps_description", step: step %>
+  <hr class="list-separator">
+  <%= render "step#{step}", step: step, app: app, environments: environments, space: space, create_subject: create_subject %>
+</div>

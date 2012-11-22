@@ -6,6 +6,7 @@ require "action_controller/railtie"
 require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
+require "active_resource/exceptions"
 
 # require "rails/test_unit/railtie"
 
@@ -84,5 +85,9 @@ module ReduApps
     config.paperclip = {}
 
     config.redu_domain = "http://www.redu.com.br/"
+    config.client_application = {
+      :name => "Portal de Aplicativos",
+      :secret => 'xxx'
+    }
   end
 end

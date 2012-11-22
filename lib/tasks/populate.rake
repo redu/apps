@@ -62,4 +62,22 @@ namespace :populate do
   task a_lot: :environment do
     task(:random_population).invoke(10000)
   end
+
+  desc "Create Redu hierarchy for first user (user id 1)"
+  task hierarchy: :environment do
+    user = User.first || FactoryGirl.create(:user)
+    environment = Environment.create(name: "AVA Redu", eid: 123, owner: user)
+    environment.users << user
+    course = Course.create(name: "Primeiros Passos", cid: 123, owner: user,
+                           environment: environment)
+    space = Space.create(name: "Aprendendo a Usar o Redu", sid: 123)
+    course.spaces << space
+    subject1 = Subject.create(name: "Redu para Professores", suid: 123,
+                              space: space)
+    subject2 = Subject.create(name: "Redu para Alunos", suid: 1234,
+                              space: space)
+    subject3 = Subject.create(name: "Redu para Gestores", suid: 12345,
+                              space: space)
+
+  end
 end

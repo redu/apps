@@ -1,13 +1,13 @@
 require 'spec_helper'
 describe ModelHelper do
-  let(:user) { {"uid"=> 22, 'login' => 'sexy_jedi_3000',
+  let(:user) { {"core_id"=> 22, 'login' => 'sexy_jedi_3000',
       'email' => 'jedi@concil.com', 'first_name' => 'Luke',
       'password_salt' => '1234', 'crypted_password' => '1234',
       'last_name' => 'skywalker'} }
 
   before(:all) do
     @model_helper = ModelHelper.new(ReduApps::Application.config.untied['model_data']['User'])
-    @user = FactoryGirl.create(:user, uid: 1)
+    @user = FactoryGirl.create(:user, core_id: 1)
   end
 
   after(:all) do
@@ -29,7 +29,7 @@ describe ModelHelper do
 
     it 'should create zombie model' do
       @model_helper.create_zombie(99)
-      User.find_by_uid(99).should_not be_nil
+      User.find_by_core_id(99).should_not be_nil
     end
   end
 
@@ -38,13 +38,13 @@ describe ModelHelper do
     context "with valid payload" do
       it 'should create user' do
         @model_helper.create_model(user)
-        User.find_by_uid(user['uid']).should_not be_nil
+        User.find_by_core_id(user['core_id']).should_not be_nil
       end
 
       it 'should update zombie user' do
-        User.new(uid: user['uid']).save(validate: false)
+        User.new(core_id: user['core_id']).save(validate: false)
         @model_helper.create_model(user)
-        User.find_by_uid(user['uid']).should be_valid
+        User.find_by_core_id(user['core_id']).should be_valid
       end
     end
   end
@@ -52,22 +52,22 @@ describe ModelHelper do
   describe 'update_model' do
 
     it 'should update model in database' do
-      User.new(uid: user['uid']).save(validate: false)
+      User.new(core_id: user['core_id']).save(validate: false)
       @model_helper.update_model(user)
-      User.find_by_uid(user['uid']).should be_valid
+      User.find_by_core_id(user['core_id']).should be_valid
     end
 
     it 'should create model if it doesnt exist' do
       @model_helper.update_model(user)
-      User.find_by_uid(user['uid']).should be_valid
+      User.find_by_core_id(user['core_id']).should be_valid
     end
   end
 
   describe 'destroy_model' do
     it 'should delete from database' do
-      User.new(uid: user['uid']).save(validate: false)
+      User.new(core_id: user['core_id']).save(validate: false)
       @model_helper.destroy_model(user)
-      User.find_by_uid(user['uid']).should be_nil
+      User.find_by_core_id(user['core_id']).should be_nil
     end
   end
 end

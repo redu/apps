@@ -1,0 +1,25 @@
+<%#
+  Renderiza a lista de passos, destacando o passo atual.
+
+  Variáveis:
+    step: o passo atual.
+%>
+<div class="apps-portal-add-oer-section">
+  <div class="progress-bar-total progress-bar-thick">
+    <div class="progress-bar-completed text-replacement" style="width: <%= (step * 100) / 3 %>%;"><%= (step * 100) / 3 %>%</div>
+  </div>
+  <ol class="apps-portal-add-oer-steps-explaination">
+    <li class="apps-portal-add-oer-step-explaination<%= step_active_class(1, step) %>">
+      <h4 class="apps-portal-add-oer-step-title">Passo 1</h4>
+      <p>Escolha uma Disciplina clicando no link em azul. Este aplicativo será adicionado como uma Aula.</p>
+    </li>
+    <li class="apps-portal-add-oer-step-explaination<%= step_active_class(2, step) %>">
+      <h4 class="apps-portal-add-oer-step-title">Passo 2</h4>
+      <p>Escolha entre criar um novo Módulo ou utilizar um existente para alocar a Aula onde este aplicativo estará disponível.</p>
+    </li>
+    <li class="apps-portal-add-oer-step-explaination<%= step_active_class(3, step) %>">
+      <h4 class="apps-portal-add-oer-step-title">Passo 3</h4>
+      <p>Escreva o nome do Módulo e da Aula (ou selecione entre os Módulos existentes e escreva o nome da Aula).</p>
+    </li>
+  </ol>
+</div>

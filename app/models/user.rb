@@ -3,11 +3,12 @@ class User < ActiveRecord::Base
 
   zombify
 
-  attr_accessible :uid, :login, :email, :first_name, :last_name,:role, :thumbnail
+  attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
+  :thumbnail, :client_applications
 
   # Atributos de usuário Redu
-  validates_presence_of :uid, :login, :first_name, :last_name, :role
-  validates_uniqueness_of :uid, :login
+  validates_presence_of :core_id, :login, :first_name, :last_name, :role
+  validates_uniqueness_of :core_id, :login
   validates_length_of :login, minimum: 5, maximum: 20
 
   # Role (especialista / membro)
@@ -18,7 +19,7 @@ class User < ActiveRecord::Base
   has_many :apps, through: :user_app_associations
 
   # Ambientes em que o usuário pode adicionar aplicativos
-  has_many :user_environment_associations
+  has_many :user_environment_associations, dependent: :destroy
   has_many :environments, through: :user_environment_associations
 
   # Cursos em que o usuário pode adicionar aplicativos
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :user_course_associations
 
   # Comentários
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   # Thumbnail
   has_attached_file :thumbnail,
@@ -38,7 +39,7 @@ class User < ActiveRecord::Base
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
     # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
-    c.primary_key = :uid
+    c.authlogic_record_primary_key = :core_id
 
     c.require_password_confirmation = false
     c.validate_password_field = false
@@ -54,5 +55,13 @@ class User < ActiveRecord::Base
 
   def display_name
     "#{self.first_name} #{self.last_name}"
+  end
+
+  def client_applications=(apps)
+    apps ||= []
+    secret = ReduApps::Application.config.client_application.
+      fetch(:secret, nil)
+    core_app = apps.detect { |a| a['secret'] == secret } || {}
+    self.token = core_app.fetch('user_token', nil)
   end
 end

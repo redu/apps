@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe User do
-  # UID Identificador do usuário Redu
-  it { should respond_to(:uid) }
-  it { should validate_presence_of(:uid) }
-  it { should validate_uniqueness_of(:uid) }
+  # Identificador do usuário Redu
+  it { should respond_to(:core_id) }
+  it { should validate_presence_of(:core_id) }
+  it { should validate_uniqueness_of(:core_id) }
 
   # Login do usuário Redu
   it { should respond_to(:login) }
@@ -28,21 +28,21 @@ describe User do
   it { FactoryGirl.create(:specialist).role.should == :specialist }
 
   # Aplicativos favoritos do usuário (ou simplesmente aplicativos do usuário)
-  it { should have_many(:user_app_associations) }
+  it { should have_many(:user_app_associations).dependent(:destroy) }
   it { should have_many(:apps).through(:user_app_associations) }
 
   # Comentários que usuário cria em aplicativos
-  it { should have_many(:comments) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   # Thumbnail do usuário
   it { should have_attached_file(:thumbnail) }
 
   # Ambientes de que o usuário participa
-  it { should have_many(:user_environment_associations) }
+  it { should have_many(:user_environment_associations).dependent(:destroy) }
   it { should have_many(:environments).through(:user_environment_associations) }
 
   # Disciplinas de que o usuário participa
-  it { should have_many(:user_course_associations) }
+  it { should have_many(:user_course_associations).dependent(:destroy) }
   it { should have_many(:courses).through(:user_course_associations) }
 
   # Campos necessários à autenticação
@@ -58,6 +58,32 @@ describe User do
 
       User.find_by_login_or_email(@user.login).should == @user
       User.find_by_login_or_email(@user.email).should == @user
+    end
+  end
+
+  context '#client_applications' do
+    let(:user) { User.new }
+    let(:apps_example) do
+      [{"user_token"=>"7I8EzS03niDeYTxgKMqsmbFSqN9ZItoEr5N7zUO2", "id"=>12,
+        "name"=>"Portal de aplicativos", "secret" => "xxx"}]
+    end
+
+    it "should assing #token for apps application" do
+      user.client_applications = apps_example
+      user.token.should == apps_example.first["user_token"]
+    end
+
+    it "should not fail with nil" do
+      expect {
+        user.client_applications = nil
+      }.to_not raise_error
+    end
+
+    it "should work with update attributes" do
+      user = FactoryGirl.create(:user)
+      apps_example.first['token'] = "123"
+      user.update_attributes({:client_applications => apps_example})
+      user.token = "123"
     end
   end
 end

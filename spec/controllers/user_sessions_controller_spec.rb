@@ -21,12 +21,15 @@ describe UserSessionsController do
       end
 
       context 'the request is through AJAX' do
+        before do
+          request.env["HTTP_REFERER"] = "http://whereiwas.com"
+        end
         render_views
 
-        it 'changes the header to the nav_local' do
+        it 'should do a redirect back with window.location' do
           xhr :post, :create, @login_params.merge!(:locale => 'pt-BR')
-          response.body.should include("replaceWith")
-          response.body.should include("$newHeader")
+          response.body.should \
+            include("window.location='http://whereiwas.com'")
         end
       end
 
@@ -82,12 +85,15 @@ describe UserSessionsController do
     end
 
     context 'the request is through AJAX' do
+      before do
+        request.env["HTTP_REFERER"] = "http://whereiwas.com"
+      end
       render_views
 
-      it 'changes the nav_local to the header' do
+      it 'should do a redirect back with window.location' do
         xhr :post, :destroy, :locale => 'pt-BR'
-        response.body.should include("replaceWith")
-        response.body.should include("$newHeader")
+        response.body.should \
+          include("window.location='http://whereiwas.com'")
       end
     end
   end

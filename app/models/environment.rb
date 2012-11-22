@@ -3,7 +3,7 @@ class Environment < ActiveRecord::Base
 
   zombify
 
-  attr_accessible :eid, :name, :zombie, :owner
+  attr_accessible :core_id, :name, :zombie, :owner
 
   # Associações
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
@@ -14,8 +14,8 @@ class Environment < ActiveRecord::Base
   has_many :courses
 
   # Validadores
-  validates_uniqueness_of :eid
-  validates_presence_of :eid, :name, :owner
+  validates_uniqueness_of :core_id
+  validates_presence_of :core_id, :name, :owner
 
   # Thumbnail
   has_attached_file :thumbnail,

@@ -7,9 +7,9 @@
     type: indica o tipo de estrela (lightgray, gray ou blue).
 %>
 <li class="oer-star">
-  <% if current_user %>
+  <% if can? :rate, @app %>
     <%= link_to "#{index+1}", rate_app_path(@app, rating: index+1), method: "post", class: "icon-star-full-" + type + "_16_18 show text-replacement", "data-star-color" => type %>
   <% else %>
-    <span class="icon-star-full-" + "<%= type %>" + "_16_18 show text-replacement"><%= index + 1 %></span>
+    <span class="icon-star-full-<%= type %>_16_18 show text-replacement"><%= index + 1 %></span>
   <% end %>
 </li>
