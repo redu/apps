@@ -7,29 +7,29 @@ class ModelHelper
   end
 
   def find(id)
-    @model.send("find_by_#{@model_data['id']}", id)
+    @model.send("find_by_#{@model_data[:mappings][:id]}", id)
   end
 
   def create_zombie(id)
-    zombie = @model.new(@model_data['id'] => id)
+    zombie = @model.new(@model_data[:mappings][:id] => id)
     zombie.save(validate: false)
     zombie
   end
 
   def create_model(payload)
-    temp_model = (find(payload[@model_data[:id]]) or @model.new)
+    temp_model = (find(payload[@model_data[:mappings][:id]]) or @model.new)
     payload.each_pair {|key, value| temp_model.send("#{key.to_s}=", value)} if temp_model.zombie #sets the attributes
     temp_model.save
   end
 
   def update_model(payload)
-    temp_model = (find(payload[@model_data[:id]]) or @model.new)
+    temp_model = (find(payload[@model_data[:mappings][:id]]) or @model.new)
     payload.each_pair {|key, value| temp_model.send("#{key.to_s}=", value)}
     temp_model.save
   end
 
   def destroy_model(payload)
-    temp_model = find(payload[@model_data[:id]])
+    temp_model = find(payload[@model_data[:mappings][:id]])
     temp_model.destroy if temp_model
   end
 
