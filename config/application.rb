@@ -85,6 +85,8 @@ module ReduApps
     config.paperclip = {}
 
     config.redu_domain = "http://www.redu.com.br/"
+
+    # Configurações da aplicação do portal de aplicativos no core.
     config.client_application = {
       :name => "Portal de Aplicativos",
       :secret => 'xxx'

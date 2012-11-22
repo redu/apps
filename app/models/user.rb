@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-  include BaseModel
+  attr_reader :thumbnail_remote_url
 
+  include BaseModel
   zombify
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
@@ -57,11 +58,28 @@ class User < ActiveRecord::Base
     "#{self.first_name} #{self.last_name}"
   end
 
+  # Associa token ao User.
+  #
+  # Ao receber uma lista do tipo:
+  #   [{
+  #    :user_token => "foo",
+  #    :secret => "xxx",
+  #   }]
+  # Associa o :user_toke a self.token caso ReduApps::Application.config.
+  # client_application possua o mesmo :secret. Caso contrário ignora a lista
+  # recebida.
   def client_applications=(apps)
     apps ||= []
     secret = ReduApps::Application.config.client_application.
       fetch(:secret, nil)
     core_app = apps.detect { |a| a['secret'] == secret } || {}
     self.token = core_app.fetch('user_token', nil)
+  end
+
+  # Adiciona thumbnail a partir de URL
+  def thumbnail_remote_url=(url)
+    return unless url
+    self.thumbnail = URI.parse(url)
+    @thumbnail_remote_url = url
   end
 end

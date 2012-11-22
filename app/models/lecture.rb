@@ -12,7 +12,7 @@ class Lecture < ActiveRecord::Base
     conn = Connection.new(params[:token])
     conn.post(post_to_api_url(params[:subject_suid]),
               parse_lecture(params)) do |response, entity|
-      lecture_href = entity['links'].detect {|l| l['rel'] == "self" }['href']
+      lecture_href = entity['links'].detect {|l| l['rel'] == "self_link" }['href']
     end
   end
 
