@@ -23,9 +23,9 @@ describe PayloadProccessor do
     end
 
     it "should not raise error if there is no mappings" do
-      config.delete(:mappings)
-      @processor = PayloadProccessor.new(config)
-
+      new_config = config.clone
+      new_config.delete(:mappings)
+      @processor = PayloadProccessor.new(new_config)
       expect {
         @processor.proccess(payload)
       }.to_not raise_error

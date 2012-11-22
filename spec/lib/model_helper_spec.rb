@@ -6,7 +6,8 @@ describe ModelHelper do
       'last_name' => 'skywalker'} }
 
   before(:all) do
-    @model_helper = ModelHelper.new(ReduApps::Application.config.untied['model_data']['User'])
+    config = ReduApps::Application.config.untied['model_data']['User']
+    @model_helper = ModelHelper.new(config)
     @user = FactoryGirl.create(:user, core_id: 1)
   end
 
