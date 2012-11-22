@@ -9,7 +9,10 @@ User: #Tipo que vem no payload
     - email
     - persistence_token
     - client_applications
-  id: core_id # Como traduzir o id
+    - avatar_url
+  mappings:
+    id: core_id # Como traduzir o id
+    avatar_url: thumbnail_remote_url
   include_data: # Data default que é adicionada
     - role: member
   name: User # Nome do modelo local
@@ -19,7 +22,8 @@ Environment:
     - name
     - id
     - user_id
-  id: core_id
+  mappings:
+    id: core_id
   check_for: # Checa por dependencias
     User: user_id # A chave é o modelo e o valor é como a gente procura por ele
   name: Environment
@@ -30,7 +34,8 @@ Course:
     - id
     - user_id
     - environment_id
-  id: core_id
+  mappings:
+    id: core_id
   check_for:
     Environment: environment_id
     User: user_id
@@ -41,7 +46,8 @@ Space:
     - name
     - id
     - course_id
-  id: core_id
+  mappings:
+    id: core_id
   check_for:
     Course: course_id
   name: Space
@@ -51,7 +57,8 @@ Subject:
     - name
     - id
     - space_id
-  id: core_id
+  mappings:
+    id: core_id
   check_for:
     Space: space_id
   name: Subject
@@ -62,7 +69,8 @@ UserCourseAssociation:
     - user_id
     - course_id
     - role
-  id: core_id
+  mappings:
+    id: core_id
   check_for:
     User: user_id
     Course: course_id
@@ -73,7 +81,8 @@ UserEnvironmentAssociation:
     - id
     - user_id
     - environment_id
-  id: core_id
+  mappings:
+    id: core_id
   check_for:
     User: user_id
     Environment: environment_id

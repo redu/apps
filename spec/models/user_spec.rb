@@ -86,4 +86,35 @@ describe User do
       user.token = "123"
     end
   end
+
+  context "#thumbnail_remote_url" do
+    subject { User.new }
+    let(:url) { "http://foo.bar/foo.png" }
+
+    before do
+      stub_request(:get, url).to_return(:status => 200, :body => "",
+                                        :headers => {})
+    end
+
+    it "should parse the URL" do
+      URI.should_receive(:parse)
+      subject.thumbnail_remote_url = url
+    end
+
+    it "should assing the parsed URL to self.thumbnail" do
+      subject.thumbnail_remote_url = url
+      subject.thumbnail.should_not be_nil
+    end
+
+    it "should defefine readable attribute" do
+      subject.thumbnail_remote_url = url
+      subject.thumbnail_remote_url.should == url
+    end
+
+    it "should not fail if url is nil" do
+      expect {
+        subject.thumbnail_remote_url = nil
+      }.to_not raise_error URI::InvalidURIError
+    end
+  end
 end

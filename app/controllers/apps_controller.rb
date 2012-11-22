@@ -34,13 +34,13 @@ class AppsController < ApplicationController
     @app_categories = Category.get_names_by_kind @app
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(10)
-    @user = current_user
-    @favorite = UserAppAssociation.find_by_user_id_and_app_id(@user,
+    @favorite = UserAppAssociation.find_by_user_id_and_app_id(current_user,
                                                               @app)
+    @app_rating = @app.reputation_for(:rating)
     @evaluations = @app.evaluators_for(:rating).count
-    if @user
-      @evaluated = @app.has_evaluation?(:rating, @user)
-      @user_rating = @app.reputation_for(:rating, nil, @user) if @evaluated
+    if current_user
+      @evaluated = @app.has_evaluation?(:rating, current_user)
+      @user_rating = @app.get_rating_by(current_user) if @evaluated
     end
 
     respond_to do |format|

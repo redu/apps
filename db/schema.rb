@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(:version => 20121122163754) do
   add_index "app_category_associations", ["app_id", "category_id"], :name => "index_app_category_associations_on_app_id_and_category_id"
 
   create_table "apps", :force => true do |t|
+    t.integer  "aid"
     t.string   "name"
     t.string   "author"
     t.string   "language"
@@ -42,12 +43,10 @@ ActiveRecord::Schema.define(:version => 20121122163754) do
     t.integer  "views",                  :default => 0
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
+    t.string   "token"
     t.integer  "core_id"
     t.string   "core_url"
-    t.string   "token"
   end
-
-  add_index "apps", ["core_id"], :name => "index_apps_on_core_id"
 
   create_table "categories", :force => true do |t|
     t.string   "name"

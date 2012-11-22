@@ -7,7 +7,7 @@ describe UntiedObserverHelper do
     let(:user) { { 'id' => 1, 'login' => 'sexy_jedi_3000',
       'email' => 'jedi@concil.com', 'first_name' => 'Luke',
       'password_salt' => '1234', 'crypted_password' => '1234',
-      'last_name' => 'skywalker', coisado: false } } #Outros dados sao irrelevantes...
+      'last_name' => 'skywalker', thingy: false } } #Outros dados sao irrelevantes...
 
     describe "create_user" do
       it "should add user to database" do
@@ -102,7 +102,7 @@ describe UntiedObserverHelper do
       "environment_id" => 1}}
 
     let(:homeless_course) {{"name" => "chaves", "id" => 1,
-      "user_id" => 1, "environment_id" => 57}} #curso sownerronmnet
+      "user_id" => 1, "environment_id" => 57}} #curso sem environment
 
     let(:orphan_course) {{ "name" => "bruce wayne", "id" => 1,
       "user_id" => 77, "environment_id" =>  99 }} #curso sem environment_id e user_id
