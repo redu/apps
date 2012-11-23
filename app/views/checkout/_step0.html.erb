@@ -1,0 +1,15 @@
+<%#
+  Renderiza a janela modal quando o usuário não tem nenhum ambiente.
+
+  Variáveis:
+    step: o passo atual.
+    app: o aplicativo.
+%>
+<div class="modal-body">
+  <div class="apps-portal-add-oer-section">
+    <div class="oer-apps-none">
+        <img alt="Icon-api-gray_128_130" height="130" src="/assets/icon-api-gray_128_130.png" width="128">
+        <p>Para adicionar este Aplicativo a uma Disciplina, você precisa ser Administrador ou Professor de um Ambiente. <br>Deseja criar um Ambiente? Clique em “<%= link_to 'Ensine', redu_static('ensine') %>.</p>
+      </div>
+  </div>
+</div>
