@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121122133651) do
+ActiveRecord::Schema.define(:version => 20121122163754) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(:version => 20121122133651) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.string   "token"
+    t.integer  "core_id"
+    t.string   "core_url"
   end
 
   create_table "categories", :force => true do |t|

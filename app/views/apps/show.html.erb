@@ -79,7 +79,7 @@
 
         <%# Botões. %>
         <div class="oer-buttons">
-          <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.url %>">Abrir este Recurso</button>
+          <button class="button-default" data-toggle="modal-app" data-modal-title="<%= @app.name %>" data-modal-subtitle="<%= @app.author %>" data-modal-url="<%= @app.core_url %>">Abrir este Recurso</button>
           <% if can? :create, UserAppAssociation.new(app: @app)   %>
             <%= form_tag user_favorites_path(current_user), method: "post" do %>
               <%= hidden_field_tag :app_id , @app.id %>
