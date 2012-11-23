@@ -21,4 +21,12 @@ class Environment < ActiveRecord::Base
   has_attached_file :thumbnail,
     ReduApps::Application.config.paperclip.merge({styles: { medium: "300x300>",
                                                             thumb: "100x100>" }})
+  def self.with_admin_permission(user)
+    roles = [UserCourseAssociation.teacher,
+      UserCourseAssociation.environment_admin]
+
+    Environment.includes({courses: [:spaces, :user_course_associations]}).
+      where("user_course_associations.user_id" => user.id,
+      "user_course_associations.role_cd" => roles)
+  end
 end

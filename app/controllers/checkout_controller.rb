@@ -31,7 +31,7 @@ class CheckoutController < ApplicationController
 
   def step_1
     get_params([:previous_step], params)
-    @environments = current_user.environments(include: { courses: :spaces })
+    @environments = Environment.with_admin_permission(current_user)
     @next_step = 2
 
     respond_to do |format|
@@ -79,11 +79,20 @@ class CheckoutController < ApplicationController
   end
 
   def create_subject_via_api
-    Subject.create_via_api(space_sid: Space.find(@space_id).core_id,
+    space = Space.find(@space_id)
+    auth_subject = Subject.new
+    auth_subject.space = space
+
+    authorize! :create, auth_subject
+    Subject.create_via_api(space_sid: space.core_id,
                            subject: @subject, token: current_user.token)
   end
 
   def create_lecture_via_api
+    auth_lecture = Lecture.new
+    auth_lecture.subject = @subject
+
+    authorize! :create, auth_lecture
     Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
                            subject_suid: @subject.core_id,
                            token: current_user.token)
