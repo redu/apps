@@ -1,11 +1,10 @@
 # encoding: utf-8
 
 class App < ActiveRecord::Base
-  attr_accessible :aid, :name, :thumbnail, :views, :url, :author, :language
+  attr_accessible :core_id, :name, :thumbnail, :views, :url, :author, :language
 
-  validates_presence_of :aid, :name, :author, :language
-
-  validates_uniqueness_of :aid
+  validates_presence_of :core_id, :name, :author, :language, :core_url
+  validates_uniqueness_of :core_id
 
   # Categorias
   has_many :app_category_associations, dependent: :destroy

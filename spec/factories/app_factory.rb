@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :app do
-    sequence(:aid)
+    sequence(:core_id)
+    sequence(:core_url) { |n| "http://redu-java-applets.heroku.com/applets/#{n}/include" }
     sequence(:name) { |n| "Recurso Educacional Aberto #{n}" }
     author "Redu Educational Technologies"
     language "Portugues (pt_BR)"
