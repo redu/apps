@@ -97,7 +97,7 @@ class CheckoutController < ApplicationController
     auth_subject = Subject.new
     auth_subject.space = space
 
-    authorize! :create, auth_subject
+    #authorize! :create, auth_subject
 
     Subject.create_via_api(space_sid: space.core_id,
                            subject: subject_name, token: current_user.token)
@@ -107,7 +107,7 @@ class CheckoutController < ApplicationController
     auth_lecture = Lecture.new
     auth_lecture.subject = subject
 
-    authorize! :create, auth_lecture
+    #authorize! :create, auth_lecture
 
     Lecture.create_via_api(lecture: lecture_name, aid: @app.core_id,
                            subject_suid: subject.core_id,
