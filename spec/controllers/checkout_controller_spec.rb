@@ -133,6 +133,11 @@ describe CheckoutController do
 
       context 'when Redu API returns Unauthorized status code' do
         before do
+          UserCourseAssociation.create(user: @user) do |uca|
+            uca.course_id = @course.id
+            uca.role = UserCourseAssociation.teacher
+          end # O user tem que ter permissão para passar do authorize!
+
           stub_request(:post, ReduApps::Application.config.api_url +
                               Subject.post_to_api_url(@space.core_id)).
             to_return(status: 401)
@@ -148,6 +153,11 @@ describe CheckoutController do
 
       context 'when Redu API returns BadRequest status code' do
         before do
+          UserCourseAssociation.create(user: @user) do |uca|
+            uca.course_id = @course.id
+            uca.role = UserCourseAssociation.teacher
+          end # O user tem que ter permissão para passar do authorize!
+
           stub_request(:post, ReduApps::Application.config.api_url +
                               Subject.post_to_api_url(@space.core_id)).
             to_return(status: 422)

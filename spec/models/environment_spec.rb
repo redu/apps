@@ -24,4 +24,32 @@ describe Environment do
 
   # Cursos do Ambiente
   it { should have_many(:courses) }
+
+  context  "Associations" do
+    before do
+      @course = FactoryGirl.create(:course)
+      @course2 = FactoryGirl.create(:course)
+
+      UserCourseAssociation.create(user: @course.owner) do |c|
+        c.course_id = @course.id
+        c.role = UserCourseAssociation.teacher
+      end
+
+      UserCourseAssociation.create(user: @course.owner) do |c|
+        c.course_id = @course2.id
+        c.role = UserCourseAssociation.member
+      end # Ruído
+    end
+
+    it 'Does not Retrive environments whoose courses are not able to have apps added to them' do
+      environments = Environment.with_admin_permission(@course.owner)
+      environments.should_not include(@course2.environment)
+    end
+
+    it ' Retrives environments whoose courses are not able to have apps added to them' do
+      environments = Environment.with_admin_permission(@course.owner)
+      environments.should include(@course.environment)
+    end
+  end
+
 end
