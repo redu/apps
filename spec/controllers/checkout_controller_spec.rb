@@ -39,7 +39,6 @@ describe CheckoutController do
     end
 
     context 'after step 1' do
-
       context 'when performing a valid request' do
         before do
           post :update, @params.merge(space_id: @space.id, step: 2,
@@ -67,7 +66,6 @@ describe CheckoutController do
     end
 
     context 'after step 2' do
-
       context 'when performing a valid request' do
         before do
           post :update, @params.merge(space_id: @space.id, create_subject: false,
