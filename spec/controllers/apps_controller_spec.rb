@@ -54,9 +54,9 @@ describe AppsController do
       end
 
       it "increments app views counter" do
-        before = @app.views
+        visualizations = @app.views
         get :show, @params
-        App.find(@app.id).views.should == before + 1
+        App.find(@app.id).views.should == visualizations + 1
       end
 
       it "assigns the proper app" do
@@ -64,15 +64,15 @@ describe AppsController do
         assigns(:app).should == App.find(@params[:id])
       end
 
+      it "assigns app reputation for rating" do
+        get :show, @params
+        assigns(:app_rating).should == @app.reputation_for(:rating)
+      end
+
       context "when user is logged in" do
         before do
           @user = FactoryGirl.create(:user)
           controller.stub(current_user: @user)
-        end
-
-        it "assigns the current user" do
-          get :show, @params
-          assigns(:user).should == @user
         end
 
         it "assigns a bool which indicates wheter the user has rated" do
@@ -82,7 +82,9 @@ describe AppsController do
 
         context "and has rated the app" do
           before do
+            another_user = FactoryGirl.create(:user)
             @user_rating = 5
+            @app.add_evaluation(:rating, 1, another_user)
             @app.add_evaluation(:rating, @user_rating, @user)
             get :show, @params
           end

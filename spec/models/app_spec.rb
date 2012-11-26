@@ -2,10 +2,15 @@
 require 'spec_helper'
 
 describe App do
-  # AID (ID do aplicativo no Redu)
-  it { should respond_to(:aid) }
-  it { should validate_presence_of(:aid) }
-  it { should validate_uniqueness_of(:aid) }
+  subject { create(:app) }
+  # ID do aplicativo no Redu
+  it { should respond_to(:core_id) }
+  it { should validate_presence_of(:core_id) }
+  it { should validate_uniqueness_of(:core_id) }
+
+  # URL do aplicativo no Redu
+  it { should respond_to(:core_url) }
+  it { should validate_presence_of(:core_url) }
 
   # Nome
   it { should respond_to(:name) }
@@ -69,10 +74,16 @@ describe App do
   # Screenshots do aplicativo
   it { should have_many(:screen_shots).dependent(:destroy) }
 
+  # Id do app no redu
+  it { should respond_to(:core_id) }
+
+  # Url do objeto do aplicativo
+  it { should respond_to(:core_url) }
+
   describe "has many categories" do
     before do
-      @app = FactoryGirl.create(:app)
-      @category = Category.create(name: "Rock School")
+      @category = FactoryGirl.create(:category)
+      subject.categories << @category
     end
 
     it "should not destroy app when associated categories are destroyed" do
@@ -118,5 +129,14 @@ describe App do
         App.is_valid_rating_value?(valid_value).should be_true
       end
     end
+  end
+
+  it "should get rating by user" do
+    user = FactoryGirl.create(:user)
+    user_rating = 5
+    another_user = FactoryGirl.create(:user)
+    subject.add_or_update_evaluation(:rating, user_rating, user)
+    subject.add_or_update_evaluation(:rating, 1, another_user)
+    subject.get_rating_by(user).should == user_rating
   end
 end

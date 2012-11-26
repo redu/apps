@@ -6668,8 +6668,11 @@ hr {
   clear: both;
 }
 
-.general-list-item-column {
+.general-list-item-column:first-child {
   float: left;
+}
+.general-list-item-column:last-child {
+  overflow: hidden;
 }
 .general-list-item-column .general-list-item-title +
 .legend {
@@ -6693,7 +6696,7 @@ hr {
 }
 .general-list-item-column +
 .general-list-item-column {
-  margin-left: 10px;
+  padding-left: 10px;
 }
 
 .general-list-item-counters {

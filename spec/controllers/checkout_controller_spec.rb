@@ -39,7 +39,6 @@ describe CheckoutController do
     end
 
     context 'after step 1' do
-
       context 'when performing a valid request' do
         before do
           post :update, @params.merge(space_id: @space.id, step: 2,
@@ -53,6 +52,10 @@ describe CheckoutController do
         it 'assigns space_id variable' do
           assigns(:space_id).to_i.should == @space.id
         end
+
+        it 'assings environment variable' do
+          assigns(:environments).should == @user.environments
+        end
       end
 
       it 'should not render step 2 if space_id missing' do
@@ -63,7 +66,6 @@ describe CheckoutController do
     end
 
     context 'after step 2' do
-
       context 'when performing a valid request' do
         before do
           post :update, @params.merge(space_id: @space.id, create_subject: false,
@@ -76,6 +78,10 @@ describe CheckoutController do
 
         it 'assigns create_subject variable' do
           assigns(:create_subject).should be_false
+        end
+
+        it 'assings environment variable' do
+          assigns(:environments).should == @user.environments
         end
       end
 
@@ -95,8 +101,8 @@ describe CheckoutController do
           stub_request(:post, ReduApps::Application.config.api_url +
                               Lecture.post_to_api_url(@subject.core_id)).
             to_return(status: 201, body: { name: lecture_name, id: 713,
-              links: [{ rel: 'self',
-                        href: 'http://www.redu.com.br/api/lectures/1'}] }.to_json)
+              links: [{ rel: 'self_link',
+                        href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'false',
                              lecture: lecture_name, subject: @subject.id)
@@ -115,8 +121,8 @@ describe CheckoutController do
           stub_request(:post, ReduApps::Application.config.api_url +
                               Lecture.post_to_api_url(new_redu_subject_id)).
             to_return(status: 201, body: { name: lecture_name, id: 713,
-              links: [{ rel: 'self',
-                        href: 'http://www.redu.com.br/api/lectures/1'}] }.to_json)
+              links: [{ rel: 'self_link',
+                        href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
           post :update,
                @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
                              lecture: lecture_name, subject: subject_name)

@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :app do
-    sequence(:aid)
+    sequence(:core_id)
+    sequence(:core_url) { |n| "http://redu-java-applets.heroku.com/applets/#{n}/include" }
     sequence(:name) { |n| "Recurso Educacional Aberto #{n}" }
     author "Redu Educational Technologies"
     language "Portugues (pt_BR)"
@@ -24,7 +25,7 @@ FactoryGirl.define do
 
       factory :complete_app_with_comments do
         after(:create) do |app|
-          2.times do 
+          2.times do
             app.comments << FactoryGirl.create(:specialized_comment, :app => app)
             app.comments << FactoryGirl.create(:comment, :app => app)
           end

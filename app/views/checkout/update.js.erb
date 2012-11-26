@@ -22,6 +22,9 @@
   var $modalNextStep = $("#app-checkout-step-<%= @previous_step %>");
   $modalNextStep.length && $modalNextStep.modal("hide");
 
+  <%# Redireciona para a modal de quando o usuário não possui ambientes. %>
+  <% @next_step = 1 if @environments.empty? %>
+
   $('<%= escape_javascript render "step", step: (@next_step - 1), app: @app,
                                   environments: @environments, space: @space,
                                   create_subject: @create_subject %>')

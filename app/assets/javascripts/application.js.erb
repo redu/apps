@@ -72,7 +72,9 @@ $(function() {
       .append($(document.createElement('iframe')).attr({
         'frameborder': '0',
         'scrolling': 'no',
-        'src': $this.data('modal-url')
+        'src': $this.data('modal-url'),
+        'width' : '720px',
+        'height' : '340px',
       }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')
@@ -196,6 +198,25 @@ $(function() {
   // No cancelar, remove também a classe de aberto.
   $(document).on("click", "." + containerClass + " .cancel", function(e) {
     $("." + buttonReviewClass + ", ." + buttonCommentClass).parent().removeClass(openClass);
+  });
+
+  // Carregamento assíncrono
+  $.cachedScript = function(url) {
+    options = {
+      dataType: "script",
+      cache: true,
+      url: url
+    };
+
+    return $.ajax(options);
+  };
+
+  $.cachedScript("<%= asset_path('olark.js') %>");
+  $.cachedScript("http://use.typekit.com/lpo4rgu.js").done(function() {
+    try {
+      Typekit.load();
+      $(".typekit-badge").css("left", "0");
+    }catch(e){}
   });
 });
 
