@@ -7,9 +7,8 @@ module LectureAbility
         roles = [ UserCourseAssociation.environment_admin,
           UserCourseAssociation.teacher ]
 
-        UserCourseAssociation.includes(course: {spaces: :subjects}).
-          where("subjects.id" => lecture.subject.id, "user_id" => user.id,
-            "role_cd" => roles).exists?
+        UserCourseAssociation.where(course_id: lecture.subject.space.course_id,
+          user_id: user.id, role_cd: roles).exists?
       end
     end
   end

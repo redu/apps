@@ -24,7 +24,6 @@ describe 'Subject Ability' do
     end
 
     context 'when user has admin rights' do
-
       it 'should be able to create a subject' do
         subject.should be_able_to(:create,
           FactoryGirl.build(:subject, space: @space))
@@ -32,7 +31,6 @@ describe 'Subject Ability' do
     end
 
     context 'when user does not have admin rights' do
-
       it 'should not be able to create a subject' do
         @association.role = UserCourseAssociation.member #Membro
         @association.save

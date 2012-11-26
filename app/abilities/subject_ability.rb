@@ -7,9 +7,8 @@ module SubjectAbility
         roles = [ UserCourseAssociation.environment_admin,
           UserCourseAssociation.teacher ]
 
-        UserCourseAssociation.includes(course: :spaces).
-          where("spaces.id" => subject.space.id, "user_id" => user.id,
-            "role_cd" => roles).exists?
+        UserCourseAssociation.where(course_id: subject.space.course_id,
+          user_id: user.id, role_cd: roles).exists?
       end
     end
   end

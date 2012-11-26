@@ -21,23 +21,20 @@ describe 'Lecture Ability' do
         uca.course_id = @subject.space.course.id
         uca.role = UserCourseAssociation.environment_admin
       end
+      @lecture = FactoryGirl.build(:lecture, subject: @subject)
     end
 
     context 'with admin rights' do
-
       it 'should be able to create a lecture' do
-        subject.should be_able_to(:create, FactoryGirl.build(:lecture,
-        subject: @subject))
+        subject.should be_able_to(:create, @lecture)
       end
     end
 
     context 'without admin rights' do
-
       it 'should not be to create a lecture' do
         @association.role = UserCourseAssociation.member
         @association.save
-        subject.should_not be_able_to(:create, FactoryGirl.build(:lecture,
-          subject: @subject))
+        subject.should_not be_able_to(:create, @lecture)
       end
     end
   end

@@ -63,8 +63,8 @@ class CheckoutController < ApplicationController
     get_params([:space_id, :create_subject, :lecture, :subject], params)
     @next_step = 4
     @space = Space.find_by_id(@space_id)
-    @subject = @create_subject == 'true' ? create_subject_via_api : Subject.find(@subject)
-    @lecture_href = create_lecture_via_api
+    @subject = @create_subject == 'true' ? create_subject_via_api(@space_id, @subject) : Subject.find(@subject)
+    @lecture_href = create_lecture_via_api(@subject, @lecture)
 
     respond_to do |format|
       format.js
@@ -78,23 +78,25 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def create_subject_via_api
-    space = Space.find(@space_id)
+  def create_subject_via_api(space_id, subject_name)
+    space = Space.find(space_id)
     auth_subject = Subject.new
     auth_subject.space = space
 
     authorize! :create, auth_subject
+
     Subject.create_via_api(space_sid: space.core_id,
-                           subject: @subject, token: current_user.token)
+                           subject: subject_name, token: current_user.token)
   end
 
-  def create_lecture_via_api
+  def create_lecture_via_api(subject, lecture_name)
     auth_lecture = Lecture.new
-    auth_lecture.subject = @subject
+    auth_lecture.subject = subject
 
     authorize! :create, auth_lecture
-    Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
-                           subject_suid: @subject.core_id,
+
+    Lecture.create_via_api(lecture: lecture_name, aid: @app.aid,
+                           subject_suid: subject.core_id,
                            token: current_user.token)
   end
 

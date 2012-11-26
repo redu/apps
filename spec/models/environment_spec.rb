@@ -26,22 +26,29 @@ describe Environment do
   it { should have_many(:courses) }
 
   context  "Associations" do
-    it "Retrives environments whoose courses are able to have apps added to them" do
-      course = FactoryGirl.create(:course)
-      course2 = FactoryGirl.create(:course)
+    before do
+      @course = FactoryGirl.create(:course)
+      @course2 = FactoryGirl.create(:course)
 
-      UserCourseAssociation.create(user: course.owner) do |c|
-        c.course_id = course.id
+      UserCourseAssociation.create(user: @course.owner) do |c|
+        c.course_id = @course.id
         c.role = UserCourseAssociation.teacher
       end
 
-      UserCourseAssociation.create(user: course.owner) do |c|
-        c.course_id = course2.id
+      UserCourseAssociation.create(user: @course.owner) do |c|
+        c.course_id = @course2.id
         c.role = UserCourseAssociation.member
-      end #RUIDO
+      end # Ruído
+    end
 
-      environments = Environment.with_admin_permission(course.owner)
-      environments.should_not include(course2.environment)
+    it 'Does not Retrive environments whoose courses are not able to have apps added to them' do
+      environments = Environment.with_admin_permission(@course.owner)
+      environments.should_not include(@course2.environment)
+    end
+
+    it ' Retrives environments whoose courses are not able to have apps added to them' do
+      environments = Environment.with_admin_permission(@course.owner)
+      environments.should include(@course.environment)
     end
   end
 
