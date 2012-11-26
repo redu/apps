@@ -15,8 +15,8 @@
         <%= link_to truncate(app.name, :length => 40), app_path(app),
             title: app.name, class: "general-list-item-title-link" %>
       </h4>
-      <span class="legend">Autor: <%= app.author %></span>
       <span class="legend"><%= names_for(Category.get_by_kind(app, 'Nível')) %></span>
+      <span class="legend">Autor: <%= app.author %></span>
       <span class="legend">Língua: <%= app.language %></span>
       <% has_subarea = Category.get_by_kind(app, 'Subárea').length > 0 %>
       <% if Category.get_by_kind(app, 'Área').length > 0 %>
