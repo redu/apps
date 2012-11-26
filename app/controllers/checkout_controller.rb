@@ -21,6 +21,8 @@ class CheckoutController < ApplicationController
 
     @app_id = params[:app_id]
     @app = App.find_by_id(@app_id)
+    @environments = current_user.environments(include: { courses: :spaces })
+
     case params[:step]
     when '1'
       step_1
@@ -50,7 +52,6 @@ class CheckoutController < ApplicationController
   def step_2
     get_params([:space_id, :previous_step], params)
     @space = Space.find_by_id(@space_id)
-    @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 3
 
     respond_to do |format|

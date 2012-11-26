@@ -79,6 +79,10 @@ describe CheckoutController do
         it 'assigns create_subject variable' do
           assigns(:create_subject).should be_false
         end
+
+        it 'assings environment variable' do
+          assigns(:environments).should == @user.environments
+        end
       end
 
       it 'should not render step 3 if missing params' do
