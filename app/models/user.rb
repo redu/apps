@@ -79,7 +79,22 @@ class User < ActiveRecord::Base
   # Adiciona thumbnail a partir de URL
   def thumbnail_remote_url=(url)
     return unless url
-    self.thumbnail = URI.parse(url)
+    assign_thumbnail(url)
     @thumbnail_remote_url = url
+  end
+
+  protected
+
+  # Tenta atribuir url ao thumbnail, se o erro OpenURI::HTTPError
+  # é levantado, trata-se o erro logando ele no console de rails
+  # e atribui-se nil.
+  def assign_thumbnail(url)
+    begin
+      self.thumbnail = URI.parse(url)
+    rescue OpenURI::HTTPError => e
+      self.thumbnail = nil
+      Rails.logger.error "Error: #{e.message}"
+      Rails.logger.error "Entity: #{self.inspect}"
+    end
   end
 end
