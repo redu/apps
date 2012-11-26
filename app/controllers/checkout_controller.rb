@@ -41,7 +41,6 @@ class CheckoutController < ApplicationController
 
   def step_1
     get_params([:previous_step], params)
-    @environments = current_user.environments(include: { courses: :spaces })
     @next_step = 2
 
     respond_to do |format|
@@ -98,7 +97,7 @@ class CheckoutController < ApplicationController
   end
 
   def create_lecture_via_api
-    Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
+    Lecture.create_via_api(lecture: @lecture, aid: @app.core_id,
                            subject_suid: @subject.core_id,
                            token: current_user.token)
   end
