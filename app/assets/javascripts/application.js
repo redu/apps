@@ -74,7 +74,7 @@ $(function() {
         'scrolling': 'no',
         'src': $this.data('modal-url'),
         'width' : '720px',
-        'height' : '600px',
+        'height' : '340px',
       }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')
