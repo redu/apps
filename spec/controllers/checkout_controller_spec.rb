@@ -53,6 +53,10 @@ describe CheckoutController do
         it 'assigns space_id variable' do
           assigns(:space_id).to_i.should == @space.id
         end
+
+        it 'assings environment variable' do
+          assigns(:environments).should == @user.environments
+        end
       end
 
       it 'should not render step 2 if space_id missing' do
