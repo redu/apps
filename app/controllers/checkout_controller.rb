@@ -109,7 +109,7 @@ class CheckoutController < ApplicationController
 
     authorize! :create, auth_lecture
 
-    Lecture.create_via_api(lecture: lecture_name, aid: @app.aid,
+    Lecture.create_via_api(lecture: lecture_name, aid: @app.core_id,
                            subject_suid: subject.core_id,
                            token: current_user.token)
   end
