@@ -49,7 +49,8 @@
     <div class="filters">
       <% @categories.each do |cat| %>
         <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
-                    apps_path(filter: filters_url(@filter, cat), search: @search),
+                    apps_path(filter: filters_url(@filter, cat, @categories.length),
+                              search: @search),
                     :class => filter_class(@filter, cat) %>
       <% end %>
     </div>
