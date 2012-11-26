@@ -66,7 +66,7 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user' do
         helper.create_proxy("environment", environment_no_owner)
-        User.find_by_core_id(environment_no_owner['user_id']).should_not be_nil
+        User.unscoped.find_by_core_id(environment_no_owner['user_id']).should_not be_nil
       end
 
       it 'should complete zombie environment' do
@@ -127,13 +127,13 @@ describe UntiedObserverHelper do
 
       it 'should create zombie environment' do
         helper.create_proxy("course", homeless_course)
-        Environment.find_by_core_id(homeless_course["environment_id"]).should_not be_nil
+        Environment.unscoped.find_by_core_id(homeless_course["environment_id"]).should_not be_nil
       end
 
       it 'should create zombie owner and environment' do
         helper.create_proxy("course", orphan_course)
-        Environment.find_by_core_id(orphan_course["environment_id"]).should_not be_nil
-        User.find_by_core_id(orphan_course["user_id"]).should_not be_nil
+        Environment.unscoped.find_by_core_id(orphan_course["environment_id"]).should_not be_nil
+        User.unscoped.find_by_core_id(orphan_course["user_id"]).should_not be_nil
       end
 
       it 'should comple zombie course' do
@@ -190,7 +190,7 @@ describe UntiedObserverHelper do
 
       it 'should create zombie course' do
         helper.create_proxy("space", orphan_space)
-        Course.find_by_core_id(orphan_space["course_id"]).should_not be_nil
+        Course.unscoped.find_by_core_id(orphan_space["course_id"]).should_not be_nil
       end
 
       it 'should complete zombie space' do
@@ -248,7 +248,7 @@ describe UntiedObserverHelper do
 
       it 'should create zombie space' do
         helper.create_proxy("subject", orphan_subject)
-        Space.find_by_core_id(orphan_subject["space_id"]).should_not be_nil
+        Space.unscoped.find_by_core_id(orphan_subject["space_id"]).should_not be_nil
       end
 
       it 'should complete zombie subject' do
@@ -306,14 +306,14 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user and course' do
         helper.create_proxy("user_course_association", orphan_association)
-        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
-        Course.find_by_core_id(orphan_association['course_id']).should_not be_nil
+        User.unscoped.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Course.unscoped.find_by_core_id(orphan_association['course_id']).should_not be_nil
       end
 
       it 'should complete zombie association' do
         UserCourseAssociation.new(core_id: orphan_association['id']).save(validate: false)
         helper.create_proxy("user_course_association", association)
-        UserCourseAssociation.find_by_core_id(orphan_association['id']).should be_valid
+        UserCourseAssociation.unscoped.find_by_core_id(orphan_association['id']).should be_valid
       end
     end
 
@@ -341,7 +341,7 @@ describe UntiedObserverHelper do
       "user_id" => 1, "role" => 2, "environment_id" => 1, "id" => 1,
       "created_at" => "2012-11-06T09:18:23-02:00" }}
     let(:orphan_association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
-      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 123,
+      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 1,
       "created_at" => "2012-11-06T09:18:23-02:00" }}
 
     before(:all) do
@@ -361,8 +361,8 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user and environment' do
         helper.create_proxy("user_environment_association", orphan_association)
-        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
-        Environment.find_by_core_id(orphan_association['environment_id']).
+        User.unscoped.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Environment.unscoped.find_by_core_id(orphan_association['environment_id']).
           should_not be_nil
       end
 

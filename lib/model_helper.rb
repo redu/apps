@@ -7,7 +7,8 @@ class ModelHelper
   end
 
   def find(id)
-    @model.send("find_by_#{@model_data[:mappings][:id]}", id)
+    # Unscoped para encontrar zombies
+    @model.unscoped.send("find_by_#{@model_data[:mappings][:id]}", id)
   end
 
   def create_zombie(id)

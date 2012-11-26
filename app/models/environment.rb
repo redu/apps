@@ -1,7 +1,7 @@
 class Environment < ActiveRecord::Base
-  include BaseModel
+  include Zombificator::ActAsZombie
 
-  zombify
+  act_as_zombie
 
   attr_accessible :core_id, :name, :zombie, :owner
 

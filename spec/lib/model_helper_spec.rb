@@ -30,7 +30,7 @@ describe ModelHelper do
 
     it 'should create zombie model' do
       @model_helper.create_zombie(99)
-      User.find_by_core_id(99).should_not be_nil
+      User.unscoped.find_by_core_id(99).should_not be_nil
     end
   end
 

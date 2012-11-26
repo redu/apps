@@ -1,6 +1,7 @@
 class Subject < ActiveRecord::Base
-  include BaseModel
-  zombify
+  include Zombificator::ActAsZombie
+
+  act_as_zombie
 
   attr_accessible :name, :core_id, :space
 
