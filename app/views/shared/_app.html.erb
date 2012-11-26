@@ -16,12 +16,12 @@
             title: app.name, class: "general-list-item-title-link" %>
       </h4>
       <span class="legend"><%= names_for(Category.get_by_kind(app, 'Nível')) %></span>
-      <span class="legend">Autor: <%= app.author %></span>
-      <span class="legend">Língua: <%= app.language %></span>
+      <span class="legend"><em>Autor:</em> <%= app.author %></span>
+      <span class="legend"><em>Língua:</em> <%= app.language %></span>
       <% has_subarea = Category.get_by_kind(app, 'Subárea').length > 0 %>
       <% if Category.get_by_kind(app, 'Área').length > 0 %>
         <span class="legend">
-          Área: <%= names_for(Category.get_by_kind(app, 'Área')) %><%= ':' if has_subarea %>
+          <em>Área:</em> <%= names_for(Category.get_by_kind(app, 'Área')) %><%= ':' if has_subarea %>
           <%= names_for(Category.get_by_kind(app, 'Subárea')) if has_subarea %>
         </span>
       <% end %>
