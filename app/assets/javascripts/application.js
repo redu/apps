@@ -72,7 +72,9 @@ $(function() {
       .append($(document.createElement('iframe')).attr({
         'frameborder': '0',
         'scrolling': 'no',
-        'src': $this.data('modal-url')
+        'src': $this.data('modal-url'),
+        'width' : '720px',
+        'height' : '600px',
       }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')
