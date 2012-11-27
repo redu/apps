@@ -1,7 +1,7 @@
 class Space < ActiveRecord::Base
-  include Zombificator::ActAsZombie
+  include Untied::Zombificator::ActAsZombie
 
-  act_as_zombie
+  acts_as_zombie
 
   attr_accessible :name, :core_id, :course
 

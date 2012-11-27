@@ -1,7 +1,7 @@
 class UserEnvironmentAssociation < ActiveRecord::Base
-  include Zombificator::ActAsZombie
+  include Untied::Zombificator::ActAsZombie
 
-  act_as_zombie
+  acts_as_zombie
 
   attr_accessible :core_id
 
