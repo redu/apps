@@ -20,6 +20,12 @@ describe CheckoutController do
         c.owner = User.last
         c.environment = @env
       end
+
+      UserCourseAssociation.create(user: @user) do |uca|
+        uca.course = @course
+        uca.role = UserCourseAssociation.teacher
+      end # O user tem que estar matriculado em um
+
       @env.courses << @course
       @space = Space.create(name: "espaco",
         core_id: 231) { |s| s.course = @course }
@@ -54,7 +60,7 @@ describe CheckoutController do
         end
 
         it 'assings environment variable' do
-          assigns(:environments).should == @user.environments
+          assigns(:environments).should == Environment.with_admin_permission(@user)
         end
       end
 
@@ -81,7 +87,7 @@ describe CheckoutController do
         end
 
         it 'assings environment variable' do
-          assigns(:environments).should == @user.environments
+          assigns(:environments).should == Environment.with_admin_permission(@user)
         end
       end
 
@@ -133,11 +139,6 @@ describe CheckoutController do
 
       context 'when Redu API returns Unauthorized status code' do
         before do
-          UserCourseAssociation.create(user: @user) do |uca|
-            uca.course_id = @course.id
-            uca.role = UserCourseAssociation.teacher
-          end # O user tem que ter permissão para passar do authorize!
-
           stub_request(:post, ReduApps::Application.config.api_url +
                               Subject.post_to_api_url(@space.core_id)).
             to_return(status: 401)
@@ -153,11 +154,6 @@ describe CheckoutController do
 
       context 'when Redu API returns BadRequest status code' do
         before do
-          UserCourseAssociation.create(user: @user) do |uca|
-            uca.course_id = @course.id
-            uca.role = UserCourseAssociation.teacher
-          end # O user tem que ter permissão para passar do authorize!
-
           stub_request(:post, ReduApps::Application.config.api_url +
                               Subject.post_to_api_url(@space.core_id)).
             to_return(status: 422)
