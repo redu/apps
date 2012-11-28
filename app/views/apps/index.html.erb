@@ -56,10 +56,10 @@
   </div>
 
   <div class="oer-apps-wrapper">
-    <ul id="apps" class="list-2-columns list-columns-separator">
+    <div id="apps" class="apps-list">
       <%= render partial: 'shared/app', collection: @apps,
-                 locals: { favorite_flag: false } %>
-    </ul>
+                 locals: { favorite_flag: false, total: @apps.count } %>
+    </div>
   </div>
 
   <% if @apps.num_pages > 1 %>

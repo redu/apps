@@ -1,4 +1,4 @@
-<li class="general-list-item">
+<div class="apps-list-item general-list-item">
   <% if favorite_flag %>
     <%= link_to "Remover dos favoritos", user_favorite_path(current_user, App.favorited_by([app], current_user)),
                 :confirm => "Esta ação irá remover este aplicativo dos seus favoritos. Deseja continuar?", :method => :delete,
@@ -47,4 +47,7 @@
   <% if favorite_flag %>
     <button class="button-default" data-toggle="modal-app" data-modal-title="<%= app.name %>" data-modal-subtitle="<%= app.author %>" data-modal-url="<%= app.core_url %>">Abrir</button>
   <% end %>
-</li>
+</div>
+<% if display_separator(app_counter + 1, total) %>
+  <hr>
+<% end %>
