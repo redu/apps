@@ -5,8 +5,7 @@ class UntiedGeneralObserver < UntiedObserverHelper
   def initialize
     super
 
-    elements =   ReduApps::Application.config.untied['model_data'].
-      values.collect {|v| v['name'].underscore.to_sym }
+    elements = self.config.values.collect {|v| v['name'].underscore.to_sym }
     self.class.observe(*elements, :from => :core)
   end
 
