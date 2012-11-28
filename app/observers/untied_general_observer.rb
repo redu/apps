@@ -2,9 +2,6 @@ class UntiedGeneralObserver < UntiedObserverHelper
   # Observa todos os objetos relevantes do redu, faz uso do helper para criação
   # dos modelos
 
-  # observe(:user, :environment, :course, :space, :subject,
-  #   :user_course_association, :user_environment_association, :from => :core)
-
   def initialize
     super
 
