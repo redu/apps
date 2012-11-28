@@ -21,7 +21,6 @@ class CheckoutController < ApplicationController
 
     @app_id = params[:app_id]
     @app = App.find_by_id(@app_id)
-    @environments = Environment.with_admin_permission(current_user)
 
     case params[:step]
     when '1'
@@ -41,7 +40,13 @@ class CheckoutController < ApplicationController
 
   def step_1
     get_params([:previous_step], params)
-    @next_step = 2
+    @environments = Environment.with_admin_permission(current_user)
+
+    if @environments.empty?
+      @next_step = 1
+    else
+      @next_step = 2
+    end
 
     respond_to do |format|
       format.js

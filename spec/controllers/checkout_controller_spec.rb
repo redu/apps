@@ -85,10 +85,6 @@ describe CheckoutController do
           it 'assigns space_id variable' do
             assigns(:space_id).to_i.should == @space.id
           end
-
-          it 'assings environment variable' do
-            assigns(:environments).should == Environment.with_admin_permission(@user)
-          end
         end
 
         context 'without valid params' do
@@ -113,10 +109,6 @@ describe CheckoutController do
 
           it 'assigns create_subject variable' do
             assigns(:create_subject).should be_false
-          end
-
-          it 'assings environment variable' do
-            assigns(:environments).should == Environment.with_admin_permission(@user)
           end
         end
 
