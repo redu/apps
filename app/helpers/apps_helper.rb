@@ -97,4 +97,17 @@ module AppsHelper
   def step_active_class(step, current_step)
     " apps-portal-add-oer-step-current" if step == current_step
   end
+
+  # Retorna "N/A" (Not Applicable) se info não existir.
+  def verify_availability(info, is_link = false)
+    if info.nil?
+      "N/A"
+    else
+      if is_link
+        link_to(info, info)
+      else
+        info
+      end
+    end
+  end
 end

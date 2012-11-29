@@ -91,30 +91,53 @@ describe User do
     subject { User.new }
     let(:url) { "http://foo.bar/foo.png" }
 
-    before do
-      stub_request(:get, url).to_return(:status => 200, :body => "",
-                                        :headers => {})
+    context "when the url is accessible" do
+      before do
+        stub_request(:get, url).to_return(:status => 200, :body => "",
+                                          :headers => {})
+      end
+
+      it "should parse the URL" do
+        URI.should_receive(:parse)
+        subject.thumbnail_remote_url = url
+      end
+
+      it "should assing the parsed URL to self.thumbnail" do
+        subject.thumbnail_remote_url = url
+        subject.thumbnail.should_not be_nil
+      end
+
+      it "should defefine readable attribute" do
+        subject.thumbnail_remote_url = url
+        subject.thumbnail_remote_url.should == url
+      end
+
+      it "should not fail if url is nil" do
+        expect {
+          subject.thumbnail_remote_url = nil
+        }.to_not raise_error URI::InvalidURIError
+      end
     end
 
-    it "should parse the URL" do
-      URI.should_receive(:parse)
-      subject.thumbnail_remote_url = url
-    end
+    context "when the url is not accessible" do
+      before do
+        stub_request(:get, url).to_return(:status => 403, :body => "",
+                                          :headers => {})
+      end
 
-    it "should assing the parsed URL to self.thumbnail" do
-      subject.thumbnail_remote_url = url
-      subject.thumbnail.should_not be_nil
-    end
+      it "should the thumbnail be nil" do
+        subject.thumbnail_remote_url = url
+        subject.thumbnail be_nil
+      end
 
-    it "should defefine readable attribute" do
-      subject.thumbnail_remote_url = url
-      subject.thumbnail_remote_url.should == url
-    end
+      it "should create a user" do
+        user = FactoryGirl.build(:user, :thumbnail => nil)
+        expect {
+          user.thumbnail_remote_url = url
+          user.save
+        }.to change(User, :count).by(1)
+      end
 
-    it "should not fail if url is nil" do
-      expect {
-        subject.thumbnail_remote_url = nil
-      }.to_not raise_error URI::InvalidURIError
     end
   end
 end

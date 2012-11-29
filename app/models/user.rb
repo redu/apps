@@ -43,8 +43,11 @@ class User < ActiveRecord::Base
     # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
     c.authlogic_record_primary_key = :core_id
 
+    # Não é necessário pois não ocorrem cadastros através do Portal
     c.require_password_confirmation = false
     c.validate_password_field = false
+    c.validate_email_field = false
+    c.validate_login_field = false
   end
 
   def self.find_by_login_or_email(key)
@@ -80,7 +83,22 @@ class User < ActiveRecord::Base
   # Adiciona thumbnail a partir de URL
   def thumbnail_remote_url=(url)
     return unless url
-    self.thumbnail = URI.parse(url)
+    assign_thumbnail(url)
     @thumbnail_remote_url = url
+  end
+
+  protected
+
+  # Tenta atribuir url ao thumbnail, se o erro OpenURI::HTTPError
+  # é levantado, trata-se o erro logando ele no console de rails
+  # e atribui-se nil.
+  def assign_thumbnail(url)
+    begin
+      self.thumbnail = URI.parse(url)
+    rescue OpenURI::HTTPError => e
+      self.thumbnail = nil
+      Rails.logger.error "Error: #{e.message}"
+      Rails.logger.error "Entity: #{self.inspect}"
+    end
   end
 end

@@ -102,28 +102,28 @@
       <div class="oer-meta-wrapper">
         <ul class="oer-meta meta-data-column-1">
           <li class="oer-meta-item">
-            <span class="legend"><em>Publicador:</em> <%= @app.publishers %></span>
+            <span class="legend"><em>Publicador:</em> <%= verify_availability(@app.publishers) %></span>
           </li>
           <li class="oer-meta-item">
-            <span class="legend"><em>Detentor dos Direitos:</em> <%= @app.copyright %></span>
+            <span class="legend"><em>Detentor dos Direitos:</em> <%= verify_availability(@app.copyright) %></span>
           </li>
           <li class="oer-meta-item">
-            <span class="legend"><em>Submetido por:</em> <%= @app.submitters %></span>
-          </li>
-          <li class="oer-meta-item">
-            <span class="legend"><em>Classificação:</em> <%= @app.classification %></span>
+            <span class="legend"><em>Submetido por:</em> <%= verify_availability(@app.submitters) %></span>
           </li>
         </ul>
 
         <ul class="oer-meta meta-data-column-2">
           <li class="oer-meta-item">
-            <span class="legend"><em>Língua:</em> <%= @app.language %></span>
+            <span class="legend"><em>Classificação:</em> <%= verify_availability(@app.classification) %></span>
           </li>
           <li class="oer-meta-item">
-            <span class="legend"><em>País de Origem:</em> <%= @app.country %></span>
+            <span class="legend"><em>Língua:</em> <%= verify_availability(@app.language) %></span>
           </li>
           <li class="oer-meta-item">
-            <span class="legend"><em>Origem:</em> <%= @app.url %></span>
+            <span class="legend"><em>País de Origem:</em> <%= verify_availability(@app.country) %></span>
+          </li>
+          <li class="oer-meta-item">
+            <span class="legend"><em>Origem:</em> <%= verify_availability(@app.url, true) %></span>
           </li>
         </ul>
       </div>

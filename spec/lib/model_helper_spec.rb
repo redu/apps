@@ -16,7 +16,6 @@ describe ModelHelper do
   end
 
   describe 'find' do
-
     it 'should find object by id' do
       @model_helper.find(1).should_not be_nil
     end
@@ -27,7 +26,6 @@ describe ModelHelper do
   end
 
   describe 'create_zombie' do
-
     it 'should create zombie model' do
       @model_helper.create_zombie(99)
       User.unscoped.find_by_core_id(99).should_not be_nil
@@ -35,7 +33,6 @@ describe ModelHelper do
   end
 
   describe 'create_model' do
-
     context "with valid payload" do
       it 'should create user' do
         @model_helper.create_model(user)
@@ -51,7 +48,6 @@ describe ModelHelper do
   end
 
   describe 'update_model' do
-
     it 'should update model in database' do
       User.new(core_id: user['core_id']).save(validate: false)
       @model_helper.update_model(user)

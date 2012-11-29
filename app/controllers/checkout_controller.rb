@@ -21,6 +21,7 @@ class CheckoutController < ApplicationController
 
     @app_id = params[:app_id]
     @app = App.find_by_id(@app_id)
+
     case params[:step]
     when '1'
       step_1
@@ -39,8 +40,13 @@ class CheckoutController < ApplicationController
 
   def step_1
     get_params([:previous_step], params)
-    @environments = current_user.environments(include: { courses: :spaces })
-    @next_step = 2
+    @environments = Environment.with_admin_permission(current_user)
+
+    if @environments.empty?
+      @next_step = 1
+    else
+      @next_step = 2
+    end
 
     respond_to do |format|
       format.js
@@ -72,11 +78,11 @@ class CheckoutController < ApplicationController
     @next_step = 4
     @space = Space.find_by_id(@space_id)
     @subject = if @create_subject == 'true'
-      create_subject_via_api
+      create_subject_via_api(@space_id, @subject)
     else
       Subject.find(@subject)
     end
-    @lecture_href = create_lecture_via_api
+    @lecture_href = create_lecture_via_api(@subject, @lecture)
 
     respond_to do |format|
       format.js
@@ -90,14 +96,21 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def create_subject_via_api
-    Subject.create_via_api(space_sid: Space.find(@space_id).core_id,
-                           subject: @subject, token: current_user.token)
+  def create_subject_via_api(space_id, subject_name)
+    space = Space.find(space_id)
+    auth_subject = Subject.new
+    auth_subject.space = space
+
+    Subject.create_via_api(space_sid: space.core_id,
+                           subject: subject_name, token: current_user.token)
   end
 
-  def create_lecture_via_api
-    Lecture.create_via_api(lecture: @lecture, aid: @app.aid,
-                           subject_suid: @subject.core_id,
+  def create_lecture_via_api(subject, lecture_name)
+    auth_lecture = Lecture.new
+    auth_lecture.subject = subject
+
+    Lecture.create_via_api(lecture: lecture_name, aid: @app.core_id,
+                           subject_suid: subject.core_id,
                            token: current_user.token)
   end
 

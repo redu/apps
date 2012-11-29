@@ -82,7 +82,9 @@ module ReduApps
     # Carrega renderers do simple_navigation
     config.autoload_paths << "#{config.root}/app/navigation_renderers"
 
-    config.paperclip = {}
+    config.paperclip = {
+      default_url: "#{config.action_controller.asset_host}/assets/missing_:class_:style.png",
+    }
 
     config.redu_domain = "http://www.redu.com.br/"
 

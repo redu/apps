@@ -1,7 +1,7 @@
 <%= render :partial => 'shared/form_sign_in' %>
 <hr class="header-separator">
 <div class="facebook-sign-in">
-  <%= link_to "Entre com sua conta do Facebook", redu_static("auth/facebook?state=#{path_to_be_back}"), class: "facebook-sign-in-button" %>
+  <%= link_to "Entre com sua conta do Facebook", redu_static("auth/facebook?state=#{request.url}"), class: "facebook-sign-in-button" %>
 </div>
 <hr class="header-separator">
 <div class="header-sign-in-recover">
