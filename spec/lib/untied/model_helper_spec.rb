@@ -1,5 +1,6 @@
 require 'spec_helper'
-describe ModelHelper do
+
+describe Untied::ModelHelper do
   let(:user) { {"core_id"=> 22, 'login' => 'sexy_jedi_3000',
       'email' => 'jedi@concil.com', 'first_name' => 'Luke',
       'password_salt' => '1234', 'crypted_password' => '1234',
@@ -7,7 +8,7 @@ describe ModelHelper do
 
   before(:all) do
     config = ReduApps::Application.config.untied['model_data']['User']
-    @model_helper = ModelHelper.new(config)
+    @model_helper = Untied::ModelHelper.new(config)
     @user = FactoryGirl.create(:user, core_id: 1)
   end
 
