@@ -26,13 +26,11 @@ $(function() {
   var oerCloseClass = '.apps-portal-oer-close';
   var $oerLink = $(oerLinkClass);
   var $oerArea = $(oerCloseClass).parents('.apps-portal-oer');
-  var warned = $.cookie("oer_explaination");
+  var warned = $.cookie("oer_explanation");
 
-  if (warned) {
-    // O usuário já fechou a explicação uma vez, então a mantém escondida.
-    $oerArea.hide();
-  } else {
-    // Se o usuário ainda não fechou a explicação pelo menos uma vez.
+  // Se o usuário ainda não fechou a explicação pelo menos uma vez
+  if (!warned) {
+    $oerArea.show();
     $oerLink.hide();
   }
 
@@ -42,7 +40,7 @@ $(function() {
     $oerArea.slideToggle('fast', function() {
       $oerLink.show('fast');
       // Cria um cookie pra salvar que o usuário fechou a explicação.
-      $.cookie("oer_explaination", true, { path: "/" });
+      $.cookie("oer_explanation", true, { path: "/" });
     });
   }).on('click', oerLinkClass, function(e) {
     // Expande a explicação.

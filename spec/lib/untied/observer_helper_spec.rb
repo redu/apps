@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe UntiedObserverHelper do
-  let(:helper){ UntiedObserverHelper.instance }
-  context "When working with user" do
+describe Untied::ObserverHelper do
+  let(:helper){ Untied::ObserverHelper.instance }
 
+  context "When working with user" do
     let(:user) { { 'id' => 1, 'login' => 'sexy_jedi_3000',
       'email' => 'jedi@concil.com', 'first_name' => 'Luke',
       'password_salt' => '1234', 'crypted_password' => '1234',
@@ -25,7 +25,6 @@ describe UntiedObserverHelper do
     end
 
     describe "update_user" do
-
       it "should update user in database" do
         User.create(login: "darth", first_name: "anny", last_name: "skywalker",
           core_id: 1)
@@ -34,7 +33,6 @@ describe UntiedObserverHelper do
     end
 
     describe "destroy_user" do
-
       it "should erase user from database" do
         User.create(login: "darth", first_name: "anny", last_name: "skywalker",
           core_id: 1)
@@ -45,7 +43,6 @@ describe UntiedObserverHelper do
   end
 
   context "When working with environment" do
-
     let(:environment) {{"name" => "env", "id" =>  3, "user_id" => 1}}
     let(:environment_no_owner) {{"id" => 2 , "name" => "Zombie Owner",
       "user_id" => 67 }}
@@ -58,7 +55,6 @@ describe UntiedObserverHelper do
       FactoryGirl.reload
     end
 
-    #context with valid user,
     describe 'create_environment' do
       it 'should add environment to database' do
         helper.create_proxy("environment", environment).should == true
@@ -66,7 +62,7 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user' do
         helper.create_proxy("environment", environment_no_owner)
-        User.find_by_core_id(environment_no_owner['user_id']).should_not be_nil
+        User.unscoped.find_by_core_id(environment_no_owner['user_id']).should_not be_nil
       end
 
       it 'should complete zombie environment' do
@@ -77,7 +73,6 @@ describe UntiedObserverHelper do
     end
 
     describe 'update_environment' do
-
       it 'should update environment in database' do
         Environment.create(name: "Ambiente mais lindo do mundo", core_id: 3,
           owner: @user)
@@ -86,7 +81,6 @@ describe UntiedObserverHelper do
     end
 
     describe 'destroy_environment' do
-
       it 'should erase environment from database' do
         Environment.create(name: "Ambiente mais lindo do mundo", core_id: 3,
           owner: @user)
@@ -97,7 +91,6 @@ describe UntiedObserverHelper do
   end
 
   context "When working with course" do
-
     let(:course) {{"name" => "curso", "id" => 1, "user_id" => 1,
       "environment_id" => 1}}
 
@@ -120,20 +113,19 @@ describe UntiedObserverHelper do
     end
 
     describe "create_course" do
-
       it 'should add course to database' do
         helper.create_proxy("course", course).should == true
       end
 
       it 'should create zombie environment' do
         helper.create_proxy("course", homeless_course)
-        Environment.find_by_core_id(homeless_course["environment_id"]).should_not be_nil
+        Environment.unscoped.find_by_core_id(homeless_course["environment_id"]).should_not be_nil
       end
 
       it 'should create zombie owner and environment' do
         helper.create_proxy("course", orphan_course)
-        Environment.find_by_core_id(orphan_course["environment_id"]).should_not be_nil
-        User.find_by_core_id(orphan_course["user_id"]).should_not be_nil
+        Environment.unscoped.find_by_core_id(orphan_course["environment_id"]).should_not be_nil
+        User.unscoped.find_by_core_id(orphan_course["user_id"]).should_not be_nil
       end
 
       it 'should comple zombie course' do
@@ -144,14 +136,12 @@ describe UntiedObserverHelper do
     end
 
     describe 'update_course' do
-
       it 'should update course in database' do
         helper.update_proxy("course", course.merge(id: 2)).should == true
       end
     end
 
     describe 'destroy_course' do
-
       it 'Should erase course from database' do
         Course.new(core_id: course["id"]).save(validate: false) # o curso não precisa ser valido
         helper.destroy_proxy("course", course)
@@ -161,7 +151,6 @@ describe UntiedObserverHelper do
   end
 
   context "When working with space" do
-
     let(:space) {{ "name" => "Melhor espaco do mundo", "id" => 2,
       "course_id" => 1 }}
 
@@ -183,14 +172,13 @@ describe UntiedObserverHelper do
     end
 
     describe 'create_space' do
-
       it 'should add space to database' do
         helper.create_proxy("space", space).should == true
       end
 
       it 'should create zombie course' do
         helper.create_proxy("space", orphan_space)
-        Course.find_by_core_id(orphan_space["course_id"]).should_not be_nil
+        Course.unscoped.find_by_core_id(orphan_space["course_id"]).should_not be_nil
       end
 
       it 'should complete zombie space' do
@@ -201,14 +189,12 @@ describe UntiedObserverHelper do
     end
 
     describe 'update_space' do
-
       it 'should udpate space in database' do
         helper.update_proxy("space", space.merge(id: 1)).should == true
       end
     end
 
     describe 'destroy_space' do
-
       it 'should erase space from database' do
         Space.new(core_id: space["id"])
         helper.destroy_proxy("space", space)
@@ -218,7 +204,6 @@ describe UntiedObserverHelper do
   end
 
   context "When working with subject" do
-
     let(:subject) {{ "name" => "Melhor materia do mundo ", "id" => 2,
       "space_id" => 1}}
 
@@ -241,14 +226,13 @@ describe UntiedObserverHelper do
     end
 
     describe 'create_subject' do
-
       it 'should add subject to database' do
         helper.create_proxy("subject", subject).should == true
       end
 
       it 'should create zombie space' do
         helper.create_proxy("subject", orphan_subject)
-        Space.find_by_core_id(orphan_subject["space_id"]).should_not be_nil
+        Space.unscoped.find_by_core_id(orphan_subject["space_id"]).should_not be_nil
       end
 
       it 'should complete zombie subject' do
@@ -259,14 +243,12 @@ describe UntiedObserverHelper do
     end
 
     describe 'update_subject' do
-
       it 'should update subject in database' do
         helper.update_proxy("subject", subject.merge("id" => 1)).should == true
       end
     end
 
     describe 'destroy_subject' do
-
       it 'should erase subject from database' do
         Subject.new(core_id: subject["id"]).save(validate: false)
         helper.destroy_proxy("subject", subject)
@@ -276,7 +258,6 @@ describe UntiedObserverHelper do
   end
 
   context "When working with user_course_association" do
-
     let(:association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
       "user_id" => 1, "role" => 2, "course_id" => 1, "token" => nil, "email" => nil,
       "id" => 1, "created_at" => "2012-11-06T09:18:23-02:00",
@@ -299,26 +280,24 @@ describe UntiedObserverHelper do
     end
 
     describe 'create_user_course_association' do
-
       it 'should add association to database' do
         helper.create_proxy("user_course_association", association)
       end
 
       it 'should create zombie user and course' do
         helper.create_proxy("user_course_association", orphan_association)
-        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
-        Course.find_by_core_id(orphan_association['course_id']).should_not be_nil
+        User.unscoped.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Course.unscoped.find_by_core_id(orphan_association['course_id']).should_not be_nil
       end
 
       it 'should complete zombie association' do
         UserCourseAssociation.new(core_id: orphan_association['id']).save(validate: false)
         helper.create_proxy("user_course_association", association)
-        UserCourseAssociation.find_by_core_id(orphan_association['id']).should be_valid
+        UserCourseAssociation.unscoped.find_by_core_id(orphan_association['id']).should be_valid
       end
     end
 
     describe 'update_user_course_association' do
-
       it 'should update association in database' do
         UserCourseAssociation.create()
         helper.update_proxy("user_course_association", association)
@@ -327,7 +306,6 @@ describe UntiedObserverHelper do
     end
 
     describe 'destroy_user_course_association' do
-
       it 'should erase use_course_associaiton from database' do
         UserCourseAssociation.new(core_id: 1).save(validate: false)
         helper.destroy_proxy("user_course_association", association)
@@ -341,7 +319,7 @@ describe UntiedObserverHelper do
       "user_id" => 1, "role" => 2, "environment_id" => 1, "id" => 1,
       "created_at" => "2012-11-06T09:18:23-02:00" }}
     let(:orphan_association) {{ "updated_at" => "2012-11-06T09:18:23-02:00",
-      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 123,
+      "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 1,
       "created_at" => "2012-11-06T09:18:23-02:00" }}
 
     before(:all) do
@@ -361,8 +339,8 @@ describe UntiedObserverHelper do
 
       it 'should create zombie user and environment' do
         helper.create_proxy("user_environment_association", orphan_association)
-        User.find_by_core_id(orphan_association['user_id']).should_not be_nil
-        Environment.find_by_core_id(orphan_association['environment_id']).
+        User.unscoped.find_by_core_id(orphan_association['user_id']).should_not be_nil
+        Environment.unscoped.find_by_core_id(orphan_association['environment_id']).
           should_not be_nil
       end
 

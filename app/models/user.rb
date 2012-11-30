@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
+  include Untied::Zombificator::ActAsZombie
+
   attr_reader :thumbnail_remote_url
 
-  include BaseModel
-  zombify
+  acts_as_zombie
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
   :thumbnail, :client_applications
@@ -42,8 +43,11 @@ class User < ActiveRecord::Base
     # Utiliza o id do Core na sessão, desta forma o usuário também é logado no Core
     c.authlogic_record_primary_key = :core_id
 
+    # Não é necessário pois não ocorrem cadastros através do Portal
     c.require_password_confirmation = false
     c.validate_password_field = false
+    c.validate_email_field = false
+    c.validate_login_field = false
   end
 
   def self.find_by_login_or_email(key)

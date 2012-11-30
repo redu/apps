@@ -6,8 +6,6 @@ class Ability
   include CommentAbility
   include UserAbility
   include UserSessionAbility
-  include SubjectAbility
-  include LectureAbility
 
   def initialize(user)
     execute_rules(user)

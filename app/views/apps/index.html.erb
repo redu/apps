@@ -1,5 +1,5 @@
 <% unless params.include? :search %>
-  <div class="apps-portal-oer">
+  <div class="apps-portal-oer" style="display:none;">
     <div class="apps-portal-oer-explaination">
       <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
       <h3 class="apps-portal-oer-explaination-title">O que são R.E.A.s?</h3>
@@ -57,10 +57,10 @@
   </div>
 
   <div class="oer-apps-wrapper">
-    <ul id="apps" class="list-2-columns list-columns-separator">
+    <div id="apps" class="apps-list">
       <%= render partial: 'shared/app', collection: @apps,
-                 locals: { favorite_flag: false } %>
-    </ul>
+                 locals: { favorite_flag: false, total: @apps.count } %>
+    </div>
   </div>
 
   <% if @apps.num_pages > 1 %>

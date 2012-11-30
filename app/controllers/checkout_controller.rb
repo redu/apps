@@ -21,7 +21,6 @@ class CheckoutController < ApplicationController
 
     @app_id = params[:app_id]
     @app = App.find_by_id(@app_id)
-    @environments = current_user.environments(include: { courses: :spaces })
 
     case params[:step]
     when '1'
@@ -42,7 +41,12 @@ class CheckoutController < ApplicationController
   def step_1
     get_params([:previous_step], params)
     @environments = Environment.with_admin_permission(current_user)
-    @next_step = 2
+
+    if @environments.empty?
+      @next_step = 1
+    else
+      @next_step = 2
+    end
 
     respond_to do |format|
       format.js
@@ -97,8 +101,6 @@ class CheckoutController < ApplicationController
     auth_subject = Subject.new
     auth_subject.space = space
 
-    authorize! :create, auth_subject
-
     Subject.create_via_api(space_sid: space.core_id,
                            subject: subject_name, token: current_user.token)
   end
@@ -106,8 +108,6 @@ class CheckoutController < ApplicationController
   def create_lecture_via_api(subject, lecture_name)
     auth_lecture = Lecture.new
     auth_lecture.subject = subject
-
-    authorize! :create, auth_lecture
 
     Lecture.create_via_api(lecture: lecture_name, aid: @app.core_id,
                            subject_suid: subject.core_id,
