@@ -22,7 +22,7 @@
             <% if create_subject == "true" %>
               <%= text_field_tag "subject", nil, placeholder: "Nome do novo Módulo" %>
             <% else %>
-             <%= select_tag "subject", options_from_collection_for_select(space.subjects, "id", "name") %>
+              <%= select_tag "subject", options_from_collection_for_select(space.subjects.finalized, "id", "name") %>
             <% end %>
           </div>
         </div>

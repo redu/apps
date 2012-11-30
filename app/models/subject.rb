@@ -10,6 +10,8 @@ class Subject < ActiveRecord::Base
 
   validates_presence_of :space, :name
 
+  scope :finalized, where(finalized: true)
+
   def self.create_via_api(params)
     conn = Connection.new(params[:token])
     conn.post(post_to_api_url(params[:space_sid]),

@@ -57,6 +57,7 @@ Subject:
     - name
     - id
     - space_id
+    - finalized
   mappings:
     id: core_id
   check_for:

@@ -15,8 +15,30 @@ describe Subject do
   it { should belong_to(:space) }
   it { should validate_presence_of(:space) }
 
-  #Lectures do subject
+  # Lectures do subject
   it { should have_many(:lectures)}
+
+  # Indica se o módulo foi finalizado ou não
+  it { should respond_to(:finalized) }
+
+  context "scopes" do
+
+    let(:space) do
+      space = FactoryGirl.create(:space)
+      5.times do |n|
+        space.subjects << FactoryGirl.create(:subject) if n.odd?
+        space.subjects << FactoryGirl.create(:subject, finalized: false) if n.even?
+      end
+
+      space
+    end
+
+    it "should return only finalized subjects" do
+      space.subjects.finalized.each do |subject|
+        subject.finalized.should be
+      end
+    end
+  end # context "scopes"
 
   context "class method" do
     let(:params) { { token: 123, space_sid: 1, subject: "Meu Módulo" } }
@@ -50,5 +72,5 @@ describe Subject do
            "/api/spaces/#{params[:space_sid]}/subjects"
       end
     end
-  end
+  end # context "class method"
 end

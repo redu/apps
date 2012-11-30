@@ -5,5 +5,6 @@ FactoryGirl.define do
     sequence(:core_id)
     name "Novo Modulo"
     space { FactoryGirl.create(:space) }
+    finalized true
   end
 end

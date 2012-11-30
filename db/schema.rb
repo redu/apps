@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121126165406) do
+ActiveRecord::Schema.define(:version => 20121130164939) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -190,6 +190,7 @@ ActiveRecord::Schema.define(:version => 20121126165406) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.boolean  "zombie"
+    t.boolean  "finalized"
   end
 
   add_index "subjects", ["core_id", "name", "space_id"], :name => "index_subjects_on_core_id_and_name_and_space_id"
