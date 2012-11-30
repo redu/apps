@@ -1,10 +1,14 @@
 # encoding: utf-8
 module AppsHelper
-  def filters_url(filters, category)
+  # Gera o parâmetro filters para url de cada filtro de acordo com a computação
+  # dos filtros já selecionados + o que está sendo clicado / (des)selecionado
+  def filters_url(filters, category, max_filters)
     ret = filters + [category.id.to_s] - (filters & [category.id.to_s])
 
-    if ret.length == 0 || ret.length == 5 # Quantidade máximo de filtros
-      nil
+    # Retorna nil quando a quantidade de categorias selecionadas é 0 ou é igual
+    # ao máximo de categorias possíveis (dependente de contexto)
+    if ret.length == 0 || ret.length == max_filters
+      nil # Desativa filtros
     else
       ret
     end
