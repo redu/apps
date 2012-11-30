@@ -110,4 +110,9 @@ module AppsHelper
       end
     end
   end
+
+  # Mostra o separador somente a cada 2 iterações e quando não é o último.
+  def display_separator(index, total)
+    (index % 2 == 0) and (index != total)
+  end
 end

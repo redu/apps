@@ -142,6 +142,14 @@
           box-sizing: $box-mode;
 }
 
+// Background clipping.
+//  $clip: o modelo.
+@mixin background-clip($clip) {
+  -webkit-background-clip: $clip;
+     -moz-background-clip: $clip;
+          background-clip: $clip;
+}
+
 // Opacidade.
 //  $opacity: o valor da opacidade (de 0 a 100).
 @mixin opacity($opacity: 100) {
