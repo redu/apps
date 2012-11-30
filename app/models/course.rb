@@ -1,6 +1,7 @@
 class Course < ActiveRecord::Base
-  include BaseModel
-  zombify
+  include Untied::Zombificator::ActAsZombie
+
+  acts_as_zombie
 
   attr_accessible :core_id, :name, :owner, :environment
 

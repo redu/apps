@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
+  include Untied::Zombificator::ActAsZombie
+
   attr_reader :thumbnail_remote_url
 
-  include BaseModel
-  zombify
+  acts_as_zombie
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
   :thumbnail, :client_applications
