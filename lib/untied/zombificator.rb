@@ -12,8 +12,8 @@ module Untied
         # Modelos zombies não devem aparecer em consultas normais.
         default_scope where("#{self.table_name}.zombie is FALSE")
 
-        after_initialize { self.zombie = true if self.zombie.nil? }
-        after_validation { self.zombie = false if self.errors.empty? }
+        after_initialize "self.zombie = true if self.zombie.nil?"
+        after_validation "self.zombie = false if self.errors.empty?"
       end
     end
   end
