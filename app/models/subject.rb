@@ -1,8 +1,6 @@
 class Subject < ActiveRecord::Base
   include Untied::Zombificator::ActsAsZombie
 
-  acts_as_zombie
-
   attr_accessible :name, :core_id, :space
 
   belongs_to :space

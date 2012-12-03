@@ -1,8 +1,6 @@
 class Course < ActiveRecord::Base
   include Untied::Zombificator::ActsAsZombie
 
-  acts_as_zombie
-
   attr_accessible :core_id, :name, :owner, :environment
 
   # Associações
