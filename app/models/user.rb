@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include Untied::Zombificator::ActAsZombie
+  include Untied::Zombificator::ActsAsZombie
 
   attr_reader :thumbnail_remote_url
 

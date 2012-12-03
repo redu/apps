@@ -1,5 +1,5 @@
 class UserCourseAssociation < ActiveRecord::Base
-  include Untied::Zombificator::ActAsZombie
+  include Untied::Zombificator::ActsAsZombie
 
   acts_as_zombie
 
