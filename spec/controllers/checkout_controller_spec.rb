@@ -34,90 +34,88 @@ describe CheckoutController do
         core_id: 75) { |s| s.space = @space }
     end
 
-    context 'when POST' do
-      context 'with ?previous_step=1' do
-        it 'assigns app_id variable' do
-          post :update, @params.merge(previous_step: 1)
-          assigns(:app_id).to_i.should == @app.id
+    context 'with ?previous_step=0' do
+      context 'with valid params' do
+        before do
+          post :update, @params.merge(previous_step: 0)
         end
 
         it 'assigns next_step variable properly' do
-          post :update, @params.merge(previous_step: 1)
           assigns(:next_step).to_i.should == 2
         end
-      end
 
-      context 'with ?previous_step=0' do
-        context 'with valid params' do
-          before do
-            post :update, @params.merge(previous_step: 0)
-          end
-
-          it 'assigns next_step variable properly' do
-            assigns(:next_step).to_i.should == 2
-          end
-
-          it 'assigns environments variable' do
-            assigns(:environments).should == Environment.with_admin_permission(@user)
-          end
-        end
-
-        context 'without valid params' do
-          it 'does not render step2' do
-            expect {
-              post :update, @params.merge(step: 1)
-            }.to raise_error 'Invalid State'
-          end
+        it 'assigns environments variable' do
+          assigns(:environments).should == Environment.with_admin_permission(@user)
         end
       end
 
-      context 'with ?step=2' do
-        context 'with valid request' do
-          before do
-            post :update, @params.merge(space_id: @space.id, step: 2,
-                                          previous_step: 1)
-          end
+      context 'without valid params' do
+        it 'does not render step2' do
+          expect {
+            post :update, @params.merge(step: 1)
+          }.to raise_error 'Invalid State'
+        end
+      end
+    end
 
-          it 'assigns next_step variable properly' do
-            assigns(:next_step).to_i.should == 3
-          end
+    context 'with ?previous_step=1' do
+      it 'assigns app_id variable' do
+        post :update, @params.merge(previous_step: 1)
+        assigns(:app_id).to_i.should == @app.id
+      end
 
-          it 'assigns space_id variable' do
-            assigns(:space_id).to_i.should == @space.id
-          end
+      it 'assigns next_step variable properly' do
+        post :update, @params.merge(previous_step: 1)
+        assigns(:next_step).to_i.should == 2
+      end
+    end
+
+    context 'with ?step=2' do
+      context 'with valid request' do
+        before do
+          post :update, @params.merge(space_id: @space.id, step: 2,
+                                      previous_step: 1)
         end
 
-        context 'without valid params' do
-          it 'does not render step2' do
-            expect {
-              post :update, @params.merge(step: 2)
-            }.to raise_error 'Invalid State'
-          end
+        it 'assigns next_step variable properly' do
+          assigns(:next_step).to_i.should == 3
+        end
+
+        it 'assigns space_id variable' do
+          assigns(:space_id).to_i.should == @space.id
         end
       end
 
-      context 'with ?step=3' do
-        context 'with valid params' do
-          before do
-            post :update, @params.merge(space_id: @space.id, create_subject: false,
-                                          next_step: 4, step: 3, previous_step: 2)
-          end
+      context 'without valid params' do
+        it 'does not render step2' do
+          expect {
+            post :update, @params.merge(step: 2)
+          }.to raise_error 'Invalid State'
+        end
+      end
+    end
 
-          it 'assigns space_id variable' do
-            assigns(:space_id).to_i.should == @space.id
-          end
-
-          it 'assigns create_subject variable' do
-            assigns(:create_subject).should be_false
-          end
+    context 'with ?step=3' do
+      context 'with valid params' do
+        before do
+          post :update, @params.merge(space_id: @space.id, create_subject: false,
+                                      next_step: 4, step: 3, previous_step: 2)
         end
 
-        context 'whitout valid params' do
-          it 'does not render step 3' do
-            expect {
-              post :update, @params.merge(step: 3)
-            }.to raise_error "Invalid State"
-          end
+        it 'assigns space_id variable' do
+          assigns(:space_id).to_i.should == @space.id
+        end
+
+        it 'assigns create_subject variable' do
+          assigns(:create_subject).should be_false
+        end
+      end
+
+      context 'whitout valid params' do
+        it 'does not render step 3' do
+          expect {
+            post :update, @params.merge(step: 3)
+          }.to raise_error "Invalid State"
         end
       end
     end
