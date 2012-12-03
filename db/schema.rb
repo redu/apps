@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130164939) do
+ActiveRecord::Schema.define(:version => 20121203174646) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -71,9 +71,9 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.string   "name"
     t.integer  "user_id"
     t.integer  "environment_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.boolean  "zombie"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.boolean  "zombie",         :default => true
   end
 
   add_index "courses", ["core_id", "name", "user_id"], :name => "index_courses_on_core_id_and_name_and_user_id"
@@ -86,9 +86,9 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
-    t.datetime "created_at",             :null => false
-    t.datetime "updated_at",             :null => false
-    t.boolean  "zombie"
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.boolean  "zombie",                 :default => true
   end
 
   add_index "environments", ["core_id", "name", "user_id"], :name => "index_environments_on_core_id_and_name_and_user_id"
@@ -176,9 +176,9 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.integer  "core_id"
     t.string   "name"
     t.integer  "course_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "zombie"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "zombie",     :default => true
   end
 
   add_index "spaces", ["core_id", "name", "course_id"], :name => "index_spaces_on_core_id_and_name_and_course_id"
@@ -187,9 +187,9 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.integer  "core_id"
     t.string   "name"
     t.integer  "space_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "zombie"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "zombie",     :default => true
     t.boolean  "finalized"
   end
 
@@ -209,9 +209,9 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.integer  "course_id"
     t.integer  "core_id"
     t.integer  "role_cd"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "zombie"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "zombie",     :default => true
   end
 
   add_index "user_course_associations", ["user_id", "course_id"], :name => "index_user_course_associations_on_user_id_and_course_id"
@@ -219,10 +219,10 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
   create_table "user_environment_associations", :force => true do |t|
     t.integer  "user_id"
     t.integer  "environment_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "core_id"
-    t.boolean  "zombie"
+    t.boolean  "zombie",         :default => true
   end
 
   add_index "user_environment_associations", ["user_id", "environment_id"], :name => "index_user_environment_associations_on_user_and_environment_ids"
@@ -238,13 +238,13 @@ ActiveRecord::Schema.define(:version => 20121130164939) do
     t.string   "thumbnail_content_type"
     t.integer  "thumbnail_file_size"
     t.datetime "thumbnail_updated_at"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "email"
     t.string   "persistence_token"
-    t.boolean  "zombie"
+    t.boolean  "zombie",                 :default => true
   end
 
   add_index "users", ["core_id"], :name => "index_users_on_core_id"
