@@ -83,8 +83,8 @@ describe CheckoutController do
     context 'with ?step=2' do
       context 'with valid request' do
         before do
-          post :update, @params.merge(space_id: @space.id, step: 2,
-                                      previous_step: 1)
+          Space.stub(:find_by_id).with('12').and_return(double('Space'))
+          post :update, @params.merge(space_id: 12, step: 2, previous_step: 1)
         end
 
         it 'assigns next_step variable properly' do
@@ -92,7 +92,7 @@ describe CheckoutController do
         end
 
         it 'assigns space_id variable' do
-          assigns(:space_id).to_i.should == @space.id
+          assigns(:space_id).to_i.should == 12
         end
       end
 
