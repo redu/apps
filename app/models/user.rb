@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   def assign_thumbnail(url)
     begin
       self.thumbnail = URI.parse(url)
-    rescue OpenURI::HTTPError => e
+    rescue OpenURI::HTTPError, TypeError => e
       self.thumbnail = nil
       Rails.logger.error "Error: #{e.message}"
       Rails.logger.error "Entity: #{self.inspect}"

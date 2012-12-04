@@ -119,6 +119,20 @@ describe User do
       end
     end
 
+    context "when the URL is not valid" do
+      it "should not raise TypeError" do
+        expect {
+          subject.thumbnail_remote_url = "xxx"
+        }.to_not raise_error(TypeError)
+      end
+
+      it "should assing nil" do
+        expect {
+          subject.thumbnail_remote_url = "xxx"
+        }.to_not change(subject.thumbnail, :url)
+      end
+    end
+
     context "when the url is not accessible" do
       before do
         stub_request(:get, url).to_return(:status => 403, :body => "",
@@ -134,8 +148,7 @@ describe User do
         user = FactoryGirl.build(:user, :thumbnail => nil)
         expect {
           user.thumbnail_remote_url = url
-          user.save
-        }.to change(User, :count).by(1)
+        }.to_not raise_error(OpenURI::HTTPError)
       end
 
     end
