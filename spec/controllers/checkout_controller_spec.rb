@@ -108,12 +108,13 @@ describe CheckoutController do
     context 'with ?step=3' do
       context 'with valid params' do
         before do
-          post :update, @params.merge(space_id: @space.id, create_subject: false,
+          Space.stub(:find_by_id).with('12').and_return(double('Space'))
+          post :update, @params.merge(space_id: 12, create_subject: false,
                                       next_step: 4, step: 3, previous_step: 2)
         end
 
         it 'assigns space_id variable' do
-          assigns(:space_id).to_i.should == @space.id
+          assigns(:space_id).to_i.should == 12
         end
 
         it 'assigns create_subject variable' do
