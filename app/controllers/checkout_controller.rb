@@ -16,11 +16,10 @@ class CheckoutController < ApplicationController
   rescue_from Patron::TimeoutError, with: :connection_failed
 
   def update
-    raise ActiveRecord::RecordNotFound unless App.find(params[:app_id])
-    authorize! :checkout, App
-
     @app_id = params[:app_id]
-    @app = App.find_by_id(@app_id)
+    @app = App.find(@app_id)
+
+    authorize! :checkout, App
 
     case params[:step]
     when '1'
