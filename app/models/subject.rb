@@ -4,7 +4,7 @@ class Subject < ActiveRecord::Base
   attr_accessible :name, :core_id, :space
 
   belongs_to :space
-  has_many :lectures
+  has_many :lectures, dependent: :destroy
 
   validates_presence_of :space, :name
 

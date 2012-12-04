@@ -24,6 +24,6 @@ describe Course do
   #FIXME: https://github.com/redu/apps/issues/156
   xit { should validate_presence_of(:environment) }
 
-  #Espaços do curso
-  it { should have_many(:spaces)}
+  # Espaços do curso
+  it { should have_many(:spaces).dependent(:destroy) }
 end

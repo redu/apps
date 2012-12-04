@@ -14,6 +14,6 @@ describe Space do
   it { should belong_to(:course) }
   it { should validate_presence_of(:course) }
 
-  #Subjects do Space
-  it { should have_many(:subjects)}
+  # Subjects do Space
+  it { should have_many(:subjects).dependent(:destroy) }
 end

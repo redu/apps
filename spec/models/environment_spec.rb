@@ -23,7 +23,7 @@ describe Environment do
   it { should have_attached_file(:thumbnail) }
 
   # Cursos do Ambiente
-  it { should have_many(:courses) }
+  it { should have_many(:courses).dependent(:destroy) }
 
   context  "Associations" do
     before do

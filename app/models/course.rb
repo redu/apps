@@ -8,10 +8,10 @@ class Course < ActiveRecord::Base
 
   belongs_to :environment
 
-  has_many :user_course_associations, :dependent => :destroy
-  has_many :users, :through => :user_course_associations
+  has_many :user_course_associations, dependent: :destroy
+  has_many :users, through: :user_course_associations
 
-  has_many :spaces
+  has_many :spaces, dependent: :destroy
   # Validadores
   validates_presence_of :core_id, :name, :owner
   validates_uniqueness_of :core_id

@@ -16,7 +16,7 @@ describe Subject do
   it { should validate_presence_of(:space) }
 
   # Lectures do subject
-  it { should have_many(:lectures)}
+  it { should have_many(:lectures).dependent(:destroy) }
 
   # Indica se o módulo foi finalizado ou não
   it { should respond_to(:finalized) }

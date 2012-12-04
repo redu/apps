@@ -5,7 +5,7 @@ class Space < ActiveRecord::Base
 
   # Associações
   belongs_to :course
-  has_many :subjects
+  has_many :subjects, dependent: :destroy
 
   # Validadores
   validates_presence_of :core_id, :name, :course
