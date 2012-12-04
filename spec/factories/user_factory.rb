@@ -5,7 +5,7 @@ FactoryGirl.define do
     last_name 'da Silva'
     first_name 'Joao'
     role :member
-    thumbnail { open('app/assets/images/user_thumb.png') }
+    thumbnail nil
     sequence(:email) { |n| "user#{n}@email.com" }
     password "password"
 

@@ -17,7 +17,7 @@ FactoryGirl.define do
       submitters 'Ministerio da Educacao (Brasil)'
       url 'objetoseducacionais2.mev.gov.br'
       copyright 'UNESCO'
-      thumbnail { open('app/assets/images/missing_apps_large.png') }
+      thumbnail nil
 
       after(:create) do |app|
         app.screen_shots << FactoryGirl.create(:screen_shot, :app => app)
