@@ -36,9 +36,10 @@ describe CheckoutController do
 
     context 'with ?previous_step=0' do
       context 'with valid params' do
+        let(:double_environments) { 2.times.collect { double('Environment') } }
         before do
-          Environment.
-            stub(:with_admin_permission).and_return([double('Environment')])
+          Environment.stub(:with_admin_permission).with(an_instance_of(User)).
+            and_return(double_environments)
         end
 
         it 'assigns next_step variable properly' do
@@ -62,6 +63,12 @@ describe CheckoutController do
     end
 
     context 'with ?previous_step=1' do
+      let(:double_environments) { 1.times.collect { double('Environment') } }
+      before do
+        Environment.stub(:with_admin_permission).with(an_instance_of(User)).
+          and_return(double_environments)
+      end
+
       it 'assigns app_id variable' do
         post :update, @params.merge(previous_step: 1)
         assigns(:app_id).to_i.should == @app.id
