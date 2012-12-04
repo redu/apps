@@ -11,40 +11,43 @@ describe CheckoutController do
   end
 
   describe '#update' do
-    before(:each) do
-      @env = Environment.create(name: "A",
-        core_id: 2) { |e| e.owner = User.last }
-      @env.users << User.last
-      @course = Course.create(name: "c",
-        core_id: 9) do |c|
-        c.owner = User.last
-        c.environment = @env
-      end
+   # before(:each) do
+   #   @env = Environment.create(name: "A",
+   #     core_id: 2) { |e| e.owner = User.last }
+   #   @env.users << User.last
+   #   @course = Course.create(name: "c",
+   #     core_id: 9) do |c|
+   #     c.owner = User.last
+   #     c.environment = @env
+   #   end
 
-      UserCourseAssociation.create(user: @user) do |uca|
-        uca.course = @course
-        uca.role = UserCourseAssociation.teacher
-      end # O user tem que estar matriculado em um curso
+   #   UserCourseAssociation.create(user: @user) do |uca|
+   #     uca.course = @course
+   #     uca.role = UserCourseAssociation.teacher
+   #   end # O user tem que estar matriculado em um curso
 
-      @env.courses << @course
-      @space = Space.create(name: "espaco",
-        core_id: 231) { |s| s.course = @course }
+   #   @env.courses << @course
+   #   @space = Space.create(name: "espaco",
+   #     core_id: 231) { |s| s.course = @course }
 
-      @subject = Subject.create(name: "subject",
-        core_id: 75) { |s| s.space = @space }
-    end
+   #   @subject = Subject.create(name: "subject",
+   #     core_id: 75) { |s| s.space = @space }
+   # end
 
     context 'with ?previous_step=0' do
       context 'with valid params' do
         before do
-          post :update, @params.merge(previous_step: 0)
+          Environment.
+            stub(:with_admin_permission).and_return([double('Environment')])
         end
 
         it 'assigns next_step variable properly' do
+          post :update, @params.merge(previous_step: 0)
           assigns(:next_step).to_i.should == 2
         end
 
         it 'assigns environments variable' do
+          post :update, @params.merge(previous_step: 0)
           assigns(:environments).should == Environment.with_admin_permission(@user)
         end
       end
