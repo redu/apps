@@ -32,9 +32,8 @@ class User < ActiveRecord::Base
   # Thumbnail
   has_attached_file :thumbnail,
     ReduApps::Application.config.paperclip.merge({styles: { small: "x32",
-                                                            medium: "x64",
-                                                            large: "x90",
-                                                            larger: "x140" }})
+                                                            medium: "x64" }})
+
 
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...

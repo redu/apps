@@ -7,7 +7,7 @@
    <% end %>
   <div class="status-text-response">
     <%= link_to redu_user_static("", comment_answer.author), class: "icon-link" do %>
-      <%= image_tag comment_answer.author.thumbnail.url(:medium), alt: comment_answer.author.display_name, title: comment_answer.author.display_name, size: "32x32" %>
+      <%= image_tag comment_answer.author.thumbnail.url(:small), alt: comment_answer.author.display_name, title: comment_answer.author.display_name, size: "32x32" %>
     <% end %>
     <%= link_to comment_answer.author.display_name, redu_user_static("", comment_answer.author), class: "link-name" %>
     <span class="status-info">
