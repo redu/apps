@@ -10,6 +10,11 @@ class Subject < ActiveRecord::Base
 
   scope :finalized, where(finalized: true)
 
+  # Cria Subject via API REST do core
+  # Params:
+  #   - token: token do usuário na API
+  #   - space_sid: ID do space no core
+  #   - name: nome do Subject a ser criado
   def self.create_via_api(params)
     conn = Connection.new(params[:token])
     conn.post(post_to_api_url(params[:space_sid]),
@@ -17,6 +22,8 @@ class Subject < ActiveRecord::Base
       Subject.new(name: entity['name'], core_id: entity['id'])
     end
   end
+
+  private
 
   def self.parse_subject(params)
     { subject: { name: params[:subject] } }.to_json
