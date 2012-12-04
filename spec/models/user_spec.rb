@@ -51,6 +51,9 @@ describe User do
   it { should respond_to(:password_salt) }
   it { should respond_to(:persistence_token) }
 
+  # Thumbnail remoto
+  it_should_behave_like :has_remote_file, 'thumbnail'
+
   context 'Retrievers' do
     it 'find user by login or email' do
       @user = FactoryGirl.create(:user)
@@ -84,73 +87,6 @@ describe User do
       apps_example.first['token'] = "123"
       user.update_attributes({:client_applications => apps_example})
       user.token = "123"
-    end
-  end
-
-  context "#thumbnail_remote_url" do
-    subject { User.new }
-    let(:url) { "http://foo.bar/foo.png" }
-
-    context "when the url is accessible" do
-      before do
-        stub_request(:get, url).to_return(:status => 200, :body => "",
-                                          :headers => {})
-      end
-
-      it "should parse the URL" do
-        URI.should_receive(:parse)
-        subject.thumbnail_remote_url = url
-      end
-
-      it "should assing the parsed URL to self.thumbnail" do
-        subject.thumbnail_remote_url = url
-        subject.thumbnail.should_not be_nil
-      end
-
-      it "should defefine readable attribute" do
-        subject.thumbnail_remote_url = url
-        subject.thumbnail_remote_url.should == url
-      end
-
-      it "should not fail if url is nil" do
-        expect {
-          subject.thumbnail_remote_url = nil
-        }.to_not raise_error URI::InvalidURIError
-      end
-    end
-
-    context "when the URL is not valid" do
-      it "should not raise TypeError" do
-        expect {
-          subject.thumbnail_remote_url = "xxx"
-        }.to_not raise_error(TypeError)
-      end
-
-      it "should assing nil" do
-        expect {
-          subject.thumbnail_remote_url = "xxx"
-        }.to_not change(subject.thumbnail, :url)
-      end
-    end
-
-    context "when the url is not accessible" do
-      before do
-        stub_request(:get, url).to_return(:status => 403, :body => "",
-                                          :headers => {})
-      end
-
-      it "should the thumbnail be nil" do
-        subject.thumbnail_remote_url = url
-        subject.thumbnail be_nil
-      end
-
-      it "should create a user" do
-        user = FactoryGirl.build(:user, :thumbnail => nil)
-        expect {
-          user.thumbnail_remote_url = url
-        }.to_not raise_error(OpenURI::HTTPError)
-      end
-
     end
   end
 end

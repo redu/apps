@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
+  include Paperclip::RemoteAttachment
   include Untied::Zombificator::ActsAsZombie
-
-  attr_reader :thumbnail_remote_url
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
   :thumbnail, :client_applications
@@ -33,7 +32,7 @@ class User < ActiveRecord::Base
   has_attached_file :thumbnail,
     ReduApps::Application.config.paperclip.merge({styles: { small: "x32",
                                                             medium: "x64" }})
-
+  has_remote_file :thumbnail
 
   acts_as_authentic do |c|
     c.crypto_provider = CommunityEngineSha1CryptoMethod #lib/community_eng...
@@ -75,27 +74,5 @@ class User < ActiveRecord::Base
       fetch(:secret, nil)
     core_app = apps.detect { |a| a['secret'] == secret } || {}
     self.token = core_app.fetch('user_token', nil)
-  end
-
-  # Adiciona thumbnail a partir de URL
-  def thumbnail_remote_url=(url)
-    return unless url
-    assign_thumbnail(url)
-    @thumbnail_remote_url = url
-  end
-
-  protected
-
-  # Tenta atribuir url ao thumbnail, se o erro OpenURI::HTTPError
-  # é levantado, trata-se o erro logando ele no console de rails
-  # e atribui-se nil.
-  def assign_thumbnail(url)
-    begin
-      self.thumbnail = URI.parse(url)
-    rescue OpenURI::HTTPError, TypeError => e
-      self.thumbnail = nil
-      Rails.logger.error "Error: #{e.message}"
-      Rails.logger.error "Entity: #{self.inspect}"
-    end
   end
 end
