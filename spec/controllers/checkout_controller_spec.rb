@@ -11,29 +11,6 @@ describe CheckoutController do
   end
 
   describe '#update' do
-   # before(:each) do
-   #   @env = Environment.create(name: "A",
-   #     core_id: 2) { |e| e.owner = User.last }
-   #   @env.users << User.last
-   #   @course = Course.create(name: "c",
-   #     core_id: 9) do |c|
-   #     c.owner = User.last
-   #     c.environment = @env
-   #   end
-
-   #   UserCourseAssociation.create(user: @user) do |uca|
-   #     uca.course = @course
-   #     uca.role = UserCourseAssociation.teacher
-   #   end # O user tem que estar matriculado em um curso
-
-   #   @env.courses << @course
-   #   @space = Space.create(name: "espaco",
-   #     core_id: 231) { |s| s.course = @course }
-
-   #   @subject = Subject.create(name: "subject",
-   #     core_id: 75) { |s| s.space = @space }
-   # end
-
     context 'with ?previous_step=0' do
       context 'with valid params' do
         let(:double_environments) { 2.times.collect { double('Environment') } }
@@ -132,6 +109,29 @@ describe CheckoutController do
     end
 
     context 'with ?step=4' do
+      before(:each) do
+        @env = Environment.create(name: "A",
+                                  core_id: 2) { |e| e.owner = User.last }
+        @env.users << User.last
+        @course = Course.create(name: "c",
+                                core_id: 9) do |c|
+          c.owner = User.last
+          c.environment = @env
+        end
+
+        UserCourseAssociation.create(user: @user) do |uca|
+          uca.course = @course
+          uca.role = UserCourseAssociation.teacher
+        end # O user tem que estar matriculado em um curso
+
+        @env.courses << @course
+        @space = Space.create(name: "espaco",
+                              core_id: 231) { |s| s.course = @course }
+
+        @subject = Subject.create(name: "subject",
+                                  core_id: 75) { |s| s.space = @space }
+      end
+
       let(:lecture_name) { "Nova Aula" }
       let(:subject_name) { "Novo módulo" }
 
