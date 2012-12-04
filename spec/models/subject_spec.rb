@@ -22,21 +22,11 @@ describe Subject do
   it { should respond_to(:finalized) }
 
   context "scopes" do
-
-    let(:space) do
-      space = FactoryGirl.create(:space)
-      5.times do |n|
-        space.subjects << FactoryGirl.create(:subject) if n.odd?
-        space.subjects << FactoryGirl.create(:subject, finalized: false) if n.even?
-      end
-
-      space
-    end
-
     it "should return only finalized subjects" do
-      space.subjects.finalized.each do |subject|
-        subject.finalized.should be
-      end
+      subject = FactoryGirl.create(:subject)
+      FactoryGirl.create(:subject, finalized: false)
+
+      Subject.finalized.should == [subject]
     end
   end # context "scopes"
 
