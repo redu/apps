@@ -1,4 +1,5 @@
 class Environment < ActiveRecord::Base
+  include Paperclip::RemoteAttachment
   include Untied::Zombificator::ActsAsZombie
 
   attr_accessible :core_id, :name, :zombie, :owner
@@ -19,6 +20,8 @@ class Environment < ActiveRecord::Base
   has_attached_file :thumbnail,
     ReduApps::Application.config.paperclip.merge({styles: { medium: "300x300>",
                                                             thumb: "100x100>" }})
+  has_remote_file :thumbnail
+
   def self.with_admin_permission(user)
     roles = [UserCourseAssociation.teacher,
       UserCourseAssociation.environment_admin]

@@ -22,8 +22,11 @@ Environment:
     - name
     - id
     - user_id
+    - avatar_url
   mappings:
     id: core_id
+    avatar_url: thumbnail_remote_url
+  include_data: # Data default que é adicionada
   check_for: # Checa por dependencias
     User: user_id # A chave é o modelo e o valor é como a gente procura por ele
   name: Environment

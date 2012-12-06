@@ -25,6 +25,9 @@ describe Environment do
   # Cursos do Ambiente
   it { should have_many(:courses).dependent(:destroy) }
 
+  # Thumbnail remoto
+  it_should_behave_like :has_remote_file, 'thumbnail'
+
   context  "Associations" do
     before do
       @course = FactoryGirl.create(:course)
