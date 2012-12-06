@@ -5,39 +5,32 @@ for online courses in [Redu](http://redu.com.br).
 
 ## Setup
 
-### Paperclip
-Run
-```shell
-rake paperclip:refresh:missing_styles
-```
-if you need it.
-
 ### Sunspot / Solr
 Once Solr server is properly installed you may run it. If you're using
 [Sunspot Solr Gem](https://github.com/outoftime/sunspot/tree/master/sunspot_solr#sunspotsolr)
 it can be easily done with the following rake task:
 ```shell
-rake sunspot:solr:start # or sunspot:solr:run if you want it on foreground
+bundle exec rake sunspot:solr:start # or sunspot:solr:run if you want it on foreground
 ```
 What about if you already have data in your database? Run reindex!
 ```shell
-rake sunspot:reindex
+bundle exec rake sunspot:reindex
 ```
 
 ### Database population
 Well, Sunspot / Solr is a nice search service but what is it reason to be if we do not have the such content in which perform our seeking? You can invoke the following rake tasks in order to populate your database with fake data:
 ```shell
-rake populate:one # creates 1 app
-rake populate:a_few # creates 100 apps
-rake populate:some # creates 1000 apps
-rake populate:a_lot # creates 10000 apps
-rake populate:arbitrary[n] # creates n apps
+bundle exec rake populate:one # creates 1 app
+bundle exec rake populate:a_few # creates 100 apps
+bundle exec rake populate:some # creates 1000 apps
+bundle exec rake populate:a_lot # creates 10000 apps
+bundle exec rake populate:arbitrary[n] # creates n apps
 ```
 Do not forget running Solr server before creating apps or you'll get into some trouble.
 
 You may later want to create Redu components hierarchy (Environment, Course, Space and Subjects):
 ```shell
-rake populate:hierarchy # creates Environment, Course, Space, Subjects and links them with first (or a brand new) user
+bundle exec rake populate:hierarchy # creates Environment, Course, Space, Subjects and links them with first (or a brand new) user
 ```
 
 ## Untied consumer
@@ -79,6 +72,13 @@ config.client_application = {
 }
 ```
 
+### Paperclip
+Run
+```shell
+rake paperclip:refresh:missing_styles
+```
+if you need it.
+
 More information is avalible [here](https://github.com/rumblelabs/asset_sync).
 
 ## Technologies and Versions
@@ -107,9 +107,9 @@ More information is avalible [here](https://github.com/rumblelabs/asset_sync).
 ### Run specs
 That's not that hard:
 ```shell
-rspec
+bundle exec rspec
 ```
 We do not like a million migrations among our project files. That's why you perhaps may find some issues while trying to run the specs. If that's the case, run our rake task for cleaning and putting your DB just as if it wanted to work:
 ```shell
-rake db:prepare
+bundle exec rake db:prepare
 ```
