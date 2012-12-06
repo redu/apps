@@ -18,8 +18,8 @@ class Environment < ActiveRecord::Base
 
   # Thumbnail
   has_attached_file :thumbnail,
-    ReduApps::Application.config.paperclip.merge({styles: { medium: "300x300>",
-                                                            thumb: "100x100>" }})
+    ReduApps::Application.config.paperclip.merge({styles: { small: "32x32>" }})
+
   has_remote_file :thumbnail
 
   def self.with_admin_permission(user)
