@@ -12,7 +12,7 @@ describe Course do
 
   # Usuário que criou o Course
   it { should respond_to(:owner) }
-  it { should validate_presence_of(:owner) }
+  it { should validate_presence_of(:user_id) }
   it { should belong_to(:owner) }
 
   # Usuários que participam do Course

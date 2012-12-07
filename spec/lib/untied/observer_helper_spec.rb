@@ -47,12 +47,8 @@ describe Untied::ObserverHelper do
     let(:environment_no_owner) {{"id" => 2 , "name" => "Zombie Owner",
       "user_id" => 67 }}
 
-    before(:all) do
+    before do
       @user = FactoryGirl.create(:user, core_id: 1)
-    end
-    after(:all)  do
-      @user.destroy
-      FactoryGirl.reload
     end
 
     describe 'create_environment' do
@@ -91,8 +87,8 @@ describe Untied::ObserverHelper do
   end
 
   context "When working with course" do
-    let(:course) {{"name" => "curso", "id" => 1, "user_id" => 1,
-      "environment_id" => 1}}
+    let(:course) {{"name" => "curso", "id" => Random.rand(10000), "user_id" => Random.rand(10000),
+      "environment_id" => Random.rand(10000)}}
 
     let(:homeless_course) {{"name" => "chaves", "id" => 1,
       "user_id" => 1, "environment_id" => 57}} #curso sem environment
@@ -100,16 +96,8 @@ describe Untied::ObserverHelper do
     let(:orphan_course) {{ "name" => "bruce wayne", "id" => 1,
       "user_id" => 77, "environment_id" =>  99 }} #curso sem environment_id e user_id
 
-    before(:all) do
+    before do
       @course = FactoryGirl.create(:course, core_id: 2)
-    end
-
-    after(:all) do
-      @course.owner.destroy
-      @course.environment.owner.destroy
-      @course.environment.destroy
-      @course.destroy
-      FactoryGirl.reload
     end
 
     describe "create_course" do
@@ -129,7 +117,8 @@ describe Untied::ObserverHelper do
       end
 
       it 'should comple zombie course' do
-        Course.new(core_id: course["id"]).save(validate: false) #ZOMBIE
+        c = Course.new(core_id: course["id"])
+        c.save(validate: false) #ZOMBIE
         helper.create_proxy("course", course)
         Course.find_by_core_id(course["id"]).should be_valid
       end
@@ -151,29 +140,27 @@ describe Untied::ObserverHelper do
   end
 
   context "When working with space" do
-    let(:space) {{ "name" => "Melhor espaco do mundo", "id" => 2,
-      "course_id" => 1 }}
+    let(:space) do
+      { "name" => "Melhor espaco do mundo", "id" => Random.rand(100000),
+        "course_id" => Random.rand(100000) }
+    end
 
     let(:orphan_space) {{ "name" => "Espaco sem curso", "id" => 2,
       "course_id" => 23 }}
 
-    before(:all) do
+    before do
       @space = FactoryGirl.create(:space)
     end
 
-    after(:all) do
-      course = @space.course
-      course.owner.destroy
-      course.environment.owner.destroy
-      course.environment.destroy
-      course.destroy
-      @space.destroy
-      FactoryGirl.reload
-    end
-
     describe 'create_space' do
-      it 'should add space to database' do
+      it 'should return true when created' do
         helper.create_proxy("space", space).should == true
+      end
+
+      it 'should add space to database' do
+        expect {
+          helper.create_proxy("space", space)
+        }.to change(Space, :count).by(1)
       end
 
       it 'should create zombie course' do
@@ -204,25 +191,14 @@ describe Untied::ObserverHelper do
   end
 
   context "When working with subject" do
-    let(:subject) {{ "name" => "Melhor materia do mundo ", "id" => 2,
-      "space_id" => 1}}
+    let(:subject) {{ "name" => "Melhor materia do mundo ", "id" => Random.rand(100000),
+      "space_id" => Random.rand(100000)}}
 
     let(:orphan_subject) {{ "name" => "Melhor materia do mundo", "id" => 2,
       "space_id" => 53 }}
 
-    before(:all) do
+    before do
       @subject = FactoryGirl.create(:subject)
-    end
-
-    after(:all) do #ISSO TA FEIO DEMAIS
-      course = @subject.space.course
-      course.owner.destroy
-      course.environment.owner.destroy
-      course.environment.destroy
-      course.destroy
-      @subject.space.destroy
-      @subject.destroy
-      FactoryGirl.reload
     end
 
     describe 'create_subject' do
@@ -267,16 +243,8 @@ describe Untied::ObserverHelper do
       "id" => 123, "created_at" => "2012-11-06T09:18:23-02:00",
       "state" => "waiting" }}
 
-    before(:all) do
+    before do
       @course = FactoryGirl.create(:course)
-    end
-
-    after(:all) do
-      @course.owner.destroy
-      @course.environment.owner.destroy
-      @course.environment.destroy
-      @course.destroy
-      FactoryGirl.reload
     end
 
     describe 'create_user_course_association' do
@@ -322,14 +290,8 @@ describe Untied::ObserverHelper do
       "user_id" => 100, "role" => 2, "environment_id" => 100, "id" => 1,
       "created_at" => "2012-11-06T09:18:23-02:00" }}
 
-    before(:all) do
+    before do
       @environment = FactoryGirl.create(:environment)
-    end
-
-    after(:all) do
-      @environment.owner.destroy
-      @environment.destroy
-      FactoryGirl.reload
     end
 
     describe 'create_user_environment_association' do

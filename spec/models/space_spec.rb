@@ -12,7 +12,7 @@ describe Space do
 
   # Ambiente ao qual o Space pertence
   it { should belong_to(:course) }
-  it { should validate_presence_of(:course) }
+  it { should validate_presence_of(:course_id) }
 
   # Subjects do Space
   it { should have_many(:subjects).dependent(:destroy) }

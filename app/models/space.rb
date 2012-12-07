@@ -8,6 +8,6 @@ class Space < ActiveRecord::Base
   has_many :subjects, dependent: :destroy
 
   # Validadores
-  validates_presence_of :core_id, :name, :course
+  validates_presence_of :core_id, :name, :course_id
   validates_uniqueness_of :core_id
 end

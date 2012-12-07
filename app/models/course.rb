@@ -13,6 +13,6 @@ class Course < ActiveRecord::Base
 
   has_many :spaces, dependent: :destroy
   # Validadores
-  validates_presence_of :core_id, :name, :owner
+  validates_presence_of :core_id, :name, :user_id
   validates_uniqueness_of :core_id
 end

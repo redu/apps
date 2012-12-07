@@ -13,7 +13,7 @@ describe Subject do
 
   # Disciplina à qual o Subject pertence
   it { should belong_to(:space) }
-  it { should validate_presence_of(:space) }
+  it { should validate_presence_of(:space_id) }
 
   # Lectures do subject
   it { should have_many(:lectures).dependent(:destroy) }
