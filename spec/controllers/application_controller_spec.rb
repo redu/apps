@@ -53,7 +53,9 @@ describe ApplicationController do
     context 'when user is logged in' do
       before do
         @user = FactoryGirl.create(:user)
-        UserSession.create(@user)
+        # Necessário, pois não existe uma requisição
+        Authlogic::Session::Base.controller.controller.
+          cookies["user_credentials"] = { :value => @user.persistence_token }
       end
 
       it 'current_user_session returns the session' do

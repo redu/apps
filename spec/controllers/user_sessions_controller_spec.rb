@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'authlogic/test_case'
 
 describe UserSessionsController do
   describe "GET 'create'" do
@@ -71,12 +70,9 @@ describe UserSessionsController do
   end
 
   describe "POST 'destroy'" do
-    include Authlogic::TestCase
-
     before do
       @user = FactoryGirl.create(:user)
-      activate_authlogic
-      UserSession.create @user
+      cookies["user_credentials"] = { :value => @user.persistence_token }
     end
 
     it "logs the user out" do

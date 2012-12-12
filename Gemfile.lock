@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/julianalucena/authlogic.git
-  revision: 86e992c8e1524d38b142e1bcd34d09d57da5b776
+  revision: 79da1f4385da4e074bfa1a126e019469b16cdbc6
   specs:
     authlogic (3.1.3)
       activerecord (>= 3.0.0)
@@ -144,7 +144,7 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.19)
-    multi_json (1.3.7)
+    multi_json (1.5.0)
     multi_xml (0.5.1)
     multipart-post (1.1.5)
     mysql2 (0.3.11)
@@ -234,7 +234,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.35)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
