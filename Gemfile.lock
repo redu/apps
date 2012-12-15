@@ -7,6 +7,15 @@ GIT
       activesupport (>= 3.0.0)
 
 GIT
+  remote: git://github.com/redu/untied-consumer-sync.git
+  revision: 886dc49cd7927fd75a9d6d50ada8e84742fb93df
+  specs:
+    untied-consumer-sync (0.0.1)
+      activerecord
+      configurable
+      untied-consumer (~> 0.0.5)
+
+GIT
   remote: git://github.com/redu/untied-consumer.git
   revision: 92a434a304683030fa4532f73a705f2ede472e5c
   specs:
@@ -277,4 +286,5 @@ DEPENDENCIES
   therubyracer
   uglifier (>= 1.0.3)
   untied-consumer!
+  untied-consumer-sync!
   webmock

@@ -20,6 +20,7 @@ gem 'cancan'
 gem 'faraday'
 gem 'patron'
 gem 'untied-consumer', git: 'git://github.com/redu/untied-consumer.git'
+gem 'untied-consumer-sync', git: 'git://github.com/redu/untied-consumer-sync.git'
 
 # Gems used only for assets and not required
 # in production environments by default.

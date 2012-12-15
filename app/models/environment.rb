@@ -1,6 +1,6 @@
 class Environment < ActiveRecord::Base
   include Paperclip::RemoteAttachment
-  include Untied::Zombificator::ActsAsZombie
+  include Untied::Consumer::Sync::Zombificator::ActsAsZombie
 
   attr_accessible :core_id, :name, :zombie, :owner
 

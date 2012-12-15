@@ -1,4 +1,4 @@
-class UntiedGeneralObserver < Untied::ObserverHelper
+class UntiedGeneralObserver < Untied::Consumer::Sync::ObserverHelper
   # Observa todos os objetos relevantes do redu, faz uso do helper para criação
   # dos modelos
 
