@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git://github.com/redu/untied-consumer-sync.git
-  revision: 886dc49cd7927fd75a9d6d50ada8e84742fb93df
+  revision: 5bdfe266ba630ff53c75080ea4eca707059b27c0
   specs:
     untied-consumer-sync (0.0.1)
       activerecord
