@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>Portal de Aplicativos — Redu</title>
-    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag    "application", media: "all" %>
     <%= javascript_include_tag "application" %>
     <!-- Google Analytics -->
     <script type="text/javascript">
@@ -24,9 +24,9 @@
   <body>
     <div class="main-wrapper">
       <% if current_user %>
-        <%= render :partial => "shared/nav_global" %>
+        <%= render partial: "shared/nav_global" %>
       <% else %>
-        <%= render :partial => "shared/header_not_logged_in" %>
+        <%= render partial: "shared/header_not_logged_in" %>
       <% end %>
       <%= render "shared/flash_message" %>
       <div class="container">
@@ -34,7 +34,7 @@
           <div class="span16">
             <div class="apps-portal-header">
               <h2 class="portal-title icon-apps-portal-gray_48_50-before link-container pull-left">
-                <%= link_to "Portal de Aplicativos", root_path, :class => "portal-title-link link-target", :title => "Portal de Aplicativos" %>
+                <%= link_to "Portal de Aplicativos", root_path, class: "portal-title-link link-target", title: "Portal de Aplicativos" %>
               </h2>
               <div id="apps-portal-breadcrumb" class="breadcrumb-mini-wrapper">
                 <%= render_navigation renderer: :custom_breadcrumbs %>
@@ -52,6 +52,6 @@
       </div>
       <div class="footer-pusher"></div>
     </div>
-    <%= render :partial => "shared/footer" %>
+    <%= render partial: "shared/footer" %>
   </body>
 </html>

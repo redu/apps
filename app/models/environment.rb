@@ -7,7 +7,7 @@ class Environment < ActiveRecord::Base
   # Associações
   belongs_to :owner, class_name: 'User', foreign_key: 'user_id'
 
-  has_many :user_environment_associations, :dependent => :destroy
+  has_many :user_environment_associations, dependent: :destroy
   has_many :users, through: :user_environment_associations
 
   has_many :courses, dependent: :destroy
@@ -28,6 +28,6 @@ class Environment < ActiveRecord::Base
 
     Environment.includes({courses: [:spaces, :user_course_associations]}).
       where("user_course_associations.user_id" => user.id,
-      "user_course_associations.role_cd" => roles)
+            "user_course_associations.role_cd" => roles)
   end
 end

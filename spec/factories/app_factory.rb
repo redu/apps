@@ -20,16 +20,16 @@ FactoryGirl.define do
       thumbnail nil
 
       after(:create) do |app|
-        app.screen_shots << FactoryGirl.create(:screen_shot, :app => app)
+        app.screen_shots << FactoryGirl.create(:screen_shot, app: app)
       end
 
       factory :complete_app_with_comments do
         after(:create) do |app|
           2.times do
-            app.comments << FactoryGirl.create(:specialized_comment, :app => app)
-            app.comments << FactoryGirl.create(:comment, :app => app)
+            app.comments << FactoryGirl.create(:specialized_comment, app: app)
+            app.comments << FactoryGirl.create(:comment, app: app)
           end
-          app.comments << FactoryGirl.create(:common_comment, :app => app)
+          app.comments << FactoryGirl.create(:common_comment, app: app)
         end
       end
     end

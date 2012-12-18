@@ -1,8 +1,8 @@
 <div class="apps-list-item general-list-item">
   <% if favorite_flag %>
     <%= link_to "Remover dos favoritos", user_favorite_path(current_user, App.favorited_by([app], current_user)),
-                :confirm => "Esta ação irá remover este aplicativo dos seus favoritos. Deseja continuar?", :method => :delete,
-                :class => "general-list-item-close icon-close-gray_16_18 text-replacement" %>
+                confirm: "Esta ação irá remover este aplicativo dos seus favoritos. Deseja continuar?", method: :delete,
+                class: "general-list-item-close icon-close-gray_16_18 text-replacement" %>
   <% end %>
   <div class="general-list-item-body">
     <div class="general-list-item-column">

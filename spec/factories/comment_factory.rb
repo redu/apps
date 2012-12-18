@@ -20,9 +20,9 @@ FactoryGirl.define do
       body "Ae, mano! Muito massa esse app, vei."
 
       after(:create) do |comment|
-        comment.answers << FactoryGirl.create(:comment, :body => "Eh mesmo!",
-                                              :type => :answer,
-                                              :app => comment.app)
+        comment.answers << FactoryGirl.create(:comment, body: "Eh mesmo!",
+                                              type: :answer,
+                                              app: comment.app)
       end
     end
   end

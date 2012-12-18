@@ -18,7 +18,7 @@ class FavoritesController < ApplicationController
   def create
     @user = User.find_by_login(params[:user_id])
     @app = App.find(params[:app_id])
-    @user_app_association = UserAppAssociation.new(:app => @app)
+    @user_app_association = UserAppAssociation.new(app: @app)
     @user_app_association.user = @user
     authorize! :create, @user_app_association
 

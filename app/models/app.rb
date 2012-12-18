@@ -39,7 +39,7 @@ class App < ActiveRecord::Base
   }
 
   searchable do
-    text :name, :boost => 5.0
+    text :name, boost: 5.0
     text :author, :language, :objective, :synopsis, :description,
       :publishers, :submitters, :copyright
     text :categories do

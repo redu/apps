@@ -67,8 +67,8 @@ describe User do
   context '#client_applications' do
     let(:user) { User.new }
     let(:apps_example) do
-      [{"user_token"=>"7I8EzS03niDeYTxgKMqsmbFSqN9ZItoEr5N7zUO2", "id"=>12,
-        "name"=>"Portal de aplicativos", "secret" => "xxx"}]
+      [{ "user_token" => "7I8EzS03niDeYTxgKMqsmbFSqN9ZItoEr5N7zUO2", "id" => 12,
+        "name" => "Portal de aplicativos", "secret" => "xxx" }]
     end
 
     it "should assing #token for apps application" do
@@ -85,7 +85,7 @@ describe User do
     it "should work with update attributes" do
       user = FactoryGirl.create(:user)
       apps_example.first['token'] = "123"
-      user.update_attributes({:client_applications => apps_example})
+      user.update_attributes({ client_applications: apps_example })
       user.token = "123"
     end
   end

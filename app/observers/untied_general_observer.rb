@@ -6,7 +6,7 @@ class UntiedGeneralObserver < Untied::ObserverHelper
     super
 
     elements = self.config.values.collect {|v| v['name'].underscore.to_sym }
-    self.class.observe(*elements, :from => :core)
+    self.class.observe(*elements, from: :core)
   end
 
   def after_create(payload)

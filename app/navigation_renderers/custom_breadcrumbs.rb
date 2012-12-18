@@ -2,8 +2,8 @@ class CustomBreadcrumbs < SimpleNavigation::Renderer::Base
 
   def render(item_container)
     content = a_tags(item_container).join(join_with)
-    content_tag(:ul, content, {:id => "apps-portal-breadcrumb", 
-                               :class => "breadcrumb-mini"})
+    content_tag(:ul, content, {id: "apps-portal-breadcrumb",
+                               class: "breadcrumb-mini"})
   end
 
   protected
@@ -25,11 +25,11 @@ class CustomBreadcrumbs < SimpleNavigation::Renderer::Base
     if item.name == '' # Descarta elementos vazios (zombies do simple-navigation)
       nil
     else
-      li_content = content_tag(:a, item.name, { :href => item.url, 
-                                                :class => switch_class(item) })
+      li_content = content_tag(:a, item.name, { href: item.url,
+                                                class: switch_class(item) })
 
       content_tag(:li, li_content,
-                  :class => "breadcrumb-mini-item icon-arrow-right-" + \
+                  class: "breadcrumb-mini-item icon-arrow-right-" + \
                     "separator-gray_16_18-after")
     end
   end
