@@ -6,6 +6,6 @@ class ScreenShot < ActiveRecord::Base
 
   # Imagem do screenshot
   has_attached_file :screen,
-    ReduApps::Application.config.paperclip.merge({styles: { unique: "700x200",
-                                                            double: "340x200" }})
+    ReduApps::Application.config.paperclip.merge({styles: { unique: "700x200#",
+                                                            double: "340x200#" }})
 end
