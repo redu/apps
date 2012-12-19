@@ -4,7 +4,6 @@ FactoryGirl.define do
   factory :lecture do
     sequence(:core_id)
     name "Nova Aula"
-    subject { FactoryGirl.create(:subject) }
     lectureable_type "rea"
     sequence(:lectureable_id)
   end

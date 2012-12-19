@@ -5,6 +5,11 @@ FactoryGirl.define do
     sequence(:core_id)
     name "Novo Curso"
     owner { FactoryGirl.create(:user) }
-    environment { FactoryGirl.create(:environment) }
+
+    factory :complete_course do
+      after(:create) do |course|
+        course.spaces << FactoryGirl.create(:complete_space)
+      end
+    end
   end
 end

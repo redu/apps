@@ -4,6 +4,11 @@ FactoryGirl.define do
   factory :space do
     sequence(:core_id)
     name "Nova Disciplina"
-    course { FactoryGirl.create(:course) }
+
+    factory :complete_space do
+      after(:create) do |space|
+        space.subjects << FactoryGirl.create(:complete_subject)
+      end
+    end
   end
 end

@@ -6,7 +6,7 @@ class Subject < ActiveRecord::Base
   belongs_to :space
   has_many :lectures, dependent: :destroy
 
-  validates_presence_of :space_id, :name
+  validates_presence_of :name
 
   scope :finalized, where(finalized: true)
 

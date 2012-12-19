@@ -12,7 +12,6 @@ describe Lecture do
 
   # Modulo ao qual o Lecture pertence
   it { should belong_to(:subject) }
-  it { should validate_presence_of(:subject) }
 
   # Aplicativo ao qual a aula está vinculada
   it { should belong_to(:app) }
