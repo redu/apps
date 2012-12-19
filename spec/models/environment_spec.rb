@@ -30,7 +30,8 @@ describe Environment do
 
   context  "Associations" do
     before do
-      @course = FactoryGirl.create(:course)
+      @course = FactoryGirl.create(:course,
+                                   environment: FactoryGirl.create(:environment))
       @course2 = FactoryGirl.create(:course)
 
       UserCourseAssociation.create(user: @course.owner) do |c|
