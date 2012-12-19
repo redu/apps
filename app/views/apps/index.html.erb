@@ -16,12 +16,12 @@
   <% else %>
     <li class="tab tab-active">
   <% end %>
-    <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
+    <%= link_to "Recursos Educacionais Abertos", root_path, class: "tab-title icon-oer-lightblue_16_18-before", title: "Recursos Educacionais Abertos" %>
   </li>
   <% if can? :manage, UserAppAssociation %>
     <li class="tab">
       <% favorite_apps_count = parentize(@favorite_apps_count) %>
-      <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
+      <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), class: "tab-title icon-favorite-lightblue_16_18-before", title: "Aplicativos Favoritos #{favorite_apps_count}" %>
     </li>
   <% end %>
 </ul>
@@ -51,7 +51,7 @@
         <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
                     apps_path(filter: filters_url(@filter, cat, @categories.length),
                               search: @search),
-                    :class => filter_class(@filter, cat) %>
+                    class: filter_class(@filter, cat) %>
       <% end %>
     </div>
   </div>

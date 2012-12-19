@@ -46,7 +46,7 @@ class AppsController < ApplicationController
     respond_to do |format|
       format.js
       format.html  # show.html.erb
-      format.json  { render :json => @app }
+      format.json  { render json: @app }
     end
   end
 
@@ -67,10 +67,10 @@ class AppsController < ApplicationController
   def search(filters = nil)
     App.search(include: [:comments, :categories]) do
       fulltext params[:search] do
-        boost_fields :name => 2.0 # Prioridade para itens com o termo no nome
+        boost_fields name: 2.0 # Prioridade para itens com o termo no nome
         query_phrase_slop 3 # 3 palavras podem aparecer entre os termos da busca
-        phrase_fields :description => 2.0 # Prioriza se aparecer a frase na desc
-        phrase_fields :synopsis => 2.0 # Prioriza se aparecer a frase na sinopse
+        phrase_fields description: 2.0 # Prioriza se aparecer a frase na desc
+        phrase_fields synopsis: 2.0 # Prioriza se aparecer a frase na sinopse
       end
       with(:category_ids, filters) if filters
     end

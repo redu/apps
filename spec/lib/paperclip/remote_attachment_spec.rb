@@ -18,8 +18,8 @@ module Paperclip
       context "when the url is accessible" do
         let(:url) { "http://foo.bar/foo.png" }
         before do
-          stub_request(:get, url).to_return(:status => 200, :body => "",
-                                            :headers => {})
+          stub_request(:get, url).to_return(status: 200, body: "",
+                                            headers: {})
         end
 
         it "should parse the URL" do
@@ -68,8 +68,8 @@ module Paperclip
       context "when the url is not accessible" do
         let(:url) { "http://foo.bar/foo.png" }
         before do
-          stub_request(:get, url).to_return(:status => 403, :body => "",
-                                            :headers => {})
+          stub_request(:get, url).to_return(status: 403, body: "",
+                                            headers: {})
         end
 
         it "should the thumbnail be nil" do

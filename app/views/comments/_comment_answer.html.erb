@@ -1,9 +1,9 @@
 <li class="status-content response">
   <% if can? :destroy, comment_answer %>
     <%= link_to 'Apagar Resposta', [comment.app, comment_answer],
-               :confirm => 'Esta ação irá apagar sua resposta. Deseja continuar?',
-               :method => :delete,
-               :class => "close icon-close-gray_16_18 replacement" %>
+               confirm: 'Esta ação irá apagar sua resposta. Deseja continuar?',
+               method: :delete,
+               class: "close icon-close-gray_16_18 replacement" %>
    <% end %>
   <div class="status-text-response">
     <%= link_to redu_user_static("", comment_answer.author), class: "icon-link" do %>

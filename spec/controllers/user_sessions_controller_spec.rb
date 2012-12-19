@@ -8,14 +8,14 @@ describe UserSessionsController do
 
     context 'with correct credentials' do
       before do
-        @login_params = { :user_session => {
-          :login => @user.login,
-          :password => @user.password }
+        @login_params = { user_session: {
+          login: @user.login,
+          password: @user.password }
         }
       end
 
       it 'logs the user in' do
-        post :create, @login_params.merge!(:locale => 'pt-BR')
+        post :create, @login_params.merge!(locale: 'pt-BR')
         controller.send(:current_user).should == @user
       end
 
@@ -26,7 +26,7 @@ describe UserSessionsController do
         render_views
 
         it 'should do a redirect back with window.location' do
-          xhr :post, :create, @login_params.merge!(:locale => 'pt-BR')
+          xhr :post, :create, @login_params.merge!(locale: 'pt-BR')
           response.body.should \
             include("window.location='http://whereiwas.com'")
         end
@@ -38,7 +38,7 @@ describe UserSessionsController do
         end
 
         it 'logs the user in' do
-          post :create, @login_params.merge!(:locale => 'pt-BR')
+          post :create, @login_params.merge!(locale: 'pt-BR')
           controller.send(:current_user).should == @user
         end
       end
@@ -46,14 +46,14 @@ describe UserSessionsController do
 
     context 'with wrong credentials' do
       before do
-        @login_params = { :user_session => {
-          :login => @user.login,
-          :password => 'wrongpass' }
+        @login_params = { user_session: {
+          login: @user.login,
+          password: 'wrongpass' }
         }
       end
 
       it 'do NOT logs the user in' do
-        post :create, @login_params.merge!(:locale => 'pt-BR')
+        post :create, @login_params.merge!(locale: 'pt-BR')
         controller.send(:current_user).should be_nil
       end
 
@@ -61,7 +61,7 @@ describe UserSessionsController do
         render_views
 
         it 'shows form errors' do
-          xhr :post, :create, @login_params.merge!(:locale => 'pt-BR')
+          xhr :post, :create, @login_params.merge!(locale: 'pt-BR')
           response.body.should include("replaceWith")
           response.body.should include("$newForm")
         end
@@ -72,11 +72,11 @@ describe UserSessionsController do
   describe "POST 'destroy'" do
     before do
       @user = FactoryGirl.create(:user)
-      cookies["user_credentials"] = { :value => @user.persistence_token }
+      cookies["user_credentials"] = { value: @user.persistence_token }
     end
 
     it "logs the user out" do
-      post :destroy, :locale => 'pt-BR'
+      post :destroy, locale: 'pt-BR'
       controller.send(:current_user).should be_nil
     end
 
@@ -87,7 +87,7 @@ describe UserSessionsController do
       render_views
 
       it 'should do a redirect back with window.location' do
-        xhr :post, :destroy, :locale => 'pt-BR'
+        xhr :post, :destroy, locale: 'pt-BR'
         response.body.should \
           include("window.location='http://whereiwas.com'")
       end

@@ -76,7 +76,7 @@
           <% if can? :create, UserAppAssociation.new(app: @app)   %>
             <%= form_tag user_favorites_path(current_user), method: "post" do %>
               <%= hidden_field_tag :app_id , @app.id %>
-              <%= content_tag :button, :type => :submit, class: "button-primary" do %>
+              <%= content_tag :button, type: :submit, class: "button-primary" do %>
                 Adicionar a Favoritos
               <% end %>
             <% end %>
@@ -87,7 +87,7 @@
             <% end %>
           <% end %>
           <% if can? :destroy, @favorite %>
-            <%= link_to "Remover dos Favoritos", user_favorite_path(current_user, @favorite), :method => "delete", :class => "icon-favorite-delete-lightblue_16_18-before", :title => "Remover dos Favoritos" %>
+            <%= link_to "Remover dos Favoritos", user_favorite_path(current_user, @favorite), method: "delete", class: "icon-favorite-delete-lightblue_16_18-before", title: "Remover dos Favoritos" %>
           <% end %>
         </div>
       </div>

@@ -5,9 +5,9 @@
 # (create the session table with "rails generate session_migration")
 if Rails.env.production?
   ReduApps::Application.config.session_store :active_record_store,
-    :key => '_redu_session',
-    :domain => '.redu.com.br'
+    key: '_redu_session',
+    domain: '.redu.com.br'
 else
   ReduApps::Application.config.session_store :active_record_store,
-    :key => '_redu_session'
+    key: '_redu_session'
 end

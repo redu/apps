@@ -5,7 +5,7 @@ module ApplicationHelper
       content_tag(:li, msg)
     end.join.html_safe
 
-    content_tag(:ul, errors, :class => 'control-errors')
+    content_tag(:ul, errors, class: 'control-errors')
   end
 
   # Retorna a URL base do Redu.
