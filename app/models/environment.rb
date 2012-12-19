@@ -18,7 +18,7 @@ class Environment < ActiveRecord::Base
 
   # Thumbnail
   has_attached_file :thumbnail,
-    ReduApps::Application.config.paperclip.merge({styles: { small: "32x32>" }})
+    ReduApps::Application.config.paperclip.merge({ styles: { small: "32x32#" } })
 
   has_remote_file :thumbnail
 
@@ -26,7 +26,7 @@ class Environment < ActiveRecord::Base
     roles = [UserCourseAssociation.teacher,
       UserCourseAssociation.environment_admin]
 
-    Environment.includes({courses: [:spaces, :user_course_associations]}).
+    Environment.includes({ courses: [:spaces, :user_course_associations] }).
       where("user_course_associations.user_id" => user.id,
       "user_course_associations.role_cd" => roles)
   end
