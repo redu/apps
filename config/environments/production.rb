@@ -82,7 +82,7 @@ ReduApps::Application.configure do
   config.api_url = "http://redu.com.br"
 
   config.client_application = {
-    :secret => 'e2hbu63diQtHHtI2kQXUbktaGZLlbjeXUgmy9H8A'
+    secret: 'e2hbu63diQtHHtI2kQXUbktaGZLlbjeXUgmy9H8A'
   }
 
 end

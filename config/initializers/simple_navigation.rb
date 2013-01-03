@@ -1,1 +1,1 @@
-SimpleNavigation.register_renderer :custom_breadcrumbs => CustomBreadcrumbs
+SimpleNavigation.register_renderer custom_breadcrumbs: CustomBreadcrumbs

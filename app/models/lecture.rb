@@ -6,7 +6,7 @@ class Lecture < ActiveRecord::Base
   belongs_to :app
 
   # Validadores
-  validates_presence_of :name, :subject
+  validates_presence_of :name
 
   def self.create_via_api(params)
     conn = Connection.new(params[:token])

@@ -25,9 +25,9 @@ class App < ActiveRecord::Base
 
   # Thumbnail
   has_attached_file :thumbnail,
-    ReduApps::Application.config.paperclip.merge({ styles: { large: "x160>",
-                                                             medium: "x90",
-                                                             small: "x32" }})
+    ReduApps::Application.config.paperclip.merge({ styles: { large: "x160#",
+                                                             medium: "x90#",
+                                                             small: "x32#" }})
 
   # Rating
   has_reputation :rating, source: :user, aggregated_by: :average
@@ -39,7 +39,7 @@ class App < ActiveRecord::Base
   }
 
   searchable do
-    text :name, :boost => 5.0
+    text :name, boost: 5.0
     text :author, :language, :objective, :synopsis, :description,
       :publishers, :submitters, :copyright
     text :categories do

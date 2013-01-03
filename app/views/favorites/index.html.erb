@@ -1,10 +1,10 @@
 <ul class="tabs tabs-big">
   <li class="tab">
-    <%= link_to "Recursos Educacionais Abertos", root_path, :class => "tab-title icon-oer-lightblue_16_18-before", :title => "Recursos Educacionais Abertos" %>
+    <%= link_to "Recursos Educacionais Abertos", root_path, class: "tab-title icon-oer-lightblue_16_18-before", title: "Recursos Educacionais Abertos" %>
   </li>
   <li class="tab tab-active">
     <% favorite_apps_count = parentize(@favorite_apps_count) %>
-    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), :class => "tab-title icon-favorite-lightblue_16_18-before", :title => "Aplicativos Favoritos #{favorite_apps_count}" %>
+    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), class: "tab-title icon-favorite-lightblue_16_18-before", title: "Aplicativos Favoritos #{favorite_apps_count}" %>
   </li>
 </ul>
 

@@ -23,7 +23,6 @@ describe AppsController do
       before(:each) do
         @categories = (0..3).collect {|i| Category.create(name: "Cat #{i}")}
         @apps = 10.times.collect do |i|
-          # app = App.create(:name => "App #{i}")
           app = FactoryGirl.create(:app)
           app.categories << @categories.sample(rand(4))
           app

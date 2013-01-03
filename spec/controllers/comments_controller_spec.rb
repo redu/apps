@@ -163,8 +163,8 @@ describe CommentsController do
 
         context "which is an answer" do
           before do
-            @answer = FactoryGirl.create(:comment, :app => @app,
-                                         :author => @user)
+            @answer = FactoryGirl.create(:comment, app: @app,
+                                         author: @user)
             @comment.answers << @answer
             @comment.save
           end

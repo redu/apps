@@ -12,7 +12,7 @@ require "active_resource/exceptions"
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
-  Bundler.require(*Rails.groups(:assets => %w(development test)))
+  Bundler.require(*Rails.groups(assets: %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
 end
@@ -82,8 +82,8 @@ module ReduApps
 
     # Configurações da aplicação do portal de aplicativos no core.
     config.client_application = {
-      :name => "Portal de Aplicativos",
-      :secret => 'xxx'
+      name: "Portal de Aplicativos",
+      secret: 'xxx'
     }
   end
 end

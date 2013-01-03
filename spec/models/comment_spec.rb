@@ -37,11 +37,11 @@ describe Comment do
         n = rand(3)
         case n
         when 0 # Comentário especializado criado por especialista
-          @specialized << FactoryGirl.create(:specialized_comment, :author => @specialist)
+          @specialized << FactoryGirl.create(:specialized_comment, author: @specialist)
         when 1 # Comentário comum criado por especialista
-          @common << FactoryGirl.create(:common_comment, :author => @specialist)
+          @common << FactoryGirl.create(:common_comment, author: @specialist)
         when 2 # Comentário comum criado por membro
-          @common << FactoryGirl.create(:common_comment, :author => @member)
+          @common << FactoryGirl.create(:common_comment, author: @member)
         end
       end
     end

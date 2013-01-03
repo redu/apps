@@ -30,8 +30,8 @@ class User < ActiveRecord::Base
 
   # Thumbnail
   has_attached_file :thumbnail,
-    ReduApps::Application.config.paperclip.merge({styles: { small: "x32",
-                                                            medium: "x64" }})
+    ReduApps::Application.config.paperclip.merge({styles: { small: "x32#",
+                                                            medium: "x90#" }})
   has_remote_file :thumbnail
 
   acts_as_authentic do |c|
