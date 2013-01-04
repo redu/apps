@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   include Paperclip::RemoteAttachment
-  include Untied::Zombificator::ActsAsZombie
+  include Untied::Consumer::Sync::Zombificator::ActsAsZombie
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
   :thumbnail, :client_applications

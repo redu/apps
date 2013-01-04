@@ -6,16 +6,6 @@ GIT
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
 
-GIT
-  remote: git://github.com/redu/untied-consumer.git
-  revision: 59b298d3a2d3b1291721d8999791fd34b3b1fd54
-  specs:
-    untied-consumer (0.0.4)
-      activemodel
-      amqp
-      configurable
-      json
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -48,10 +38,10 @@ GEM
       i18n (~> 0.6)
       multi_json (~> 1.0)
     addressable (2.3.2)
-    amq-client (0.9.5)
+    amq-client (0.9.10)
       amq-protocol (>= 0.9.4)
       eventmachine
-    amq-protocol (0.9.5)
+    amq-protocol (1.0.1)
     amqp (0.9.8)
       amq-client (~> 0.9.5)
       amq-protocol (>= 0.9.4)
@@ -239,6 +229,17 @@ GEM
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    untied-consumer (0.0.5)
+      activemodel
+      amqp
+      configurable
+      json
+    untied-consumer-sync (0.0.1)
+      configurable
+      untied-consumer (~> 0.0.5)
+    untied-consumer-sync-activerecord (0.0.1)
+      activerecord (~> 3.2)
+      untied-consumer-sync (~> 0.0)
     uuidtools (2.1.3)
     webmock (1.9.0)
       addressable (>= 2.2.7)
@@ -277,5 +278,5 @@ DEPENDENCIES
   sunspot_solr
   therubyracer
   uglifier (>= 1.0.3)
-  untied-consumer!
+  untied-consumer-sync-activerecord (~> 0.0.1)
   webmock

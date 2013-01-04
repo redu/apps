@@ -1,5 +1,5 @@
 class UserCourseAssociation < ActiveRecord::Base
-  include Untied::Zombificator::ActsAsZombie
+  include Untied::Consumer::Sync::Zombificator::ActsAsZombie
 
   attr_accessible :core_id, :user
   belongs_to :user

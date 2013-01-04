@@ -1,5 +1,5 @@
 class Subject < ActiveRecord::Base
-  include Untied::Zombificator::ActsAsZombie
+  include Untied::Consumer::Sync::Zombificator::ActsAsZombie
 
   attr_accessible :name, :core_id, :space
 
