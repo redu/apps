@@ -145,7 +145,7 @@ describe CheckoutController do
                           href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'false',
-                               lecture: lecture_name, subject: @subject.id)
+                               lecture_name: lecture_name, subject_name: @subject.id)
           end
 
           it_behaves_like 'a checkout variables ascriber'
@@ -165,7 +165,7 @@ describe CheckoutController do
                           href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_name: subject_name)
           end
 
           it_behaves_like 'a checkout variables ascriber'
@@ -178,7 +178,7 @@ describe CheckoutController do
               to_return(status: 401)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_name: subject_name)
           end
 
           it 'should set flash error message' do
@@ -193,7 +193,7 @@ describe CheckoutController do
               to_return(status: 422)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_name: subject_name)
           end
 
           it 'should set flash error message' do
