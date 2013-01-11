@@ -33,9 +33,8 @@ class AppsController < ApplicationController
     @app.update_attribute(:views, @app.views + 1) unless params[:page]
     @app_categories = Category.get_names_by_kind @app
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
-      page(params[:page]).per(10)
-    @favorite = UserAppAssociation.find_by_user_id_and_app_id(current_user,
-                                                              @app)
+      page(params[:page]).per(comments_per_page)
+    @favorite = UserAppAssociation.find_by_user_id_and_app_id(current_user, @app)
     @app_rating = @app.reputation_for(:rating)
     @evaluations = @app.evaluators_for(:rating).count
     if current_user
@@ -83,5 +82,9 @@ class AppsController < ApplicationController
     @categories = Category.filters_on @apps
     @filters_counter = Category.count_filters_on @categories
     @categories = @categories.uniq # Remove categorias duplicadas
+  end
+
+  def comments_per_page
+    ReduApps::Application.config.comments_per_page
   end
 end

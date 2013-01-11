@@ -85,5 +85,8 @@ module ReduApps
       name: "Portal de Aplicativos",
       secret: 'xxx'
     }
+
+    # Quantidade de comentários exibidos por página
+    config.comments_per_page = 10
   end
 end
