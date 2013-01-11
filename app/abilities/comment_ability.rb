@@ -6,8 +6,10 @@ module CommentAbility
 
     if user
       can :create, Comment
-      cannot :create, Comment do |comment|
-        comment.specialized? && !user.specialist?
+      unless user.is_admin?
+        cannot :create, Comment do |comment|
+          comment.specialized? && !user.specialist?
+        end
       end
 
       can :manage, Comment, user_id: user.id

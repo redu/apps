@@ -27,6 +27,9 @@ describe User do
   it { FactoryGirl.create(:member).role.should == :member }
   it { FactoryGirl.create(:specialist).role.should == :specialist }
 
+  # Papel de usuário no Redu (core)
+  it { should respond_to(:core_role) }
+
   # Aplicativos favoritos do usuário (ou simplesmente aplicativos do usuário)
   it { should have_many(:user_app_associations).dependent(:destroy) }
   it { should have_many(:apps).through(:user_app_associations) }
@@ -87,6 +90,19 @@ describe User do
       apps_example.first['token'] = "123"
       user.update_attributes({ client_applications: apps_example })
       user.token = "123"
+    end
+  end
+
+  describe :is_admin? do
+    let(:member) { FactoryGirl.create(:user) }
+    let(:admin) { FactoryGirl.create(:user, core_role: 1) }
+
+    it "should return true for admin user" do
+      admin.is_admin?.should be_true
+    end
+
+    it "should return false for member user" do
+      member.is_admin?.should be_false
     end
   end
 end

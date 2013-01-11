@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   include Untied::Consumer::Sync::Zombificator::ActsAsZombie
 
   attr_accessible :core_id, :login, :email, :first_name, :last_name, :role,
-  :thumbnail, :client_applications
+    :thumbnail, :client_applications, :core_role
 
   # Atributos de usuário Redu
   validates_presence_of :core_id, :login, :first_name, :last_name, :role
@@ -74,5 +74,10 @@ class User < ActiveRecord::Base
       fetch(:secret, nil)
     core_app = apps.detect { |a| a['secret'] == secret } || {}
     self.token = core_app.fetch('user_token', nil)
+  end
+
+  # Utiliza a coluna da tabela Users que guarda o role do usuário no Redu (core)
+  def is_admin?
+    core_role == 1
   end
 end

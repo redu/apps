@@ -10,9 +10,11 @@ User: #Tipo que vem no payload
     - persistence_token
     - client_applications
     - avatar_url
+    - role
   mappings:
     id: core_id # Como traduzir o id
     avatar_url: thumbnail_remote_url
+    role: core_role
   include_data: # Data default que é adicionada
     - role: member
   name: User # Nome do modelo local
