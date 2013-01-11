@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(:version => 20130110171821) do
 
   add_index "comments", ["app_id"], :name => "index_comments_on_app_id"
   add_index "comments", ["in_response_to_id"], :name => "index_comments_on_in_response_to_id"
-  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "courses", :force => true do |t|
     t.integer  "core_id"

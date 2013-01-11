@@ -3,7 +3,6 @@ class RefactorIndexes < ActiveRecord::Migration
     # Comments
     remove_index :comments,
       :name => 'index_comments_on_user_and_app_and_type_columns'
-    add_index :comments, :user_id
     add_index :comments, :app_id
     add_index :comments, :in_response_to_id
 
