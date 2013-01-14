@@ -48,6 +48,24 @@ describe 'Comment ability' do
       end
     end
 
+    context 'when admin' do
+      before do
+        user.update_attributes(core_role: 1)
+      end
+
+      it 'should be able to create a common Comment' do
+        subject.should be_able_to(:create, Comment.new(type: :common))
+      end
+
+      it 'should be able to create an specialized Comment' do
+        subject.should be_able_to(:create, Comment.new(type: :specialized))
+      end
+
+      it 'should be able to manage comment when he is not the author' do
+        subject.should be_able_to(:manage, comment)
+      end
+    end
+
     it 'should be able to manage comment when he is the author' do
       comment.author = user
       subject.should be_able_to(:manage, comment)

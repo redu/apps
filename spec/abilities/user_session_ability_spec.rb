@@ -35,5 +35,15 @@ describe 'UserSession ability' do
     it 'should not be able to destroy an others UserSession' do
       subject.should_not be_able_to(:destroy, others_user_session)
     end
+
+    context 'when admin' do
+      before do
+        user.update_attributes(core_role: 1)
+      end
+
+      it 'should be able to destroy an others UserSession' do
+        subject.should be_able_to(:destroy, others_user_session)
+      end
+    end
   end
 end

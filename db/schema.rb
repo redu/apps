@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110171821) do
+ActiveRecord::Schema.define(:version => 20130111212857) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -256,6 +256,7 @@ ActiveRecord::Schema.define(:version => 20130110171821) do
     t.string   "email"
     t.string   "persistence_token"
     t.boolean  "zombie",                 :default => true
+    t.integer  "core_role",              :default => 2
   end
 
   add_index "users", ["core_id"], :name => "index_users_on_core_id"

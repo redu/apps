@@ -20,7 +20,7 @@ describe 'UserAppAssociation ability' do
       subject.should be_able_to(:create, UserAppAssociation.new)
     end
 
-    it 'should_not be able to create an UserAppAssociation associated to ' \
+    it 'should not be able to create an UserAppAssociation associated to ' \
       'another user' do
         another_user = FactoryGirl.create(:user)
         assoc = UserAppAssociation.new
@@ -45,6 +45,25 @@ describe 'UserAppAssociation ability' do
       it 'should not be able to create an UserAppAssociation' do
         subject.should_not \
           be_able_to(:create, UserAppAssociation.new(app: favorited_app.app))
+      end
+    end
+
+    context 'when admin' do
+      before do
+        user.update_attributes(core_role: 1)
+      end
+
+      it 'should be able to create an UserAppAssociation associated to ' \
+        'another user' do
+          another_user = FactoryGirl.create(:user)
+          assoc = UserAppAssociation.new
+          assoc.user = another_user
+          subject.should be_able_to(:create, assoc)
+      end
+
+      it 'should be able to manage an UserAppAssociation until if he is not' \
+        'associated with it' do
+          subject.should be_able_to(:manage, user_app_assoc)
       end
     end
   end
