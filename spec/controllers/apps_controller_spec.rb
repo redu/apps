@@ -40,6 +40,18 @@ describe AppsController do
         assigns(:apps).all? {|a| a.categories.include?(@categories.first)}.should == true
       end
     end
+
+    context "when searching" do
+
+      it "should call search method" do
+        search_method = App.method(:search)
+        App.should_receive(:search).once do
+          search_method.call
+        end
+
+        get :index, search: "isto é uma query", locale: 'pt-BR'
+      end
+    end
   end
 
   describe "GET show" do
