@@ -19,8 +19,9 @@
       <div class="filters">
         <% @favorite_apps_filters.uniq.each do |cat| %>
           <%= link_to "#{cat.name} #{parentize(@favorite_apps_filters_counter[cat.name])}",
-                      user_favorites_path(current_user, filter: filters_url(@filter, cat)),
-                      class: filter_class(@filter, cat) %>
+            user_favorites_path(current_user,
+              filter: filters_url(@filter, cat, @favorite_apps_filters_counter.length)),
+            class: filter_class(@filter, cat) %>
         <% end %>
       </div>
     </div>

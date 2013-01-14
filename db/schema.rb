@@ -20,7 +20,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "app_category_associations", ["app_id", "category_id"], :name => "index_app_category_associations_on_app_id_and_category_id"
+  add_index "app_category_associations", ["app_id"], :name => "index_app_category_associations_on_app_id"
+  add_index "app_category_associations", ["category_id"], :name => "index_app_category_associations_on_category_id"
 
   create_table "apps", :force => true do |t|
     t.string   "name"
@@ -64,7 +65,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.datetime "updated_at",                       :null => false
   end
 
-  add_index "comments", ["user_id", "app_id", "in_response_to_id", "type_cd"], :name => "index_comments_on_user_and_app_and_type_columns"
+  add_index "comments", ["app_id"], :name => "index_comments_on_app_id"
+  add_index "comments", ["in_response_to_id"], :name => "index_comments_on_in_response_to_id"
 
   create_table "courses", :force => true do |t|
     t.integer  "core_id"
@@ -76,7 +78,9 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "zombie",         :default => true
   end
 
-  add_index "courses", ["core_id", "name", "user_id"], :name => "index_courses_on_core_id_and_name_and_user_id"
+  add_index "courses", ["core_id"], :name => "index_courses_on_core_id"
+  add_index "courses", ["environment_id"], :name => "index_courses_on_environment_id"
+  add_index "courses", ["user_id"], :name => "index_courses_on_user_id"
 
   create_table "environments", :force => true do |t|
     t.integer  "core_id"
@@ -91,7 +95,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "zombie",                 :default => true
   end
 
-  add_index "environments", ["core_id", "name", "user_id"], :name => "index_environments_on_core_id_and_name_and_user_id"
+  add_index "environments", ["core_id"], :name => "index_environments_on_core_id"
+  add_index "environments", ["user_id"], :name => "index_environments_on_user_id"
 
   create_table "lectures", :force => true do |t|
     t.integer  "core_id"
@@ -104,7 +109,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.datetime "updated_at",       :null => false
   end
 
-  add_index "lectures", ["core_id", "name", "subject_id"], :name => "index_lectures_on_core_id_and_name_and_subject_id"
+  add_index "lectures", ["core_id"], :name => "index_lectures_on_core_id"
+  add_index "lectures", ["subject_id"], :name => "index_lectures_on_subject_id"
 
   create_table "rs_evaluations", :force => true do |t|
     t.string   "reputation_name"
@@ -181,7 +187,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "zombie",     :default => true
   end
 
-  add_index "spaces", ["core_id", "name", "course_id"], :name => "index_spaces_on_core_id_and_name_and_course_id"
+  add_index "spaces", ["core_id"], :name => "index_spaces_on_core_id"
+  add_index "spaces", ["course_id"], :name => "index_spaces_on_course_id"
 
   create_table "subjects", :force => true do |t|
     t.integer  "core_id"
@@ -193,7 +200,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "finalized"
   end
 
-  add_index "subjects", ["core_id", "name", "space_id"], :name => "index_subjects_on_core_id_and_name_and_space_id"
+  add_index "subjects", ["core_id"], :name => "index_subjects_on_core_id"
+  add_index "subjects", ["space_id"], :name => "index_subjects_on_space_id"
 
   create_table "user_app_associations", :force => true do |t|
     t.integer  "user_id"
@@ -202,7 +210,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "user_app_associations", ["user_id", "app_id"], :name => "index_user_app_associations_on_user_id_and_app_id"
+  add_index "user_app_associations", ["app_id"], :name => "index_user_app_associations_on_app_id"
+  add_index "user_app_associations", ["user_id"], :name => "index_user_app_associations_on_user_id"
 
   create_table "user_course_associations", :force => true do |t|
     t.integer  "user_id"
@@ -214,7 +223,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "zombie",     :default => true
   end
 
-  add_index "user_course_associations", ["user_id", "course_id"], :name => "index_user_course_associations_on_user_id_and_course_id"
+  add_index "user_course_associations", ["course_id"], :name => "index_user_course_associations_on_course_id"
+  add_index "user_course_associations", ["user_id"], :name => "index_user_course_associations_on_user_id"
 
   create_table "user_environment_associations", :force => true do |t|
     t.integer  "user_id"
@@ -225,7 +235,8 @@ ActiveRecord::Schema.define(:version => 20130111212857) do
     t.boolean  "zombie",         :default => true
   end
 
-  add_index "user_environment_associations", ["user_id", "environment_id"], :name => "index_user_environment_associations_on_user_and_environment_ids"
+  add_index "user_environment_associations", ["environment_id"], :name => "index_user_environment_associations_on_environment_id"
+  add_index "user_environment_associations", ["user_id"], :name => "index_user_environment_associations_on_user_id"
 
   create_table "users", :force => true do |t|
     t.integer  "core_id"
