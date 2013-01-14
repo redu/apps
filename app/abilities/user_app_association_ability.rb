@@ -4,12 +4,17 @@ module UserAppAssociationAbility
   def user_app_association_abilities(user)
     if user
       can :create, UserAppAssociation do |user_app_assoc|
-        (user_app_assoc.user.nil? || user_app_assoc.user.nil? == user) &&
+        ((user_app_assoc.user.nil? || user_app_assoc.user == user) &&
           !UserAppAssociation.exists?(user_id: user,
-                                      app_id: user_app_assoc.app)
+                                      app_id: user_app_assoc.app)) ||
+        (user.is_admin? &&
+          !UserAppAssociation.exists?(user_id: user,
+                                      app_id: user_app_assoc.app))
       end
 
-      can :manage, UserAppAssociation, user_id: user.id
+      can :manage, UserAppAssociation do |user_app_assoc|
+        user_app_assoc.user == user || user.is_admin?
+      end
     end
   end
 end
