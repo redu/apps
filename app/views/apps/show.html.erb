@@ -131,7 +131,7 @@
 </div>
 
 <ol class="statuses oer-comments">
-  <%= render partial: 'specialized_comment', collection: @app.comments.specialized %>
+  <%= render partial: 'comments/specialized_comment', collection: @app.comments.specialized %>
 
   <% if can? :create, Comment %>
     <!-- Botões de comentários -->

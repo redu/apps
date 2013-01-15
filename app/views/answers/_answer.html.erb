@@ -1,0 +1,26 @@
+<li class="status-content response">
+  <% if can? :destroy, answer %>
+    <%= link_to 'Apagar Resposta', [comment.app, answer],
+               confirm: 'Esta ação irá apagar sua resposta. Deseja continuar?',
+               method: :delete,
+               class: "close icon-close-gray_16_18 replacement" %>
+   <% end %>
+  <div class="status-text-response">
+    <%= link_to redu_user_static("", answer.author), class: "icon-link" do %>
+      <%= image_tag answer.author.thumbnail.url(:small), alt: answer.author.display_name, title: answer.author.display_name, size: "32x32" %>
+    <% end %>
+    <%= link_to answer.author.display_name, redu_user_static("", answer.author), class: "link-name" %>
+    <span class="status-info">
+      respondeu:
+    </span>
+    <span class="date">
+      <%= l answer.created_at %>
+    </span>
+    <div class="post-text">
+      <p class="input-user"><%= answer.body %></p>
+    </div>
+  </div>
+  <% unless last_answer?(answer_counter, total) %>
+    <hr>
+  <% end %>
+</li>

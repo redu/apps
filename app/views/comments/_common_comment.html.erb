@@ -34,7 +34,7 @@
         </li>
       <% end %>
       <div class="comments">
-        <%= render partial: 'comments/comment_answer', collection: common_comment.answers.last(number_of_displayed_last_answers),
+        <%= render partial: 'answers/answer', collection: common_comment.answers.last(number_of_displayed_last_answers),
                    locals: { comment: common_comment, total: max_answers(common_comment.answers.length, number_of_displayed_last_answers) } %>
       </div>
       <% if common_comment.answers.length > number_of_displayed_last_answers %>
