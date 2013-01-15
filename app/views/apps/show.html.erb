@@ -169,8 +169,9 @@
     <div id="pagination-wrapper">
       <hr class="list-separator">
       <div id="paginator" class="pagination">
-        <%= link_to_next_page(@comments, "Mostrar mais...", remote: true,
-                              class: "button-default icon-arrow-down-pagination-gray_16_18-before") %>
+        <%= link_to_unless @comments.last_page?, "Mostrar mais...",
+          app_comments_path(@app, page: (@comments.current_page + 1)), :rel => 'next', remote: true,
+          class: "button-default icon-arrow-down-pagination-gray_16_18-before" %>
       </div>
     </div>
   <% end %>

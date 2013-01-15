@@ -30,7 +30,7 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     authorize! :show, App
 
-    @app.update_attribute(:views, @app.views + 1) unless params[:page]
+    @app.update_attribute(:views, @app.views + 1)
     @app_categories = Category.get_names_by_kind @app
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(comments_per_page)
@@ -43,7 +43,6 @@ class AppsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
       format.html  # show.html.erb
       format.json  { render json: @app }
     end
