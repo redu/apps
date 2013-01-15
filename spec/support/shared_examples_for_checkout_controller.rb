@@ -11,7 +11,7 @@ shared_examples 'a checkout variables ascriber' do
     assigns(:subject).should_not be_nil
   end
 
-  it 'assigns subject name variable' do
+  it 'assigns subject info variable' do
     assigns(:subject_info).should_not be_nil
   end
 
