@@ -12,7 +12,7 @@ shared_examples 'a checkout variables ascriber' do
   end
 
   it 'assigns subject name variable' do
-    assigns(:subject_name).should_not be_nil
+    assigns(:subject_info).should_not be_nil
   end
 
   it 'assigns lecture name variable' do

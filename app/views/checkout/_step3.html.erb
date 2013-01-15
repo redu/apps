@@ -20,9 +20,9 @@
           </div>
           <div class="controls span8">
             <% if create_subject == "true" %>
-              <%= text_field_tag "subject_name", nil, placeholder: "Nome do novo Módulo" %>
+              <%= text_field_tag "subject_info", nil, placeholder: "Nome do novo Módulo" %>
             <% else %>
-              <%= select_tag "subject_name", options_from_collection_for_select(space.subjects.finalized, "id", "name") %>
+              <%= select_tag "subject_info", options_from_collection_for_select(space.subjects.finalized, "id", "name") %>
             <% end %>
           </div>
         </div>

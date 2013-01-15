@@ -26,7 +26,7 @@ class Subject < ActiveRecord::Base
   private
 
   def self.parse_subject(params)
-    { subject: { name: params[:subject_name] } }.to_json
+    { subject: { name: params[:subject_info] } }.to_json
   end
 
   def self.post_to_api_url(space_id)

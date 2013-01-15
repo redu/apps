@@ -73,13 +73,13 @@ class CheckoutController < ApplicationController
   end
 
   def step_4
-    get_params([:space_id, :create_subject, :lecture_name, :subject_name], params)
+    get_params([:space_id, :create_subject, :lecture_name, :subject_info], params)
     @next_step = 4
     @space = Space.find_by_id(@space_id)
     @subject = if @create_subject == 'true'
-      create_subject_via_api(@space_id, @subject_name)
+      create_subject_via_api(@space_id, @subject_info)
     else
-      Subject.find(@subject_name)
+      Subject.find(@subject_info)
     end
     @lecture_href = create_lecture_via_api(@subject, @lecture_name)
 
@@ -95,13 +95,13 @@ class CheckoutController < ApplicationController
     end
   end
 
-  def create_subject_via_api(space_id, subject_name)
+  def create_subject_via_api(space_id, subject_info)
     space = Space.find(space_id)
     auth_subject = Subject.new
     auth_subject.space = space
 
     Subject.create_via_api(space_sid: space.core_id,
-                           subject_name: subject_name, token: current_user.token)
+                           subject_name: subject_info, token: current_user.token)
   end
 
   def create_lecture_via_api(subject, lecture_name)
