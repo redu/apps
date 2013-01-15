@@ -58,10 +58,11 @@ module AppsHelper
     entities.collect(&:name).join(", ")
   end
 
-  # Retorna 3 se length for maior que 3 ou length se menor.
-  def max_3_answers(length)
-    if length > 3
-      3
+  # Retorna number_of_displayed_last_answers se length for maior que
+  # number_of_displayed_last_answers ou length se menor.
+  def max_answers(length, number_of_displayed_last_answers)
+    if length > number_of_displayed_last_answers
+      number_of_displayed_last_answers
     else
       length
     end

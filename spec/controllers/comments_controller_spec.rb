@@ -2,7 +2,7 @@
 require 'spec_helper'
 
 describe CommentsController do
-  describe "GET show" do
+  describe "GET index" do
     before do
       @app = FactoryGirl.create(:app)
       @comment = FactoryGirl.create(:common_comment)
@@ -10,7 +10,7 @@ describe CommentsController do
     end
 
     it "should assign comment" do
-      get :show, { app_id: @app, id: @comment, locale: 'pt-BR' }
+      get :index, { app_id: @app, comment_id: @comment, locale: 'pt-BR' }
       assigns(:comment).should == @comment
     end
   end

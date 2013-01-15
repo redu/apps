@@ -1,3 +1,3 @@
-var $container = $('#comments-for-<%= params[:id] %>');
+var $container = $('#comments-for-<%= params[:comment_id] %>');
 $container.find('.comments').html('<%= escape_javascript render partial: "comment_answer", collection: @comment.answers, locals: { comment: @comment, total: @comment.answers.length } %>');
 $container.find('.show-more, .last-responses').remove();

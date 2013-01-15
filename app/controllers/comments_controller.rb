@@ -1,7 +1,7 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
-  def show
-    @comment = Comment.includes(:answers).find(params[:id])
+  def index
+    @comment = Comment.includes(:answers).find(params[:comment_id])
     authorize! :show, @comment
 
     respond_to do |format|

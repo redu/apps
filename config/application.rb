@@ -88,5 +88,8 @@ module ReduApps
 
     # Quantidade de comentários exibidos por página
     config.comments_per_page = 10
+
+    # Quantidade inicial de respostas a comentários exibida
+    config.number_of_displayed_last_answers = 3
   end
 end
