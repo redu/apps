@@ -1,14 +1,5 @@
 # encoding: utf-8
 class CommentsController < ApplicationController
-  def index
-    @comment = Comment.includes(:answers).find(params[:comment_id])
-    authorize! :show, @comment
-
-    respond_to do |format|
-      format.js
-    end
-  end
-
   def create
     @app = App.find(params[:app_id])
     @comment = Comment.new(params[:comment].
@@ -18,11 +9,7 @@ class CommentsController < ApplicationController
     authorize! :create, @comment
     authorize! :manage, @comment.author
 
-    if params[:comment_id]
-      Comment.find(params[:comment_id]).answers << @comment
-    else
-      @app.comments << @comment
-    end
+    @app.comments << @comment
 
     redirect_to app_path(@app)
   end

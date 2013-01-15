@@ -42,7 +42,7 @@
           <hr>
           <li class="all-responses">
             <%= link_to "Mostrar todas as #{common_comment.answers.length} respostas",
-                        app_comment_comments_path(@app, common_comment), remote: true,
+                        app_comment_answers_path(@app, common_comment), remote: true,
                         class: "link-secondary" %>
           </li>
         </div>
@@ -56,6 +56,6 @@
         <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
       </li>
     </ul>
-    <%= render "create_response", klass: nil, model_object: [@app, common_comment, @app.comments.build], comment_type: "answer" %>
+    <%= render "create_response", klass: nil, model_object: [@app, common_comment, Answer.new], comment_type: "answer" %>
   <% end %>
 </li>

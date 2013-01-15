@@ -2,19 +2,6 @@
 require 'spec_helper'
 
 describe CommentsController do
-  describe "GET index" do
-    before do
-      @app = FactoryGirl.create(:app)
-      @comment = FactoryGirl.create(:common_comment)
-      @app.comments << @comment
-    end
-
-    it "should assign comment" do
-      get :index, { app_id: @app, comment_id: @comment, locale: 'pt-BR' }
-      assigns(:comment).should == @comment
-    end
-  end
-
   describe "POST create" do
     before do
       @app = FactoryGirl.create(:app)
@@ -24,7 +11,6 @@ describe CommentsController do
 
     context "when creating a comment" do
       before do
-        request.env["HTTP_REFERER"] = app_path @app
         @params = { app_id: @app, comment: {
             author: @user.id, body: "Olá! Parabéns pelo REA." },
             locale: 'pt-BR'
@@ -112,19 +98,6 @@ describe CommentsController do
             }.to_not change(Comment.common, :count).by(1)
           end
         end # context "which is specialized"
-
-        context "which is an answer" do
-          before do
-            @comment = FactoryGirl.create(:common_comment, app: @app)
-            @params = @params.merge(comment_id: @comment)
-          end
-
-          it 'should create a new answer for proper comment' do
-            expect {
-              post :create, @params
-            }.to change(@comment.answers, :count).by(1)
-          end
-        end # context "which is an answer"
       end # context "with valid params"
     end # context "when creating a comment"
   end
@@ -160,22 +133,6 @@ describe CommentsController do
             post :destroy, @params
           }.to change(@user.comments, :count).by(-1)
         end
-
-        context "which is an answer" do
-          before do
-            @answer = FactoryGirl.create(:comment, app: @app,
-                                         author: @user)
-            @comment.answers << @answer
-            @comment.save
-          end
-
-          it 'should destroy answer for proper comment' do
-            expect {
-              post :destroy, @params.merge(comment_id: @comment.id,
-                                           id: @answer.id)
-            }.to change(@comment.answers, :count).by(-1)
-          end
-        end # context "which is an answer"
       end # context "with valid params"
     end # context "when deleting a comment"
   end
