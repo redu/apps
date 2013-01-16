@@ -6,6 +6,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id'
   belongs_to :app
+  belongs_to :in_response_to, class_name: 'Comment'
 
   has_many :answers, class_name: 'Comment', foreign_key: 'in_response_to_id',
     dependent: :destroy

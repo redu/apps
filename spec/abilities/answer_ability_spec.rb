@@ -25,13 +25,19 @@ describe 'Answer ability' do
   context 'when logged in' do
     subject { Ability.new(user) }
 
-    it 'should be able to manage answer when he is the author' do
-      answer.author = user
-      subject.should be_able_to(:manage, answer)
+    context 'as answer author' do
+
+      it 'should be able to manage answer' do
+        answer.author = user
+        subject.should be_able_to(:manage, answer)
+      end
     end
 
-    it 'should not be able to manage answer when he is not the author' do
-      subject.should_not be_able_to(:manage, answer)
+    context 'as an user other than the answer author' do
+
+      it 'should not be able to manage answer' do
+        subject.should_not be_able_to(:manage, answer)
+      end
     end
 
     it 'should be able to read an answer' do

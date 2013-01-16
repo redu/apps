@@ -23,6 +23,9 @@ describe Comment do
   # Respostas
   it { should have_many(:answers).dependent(:destroy) }
 
+  # No caso de respostas, indica o comentário a que pertence
+  it { should respond_to(:in_response_to) }
+
   # Scopes
   context 'when searching for' do
     before do
