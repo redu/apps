@@ -20,7 +20,9 @@
       <%# Contadores. %>
       <ul class="oer-counters">
         <li class="oer-counter legend icon-star-empty-gray_16_18-before">
-          <%= t 'evaluation', count: @evaluations %>.
+          <div id="evaluation-count">
+            <%= t 'evaluation', count: @evaluations %>.
+          </div>
         </li>
         <li class="oer-counter legend icon-favorite-gray_16_18-before">
           <%= t 'favorite', count: @app.users.count %>.

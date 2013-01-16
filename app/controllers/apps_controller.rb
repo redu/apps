@@ -58,7 +58,14 @@ class AppsController < ApplicationController
     end
     @app = App.find(params[:id])
     @app.add_or_update_evaluation(:rating, rating, current_user)
-    redirect_to :back
+    @user_rating = rating
+    @app_rating = @app.reputation_for(:rating)
+    @evaluated = true
+    @evaluations = @app.evaluators_for(:rating).count
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private
