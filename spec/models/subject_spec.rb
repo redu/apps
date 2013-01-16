@@ -30,7 +30,7 @@ describe Subject do
   end # context "scopes"
 
   context "class method" do
-    let(:params) { { token: 123, space_sid: 1, subject_info: "Meu Módulo" } }
+    let(:params) { { token: 123, space_sid: 1, subject_name: "Meu Módulo" } }
 
     describe :create_via_api do
 
@@ -51,7 +51,7 @@ describe Subject do
     describe :parse_subject do
       it "should format params properly" do
         Subject.parse_subject(params).should ==
-          { subject: { name: params[:subject_info] } }.to_json
+          { subject: { name: params[:subject_name] } }.to_json
       end
     end
 
