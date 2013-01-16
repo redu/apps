@@ -123,7 +123,7 @@
 
       <div class="oer-images">
         <% @app.screen_shots.each do |ss| %>
-          <%= image_tag ss.screen.url(:unique), alt: "Prévia", title: "Prévia", class: screen_shot_class(@app.screen_shots.length), size: screen_shot_size(@app.screen_shots.length) %>
+          <%= image_tag ss.screen.url(:unique), alt: "Prévia", title: "Prévia", class: screen_shot_class(@app.screen_shots.length), size: "700x200" %>
         <% end %>
       </div>
     </div>
