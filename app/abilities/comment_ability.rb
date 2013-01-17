@@ -13,7 +13,7 @@ module CommentAbility
       end
 
       can :manage, Comment do |comment|
-        comment.author == user || user.is_admin?
+        comment.author == user
       end
     end
   end
