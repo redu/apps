@@ -11,3 +11,5 @@
  *= require bootstrap-redu
  *= require apps_portal
  */
+
+.textshadow .olrk-available { text-shadow: none; }
