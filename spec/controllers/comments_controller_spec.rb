@@ -2,6 +2,42 @@
 require 'spec_helper'
 
 describe CommentsController do
+
+  describe "GET index" do
+    let(:per_page) { ReduApps::Application.config.comments_per_page }
+    let(:app) { FactoryGirl.create(:app) }
+
+    before do
+      (per_page*2+1).times do |n|
+        app.comments << FactoryGirl.create(:comment, created_at: n.days.ago)
+      end
+    end
+
+    it "should assign app variable" do
+      get :index, { app_id: app, locale: 'pt-BR' }
+      assigns(:app).should == app
+    end
+
+    it "should assign right number of comments for the first page" do
+      get :index, { app_id: app, locale: 'pt-BR' }
+      assigns(:comments).count.should == per_page
+    end
+
+    it "should assign right number of comments for the last page" do
+      get :index, { app_id: app, page: 3, locale: 'pt-BR' }
+      assigns(:comments).count.should == 1
+    end
+
+    it "should assign comments in proper order" do
+      get :index, { app_id: app, locale: 'pt-BR' }
+      per_page.times do |n|
+        unless n == 0
+          assigns(:comments)[n-1].created_at.should > assigns(:comments)[n].created_at
+        end
+      end
+    end
+  end
+
   describe "GET show" do
     before do
       @app = FactoryGirl.create(:app)
