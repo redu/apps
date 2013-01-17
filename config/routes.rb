@@ -8,7 +8,7 @@ ReduApps::Application.routes.draw do
       post 'rate'
     end
     resources :comments, only: [:create, :destroy] do
-      resources :answers, only: [:index]
+      resources :answers, only: [:index, :create, :destroy]
     end
   end
 

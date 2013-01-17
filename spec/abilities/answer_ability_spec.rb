@@ -26,7 +26,6 @@ describe 'Answer ability' do
     subject { Ability.new(user) }
 
     context 'as answer author' do
-
       it 'should be able to manage answer' do
         answer.author = user
         subject.should be_able_to(:manage, answer)
@@ -34,7 +33,6 @@ describe 'Answer ability' do
     end
 
     context 'as an user other than the answer author' do
-
       it 'should not be able to manage answer' do
         subject.should_not be_able_to(:manage, answer)
       end

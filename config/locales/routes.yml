@@ -4,5 +4,6 @@ pt-BR:
     users: usuarios
     favorites: favoritos
     comments: comentarios
+    answers: respostas
     user_sessions: sessoes
     logout: sair
