@@ -132,12 +132,36 @@ describe AppsController do
 
     context "with valid params" do
       before do
-        @params = { id: @app, rating: 5, locale: 'pt-BR' }
+        @params = { id: @app, rating: 5, locale: 'pt-BR', format: 'js' }
       end
 
-      it "redirects to HTTP referer" do
+      it "should respond with 200 status code" do
         post :rate, @params
-        should respond_with(:redirect)
+        expect(response.code).to eq("200")
+      end
+
+      context "when assigning variables" do
+        before { post :rate, @params }
+
+        it "assigns app variable" do
+          assigns(:app).should == @app
+        end
+
+        it "assigns user rating variable" do
+          assigns(:user_rating).should == 5
+        end
+
+        it "assigns app rating variable" do
+          assigns(:app_rating).should == @app.reputation_for(:rating)
+        end
+
+        it "assigns evaluated variable" do
+          assigns(:evaluated).should == true
+        end
+
+        it "assigns evaluations variable" do
+          assigns(:evaluations).should == @app.evaluators_for(:rating).count
+        end
       end
 
       context "when user hasn't rated before" do
