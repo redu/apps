@@ -12,12 +12,8 @@ describe AnswersController do
           { app_id: app, comment_id: comment, locale: 'pt-BR', format: 'js' }
     end
 
-    it "should assign comment which answers are being retrieved" do
-      assigns(:comment).should == comment
-    end
-
     it "should assign comment answers" do
-      assigns(:answers).should == comment.answers
+      assigns(:answers).should == Answer.where(in_response_to_id: comment.id)
     end
 
     it "should respond with 200 status code" do

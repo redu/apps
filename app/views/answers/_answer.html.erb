@@ -1,6 +1,6 @@
 <li class="status-content response">
   <% if can? :destroy, answer %>
-    <%= link_to 'Apagar Resposta', [comment.app, answer],
+    <%= link_to 'Apagar Resposta', app_comment_path(answer.app, answer),
                confirm: 'Esta ação irá apagar sua resposta. Deseja continuar?',
                method: :delete,
                class: "close icon-close-gray_16_18 replacement" %>

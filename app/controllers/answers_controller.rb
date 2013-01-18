@@ -1,8 +1,7 @@
 class AnswersController < CommentsController
 
   def index
-    @comment = Comment.includes(:answers).find(params[:comment_id])
-    @answers = @comment.answers
+    @answers = Answer.where(in_response_to_id: params[:comment_id])
     authorize! :read, Answer
 
     respond_to do |format|
