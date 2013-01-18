@@ -132,11 +132,11 @@ describe AppsController do
 
     context "with valid params" do
       before do
-        @params = { id: @app, rating: 5, locale: 'pt-BR', format: 'js' }
+        @params = { id: @app, rating: 5, locale: 'pt-BR' }
       end
 
       it "should respond with 200 status code" do
-        post :rate, @params
+        xhr :post, :rate, @params
         expect(response.code).to eq("200")
       end
 
