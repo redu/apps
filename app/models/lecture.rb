@@ -18,7 +18,7 @@ class Lecture < ActiveRecord::Base
 
   def self.parse_lecture(params)
     { lecture: {
-               name: params[:lecture], type: "Canvas",
+               name: params[:lecture_name], type: "Canvas",
                lectureable: {
                             client_application_id: params[:aid]
                             }

@@ -60,7 +60,7 @@ $(function() {
     var $modal = $(document.createElement('div'))
       .attr({
         'id': $this.attr('href'),
-        'class': 'modal hide modal-fill-horizontal'
+        'class': 'modal hide modal-fill-horizontal modal-open-oer'
       });
     var $header = $(document.createElement('div'))
       .attr('class', 'modal-header')
@@ -73,7 +73,7 @@ $(function() {
         'scrolling': 'no',
         'src': $this.data('modal-url'),
         'width' : '720px',
-        'height' : '340px',
+        'height' : '420px',
       }));
     var $footer = $(document.createElement('div'))
       .attr('class', 'modal-footer')

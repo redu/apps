@@ -56,6 +56,6 @@
         <a class="icon-reply-gray_8_10-before reply-status" href="#">Responder</a>
       </li>
     </ul>
-    <%= render "create_response", klass: nil, model_object: [@app, common_comment, Answer.new], comment_type: "answer" %>
+    <%= render "apps/create_response", klass: nil, model_object: [@app, common_comment, Answer.new], comment_type: "answer" %>
   <% end %>
 </li>

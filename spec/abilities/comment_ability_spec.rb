@@ -20,7 +20,7 @@ describe 'Comment ability' do
   context 'when logged in' do
     subject { Ability.new(user) }
 
-    context 'when common' do
+    context 'a common user' do
       before do
         user.update_attributes(role: :member)
       end
@@ -34,7 +34,7 @@ describe 'Comment ability' do
       end
     end
 
-    context 'when specialist' do
+    context 'a specialist' do
       before do
         user.update_attributes(role: :specialist)
       end
@@ -48,7 +48,7 @@ describe 'Comment ability' do
       end
     end
 
-    context 'when admin' do
+    context 'an admin' do
       before do
         user.update_attributes(core_role: 1)
       end
@@ -61,18 +61,24 @@ describe 'Comment ability' do
         subject.should be_able_to(:create, Comment.new(type: :specialized))
       end
 
-      it 'should be able to manage comment when he is not the author' do
+      context 'who is not the comment author' do
+        it 'should still be able to manage comment' do
+          subject.should be_able_to(:manage, comment)
+        end
+      end
+    end
+
+    context 'as the comment author user' do
+      it 'should be able to manage comment' do
+        comment.author = user
         subject.should be_able_to(:manage, comment)
       end
     end
 
-    it 'should be able to manage comment when he is the author' do
-      comment.author = user
-      subject.should be_able_to(:manage, comment)
-    end
-
-    it 'should not be able to manage comment when he is not the author' do
-      subject.should_not be_able_to(:manage, comment)
+    context 'as another user than the comment author user' do
+      it 'should not be able to manage comment' do
+        subject.should_not be_able_to(:manage, comment)
+      end
     end
 
     it 'should be able to read a comment' do

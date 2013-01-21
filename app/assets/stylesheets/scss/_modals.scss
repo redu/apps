@@ -1,9 +1,9 @@
 // ==========================================================================
-// Janelas modais de adicionar REA à disciplina
+// Janelas modais de adicionar REA à disciplina e abrir recurso
 // ==========================================================================
 
 
-// Comum aos modais.
+// Comum aos modais de checkout.
 // ==========================================================================
 
 .modal-add-oer {
@@ -135,4 +135,16 @@
 .apps-portal-add-oer-step-3-form {
   width: 640px;
   margin: 0 auto 30px;
+}
+
+
+// Modal de abrir recurso.
+// ==========================================================================
+
+.modal-open-oer {
+  $width: 775px;
+  width: $width;
+  margin-left: (- $width) / 2;
+
+  .modal-body { max-height: 425px; }
 }

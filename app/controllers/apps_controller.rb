@@ -10,10 +10,11 @@ class AppsController < ApplicationController
       @apps = search(params[:filter]).results
       @categories = Category.filter if params[:filter] && !params[:search]
       assign_searching_variables unless !params[:search]
-      @apps = Kaminari.paginate_array(@apps).page(params[:page])
-    else
-      @apps = App.includes(:comments, :categories).
+      @apps = Kaminari.paginate_array(@apps.sort_by { |a| -a[:views] }).
         page(params[:page])
+    else
+      @apps = Kaminari.paginate_array(App.includes(:comments, :categories).
+        all(:order => 'views DESC')).page(params[:page])
       @categories = Category.filter
     end
     @favorite_apps_count = current_user.apps.count if current_user
@@ -30,7 +31,7 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
     authorize! :show, App
 
-    @app.update_attribute(:views, @app.views + 1) unless params[:page]
+    @app.update_attribute(:views, @app.views + 1)
     @app_categories = Category.get_names_by_kind @app
     @comments = Kaminari::paginate_array(@app.comments.common.order('created_at DESC')).
       page(params[:page]).per(comments_per_page)
@@ -43,7 +44,6 @@ class AppsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js
       format.html  # show.html.erb
       format.json  { render json: @app }
     end
@@ -58,7 +58,14 @@ class AppsController < ApplicationController
     end
     @app = App.find(params[:id])
     @app.add_or_update_evaluation(:rating, rating, current_user)
-    redirect_to :back
+    @user_rating = rating
+    @app_rating = @app.reputation_for(:rating)
+    @evaluated = true
+    @evaluations = @app.evaluators_for(:rating).count
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

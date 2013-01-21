@@ -133,7 +133,7 @@ describe CheckoutController do
       end
 
       let(:lecture_name) { "Nova Aula" }
-      let(:subject_name) { "Novo módulo" }
+      let(:subject_info) { "Novo módulo" }
 
       context 'valid params' do
         context 'when creating lecture in existing subject' do
@@ -145,7 +145,7 @@ describe CheckoutController do
                           href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'false',
-                               lecture: lecture_name, subject: @subject.id)
+                               lecture_name: lecture_name, subject_info: @subject.id)
           end
 
           it_behaves_like 'a checkout variables ascriber'
@@ -157,7 +157,7 @@ describe CheckoutController do
             stub_request(:post, ReduApps::Application.config.api_url +
                                 Subject.post_to_api_url(@space.core_id)).
               to_return(status: 201,
-                        body: { name: subject_name, id: new_redu_subject_id }.to_json )
+                        body: { name: subject_info, id: new_redu_subject_id }.to_json )
             stub_request(:post, ReduApps::Application.config.api_url +
                                 Lecture.post_to_api_url(new_redu_subject_id)).
               to_return(status: 201, body: { name: lecture_name, id: 713,
@@ -165,7 +165,7 @@ describe CheckoutController do
                           href: 'http://www.redu.com.br/espacos/1/modulos/1/aulas/1-class'}] }.to_json)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_info: subject_info)
           end
 
           it_behaves_like 'a checkout variables ascriber'
@@ -178,7 +178,7 @@ describe CheckoutController do
               to_return(status: 401)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_info: subject_info)
           end
 
           it 'should set flash error message' do
@@ -193,7 +193,7 @@ describe CheckoutController do
               to_return(status: 422)
             post :update,
                  @params.merge(step: 4, space_id: @space.id, create_subject: 'true',
-                               lecture: lecture_name, subject: subject_name)
+                               lecture_name: lecture_name, subject_info: subject_info)
           end
 
           it 'should set flash error message' do

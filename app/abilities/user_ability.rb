@@ -4,7 +4,7 @@ module UserAbility
   def user_abilities(user)
     if user
       can :manage, User do |u|
-        u.id == user.id || user.is_admin?
+        u.id == user.id
       end
     end
   end

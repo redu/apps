@@ -11,7 +11,11 @@ shared_examples 'a checkout variables ascriber' do
     assigns(:subject).should_not be_nil
   end
 
-  it 'assigns lecture variable' do
-    assigns(:lecture).should_not be_nil
+  it 'assigns subject info variable' do
+    assigns(:subject_info).should_not be_nil
+  end
+
+  it 'assigns lecture name variable' do
+    assigns(:lecture_name).should_not be_nil
   end
 end
