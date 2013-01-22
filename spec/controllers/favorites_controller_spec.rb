@@ -22,6 +22,22 @@ describe FavoritesController do
       get :index, user_id: @user, locale: 'pt-BR'
       assigns(:apps).should_not be_nil
     end
+
+    it "should assign correct user favorites" do
+      get :index, user_id: @user, locale: 'pt-BR'
+      assigns(:apps).should == [@app1, @app2]
+    end
+
+    context "for an admin user" do
+      before do
+        controller.stub(current_user: FactoryGirl.create(:user, core_role: 1))
+      end
+
+      it "should assign correct user favorites" do
+        get :index, user_id: @user, locale: 'pt-BR'
+        assigns(:apps).should == [@app1, @app2]
+      end
+    end
   end
 
   context "when creating user favorite" do

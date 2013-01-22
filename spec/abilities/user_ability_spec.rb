@@ -32,5 +32,9 @@ describe 'User ability' do
     it 'should be able to manage another user' do
       subject.should be_able_to(:manage, another_user)
     end
+
+    it 'should not be able to manage nil' do
+      subject.should_not be_able_to(:manage, nil)
+    end
   end
 end
