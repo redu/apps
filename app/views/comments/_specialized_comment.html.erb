@@ -1,5 +1,5 @@
-<hr class="list-separator">
-<li class="status specialist">
+<hr id="hr-for-comment-<%= specialized_comment.id %>" class="list-separator">
+<li id="comment-<%= specialized_comment.id %>" class="status specialist">
   <div class="status-text">
     <span class="specialist-icon icon-specialist-gray_32_34 text-replacement">Especialista</span>
     <%= link_to redu_user_static("", specialized_comment.author), class: "icon-link" do %>
@@ -10,7 +10,7 @@
     <% if can? :manage, specialized_comment %>
       <%= link_to 'Apagar Crítica', [specialized_comment.app, specialized_comment],
                   confirm: 'Esta ação irá apagar sua crítica. Deseja continuar?',
-                  method: :delete,
+                  method: :delete, remote: true,
                   class: "close icon-close-gray_16_18 replacement" %>
     <% end %>
     <span class="date"><%= l specialized_comment.created_at %></span>

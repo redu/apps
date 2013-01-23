@@ -1,0 +1,8 @@
+<% if @comment.specialized? %>
+  $('.statuses.oer-comments').prepend('<%= escape_javascript render partial: "comments/specialized_comment", collection: [@comment] %>');
+<% elsif @comment.common? %>
+  $('#comments').prepend('<%= escape_javascript render partial: "comments/common_comment", collection: [@comment] %>');
+<% elsif @comment.answer? %>
+  $('#comment-<%= @comment.in_response_to_id %> .comments').html('<%= escape_javascript render partial: "answers/answer", collection: @comment.in_response_to.answers.last(3), locals: { comment: @comment.in_response_to, total: @comment.in_response_to.answers.length } %>');
+<% end %>
+$('.create-response textarea').val('')

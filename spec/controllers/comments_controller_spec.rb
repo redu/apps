@@ -53,6 +53,12 @@ describe CommentsController do
           }
       end
 
+      context "what occurs via AJAX" do
+        before { xhr :post, :create, @params }
+
+        it { should respond_with 200 }
+      end
+
       context "with valid params" do
         it 'should create a new comment' do
           expect {
