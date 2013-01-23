@@ -7,7 +7,7 @@ class FavoritesController < ApplicationController
     @user = User.find_by_login(params[:user_id])
     authorize! :manage, @user
 
-    @apps = current_user.apps.includes(:categories, :comments)
+    @apps = @user.apps.includes(:categories, :comments)
     @favorite_apps_count = @apps.length
     @favorite_apps_filters = Category.filters_on @apps
     @favorite_apps_filters_counter = Category.count_filters_on @favorite_apps_filters
