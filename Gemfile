@@ -19,7 +19,7 @@ gem 'authlogic', git: 'git://github.com/julianalucena/authlogic.git'
 gem 'cancan'
 gem 'faraday'
 gem 'patron'
-gem "untied-consumer-sync-activerecord", "~> 0.0.1"
+gem 'untied-consumer-sync-activerecord', '~> 0.0.1'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,6 +33,7 @@ end
 
 group :development do
   gem 'sunspot_solr'
+  gem 'bullet'
 end
 
 group :development, :test do
