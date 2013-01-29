@@ -1,5 +1,5 @@
 <%# Abas de navegação %>
-<%= render_navigation context: :tabs, renderer: :navigation_tabs %>
+<%= render_navigation context: :tabs %>
 
 <% if @favorite_apps_count <= 0 %>
   <div class="oer-apps-none">
@@ -9,7 +9,7 @@
 <% else %>
   <% unless @favorite_apps_filters_counter.keys.length < 2 %>
     <div class="apps-portal-filters">
-      <%= render_navigation context: :filters, renderer: :category_filters %>
+      <%= render_navigation context: :filters, renderer: :links %>
     </div>
   <% end %>
   <div class="oer-apps-wrapper">

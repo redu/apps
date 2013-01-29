@@ -11,7 +11,7 @@
 <% end %>
 
 <%# Abas de navegação %>
-<%= render_navigation context: :tabs, renderer: :navigation_tabs %>
+<%= render_navigation context: :tabs %>
 
 <% if @apps.size == 0 %>
 
@@ -33,7 +33,7 @@
   <% end %>
 
   <div class="apps-portal-filters">
-    <%= render_navigation context: :filters, renderer: :category_filters %>
+    <%= render_navigation context: :filters, renderer: :links %>
   </div>
 
   <div class="oer-apps-wrapper">

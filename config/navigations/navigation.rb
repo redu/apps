@@ -1,6 +1,8 @@
 # enconding: utf-8
 
 SimpleNavigation::Configuration.run do |navigation|
+  navigation.active_leaf_class = ''
+  navigation.autogenerate_item_ids = false
   navigation.items do |primary|
     primary.item :root, 'Portal de Aplicativos (Recursos Educacionais Abertos)',
       root_path,

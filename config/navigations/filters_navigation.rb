@@ -20,7 +20,7 @@ SimpleNavigation::Configuration.run do |navigation|
       primary.item category.name.to_sym, "#{category.name} #{counter}",
         url || apps_path(filter: filters_url(@filter, category, categories.length),
                          search: @search),
-        link: { class: filter_class(@filter, category) }
+        class: filter_class(@filter, category)
     end
   end
 end
