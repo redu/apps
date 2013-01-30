@@ -1,1 +1,8 @@
-$('#comment-<%= @comment.id %>').hide();
+var $comment = $('#comment-<%= @comment.id %>');
+
+<%# Se for a última resposta, tem que remover o ol também. %>
+<% if @comment.answer? && @comment.in_response_to.answers.length == 0 %>
+  $('#comments-for-<%= @comment.in_response_to.id %>').remove();
+<% end %>
+
+$comment.remove();
