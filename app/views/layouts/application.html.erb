@@ -37,7 +37,7 @@
                 <%= link_to "Portal de Aplicativos", root_path, class: "portal-title-link link-target", title: "Portal de Aplicativos" %>
               </h2>
               <div id="apps-portal-breadcrumb" class="breadcrumb-mini-wrapper">
-                <%= render_navigation renderer: :custom_breadcrumbs %>
+                <%= render_navigation context: :breadcrumbs %>
               </div>
               <%= render partial: 'shared/search' %>
             </div>
@@ -45,7 +45,7 @@
               <%= yield %>
             </div>
             <div class="breadcrumb-mini-wrapper">
-              <%= render_navigation renderer: :custom_breadcrumbs %>
+              <%= render_navigation context: :breadcrumbs %>
             </div>
           </div>
         </div>
