@@ -3,10 +3,6 @@
 <% elsif @comment.common? %>
   $('#comments').prepend('<%= escape_javascript render partial: "comments/common_comment", collection: [@comment] %>');
 <% elsif @comment.answer? %>
-  <% if @comment.in_response_to.answers.length == 1 %>
-    var $ol = $('<ol id="comments-for-<%= @comment.in_response_to_id %>" class="responses status-content"><div class="comments"></div></ol>');
-    $('#comment-<%= @comment.in_response_to_id %> .status-container').append($ol);
-  <% end %>
-  $('#comment-<%= @comment.in_response_to_id %> .comments').html('<%= escape_javascript render partial: "answers/answer", collection: @comment.in_response_to.answers.last(3), locals: { comment: @comment.in_response_to, total: @comment.in_response_to.answers.length } %>');
+  $('#comment-<%= @comment.in_response_to_id %>').replaceWith('<%= escape_javascript render partial: "comments/common_comment", collection: [@comment.in_response_to] %>');
 <% end %>
 $('.create-response textarea').val('');
