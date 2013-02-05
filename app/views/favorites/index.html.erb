@@ -1,12 +1,5 @@
-<ul class="tabs tabs-big">
-  <li class="tab">
-    <%= link_to "Recursos Educacionais Abertos", root_path, class: "tab-title icon-oer-lightblue_16_18-before", title: "Recursos Educacionais Abertos" %>
-  </li>
-  <li class="tab tab-active">
-    <% favorite_apps_count = parentize(@favorite_apps_count) %>
-    <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), class: "tab-title icon-favorite-lightblue_16_18-before", title: "Aplicativos Favoritos #{favorite_apps_count}" %>
-  </li>
-</ul>
+<%# Abas de navegação %>
+<%= render_navigation context: :tabs %>
 
 <% if @favorite_apps_count <= 0 %>
   <div class="oer-apps-none">
@@ -16,14 +9,7 @@
 <% else %>
   <% unless @favorite_apps_filters_counter.keys.length < 2 %>
     <div class="apps-portal-filters">
-      <div class="filters">
-        <% @favorite_apps_filters.uniq.each do |cat| %>
-          <%= link_to "#{cat.name} #{parentize(@favorite_apps_filters_counter[cat.name])}",
-            user_favorites_path(current_user,
-              filter: filters_url(@filter, cat, @favorite_apps_filters_counter.length)),
-            class: filter_class(@filter, cat) %>
-        <% end %>
-      </div>
+      <%= render_navigation context: :filters, renderer: :links %>
     </div>
   <% end %>
   <div class="oer-apps-wrapper">

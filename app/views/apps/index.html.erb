@@ -10,21 +10,8 @@
   <a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
 <% end %>
 
-<ul class="tabs tabs-big">
-  <% if params.include? :search %>
-    <li class="tab">
-  <% else %>
-    <li class="tab tab-active">
-  <% end %>
-    <%= link_to "Recursos Educacionais Abertos", root_path, class: "tab-title icon-oer-lightblue_16_18-before", title: "Recursos Educacionais Abertos" %>
-  </li>
-  <% if can? :manage, UserAppAssociation %>
-    <li class="tab">
-      <% favorite_apps_count = parentize(@favorite_apps_count) %>
-      <%= link_to "Aplicativos Favoritos #{favorite_apps_count}", user_favorites_path(current_user), class: "tab-title icon-favorite-lightblue_16_18-before", title: "Aplicativos Favoritos #{favorite_apps_count}" %>
-    </li>
-  <% end %>
-</ul>
+<%# Abas de navegação %>
+<%= render_navigation context: :tabs %>
 
 <% if @apps.size == 0 %>
 
@@ -46,14 +33,7 @@
   <% end %>
 
   <div class="apps-portal-filters">
-    <div class="filters">
-      <% @categories.each do |cat| %>
-        <%= link_to "#{cat.name} #{parentize(count_filtered(@filters_counter, cat))}",
-                    apps_path(filter: filters_url(@filter, cat, @categories.length),
-                              search: @search),
-                    class: filter_class(@filter, cat) %>
-      <% end %>
-    </div>
+    <%= render_navigation context: :filters, renderer: :links %>
   </div>
 
   <div class="oer-apps-wrapper">
