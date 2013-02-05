@@ -29,7 +29,9 @@ class CommentsController < ApplicationController
 
     @comment.save
 
-    redirect_to app_path(@app)
+    respond_to do |format|
+      format.js
+    end
   end
 
   def destroy
@@ -37,7 +39,10 @@ class CommentsController < ApplicationController
     authorize! :destroy, @comment
 
     @comment.destroy
-    redirect_to app_path(App.find(params[:app_id]))
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   private

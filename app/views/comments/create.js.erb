@@ -1,0 +1,20 @@
+<% if @comment.specialized? %>
+  $('.statuses.oer-comments').prepend('<%= escape_javascript render partial: "comments/specialized_comment", collection: [@comment] %>');
+<% elsif @comment.common? %>
+  $('#comments').prepend('<%= escape_javascript render partial: "comments/common_comment", collection: [@comment] %>');
+<% elsif @comment.answer? %>
+  <%# Condicional para inclusão de elementos adicionais necessários à concatenação da primeira resposta. %>
+  if ($('#comments-for-<%= @comment.in_response_to_id %>').length == 0) {
+    $('#comment-<%= @comment.in_response_to_id %> .status-container').append('<ol id="comments-for-<%= @comment.in_response_to_id %>" class="responses status-content"><div class="comments"></div></ol>');
+  } else {
+    $('#comments-for-<%= @comment.in_response_to_id %> .comments li:last-child').append('<hr>');
+  }
+
+  $('#comments-for-<%= @comment.in_response_to_id %> .comments').append('<%= escape_javascript render partial: "answer", collection: [@comment], locals: { comment: @comment.in_response_to, total: 1 } %>');
+  <%# Atualiza número total de respostas a ser exibidas caso elas estejam colapsadas. %>
+  if ($('#comment-<%= @comment.in_response_to_id %> .all-responses a').length > 0) {
+    $('#comment-<%= @comment.in_response_to_id %> .all-responses a').text('Mostrar todas as <%= @comment.in_response_to.answers.length %> respostas');
+  }
+<% end %>
+
+$('.create-response textarea').val('');

@@ -158,9 +158,9 @@
 
   <!-- Comentários comuns -->
   <% if can? :read, Comment %>
-    <div id="comments" >
+    <ol id="comments" class="oer-comments-commom">
       <%= render partial: 'comments/common_comment', collection: @comments %>
-    </div>
+    </ol>
   <% end %>
 </ol>
 
