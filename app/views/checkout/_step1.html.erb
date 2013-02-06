@@ -28,9 +28,6 @@
                             <div class="message-block-content">
                               <p><strong>Aviso.</strong> Este curso não possui Disciplinas. Para adicionar o aplicativo é necessário <%= link_to "criar uma Disciplina", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}" %> antes.</p>
                             </div>
-                            <div class="message-block-actions">
-                              <%= link_to "Crie uma Disciplina", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}", class: "button-primary" %>
-                            </div>
                           </div>
                         <% else %>
                           <% c.spaces.each do |s| %>
