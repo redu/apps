@@ -23,7 +23,7 @@
                         <h5 class="list-mix-title"><%= c.name %></h5>
                       </div>
                       <ul class="list-mix-body list-space-mini show">
-                        <% if spaces.length == 0 %>
+                        <% if c.spaces.length == 0 %>
                           <div class="message-block message-info">
                             <div class="message-block-content">
                               <p><strong>Aviso.</strong> Este curso não possui Disciplinas. Para adicionar o aplicativo é necessário <%= link_to "criar uma Disciplina", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}" %> antes.</p>
