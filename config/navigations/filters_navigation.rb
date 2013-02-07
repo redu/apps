@@ -12,7 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
       # de aplicativos favoritos
       if controller_name == 'favorites'
         counter = parentize(@favorite_apps_filters_counter[category.name]).to_s
-        url = user_favorites_path(current_user,
+        url = user_favorites_path(@user,
           filter: filters_url(@filter, category,
                               @favorite_apps_filters_counter.length))
       end
