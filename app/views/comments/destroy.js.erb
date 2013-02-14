@@ -7,13 +7,16 @@ var $comment = $('#comment-<%= @comment.id %>');
 
 $comment.remove();
 
-<%# Se a resposta que está sendo removida for a última da lista. %>
-if ($('#comments-for-<%= @comment.in_response_to.id %> .comments li:last-child hr').length > 0) {
-  <%# Remove o elemento hr %>
-  $('#comments-for-<%= @comment.in_response_to.id %> .comments li:last-child hr').remove();
-}
+<%# Manipulações de HTML adicionais para casos em que o comentário excluído é uma resposta %>
+<% if @comment.answer? %>
+  <%# Se a resposta que está sendo removida for a última da lista. %>
+  if ($('#comments-for-<%= @comment.in_response_to.id %> .comments li:last-child hr').length > 0) {
+    <%# Remove o elemento hr %>
+    $('#comments-for-<%= @comment.in_response_to.id %> .comments li:last-child hr').remove();
+  }
 
-<%# Atualiza número total de respostas a ser exibidas caso elas estejam colapsadas. %>
-if ($('#comment-<%= @comment.in_response_to_id %> .all-responses a').length > 0) {
-  $('#comment-<%= @comment.in_response_to_id %> .all-responses a').text('Mostrar todas as <%= @comment.in_response_to.answers.length %> respostas');
-}
+  <%# Atualiza número total de respostas a ser exibidas caso elas estejam colapsadas. %>
+  if ($('#comment-<%= @comment.in_response_to_id %> .all-responses a').length > 0) {
+    $('#comment-<%= @comment.in_response_to_id %> .all-responses a').text('Mostrar todas as <%= @comment.in_response_to.answers.length %> respostas');
+  }
+<% end %>
