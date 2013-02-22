@@ -21,7 +21,6 @@ FactoryGirl.define do
 
       after(:create) do |app|
         app.screen_shots << FactoryGirl.create(:screen_shot, app: app)
-        app.categories << FactoryGirl.create(:category)
       end
 
       factory :complete_app_with_comments do
@@ -31,6 +30,12 @@ FactoryGirl.define do
             app.comments << FactoryGirl.create(:comment, app: app)
           end
           app.comments << FactoryGirl.create(:common_comment, app: app)
+        end
+      end
+
+      factory :complete_app_with_category do
+        after(:create) do |app|
+          app.categories << FactoryGirl.create(:category)
         end
       end
     end

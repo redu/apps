@@ -4,12 +4,12 @@ require 'spec_helper'
 describe FavoritesController do
   before(:each) do
     @user = FactoryGirl.create(:user)
-    @app1 = FactoryGirl.create(:app)
-    @app2 = FactoryGirl.create(:app)
+    @app1 = FactoryGirl.create(:complete_app_with_category)
+    @app2 = FactoryGirl.create(:complete_app_with_category)
 
-    #Ruido
-    FactoryGirl.create(:app)
-    FactoryGirl.create(:app)
+    # Ruído
+    FactoryGirl.create(:complete_app_with_category)
+    FactoryGirl.create(:complete_app_with_category)
   end
 
   context "when listing user favorites" do
@@ -27,9 +27,9 @@ describe FavoritesController do
       before do
         @best_apps = FactoryGirl.create(:category, name: "best apps")
         @bad_apps = FactoryGirl.create(:category, name: "bad apps")
-        @my_app = FactoryGirl.create(:app)
+        @my_app = FactoryGirl.create(:complete_app_with_category)
         @my_app.categories << @best_apps
-        @your_app = FactoryGirl.create(:app)
+        @your_app = FactoryGirl.create(:complete_app_with_category)
         @your_app.categories << @bad_apps
         @user.apps << [@my_app, @your_app]
       end
@@ -56,7 +56,7 @@ describe FavoritesController do
         cat = FactoryGirl.create(:category)
         @per_page = ReduApps::Application.config.apps_per_page
         (@per_page + 1).times do |n|
-          @app = FactoryGirl.create(:app)
+          @app = FactoryGirl.create(:complete_app_with_category)
           @app.categories << cat
           @user.apps << @app
         end
