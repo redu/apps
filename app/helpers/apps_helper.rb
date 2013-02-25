@@ -120,4 +120,9 @@ module AppsHelper
   def display_separator(index, total)
     (index % 2 == 0) and (index != total)
   end
+
+  # Adiciona classe app-favorite aos aplicativos favoritos.
+  def add_app_favorite_class(favorite_flag)
+    "app-favorite" if favorite_flag    
+  end
 end
