@@ -13,10 +13,10 @@
     </div>
   <% end %>
   <div class="oer-apps-wrapper">
-    <ul id="apps" class="apps-list">
+    <div id="apps" class="apps-list">
       <%= render partial: 'shared/app', collection: @apps,
                  locals: { favorite_flag: true, total: @apps.count } %>
-    </ul>
+    </div>
   </div>
 
   <% if @apps.num_pages > 1 %>

@@ -6812,3 +6812,10 @@ hr {
 .link-container {
   cursor: pointer;
 }
+
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}

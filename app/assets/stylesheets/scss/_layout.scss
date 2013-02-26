@@ -21,3 +21,8 @@ body { background-color: $gray1; }
 .container { margin-top: 17px; }
 
 .main-wrapper > .container { padding: 17px 0 20px; }
+
+.general-list-item-column.app-favorite +
+.general-list-item-column.app-favorite {
+  margin-right: 49px;
+}
