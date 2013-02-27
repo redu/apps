@@ -17,7 +17,7 @@ describe Lecture do
   it { should belong_to(:app) }
 
   context "class method" do
-    let(:params) { { token: 123, subject_suid: 1, lecture_name: "Minha Aula", aid: 1 } }
+    let(:params) { { token: 123, subject_suid: 1, lecture_name: "Minha Aula", url: "http://foo.bar" } }
 
     describe :create_via_api do
 
@@ -35,12 +35,8 @@ describe Lecture do
     describe :parse_lecture do
       it "should format params properly" do
         Lecture.parse_lecture(params).should ==
-          { lecture: {
-                     name: params[:lecture_name], type: "Canvas",
-                     lectureable: {
-                                  client_application_id: params[:aid]
-                                  }
-                     }
+          { lecture: { name: params[:lecture_name], type: "Canvas",
+                       current_url: params[:url] }
           }.to_json
       end
     end

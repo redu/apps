@@ -108,7 +108,7 @@ class CheckoutController < ApplicationController
     auth_lecture = Lecture.new
     auth_lecture.subject = subject
 
-    Lecture.create_via_api(lecture_name: lecture_name, aid: @app.core_id,
+    Lecture.create_via_api(lecture_name: lecture_name, url: @app.core_url,
                            subject_suid: subject.core_id,
                            token: current_user.token)
   end
