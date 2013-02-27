@@ -7,8 +7,8 @@ describe Comment do
   it { should validate_presence_of(:author) }
 
   # Tipo do comentário
-  it { FactoryGirl.create(:common_comment).type.should == :common }
-  it { FactoryGirl.create(:specialized_comment).type.should == :specialized }
+  it { FactoryGirl.create(:common_comment).kind.should == :common }
+  it { FactoryGirl.create(:specialized_comment).kind.should == :specialized }
 
   # Aplicativo que recebeu o comentário
   it { should respond_to(:app) }
@@ -75,7 +75,7 @@ describe Comment do
 
       it 'should return comments which author is a specialist if it is common' do
         @specialist.comments.each do |comment|
-          @comments.should include comment if comment.type == :common
+          @comments.should include comment if comment.kind == :common
         end
       end
     end # context 'common ones'

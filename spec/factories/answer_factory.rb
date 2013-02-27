@@ -3,7 +3,7 @@ FactoryGirl.define do
     author { FactoryGirl.create(:member) }
     app { FactoryGirl.create(:app) }
     body "Gostei. Parabens pelo aplicativo!"
-    type :answer
+    kind :answer
     in_response_to { FactoryGirl.create(:comment) }
   end
 end

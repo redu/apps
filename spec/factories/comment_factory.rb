@@ -5,7 +5,7 @@ FactoryGirl.define do
     body "Gostei. Parabens pelo aplicativo!"
 
     factory :specialized_comment do
-      type :specialized
+      kind :specialized
       body "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do "    + \
         "eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim "    + \
         "ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut "     + \
@@ -16,12 +16,12 @@ FactoryGirl.define do
     end
 
     factory :common_comment do
-      type :common #default
+      kind :common #default
       body "Ae, mano! Muito massa esse app, vei."
 
       after(:create) do |comment|
         comment.answers << FactoryGirl.create(:comment, body: "Eh mesmo!",
-                                              type: :answer,
+                                              kind: :answer,
                                               app: comment.app)
       end
     end

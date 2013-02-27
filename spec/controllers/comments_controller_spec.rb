@@ -66,7 +66,7 @@ describe CommentsController do
           }.to change(Comment, :count).by(1)
         end
 
-        it 'should create a new common comment' do # common is the default type
+        it 'should create a new common comment' do # common is the default kind
           expect {
             post :create, @params
           }.to change(Comment.common, :count).by(1)
@@ -106,7 +106,7 @@ describe CommentsController do
 
         context "which is common" do
           before do
-            @params[:comment] = @params[:comment].merge(type: :common)
+            @params[:comment] = @params[:comment].merge(kind: :common)
           end
 
           it 'should create a new common comment' do
@@ -125,7 +125,7 @@ describe CommentsController do
         context "which is specialized" do
           before do
             @user = FactoryGirl.create(:specialist)
-            @params[:comment] = @params[:comment].merge(type: :specialized)
+            @params[:comment] = @params[:comment].merge(kind: :specialized)
           end
 
           it 'should create a new specialized comment' do

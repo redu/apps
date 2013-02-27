@@ -142,15 +142,15 @@
           <li>
             <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
           </li>
-          <% if can? :create, Comment.new(type: :specialized) %>
+          <% if can? :create, Comment.new(kind: :specialized) %>
             <li>
               <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
             </li>
           <% end %>
         </ul>
-        <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_type: "common" %>
-        <% if can? :create, Comment.new(type: :specialized) %>
-          <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_type: "specialized" %>
+        <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_kind: "common" %>
+        <% if can? :create, Comment.new(kind: :specialized) %>
+          <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_kind: "specialized" %>
         <% end %>
       </div>
     </li>

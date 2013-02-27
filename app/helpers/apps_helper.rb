@@ -74,7 +74,7 @@ module AppsHelper
   end
   # Conta os comentários de uma aplicação (comuns + respostas)
   def count_comments_for(app)
-    Comment.get_by_type(app, :common).length + Comment.get_by_type(app, :answer).length
+    Comment.get_by_kind(app, :common).length + Comment.get_by_kind(app, :answer).length
   end
 
   # Retorna a classe correta dependendo do tipo de mensagem.

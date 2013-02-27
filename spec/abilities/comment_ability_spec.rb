@@ -26,11 +26,11 @@ describe 'Comment ability' do
       end
 
       it 'should be able to create a common Comment' do
-        subject.should be_able_to(:create, Comment.new(type: :common))
+        subject.should be_able_to(:create, Comment.new(kind: :common))
       end
 
       it 'should not be able to create an specialized Comment' do
-        subject.should_not be_able_to(:create, Comment.new(type: :specialized))
+        subject.should_not be_able_to(:create, Comment.new(kind: :specialized))
       end
     end
 
@@ -40,11 +40,11 @@ describe 'Comment ability' do
       end
 
       it 'should be able to create an specialized Comment' do
-        subject.should be_able_to(:create, Comment.new(type: :specialized))
+        subject.should be_able_to(:create, Comment.new(kind: :specialized))
       end
 
       it 'should be able to create a common Comment' do
-        subject.should be_able_to(:create, Comment.new(type: :common))
+        subject.should be_able_to(:create, Comment.new(kind: :common))
       end
     end
 
@@ -54,11 +54,11 @@ describe 'Comment ability' do
       end
 
       it 'should be able to create a common Comment' do
-        subject.should be_able_to(:create, Comment.new(type: :common))
+        subject.should be_able_to(:create, Comment.new(kind: :common))
       end
 
       it 'should be able to create an specialized Comment' do
-        subject.should be_able_to(:create, Comment.new(type: :specialized))
+        subject.should be_able_to(:create, Comment.new(kind: :specialized))
       end
 
       context 'who is not the comment author' do
