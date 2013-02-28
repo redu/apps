@@ -3,6 +3,7 @@ FactoryGirl.define do
     author { FactoryGirl.create(:member) }
     app { FactoryGirl.create(:app) }
     body "Gostei. Parabens pelo aplicativo!"
+    type "Comment"
 
     factory :specialized_comment do
       kind :specialized
@@ -20,9 +21,9 @@ FactoryGirl.define do
       body "Ae, mano! Muito massa esse app, vei."
 
       after(:create) do |comment|
-        comment.answers << FactoryGirl.create(:comment, body: "Eh mesmo!",
-                                              kind: :answer,
-                                              app: comment.app)
+        comment.answers << FactoryGirl.build(:answer, body: "Eh mesmo!",
+                                             app: comment.app,
+                                             in_response_to: comment)
       end
     end
   end

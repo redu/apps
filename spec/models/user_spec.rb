@@ -1,6 +1,9 @@
 require 'spec_helper'
 
 describe User do
+
+  subject { FactoryGirl.build(:user) }
+
   # Identificador do usuário Redu
   it { should respond_to(:core_id) }
   it { should validate_presence_of(:core_id) }
@@ -103,6 +106,21 @@ describe User do
 
     it "should return false for member user" do
       member.is_admin?.should be_false
+    end
+  end
+
+  context "#comments" do
+    let!(:comment) { FactoryGirl.create(:comment, author: subject) }
+    let!(:answer) do
+      FactoryGirl.create(:answer, in_response_to: comment, author: subject)
+    end
+
+    it "should include comments" do
+      subject.comments.should include comment
+    end
+
+    it "should not include answers" do
+      subject.comments.should_not include answer
     end
   end
 end

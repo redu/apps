@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130227142319) do
+ActiveRecord::Schema.define(:version => 20130228163621) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -60,9 +60,10 @@ ActiveRecord::Schema.define(:version => 20130227142319) do
     t.integer  "app_id"
     t.integer  "in_response_to_id"
     t.text     "body"
-    t.integer  "kind_cd",           :default => 0
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.integer  "kind_cd"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "type"
   end
 
   add_index "comments", ["app_id"], :name => "index_comments_on_app_id"

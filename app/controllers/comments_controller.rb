@@ -17,8 +17,10 @@ class CommentsController < ApplicationController
     comment_params = params[:comment] || params[:answer]
     @app = App.find(params[:app_id])
     user = User.find(comment_params.delete(:author))
+    type = comment_params.delete(:type)
 
     @comment = Comment.new(comment_params) do |comment|
+      comment.type = type
       comment.in_response_to_id = params[:comment_id].to_i
       comment.app = @app
       comment.author = user

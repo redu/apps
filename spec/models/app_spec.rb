@@ -93,6 +93,21 @@ describe App do
     end
   end
 
+  describe "#comments" do
+    let!(:comment) { FactoryGirl.create(:comment, app: subject) }
+    let!(:answer) do
+      FactoryGirl.create(:answer, in_response_to: comment, app: subject)
+    end
+
+    it "should include comments" do
+      subject.comments.should include comment
+    end
+
+    it "should not include answers" do
+      subject.comments.should_not include answer
+    end
+  end
+
   # Rating
   describe "AR Reputation System" do
     it { should respond_to(:has_evaluation?) }

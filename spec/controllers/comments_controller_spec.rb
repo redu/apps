@@ -9,7 +9,7 @@ describe CommentsController do
 
     before do
       (per_page*2+1).times do |n|
-        app.comments << FactoryGirl.create(:comment, created_at: n.days.ago)
+        app.comments << FactoryGirl.create(:common_comment, created_at: n.days.ago)
       end
     end
 
@@ -18,17 +18,17 @@ describe CommentsController do
       assigns(:app).should == app
     end
 
-    it "should assign right number of comments for the first page" do
+    it "should assign right number of common comments for the first page" do
       get :index, { app_id: app, locale: 'pt-BR' }
       assigns(:comments).count.should == per_page
     end
 
-    it "should assign right number of comments for the last page" do
+    it "should assign right number of common comments for the last page" do
       get :index, { app_id: app, page: 3, locale: 'pt-BR' }
       assigns(:comments).count.should == 1
     end
 
-    it "should assign comments in proper order" do
+    it "should assign common comments in proper order" do
       get :index, { app_id: app, locale: 'pt-BR' }
       per_page.times do |n|
         unless n == 0
@@ -48,9 +48,12 @@ describe CommentsController do
     context "when creating a comment" do
       before do
         @params = { app_id: @app, comment: {
-            author: @user.id, body: "Olá! Parabéns pelo REA." },
-            locale: 'pt-BR'
-          }
+          type: "Comment", kind: "common",
+          author: @user.id,
+          body: "Olá! Parabéns pelo REA."
+          },
+          locale: 'pt-BR'
+        }
       end
 
       context "what occurs via AJAX" do
@@ -144,7 +147,8 @@ describe CommentsController do
         context "which is an answer" do
           before do
             @comment = FactoryGirl.create(:common_comment, app: @app)
-            @params = @params.merge(comment_id: @comment)
+            @params.merge!(comment_id: @comment)
+            @params[:comment].merge!(type: "Answer")
           end
 
           it 'should create a new answer for proper comment' do
@@ -191,7 +195,7 @@ describe CommentsController do
 
         context "which is an answer" do
           before do
-            @answer = FactoryGirl.create(:comment, app: @app,
+            @answer = FactoryGirl.create(:answer, app: @app,
                                          author: @user)
             @comment.answers << @answer
             @comment.save

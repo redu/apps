@@ -1,14 +1,14 @@
 var $comment = $('#comment-<%= @comment.id %>');
 
 <%# Se for a última resposta, tem que remover o ol também. %>
-<% if @comment.answer? && @comment.in_response_to.answers.length == 0 %>
+<% if @comment.is_a?(Answer) && @comment.in_response_to.answers.length == 0 %>
   $('#comments-for-<%= @comment.in_response_to.id %>').remove();
 <% end %>
 
 $comment.remove();
 
 <%# Manipulações de HTML adicionais para casos em que o comentário excluído é uma resposta %>
-<% if @comment.answer? %>
+<% if @comment.is_a? Answer %>
   <%# Se a resposta que está sendo removida for a última da lista. %>
   if ($('#comments-for-<%= @comment.in_response_to.id %> .comments li:last-child hr').length > 0) {
     <%# Remove o elemento hr %>

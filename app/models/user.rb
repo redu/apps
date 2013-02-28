@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   has_many :courses, through: :user_course_associations
 
   # Comentários
-  has_many :comments, dependent: :destroy
+  has_many :comments, conditions: { type: 'Comment' }, dependent: :destroy
 
   # Thumbnail
   has_attached_file :thumbnail,

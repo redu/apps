@@ -11,7 +11,7 @@ class App < ActiveRecord::Base
   has_many :categories, through: :app_category_associations
 
   # Comentários
-  has_many :comments, dependent: :destroy
+  has_many :comments, conditions: { type: "Comment" }, dependent: :destroy
 
   # Usuários que favoritaram o aplicativo
   has_many :user_app_associations, dependent: :destroy
