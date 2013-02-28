@@ -28,9 +28,9 @@
         <li class="oer-counter legend icon-seen-gray_16_18-before">
           <%= t 'views', count: @app.views %>.
         </li>
-        <% if @app.comments.specialized.length > 0 %>
+        <% if @specialized_comments.length > 0 %>
           <li class="oer-counter legend icon-specialist-gray_16_18-before">
-            <%= t 'review', count: @app.comments.specialized.length %>.
+            <%= t 'review', count: @specialized_comments.length %>.
           </li>
         <% end %>
         <li class="oer-counter legend icon-comment-gray_16_18-before">
@@ -131,7 +131,7 @@
 </div>
 
 <ol class="statuses oer-comments">
-  <%= render partial: 'comments/specialized_comment', collection: @app.comments.specialized %>
+  <%= render partial: 'comments/specialized_comment', collection: @specialized_comments %>
 
   <% if can? :create, Comment %>
     <!-- Botões de comentários -->
@@ -159,18 +159,18 @@
   <!-- Comentários comuns -->
   <% if can? :read, Comment %>
     <ol id="comments" class="oer-comments-commom">
-      <%= render partial: 'comments/common_comment', collection: @comments %>
+      <%= render partial: 'comments/common_comment', collection: @common_comments %>
     </ol>
   <% end %>
 </ol>
 
 <% if can? :read, Comment %>
-  <% unless @comments.last_page? %>
+  <% unless @common_comments.last_page? %>
     <div id="pagination-wrapper">
       <hr class="list-separator">
       <div id="paginator" class="pagination">
-        <%= link_to_unless @comments.last_page?, "Mostrar mais...",
-          app_comments_path(@app, page: (@comments.current_page + 1)), :rel => 'next', remote: true,
+        <%= link_to_unless @common_comments.last_page?, "Mostrar mais...",
+          app_comments_path(@app, page: (@common_comments.current_page + 1)), :rel => 'next', remote: true,
           class: "button-default icon-arrow-down-pagination-gray_16_18-before" %>
       </div>
     </div>

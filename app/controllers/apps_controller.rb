@@ -33,8 +33,9 @@ class AppsController < ApplicationController
 
     @app.update_attribute(:views, @app.views + 1)
     @app_categories = Category.get_names_by_kind @app
-    @comments = Kaminari::paginate_array(@app.comments.includes([:author]).
+    @common_comments = Kaminari::paginate_array(@app.comments.common.includes([:author]).
       order('created_at DESC')).page(params[:page]).per(comments_per_page)
+    @specialized_comments = @app.comments.specialized.includes([:author])
     @favorite = UserAppAssociation.find_by_user_id_and_app_id(current_user, @app)
     @app_rating = @app.reputation_for(:rating)
     @evaluations = @app.evaluators_for(:rating).count

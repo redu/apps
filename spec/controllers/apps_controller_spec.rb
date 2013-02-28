@@ -56,7 +56,7 @@ describe AppsController do
 
   describe "GET show" do
     before do
-       @app = FactoryGirl.create(:app)
+       @app = FactoryGirl.create(:complete_app_with_comments)
     end
 
     context "with valid params" do
@@ -78,6 +78,21 @@ describe AppsController do
       it "assigns app reputation for rating" do
         get :show, @params
         assigns(:app_rating).should == @app.reputation_for(:rating)
+      end
+
+      it "assigns app evaluations" do
+        get :show, @params
+        assigns(:evaluations).should == @app.evaluators_for(:rating).count
+      end
+
+      it "assigns common comments" do
+        get :show, @params
+        assigns(:common_comments).should == @app.comments.common
+      end
+
+      it "assigns specialized comments" do
+        get :show, @params
+        assigns(:specialized_comments).should == @app.comments.specialized
       end
 
       context "when user is logged in" do
