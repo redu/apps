@@ -3,14 +3,15 @@
 
   Variáveis locais:
     klass: classe adicional a ser adicionada no wrapper.
-    model_object: o modelo de objeto usado pelo formulário.
-    comment_kind: indica o tipo de resposta (common, specialized ou answer).
+    array_for_url: array com os objetos necessários para montar a url
+                   (o último sempre será o objeto do form).
 %>
 <div class="create-response <%= klass %>">
-  <%= form_for(model_object, remote: true) do |f| %>
+  <%= form_for(array_for_url, remote: true) do |f| %>
     <fieldset>
       <%= f.text_area :body, rows: "6" %>
-      <%= f.hidden_field :kind, value: comment_kind %>
+      <%= f.hidden_field :type, value: array_for_url.last.type %>
+      <%= f.hidden_field :kind, value: array_for_url.last.kind %>
       <%= f.hidden_field :author, value: current_user.id %>
       <div class="status-buttons">
         <%= link_to "Cancelar", nil, class: "button-default cancel" %>

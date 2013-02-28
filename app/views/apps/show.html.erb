@@ -148,9 +148,9 @@
             </li>
           <% end %>
         </ul>
-        <%= render "create_response", klass: "flap-to-comment", model_object: [@app, @app.comments.build], comment_kind: "common" %>
+        <%= render "comments/form", klass: "flap-to-comment", array_for_url: [@app, @app.comments.build(kind: "common")] %>
         <% if can? :create, Comment.new(kind: :specialized) %>
-          <%= render "create_response", klass: "flap-to-review", model_object: [@app, @app.comments.build], comment_kind: "specialized" %>
+          <%= render "comments/form", klass: "flap-to-review", array_for_url: [@app, @app.comments.build(kind: "specialized")] %>
         <% end %>
       </div>
     </li>
