@@ -70,6 +70,11 @@ namespace :populate do
     environment.users << user
     course = Course.create(name: "Primeiros Passos", core_id: 123, owner: user,
                            environment: environment)
+    course.users << user
+    assoc = course.user_course_associations.last
+    assoc.role = UserCourseAssociation.teacher
+    assoc.save
+
     space = Space.create(name: "Aprendendo a Usar o Redu", core_id: 123)
     course.spaces << space
     subject1 = Subject.create(name: "Redu para Professores", core_id: 123,
@@ -78,6 +83,5 @@ namespace :populate do
                               space: space)
     subject3 = Subject.create(name: "Redu para Gestores", core_id: 12345,
                               space: space)
-
   end
 end
