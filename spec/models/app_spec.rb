@@ -3,10 +3,6 @@ require 'spec_helper'
 
 describe App do
   subject { create(:app) }
-  # ID do aplicativo no Redu
-  it { should respond_to(:core_id) }
-  it { should validate_presence_of(:core_id) }
-  it { should validate_uniqueness_of(:core_id) }
 
   # URL do aplicativo no Redu
   it { should respond_to(:core_url) }
@@ -73,9 +69,6 @@ describe App do
 
   # Screenshots do aplicativo
   it { should have_many(:screen_shots).dependent(:destroy) }
-
-  # Id do app no redu
-  it { should respond_to(:core_id) }
 
   # Url do objeto do aplicativo
   it { should respond_to(:core_url) }

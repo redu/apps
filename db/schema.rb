@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130228163621) do
+ActiveRecord::Schema.define(:version => 20130301112102) do
 
   create_table "app_category_associations", :force => true do |t|
     t.integer  "app_id"
@@ -43,8 +43,6 @@ ActiveRecord::Schema.define(:version => 20130228163621) do
     t.integer  "views",                  :default => 0
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.string   "token"
-    t.integer  "core_id"
     t.string   "core_url"
   end
 
