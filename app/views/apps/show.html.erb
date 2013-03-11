@@ -83,7 +83,7 @@
           <% end %>
           <% if can? :checkout, @app %>
             <%= form_tag app_checkout_path(@app, previous_step: 0), method: :post, remote: true do %>
-              <%= content_tag :button, "Adicionar à Disciplina", class: "button-success" %>
+              <%= content_tag :button, "Adicionar à Disciplina", type: :submit, class: "button-success" %>
             <% end %>
           <% end %>
           <% if can? :destroy, @favorite %>
