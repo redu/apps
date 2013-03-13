@@ -28,7 +28,17 @@
 
   .list-environment-course-space-link { color: $gray3; }
 
-  .list-mix-inner { padding: 10px 20px; }
+  .list-mix-inner {
+    padding: 10px 20px;
+
+    .legend a {
+      color: $blue3;
+      &:hover {
+        color: $blue4;
+        text-decoration: none;
+      }
+    }
+  }
 
   .list-mix-header +
   .list-mix-body { margin-top: 10px; }

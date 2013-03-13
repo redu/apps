@@ -22,21 +22,17 @@
                       <div class="list-mix-header">
                         <h5 class="list-mix-title"><%= c.name %></h5>
                       </div>
-                      <ul class="list-mix-body list-space-mini show">
-                        <% if c.spaces.length == 0 %>
-                          <div class="message-block message-info">
-                            <div class="message-block-content">
-                              <p><strong>Aviso.</strong> Este curso não possui Disciplinas. Para adicionar o aplicativo é necessário <%= link_to "criar uma Disciplina", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}" %> antes.</p>
-                            </div>
-                          </div>
-                        <% else %>
+                      <% if c.spaces.length == 0 %>
+                        <p class="legend">Esse Curso ainda não possui Disciplinas. É necessário <%= link_to "criar uma", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}" %> antes de adicionar Aplicativos.</p>
+                      <% else %>
+                        <ul class="list-mix-body list-space-mini show">
                           <% c.spaces.each do |s| %>
                             <li class="list-space-mini-item">
                               <%= link_to s.name, nil, class: "icon-space-lightblue_16_18-before space-link", "data-space-id" => s.id  %>
                             </li>
                           <% end %>
-                        <% end %>
-                      </ul>
+                        </ul>
+                      <% end %>
                     </div>
                   </div>
                 </li>
