@@ -25,7 +25,7 @@
     </ol>
 
     <%# Nota média. %>
-    <span class="oer-rating-value"><%= @app_rating %><span class="oer-rating-value-max">/5</span></span>
+    <span class="oer-rating-value"><%= number_with_precision(@app_rating, :locale => :en, :precision => 1, :strip_insignificant_zeros => true) %><span class="oer-rating-value-max">/5</span></span>
   </div>
 
   <%# Nota do usuário. %>
