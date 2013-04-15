@@ -18,3 +18,19 @@
 
 .apps-portal-header +
 .apps-portal-content { margin-top: 21px; }
+
+.portal-title {
+  position: relative;
+  overflow: visible;
+
+  &:hover {
+    .know-more-apps_220_99 {
+      @include size(220px, 99px);
+      display: inline-block;
+      background-image: url("know-more-apps_220_99.png");
+      position: absolute;
+      top: -17px;
+      left: 47px;
+    }
+  }
+}
