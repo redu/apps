@@ -3,7 +3,7 @@ $(function() {
   $.fn.searchTokenInput = function(url) {
     $(this).tokenInputInstaSearch(
       url + "?format=json", {
-        crossDomain: false,
+        crossDomain: true,
         hintText: "Faça sua busca",
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
@@ -31,7 +31,7 @@ $(function() {
     $("#q").searchTokenInput(url);
   };
 
-  updateTokenInput($(".form-search").attr("action"));
+  updateTokenInput($(".form-search-filters-dropdown").attr("action"));
 
   // Altera o action do form e tokeninput de acordo com o filtro selecionado.
   $(document).on("change", ".form-search-filters-dropdown input:radio", function() {
@@ -44,11 +44,11 @@ $(function() {
       url = url + "/perfis";
     }
 
-    $(".form-search").attr("action", url);
+    $(".form-search-filters-dropdown").attr("action", url);
     updateTokenInput(url);
   });
 
-  $(document).on("submit", ".form-search", function(e) {
+  $(document).on("submit", ".form-search-filters-dropdown", function(e) {
     // Evita que o formulário seja submetido vazio.
     var val = $(this).find('#token-input-q').val();
     if ($.trim(val) === "") {
@@ -90,7 +90,7 @@ $(function() {
     }
 
     if ($results.length > maxResults) {
-      var linkSeeMore = $(".form-search").attr("action") + "?q=" + $("#token-input-q").val();
+      var linkSeeMore = $(".form-search-filters-dropdown").attr("action") + "?q=" + $("#token-input-q").val();
 
       $results.last().remove();
       $dropdown.append('<hr><a class="portal-search-link-see-more" title="Ver mais resultados" href="' + linkSeeMore + '">Ver mais</a>');
