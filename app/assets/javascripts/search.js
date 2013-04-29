@@ -3,7 +3,7 @@ $(function() {
   $.fn.searchTokenInput = function(url) {
     $(this).tokenInputInstaSearch(
       url + "?format=json", {
-        crossDomain: true,
+        crossDomain: false,
         hintText: "Faça sua busca",
         noResultsText: "Sem resultados",
         searchingText: "Buscando...",
