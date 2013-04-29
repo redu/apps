@@ -26,3 +26,17 @@ body { background-color: $gray1; }
 .general-list-item-column.app-favorite {
   margin-right: 49px;
 }
+
+// Técnica do sticky footer
+// ==========================================================================
+
+html,
+body { height: 100%; }
+
+.main-wrapper {
+  @include box-sizing;
+  min-height: 100%;
+  margin: 0 auto (- $footer-height);
+}
+
+.footer-pusher { height: $footer-height; }

@@ -130,41 +130,40 @@
   </div>
 </div>
 
-<ol class="statuses oer-comments">
+<%# Comentários dos especialistas. %>
+<ol id="specialized-comments" class="status-list">
   <%= render partial: 'comments/specialized_comment', collection: @specialized_comments %>
-
-  <% if can? :create, Comment %>
-    <!-- Botões de comentários -->
-    <li>
-      <hr class="list-separator">
-      <div class="status status-buttons reply-buttons">
-        <ul class="status-text">
-          <li>
-            <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before">Comentar sobre este aplicativo</button>
-          </li>
-          <% if can? :create, Comment.new(kind: :specialized) %>
-            <li>
-              <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
-            </li>
-          <% end %>
-        </ul>
-        <%= render "comments/form", klass: "flap-to-comment", array_for_url: [@app, @app.comments.build(kind: "common")] %>
-        <% if can? :create, Comment.new(kind: :specialized) %>
-          <%= render "comments/form", klass: "flap-to-review", array_for_url: [@app, @app.comments.build(kind: "specialized")] %>
-        <% end %>
-      </div>
-    </li>
-  <% end %>
-
-  <!-- Comentários comuns -->
-  <% if can? :read, Comment %>
-    <ol id="comments" class="oer-comments-commom">
-      <%= render partial: 'comments/common_comment', collection: @common_comments %>
-    </ol>
-  <% end %>
 </ol>
 
+<% if can? :create, Comment %>
+  <hr class="list-separator">
+<% end %>
+
+<%# Botões de comentários. %>
+<% if can? :create, Comment %>
+  <div class="content-section oer-comments reply-buttons">
+    <ul class="reply-buttons-list">
+      <li>
+        <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before" title="Comentar sobre este aplicativo">Comentar</button>
+      </li>
+      <% if can? :create, Comment.new(kind: :specialized) %>
+        <li>
+          <button class="button-primary button-big reply-status button-review icon-specialist-white_blue_32_34-before">Escrever uma resenha</button>
+        </li>
+      <% end %>
+    </ul>
+    <%= render "comments/form", klass: "tab-left", array_for_url: [@app, @app.comments.build(kind: "common")] %>
+    <% if can? :create, Comment.new(kind: :specialized) %>
+      <%= render "comments/form", klass: "tab-right", array_for_url: [@app, @app.comments.build(kind: "specialized")] %>
+    <% end %>
+  </div>
+<% end %>
+
+<%# Comentários comuns. %>
 <% if can? :read, Comment %>
+  <ol id="comments" class="status-list">
+    <%= render partial: 'comments/common_comment', collection: @common_comments %>
+  </ol>
   <% unless @common_comments.last_page? %>
     <div id="pagination-wrapper">
       <hr class="list-separator">

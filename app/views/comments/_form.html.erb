@@ -6,17 +6,17 @@
     array_for_url: array com os objetos necessários para montar a url
                    (o último sempre será o objeto do form).
 %>
-<div class="create-response <%= klass %>">
-  <%= form_for(array_for_url, remote: true) do |f| %>
-    <fieldset>
-      <%= f.text_area :body, rows: "6" %>
-      <%= f.hidden_field :type, value: array_for_url.last.type %>
-      <%= f.hidden_field :kind, value: array_for_url.last.kind %>
-      <%= f.hidden_field :author, value: current_user.id %>
-      <div class="status-buttons">
-        <%= link_to "Cancelar", nil, class: "button-default cancel" %>
-        <%= submit_tag "Enviar", class: "button-primary" %>
-      </div>
-    </fieldset>
-  <% end %>
-</div>
+<%= form_for(array_for_url, remote: true, html: { class: "create-response status-tab #{klass}" }) do |f| %>
+  <%= f.hidden_field :type, value: array_for_url.last.type %>
+  <%= f.hidden_field :kind, value: array_for_url.last.kind %>
+  <%= f.hidden_field :author, value: current_user.id %>
+  <%= f.text_area :body, rows: "6" %>
+  <ul class="status-buttons">
+    <li>
+      <%= button_tag "Cancelar", class: "button-default cancel", type: "button" %>
+    </li>
+    <li>
+      <%= submit_tag "Enviar", class: "button-primary" %>
+    </li>
+  </ul>
+<% end %>

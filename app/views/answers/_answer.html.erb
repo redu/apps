@@ -1,23 +1,31 @@
-<li id="comment-<%= answer.id %>" class="status-content response">
-  <% if can? :destroy, answer %>
-    <%= link_to 'Apagar Resposta', app_comment_path(answer.app, answer),
-               confirm: 'Esta ação irá apagar sua resposta. Deseja continuar?',
-               method: :delete, remote: true,
-               class: "close icon-close-gray_16_18 replacement" %>
-   <% end %>
-  <div class="status-text-response">
-    <%= link_to redu_user_static("", answer.author), class: "icon-link" do %>
+<%#
+  Resposta dos comentários.
+
+  Variáveis:
+    answer: a resposta.
+    total: a quantidade total de respostas.
+%>
+
+<li id="comment-<%= answer.id %>">
+  <div class="response">
+    <% if can? :destroy, answer %>
+      <%= link_to 'Apagar Resposta', app_comment_path(answer.app, answer),
+                 confirm: 'Esta ação irá apagar sua resposta. Deseja continuar?',
+                 method: :delete, remote: true,
+                 class: "icon-close icon-close-gray_16_18 text-replacement" %>
+    <% end %>
+    <%= link_to redu_user_static("", answer.author), class: "author-thumbnail" do %>
       <%= image_tag answer.author.thumbnail.url(:small), alt: answer.author.display_name, title: answer.author.display_name, size: "32x32" %>
     <% end %>
     <%= link_to answer.author.display_name, redu_user_static("", answer.author), class: "link-name" %>
-    <span class="status-info">
+    <span class="action">
       respondeu:
     </span>
-    <span class="date">
+    <span class="date legend">
       <%= l answer.created_at %>
     </span>
-    <div class="post-text">
-      <p class="input-user"><%= answer.body %></p>
+    <div class="status-content">
+      <%= answer.body %>
     </div>
   </div>
   <% unless last_answer?(answer_counter, total) %>

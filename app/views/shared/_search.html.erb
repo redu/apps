@@ -1,6 +1,7 @@
-<%= form_tag apps_path, method: :get, class: "form-search pull-right" do %>
-  <%= text_field_tag :search, params[:search], class: "control-area", placeholder: "Procure por aqui...", "data-toggle" => "#apps-portal-breadcrumb" %>
-  <button class="control-append-area button-default" type="submit">
+<%# Formulário de busca. %>
+<%= form_tag apps_path, method: :get, class: "form-search area-fix form-search-expandable pull-right" do %>
+  <%= text_field_tag :search, params[:search], class: "control-area area-infix", placeholder: "Procure Aplicativos...", "data-toggle" => "#apps-portal-breadcrumb" %>
+  <button class="button-default area-suffix" type="submit">
     <span class="control-search-icon icon-magnifier-gray_16_18 text-replacement">Busca</span>
   </button>
 <% end %>

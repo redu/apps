@@ -1,36 +1,41 @@
+<%#
+  Resenha do especialista.
+
+  Variáveis:
+    specialized_comment: a resenha do especialista.
+%>
+
 <li id="comment-<%= specialized_comment.id %>">
   <hr class="list-separator">
-  <div class="status specialist">
-    <div class="status-text">
+  <div class="status without-context specialist-review">
+    <div class="subject">
       <span class="specialist-icon icon-specialist-gray_32_34 text-replacement">Especialista</span>
-      <%= link_to redu_user_static("", specialized_comment.author), class: "icon-link" do %>
+      <%= link_to redu_user_static("", specialized_comment.author), class: "author-thumbnail" do %>
         <%= image_tag specialized_comment.author.thumbnail.url(:medium), alt: specialized_comment.author.display_name, title: specialized_comment.author.display_name, size: "64x64" %>
       <% end %>
-      <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
-      <span class="status-info">(especialista) escreveu uma resenha sobre este aplicativo:</span>
-      <% if can? :manage, specialized_comment %>
-        <%= link_to 'Apagar Crítica', [specialized_comment.app, specialized_comment],
-                    confirm: 'Esta ação irá apagar sua crítica. Deseja continuar?',
-                    method: :delete, remote: true,
-                    class: "close icon-close-gray_16_18 replacement" %>
-      <% end %>
-      <span class="date"><%= l specialized_comment.created_at %></span>
-    </div>
-    <div class="status-container">
-      <div class="status-content">
-        <div class="post-text">
-          <p class="input-user">
-            <%= specialized_comment.body %>
-          </p>
-        </div>
-        <%# TODO: Adicionar quando implementar opção de expandir crítica do especialista.
-        <hr class="link-separator">
-        <ul>
-          <li class="last-responses">
-            <a href="#" class="link-secondary">Mostrar toda a crítica do especialista</a>
-          </li>
-        </ul> %>
+      <div class="subject-info">
+        <%= link_to specialized_comment.author.display_name, redu_user_static("", specialized_comment.author), class: "link-name" %>
+        <span class="action">(especialista) escreveu uma resenha sobre este aplicativo:</span>
+        <% if can? :manage, specialized_comment %>
+          <%= link_to 'Apagar Crítica', [specialized_comment.app, specialized_comment],
+                      confirm: 'Esta ação irá apagar sua crítica. Deseja continuar?',
+                      method: :delete, remote: true,
+                      class: "icon-close icon-close-gray_16_18 text-replacement" %>
+        <% end %>
+        <span class="date legend"><%= l specialized_comment.created_at %></span>
       </div>
     </div>
+    <div class="subject-content">
+      <div class="status-content status-tab tab-left">
+        <%= specialized_comment.body %>
+      </div>
+    </div>
+    <%# TODO: Adicionar quando implementar opção de expandir crítica do especialista.
+    <hr class="link-separator">
+    <ul>
+      <li class="last-responses">
+        <a href="#" class="link-secondary">Mostrar toda a crítica do especialista</a>
+      </li>
+    </ul> %>
   </div>
 </li>
