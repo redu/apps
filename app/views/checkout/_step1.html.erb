@@ -25,7 +25,7 @@
                       <% if c.spaces.length == 0 %>
                         <p class="legend">Esse Curso ainda não possui Disciplinas. É necessário <%= link_to "criar uma", "http://redu.com.br/espacos/criar?course_id=#{c.core_id}" %> antes de adicionar Aplicativos.</p>
                       <% else %>
-                        <ul class="list-mix-body list-space-mini show">
+                        <ul class="list-mix-body list-space-mini">
                           <% c.spaces.each do |s| %>
                             <li class="list-space-mini-item">
                               <%= link_to s.name, nil, class: "icon-space-lightblue_16_18-before space-link", "data-space-id" => s.id  %>
