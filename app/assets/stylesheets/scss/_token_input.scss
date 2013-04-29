@@ -1,0 +1,40 @@
+// ==========================================================================
+// Tema para o jQuery Tokeninput do formulário de busca.
+// ==========================================================================
+
+
+.token-input-list-redu {
+  margin: 0;
+  list-style-type: none;
+}
+
+.token-input-dropdown-redu {
+  padding: 10px 0;
+
+  // Mensagem de buscando e sem resultados.
+  p {
+    color: $gray5;
+    text-align: center;
+  }
+
+  ul {
+    margin: 0;
+    list-style-type: none;
+  }
+
+  .control-autocomplete-suggestion-link {
+    width: 100%;
+    @include box-sizing;
+  }
+
+  .control-autocomplete-name { color: $black; }
+
+  .control-autocomplete-mail { height: 11px; }
+
+  .control-autocomplete-added-info {
+    $thumbnail-width: 32px;
+    $thumbnail-spacing-info: 5px;
+    $calc: $thumbnail-width + $thumbnail-spacing-info;
+    @include calc("width", "100% - #{$calc}", 85%);
+  }
+}

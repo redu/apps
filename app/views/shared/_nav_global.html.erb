@@ -13,36 +13,34 @@
         <%= link_to "Ambientes", redu_static("ambientes"), class: "nav-global-button", title: "Ambientes" %>
         <%= link_to "Aplicativos", root_path, class: "nav-global-button nav-global-button-active", title: "Aplicativos" %>
       </div>
-      <div class="nav-global-buttons-dropdown button-toolbar">
-        <div class="button-group">
-          <button class="button-default nav-global-button-dropdown dropdown-toggle icon-profile-2-lightblue_16_18-before" data-toggle="dropdown">
-            <span class="button-dropdown-arrow icon-arrow-down-lightblue_8_10"></span>
-          </button>
-          <div class="dropdown-menu nav-global-profile-dropdown">
-            <div class="arrow"></div>
-            <div class="nav-global-profile-header">
-              <%= current_user.display_name %>
-            </div>
-            <ul class="nav-global-profile-items">
-              <li class="nav-global-profile-item link-container">
-                <%= link_to "Meu Perfil", redu_user_static, class: "link-target icon-profile-lightblue_16_18-before", title: "Meu Perfil" %>
-                <%= link_to "editar", redu_user_static("editar"), class: "nav-global-profile-edit link-secondary", title: "Editar perfil" %>
-              </li>
-              <li class="nav-global-profile-item link-container">
-                <%= link_to "Mensagens", redu_user_static("messages"), class: "link-target icon-message-lightblue_16_18-before", title: "Mensagens" %>
-              </li>
-              <li class="nav-global-profile-item link-container">
-                <%= link_to "Configurações", redu_user_static("editar"), class: "link-target icon-manage-lightblue_16_18-before", title: "Configurações" %>
-              </li>
-              <!-- Se o usuário for parceiro:
-                <li class="nav-global-profile-item link-container">
-                  <a href="#" title="Parceiro" class="link-target icon-partner-lightblue_16_18-before">Parceiro</a>
+      <div class="nav-global-right-area">
+        <%= render "shared/form_search" %>
+        <div class="nav-global-buttons-dropdown button-toolbar pull-right">
+          <div class="button-group">
+            <button class="button-default nav-global-button-dropdown dropdown-toggle icon-profile-2-lightblue_16_18-before" data-toggle="dropdown">
+              <span class="button-dropdown-arrow icon-arrow-down-lightblue_8_10"></span>
+            </button>
+            <div class="dropdown-menu nav-global-profile-dropdown">
+              <div class="arrow"></div>
+              <div class="nav-global-profile-header">
+                <%= current_user.display_name %>
+              </div>
+              <ul class="nav-global-profile-items">
+                <li class="nav-global-profile-item">
+                  <%= link_to "Meu Perfil", redu_user_static, class: "nav-global-profile-item-link icon-profile-lightblue_16_18-before", title: "Meu Perfil" %>
+                  <%= link_to "editar", redu_user_static("editar"), class: "nav-global-profile-item-link-secondary link-secondary", title: "Editar perfil" %>
                 </li>
-              -->
-              <li class="nav-global-profile-item link-container">
-                <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "link-target" %>
-              </li>
-            </ul>
+                <li class="nav-global-profile-item">
+                  <%= link_to "Mensagens", redu_user_static("messages"), class: "nav-global-profile-item-link icon-message-lightblue_16_18-before", title: "Mensagens" %>
+                </li>
+                <li class="nav-global-profile-item">
+                  <%= link_to "Configurações", redu_user_static("editar"), class: "nav-global-profile-item-link icon-manage-lightblue_16_18-before", title: "Configurações" %>
+                </li>
+                <li class="nav-global-profile-item">
+                  <%= link_to "Sair", logout_path, remote: true, method: :delete, title: "Sair", class: "nav-global-profile-item-link nav-global-profile-item-link-iconless" %>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
