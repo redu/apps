@@ -9,6 +9,15 @@
 .oer-title {
   @include heading(2);
   float: left;
+  max-width: 60%;
+
+  .oer-favorite-icon +
+  & { margin-left: 10px; }
+}
+
+.oer-favorite-icon {
+  display: inline-block;
+  float: left;
 }
 
 .oer-header +

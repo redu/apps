@@ -1,14 +1,14 @@
 <% unless params.include? :search %>
-  <div class="apps-portal-oer" style="display:none;">
+  <div class="apps-portal-oer">
     <div class="apps-portal-oer-explaination">
       <span class="apps-portal-oer-close icon-close-gray_16_18 text-replacement">Fechar</span>
       <h3 class="apps-portal-oer-explaination-title">O que são R.E.A.s?</h3>
-        <p>Recursos Educacionais Abertos são <em>materiais</em> de ensino, aprendizado e pesquisa em qualquer suporte ou mídia, que estão sob domínio público, ou estão licenciados de maneira aberta, permitindo que sejam utilizados ou adaptados por terceiros. O uso de formatos técnicos abertos facilita o acesso e o reuso potencial dos recursos publicados digitalmente. Recursos Educacionais Abertos podem incluir cursos completos, partes de cursos, módulos, livros didáticos, artigos de pesquisa, vídeos, testes, software, e qualquer outra ferramenta, material ou técnica que possa apoiar o acesso ao conhecimento.(<a href="http://rea.net.br/site/o-que-e-rea/" title="UNESCO/Comunidade REA Brasil">UNESCO/Comunidade REA Brasil</a>)</p>
+      <p>Recursos Educacionais Abertos são <em>materiais</em> de ensino, aprendizado e pesquisa em qualquer suporte ou mídia, que estão sob domínio público, ou estão licenciados de maneira aberta, permitindo que sejam utilizados ou adaptados por terceiros. O uso de formatos técnicos abertos facilita o acesso e o reuso potencial dos recursos publicados digitalmente. Recursos Educacionais Abertos podem incluir cursos completos, partes de cursos, módulos, livros didáticos, artigos de pesquisa, vídeos, testes, software, e qualquer outra ferramenta, material ou técnica que possa apoiar o acesso ao conhecimento. (<a href="http://rea.net.br/site/o-que-e-rea/" title="UNESCO/Comunidade REA Brasil">UNESCO/Comunidade REA Brasil</a>)</p>
     </div>
   </div>
-
-  <a class="apps-portal-oer-link" href="#" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</a>
 <% end %>
+
+<%= render "shared/search" %>
 
 <%# Abas de navegação %>
 <%= render_navigation context: :tabs %>

@@ -40,7 +40,9 @@
               <div id="apps-portal-breadcrumb" class="breadcrumb-mini-wrapper">
                 <%= render_navigation context: :breadcrumbs %>
               </div>
-              <%= render partial: 'shared/search' %>
+              <% if current_page?(root_path) %>
+                <span class="apps-portal-oer-link link-fake" title="Saiba mais sobre Recursos Educacionais Abertos.">Saiba mais sobre Recursos Educacionais Abertos.</span>
+              <% end %>
             </div>
             <div class="apps-portal-content content-body">
               <%= yield %>

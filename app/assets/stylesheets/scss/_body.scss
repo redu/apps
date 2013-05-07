@@ -15,13 +15,16 @@ $oer-explaination-background-color: rgb(28, 117, 187);
 
 // Link.
 .apps-portal-oer-link {
-  position: absolute;
-  top: 30px;
-  left: 626px;
+  float: right;
+  text-align: right;
+  width: 160px;
+  position: relative;
+  top: 10px;
 }
 
 // Wrapper.
 .apps-portal-oer {
+  display: none;
   overflow: hidden;
   position: relative;
   padding: 10px 20px 15px 0;
@@ -67,6 +70,22 @@ $oer-explaination-background-color: rgb(28, 117, 187);
 }
 
 .apps-portal-oer-explaination-title { @include heading(2); }
+
+
+// Formulário de busca de aplicativos.
+// ==========================================================================
+
+.apps-portal-search-form {
+  float: right;
+
+  // Ajusta a posição no index de apps e favoritos.
+  .apps-portal-oer +
+  &,
+  .apps-portal-content > & {
+    top: 14px;
+    right: 20px;
+  }
+}
 
 
 // Abas

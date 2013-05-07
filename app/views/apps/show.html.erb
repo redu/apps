@@ -1,11 +1,10 @@
 <div class="oer-main-wrapper">
-
+  <%= render "shared/search" %>
   <div class="oer-header clearfix">
-    <h3 class="oer-title"><%= @app.name %></h3>
-
     <% if @favorite %>
-      <span class="icon-favorite-blue_32_34 show text-replacement pull-right" rel="tooltip" title="Este é um Aplicativo Favorito." data-placement="left">Favorito</span>
+      <span class="icon-favorite-blue_32_34 text-replacement oer-favorite-icon" rel="tooltip" title="Este é um Aplicativo Favorito." data-placement="top">Favorito</span>
     <% end %>
+    <%= content_tag :h3, @app.name, class: "oer-title" %>
   </div>
 
   <div class="oer-body clearfix">
