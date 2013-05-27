@@ -3,14 +3,17 @@
 <% elsif @comment.common? %>
   $('#comments').prepend('<%= escape_javascript render partial: "comments/common_comment", collection: [@comment] %>');
 <% elsif @comment.type == "Answer" %>
+  var $responses = $('#comments-for-<%= @comment.in_response_to_id %>');
   <%# Condicional para inclusão de elementos adicionais necessários à concatenação da primeira resposta. %>
-  if ($('#comments-for-<%= @comment.in_response_to_id %>').length == 0) {
-    $('#comment-<%= @comment.in_response_to_id %> .status-content').after('<ol id="comments-for-<%= @comment.in_response_to_id %>" class="responses status-tab tab-left"></ol>');
+  if ($responses.length == 0) {
+    $responses = $('<%= escape_javascript render "comments/responses", comment: @comment.in_response_to %>');
+    $('#comment-<%= @comment.in_response_to_id %> .status-content').after($responses);
   } else {
-    $('#comments-for-<%= @comment.in_response_to_id %> li:last-child').append('<hr>');
+    $responses.find('li:last-child').children().last().before('<hr>');
+    $responses.children().last().before('<%= escape_javascript render partial: "answer", collection: [@comment], locals: { comment: @comment.in_response_to, total: 1 } %>');
+    $responses.countComments();
   }
 
-  $('#comments-for-<%= @comment.in_response_to_id %>').append('<%= escape_javascript render partial: "answer", collection: [@comment], locals: { comment: @comment.in_response_to, total: 1 } %>');
 <% end %>
 
 $('.create-response textarea').val('');

@@ -6,7 +6,7 @@
     array_for_url: array com os objetos necessários para montar a url
                    (o último sempre será o objeto do form).
 %>
-<%= form_for(array_for_url, remote: true, html: { class: "create-response status-tab #{klass}" }) do |f| %>
+<%= form_for(array_for_url, remote: true, html: { class: "status-tab status-list #{klass}" }) do |f| %>
   <%= f.hidden_field :type, value: array_for_url.last.type %>
   <%= f.hidden_field :kind, value: array_for_url.last.kind %>
   <%= f.hidden_field :author, value: current_user.id %>

@@ -140,7 +140,7 @@
 
 <%# Botões de comentários. %>
 <% if can? :create, Comment %>
-  <div class="content-section oer-comments reply-buttons">
+  <div class="content-section oer-comments reply-buttons <%= "can-review" if can? :create, Comment.new(kind: :specialized) %>">
     <ul class="reply-buttons-list">
       <li>
         <button class="button-primary button-big reply-status button-comment icon-comment-white_blue_32_34-before" title="Comentar sobre este aplicativo">Comentar</button>
@@ -151,9 +151,9 @@
         </li>
       <% end %>
     </ul>
-    <%= render "comments/form", klass: "tab-left", array_for_url: [@app, @app.comments.build(kind: "common")] %>
+    <%= render "comments/form", klass: "create-status tab-left", array_for_url: [@app, @app.comments.build(kind: "common")] %>
     <% if can? :create, Comment.new(kind: :specialized) %>
-      <%= render "comments/form", klass: "tab-right", array_for_url: [@app, @app.comments.build(kind: "specialized")] %>
+      <%= render "comments/form", klass: "create-status tab-right", array_for_url: [@app, @app.comments.build(kind: "specialized")] %>
     <% end %>
   </div>
 <% end %>

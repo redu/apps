@@ -1,0 +1,17 @@
+<%# Respostas ao comentário %>
+<% unless comment.answers.empty? %>
+  <ol id="comments-for-<%= comment.id %>" class="comments responses status-tab tab-left">
+    <li class="show-responses">
+      <span class="legend last-responses">Visualizando as últimas respostas...</span>
+      <hr>
+    </li>
+    <%= render partial: 'answers/answer', collection: comment.answers,
+               locals: { total: comment.answers.length } %>
+    <li class="show-responses">
+      <div class="show-more">
+        <hr>
+        <%= content_tag :span, "Mostrar todas as #{comment.answers.length} respostas", class: "see-more link-fake link-secondary" %>
+      <div>
+    </li>
+  </ol>
+<% end %>

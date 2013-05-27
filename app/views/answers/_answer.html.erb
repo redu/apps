@@ -7,6 +7,7 @@
 %>
 
 <li id="comment-<%= answer.id %>">
+  <hr>
   <div class="response">
     <% if can? :destroy, answer %>
       <%= link_to 'Apagar Resposta', app_comment_path(answer.app, answer),
@@ -28,7 +29,4 @@
       <%= answer.body %>
     </div>
   </div>
-  <% unless last_answer?(answer_counter, total) %>
-    <hr>
-  <% end %>
 </li>

@@ -28,31 +28,14 @@
       <div class="status-content status-tab tab-left">
         <%= common_comment.body %>
       </div>
-
-      <%# Respostas ao comentário %>
-      <% unless common_comment.answers.empty? %>
-        <ol id="comments-for-<%= common_comment.id %>" class="comments responses status-tab tab-left">
-          <li class="show-responses">
-            <span class="legend last-responses">Visualizando as últimas respostas...</span>
-            <hr>
-          </li>
-          <%= render partial: 'answers/answer', collection: common_comment.answers,
-                     locals: { total: common_comment.answers.length } %>
-          <li class="show-responses">
-            <div class="show-more">
-              <hr>
-              <span class="see-more link-fake link-secondary">Mostrar todas as 12 respostas</span>
-            <div>
-          </li>
-        </ol>
-      <% end %>
+      <%= render "comments/responses", comment: common_comment %>
       <% if can? :create, Comment %>
         <ul class="actions">
           <li class="reply-status icon-reply-gray_8_10-before">
             <span class="link-fake link-secondary">Responder</span>
           </li>
         </ul>
-        <%= render "comments/form", klass: "tab-right", array_for_url: [@app, common_comment, common_comment.answers.build] %>
+        <%= render "comments/form", klass: "create-response tab-right", array_for_url: [@app, common_comment, common_comment.answers.build] %>
       <% end %>
     </div>
   </div>
